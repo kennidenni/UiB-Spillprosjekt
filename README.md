@@ -1,6 +1,7 @@
 # Arbeidslag: INF112-v2017-pr2_team_D
 # Time: onsdag 14-16
 inf112v17teamd.slack.com
+
 trello.com/b/Bw1dCfyu/inf112-teamd
 
 # Coach:
