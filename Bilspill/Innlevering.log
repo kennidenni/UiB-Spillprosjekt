@@ -1,0 +1,328 @@
+This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016/W32TeX) (preloaded format=pdflatex 2017.1.30)  22 FEB 2017 14:57
+entering extended mode
+ restricted \write18 enabled.
+ %&-line parsing enabled.
+**./Innlevering.tex
+(./Innlevering.tex
+LaTeX2e <2017/01/01> patch level 1
+Babel <3.9r> and hyphenation patterns for 83 language(s) loaded.
+(c:/texlive/2016/texmf-dist/tex/latex/base/article.cls
+Document Class: article 2014/09/29 v1.4h Standard LaTeX document class
+(c:/texlive/2016/texmf-dist/tex/latex/base/size10.clo
+File: size10.clo 2014/09/29 v1.4h Standard LaTeX file (size option)
+)
+\c@part=\count79
+\c@section=\count80
+\c@subsection=\count81
+\c@subsubsection=\count82
+\c@paragraph=\count83
+\c@subparagraph=\count84
+\c@figure=\count85
+\c@table=\count86
+\abovecaptionskip=\skip41
+\belowcaptionskip=\skip42
+\bibindent=\dimen102
+)
+(c:/texlive/2016/texmf-dist/tex/latex/ucs/ucs.sty
+Package: ucs 2013/05/11 v2.2 UCS: Unicode input support
+
+(c:/texlive/2016/texmf-dist/tex/latex/ucs/data/uni-global.def
+File: uni-global.def 2013/05/13 UCS: Unicode global data
+)
+\uc@secondtry=\count87
+\uc@combtoks=\toks14
+\uc@combtoksb=\toks15
+\uc@temptokena=\toks16
+)
+(c:/texlive/2016/texmf-dist/tex/latex/base/inputenc.sty
+Package: inputenc 2015/03/17 v1.2c Input encoding file
+\inpenc@prehook=\toks17
+\inpenc@posthook=\toks18
+
+(c:/texlive/2016/texmf-dist/tex/latex/ucs/utf8x.def
+File: utf8x.def 2004/10/17 UCS: Input encoding UTF-8
+))
+(c:/texlive/2016/texmf-dist/tex/latex/base/fontenc.sty
+Package: fontenc 2017/01/24 v2.0c Standard LaTeX package
+
+(c:/texlive/2016/texmf-dist/tex/latex/base/t1enc.def
+File: t1enc.def 2017/01/24 v2.0c Standard LaTeX file
+LaTeX Font Info:    Redeclaring font encoding T1 on input line 48.
+))
+(c:/texlive/2016/texmf-dist/tex/latex/ucs/data/uni-0.def
+File: uni-0.def 2013/05/13 UCS: Unicode data U+0000..U+00FF
+)
+(c:/texlive/2016/texmf-dist/tex/latex/tools/xspace.sty
+Package: xspace 2014/10/28 v1.13 Space after command names (DPC,MH)
+)
+(c:/texlive/2016/texmf-dist/tex/latex/tools/array.sty
+Package: array 2016/10/06 v2.4d Tabular extension package (FMi)
+\col@sep=\dimen103
+\extrarowheight=\dimen104
+\NC@list=\toks19
+\extratabsurround=\skip43
+\backup@length=\skip44
+)
+(c:/texlive/2016/texmf-dist/tex/latex/geometry/geometry.sty
+Package: geometry 2010/09/12 v5.6 Page Geometry
+
+(c:/texlive/2016/texmf-dist/tex/latex/graphics/keyval.sty
+Package: keyval 2014/10/28 v1.15 key=value parser (DPC)
+\KV@toks@=\toks20
+)
+(c:/texlive/2016/texmf-dist/tex/generic/oberdiek/ifpdf.sty
+Package: ifpdf 2016/05/14 v3.1 Provides the ifpdf switch
+)
+(c:/texlive/2016/texmf-dist/tex/generic/oberdiek/ifvtex.sty
+Package: ifvtex 2016/05/16 v1.6 Detect VTeX and its facilities (HO)
+Package ifvtex Info: VTeX not detected.
+)
+(c:/texlive/2016/texmf-dist/tex/generic/ifxetex/ifxetex.sty
+Package: ifxetex 2010/09/12 v0.6 Provides ifxetex conditional
+)
+\Gm@cnth=\count88
+\Gm@cntv=\count89
+\c@Gm@tempcnt=\count90
+\Gm@bindingoffset=\dimen105
+\Gm@wd@mp=\dimen106
+\Gm@odd@mp=\dimen107
+\Gm@even@mp=\dimen108
+\Gm@layoutwidth=\dimen109
+\Gm@layoutheight=\dimen110
+\Gm@layouthoffset=\dimen111
+\Gm@layoutvoffset=\dimen112
+\Gm@dimlist=\toks21
+)
+(c:/texlive/2016/texmf-dist/tex/latex/graphics/graphicx.sty
+Package: graphicx 2014/10/28 v1.0g Enhanced LaTeX Graphics (DPC,SPQR)
+
+(c:/texlive/2016/texmf-dist/tex/latex/graphics/graphics.sty
+Package: graphics 2016/10/09 v1.0u Standard LaTeX Graphics (DPC,SPQR)
+
+(c:/texlive/2016/texmf-dist/tex/latex/graphics/trig.sty
+Package: trig 2016/01/03 v1.10 sin cos tan (DPC)
+)
+(c:/texlive/2016/texmf-dist/tex/latex/graphics-cfg/graphics.cfg
+File: graphics.cfg 2016/06/04 v1.11 sample graphics configuration
+)
+Package graphics Info: Driver file: pdftex.def on input line 99.
+
+(c:/texlive/2016/texmf-dist/tex/latex/graphics-def/pdftex.def
+File: pdftex.def 2017/01/12 v0.06k Graphics/color for pdfTeX
+
+(c:/texlive/2016/texmf-dist/tex/generic/oberdiek/infwarerr.sty
+Package: infwarerr 2016/05/16 v1.4 Providing info/warning/error messages (HO)
+)
+(c:/texlive/2016/texmf-dist/tex/generic/oberdiek/ltxcmds.sty
+Package: ltxcmds 2016/05/16 v1.23 LaTeX kernel commands for general use (HO)
+)
+\Gread@gobject=\count91
+))
+\Gin@req@height=\dimen113
+\Gin@req@width=\dimen114
+)
+
+LaTeX Warning: Unused global option(s):
+    [paper=a4].
+
+(./Innlevering.aux)
+\openout1 = `Innlevering.aux'.
+
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 14.
+LaTeX Font Info:    ... okay on input line 14.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 14.
+LaTeX Font Info:    ... okay on input line 14.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 14.
+LaTeX Font Info:    ... okay on input line 14.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 14.
+LaTeX Font Info:    ... okay on input line 14.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 14.
+LaTeX Font Info:    ... okay on input line 14.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 14.
+LaTeX Font Info:    ... okay on input line 14.
+ (c:/texlive/2016/texmf-dist/tex/latex/ucs/ucsencs.def
+File: ucsencs.def 2011/01/21 Fixes to fontencodings LGR, T3
+)
+*geometry* driver: auto-detecting
+*geometry* detected driver: pdftex
+*geometry* verbose mode - [ preamble ] result:
+* driver: pdftex
+* paper: <default>
+* layout: <same size as paper>
+* layoutoffset:(h,v)=(0.0pt,0.0pt)
+* modes: 
+* h-part:(L,W,R)=(99.58464pt, 415.12572pt, 99.58464pt)
+* v-part:(T,H,B)=(76.82234pt, 641.3253pt, 76.82234pt)
+* \paperwidth=614.295pt
+* \paperheight=794.96999pt
+* \textwidth=415.12572pt
+* \textheight=641.3253pt
+* \oddsidemargin=27.31465pt
+* \evensidemargin=27.31465pt
+* \topmargin=-32.44765pt
+* \headheight=12.0pt
+* \headsep=25.0pt
+* \topskip=10.0pt
+* \footskip=30.0pt
+* \marginparwidth=65.0pt
+* \marginparsep=11.0pt
+* \columnsep=10.0pt
+* \skip\footins=9.0pt plus 4.0pt minus 2.0pt
+* \hoffset=0.0pt
+* \voffset=0.0pt
+* \mag=1000
+* \@twocolumnfalse
+* \@twosidefalse
+* \@mparswitchfalse
+* \@reversemarginfalse
+* (1in=72.27pt=25.4mm, 1cm=28.453pt)
+
+(c:/texlive/2016/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
+[Loading MPS to PDF converter (version 2006.09.02).]
+\scratchcounter=\count92
+\scratchdimen=\dimen115
+\scratchbox=\box26
+\nofMPsegments=\count93
+\nofMParguments=\count94
+\everyMPshowfont=\toks22
+\MPscratchCnt=\count95
+\MPscratchDim=\dimen116
+\MPnumerator=\count96
+\makeMPintoPDFobject=\count97
+\everyMPtoPDFconversion=\toks23
+) (c:/texlive/2016/texmf-dist/tex/generic/oberdiek/pdftexcmds.sty
+Package: pdftexcmds 2016/05/21 v0.22 Utility functions of pdfTeX for LuaTeX (HO
+)
+
+(c:/texlive/2016/texmf-dist/tex/generic/oberdiek/ifluatex.sty
+Package: ifluatex 2016/05/16 v1.4 Provides the ifluatex switch (HO)
+Package ifluatex Info: LuaTeX not detected.
+)
+Package pdftexcmds Info: LuaTeX not detected.
+Package pdftexcmds Info: \pdf@primitive is available.
+Package pdftexcmds Info: \pdf@ifprimitive is available.
+Package pdftexcmds Info: \pdfdraftmode found.
+)
+(c:/texlive/2016/texmf-dist/tex/latex/oberdiek/epstopdf-base.sty
+Package: epstopdf-base 2016/05/15 v2.6 Base part for package epstopdf
+
+(c:/texlive/2016/texmf-dist/tex/latex/oberdiek/grfext.sty
+Package: grfext 2016/05/16 v1.2 Manage graphics extensions (HO)
+
+(c:/texlive/2016/texmf-dist/tex/generic/oberdiek/kvdefinekeys.sty
+Package: kvdefinekeys 2016/05/16 v1.4 Define keys (HO)
+))
+(c:/texlive/2016/texmf-dist/tex/latex/oberdiek/kvoptions.sty
+Package: kvoptions 2016/05/16 v3.12 Key value format for package options (HO)
+
+(c:/texlive/2016/texmf-dist/tex/generic/oberdiek/kvsetkeys.sty
+Package: kvsetkeys 2016/05/16 v1.17 Key value parser (HO)
+
+(c:/texlive/2016/texmf-dist/tex/generic/oberdiek/etexcmds.sty
+Package: etexcmds 2016/05/16 v1.6 Avoid name clashes with e-TeX commands (HO)
+Package etexcmds Info: Could not find \expanded.
+(etexcmds)             That can mean that you are not using pdfTeX 1.50 or
+(etexcmds)             that some package has redefined \expanded.
+(etexcmds)             In the latter case, load this package earlier.
+)))
+Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 4
+38.
+Package grfext Info: Graphics extension search list:
+(grfext)             [.png,.pdf,.jpg,.mps,.jpeg,.jbig2,.jb2,.PNG,.PDF,.JPG,.JPE
+G,.JBIG2,.JB2,.eps]
+(grfext)             \AppendGraphicsExtensions on input line 456.
+
+(c:/texlive/2016/texmf-dist/tex/latex/latexconfig/epstopdf-sys.cfg
+File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
+e
+))
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <12> on input line 15.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <8> on input line 15.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <6> on input line 15.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <7> on input line 23.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <5> on input line 23.
+
+<Use-case.jpg, id=1, 658.46pt x 322.20375pt>
+File: Use-case.jpg Graphic file (type jpg)
+ <use Use-case.jpg>
+Package pdftex.def Info: Use-case.jpg used on input line 37.
+(pdftex.def)             Requested size: 311.34428pt x 152.35023pt.
+
+Overfull \hbox (8.41284pt too wide) in paragraph at lines 42--89
+ [] 
+ []
+
+[1
+
+{c:/texlive/2016/texmf-var/fonts/map/pdftex/updmap/pdftex.map} <./Use-case.jpg>
+]
+LaTeX Font Info:    Try loading font information for OMS+cmr on input line 94.
+ (c:/texlive/2016/texmf-dist/tex/latex/base/omscmr.fd
+File: omscmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
+)
+LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10> not available
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 94.
+ [2] [3]
+<Spillrunde.png, id=19, 738.76pt x 783.92876pt>
+File: Spillrunde.png Graphic file (type png)
+ <use Spillrunde.png>
+Package pdftex.def Info: Spillrunde.png used on input line 132.
+(pdftex.def)             Requested size: 415.12572pt x 440.5043pt.
+
+<storylineoblig112.png, id=21, 845.0772pt x 596.9502pt>
+File: storylineoblig112.png Graphic file (type png)
+
+<use storylineoblig112.png>
+Package pdftex.def Info: storylineoblig112.png used on input line 139.
+(pdftex.def)             Requested size: 498.14958pt x 351.88786pt.
+
+Overfull \hbox (83.02386pt too wide) in paragraph at lines 139--140
+ [] 
+ []
+
+<skisseRegelFixed.png, id=22, 596.9502pt x 845.0772pt>
+File: skisseRegelFixed.png Graphic file (type png)
+
+<use skisseRegelFixed.png>
+Package pdftex.def Info: skisseRegelFixed.png used on input line 145.
+(pdftex.def)             Requested size: 207.56285pt x 293.83434pt.
+
+<skisseRegelFixed2.png, id=23, 596.9502pt x 845.0772pt>
+File: skisseRegelFixed2.png Graphic file (type png)
+
+<use skisseRegelFixed2.png>
+Package pdftex.def Info: skisseRegelFixed2.png used on input line 147.
+(pdftex.def)             Requested size: 207.56285pt x 293.83434pt.
+
+
+LaTeX Warning: Float too large for page by 5.23131pt on input line 150.
+
+[4 <./Spillrunde.png>] [5 <./storylineoblig112.png>] [6 <./skisseRegelFixed.png
+> <./skisseRegelFixed2.png>] (./Innlevering.aux) ) 
+Here is how much of TeX's memory you used:
+ 3054 strings out of 493013
+ 41838 string characters out of 6136993
+ 123850 words of memory out of 5000000
+ 6553 multiletter control sequences out of 15000+600000
+ 10990 words of font info for 29 fonts, out of 8000000 for 9000
+ 1141 hyphenation exceptions out of 8191
+ 39i,9n,31p,341b,478s stack positions out of 5000i,500n,10000p,200000b,80000s
+{c:/texlive/2016/texmf-dist/f
+onts/enc/dvips/cm-super/cm-super-t1.enc}<c:/texlive/2016/texmf-dist/fonts/type1
+/public/amsfonts/cm/cmsy10.pfb><c:/texlive/2016/texmf-dist/fonts/type1/public/c
+m-super/sfbx1200.pfb><c:/texlive/2016/texmf-dist/fonts/type1/public/cm-super/sf
+bx1440.pfb><c:/texlive/2016/texmf-dist/fonts/type1/public/cm-super/sfrm1000.pfb
+><c:/texlive/2016/texmf-dist/fonts/type1/public/cm-super/sfrm1200.pfb><c:/texli
+ve/2016/texmf-dist/fonts/type1/public/cm-super/sfrm1728.pfb>
+Output written on Innlevering.pdf (6 pages, 2264401 bytes).
+PDF statistics:
+ 58 PDF objects out of 1000 (max. 8388607)
+ 34 compressed objects within 1 object stream
+ 0 named destinations out of 1000 (max. 500000)
+ 26 words of extra memory for PDF output out of 10000 (max. 10000000)
+
