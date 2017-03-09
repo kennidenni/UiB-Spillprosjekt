@@ -2,7 +2,9 @@
 # Time: onsdag 14-16
 inf112v17teamd.slack.com
 
-trello.com/b/Bw1dCfyu/inf112-teamd
+<strike>trello.com/b/Bw1dCfyu/inf112-teamd</strike>
+For å bli med i trello følg link fra kenneth i #general
+<https://trello.com/invite/inf112_teamd/3b38a116f79efcfd11dce1168e4a2e6c>
 
 # Coach:
  Gunnar Schulze(Gunnar.Schulze@uib.no)
