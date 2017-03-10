@@ -1,0 +1,13 @@
+Satt og diskuterte og kom på med følgende spill-idèer:
+Smash klone - 2D slossespill med plattformer aspekter - Værdata i banene
+          - 2 spiller, hp bar.
+                 
+                 2D platformer - Med værdata?
+                 Google maps racing spill - 2d Overview eller 3d?
+                 Turist quiz - Bergen
+                 Tower defence
+                 Warcraft klone med vikinger basert på geografisk plassering (værdata)
+                 Matkrig - navn work in progress - matvaretabell som åpen data
+                    - Brukergruppe - opp til 25?
+
+                    Valget til slutt ble matkrig ideen.

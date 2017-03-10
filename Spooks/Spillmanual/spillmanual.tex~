@@ -1,0 +1,58 @@
+﻿\documentclass[a4paper]{article}
+\usepackage[utf8]{inputenc}
+
+\title{Usecase for SPOOKS - Skummelt Pek og Ondskapsfullt Klikk Spill}
+\author{INF112-TEAM1\_2}
+
+\begin{document}
+\maketitle
+
+\section{Spillmanual}
+\subsection{Målgruppe}
+Spillet er ment for personer som liker skrekkspill. Forløpig er det vanskelig å sette en aldersgrense i og med at vi ikke vet hvor skummelt spillet blir, men vi håper at vi kan sette en aldersgrense og sikte til en målgruppe på 12+ år.
+
+\subsection{Spille tid}Spilletiden avhenger av Spillerens egenskaper til å løse gåter/oppgaver. Hvis spilleren har løst mange lignende gåter og/eller oppgaver vil spilletiden minskes og vice versa. 
+Spillet er lagt opp til å resette seg hvert 5-10 minutt. Det vil si at man må rekke neste checkpoint innen 
+5 minutter ellers starter man fra forrige checkpoint i spillet. Spilletiden vil også avhenge av hvor omfattende spillet blir. Spillet skal kunne lagres, slik at Spilleren kan starte spillet fra sist lagrede punkt.
+
+\subsection{Gamemode}
+Spillet er et en-spiller spill, hvor Spilleren spiller som førsteperson. Det vil si at spilleren vil se omgivelsene gjennom karakterens øyne.
+
+
+
+\subsection{Brukerfortellinger}
+\begin{itemize}
+\item Som spiller vil jeg kunne klikke på ting og forvente at det skjer noe om jeg gjør noe riktig.
+\item Som spiller ønsker jeg å få hint hvis det går lang tid uten at det skjer noe eller at jeg ikke klarer å løse en oppgave.
+\item Som spiller vil jeg at spillet gir meg en beskjed hvis jeg gjør noe feil.
+\item Som spiller vil jeg å kunne avslutte og lagre spillet når som helst og fortsette videre på et annet tidspunkt.
+\item Som spiller vil jeg at spillet skal være selvforklarende og enkelt å forstå.
+\end{itemize}
+
+
+
+
+\subsection{Bruksmønster}
+
+TODO:SETT INN USE CASE HER
+
+\subsection{Bruksmønsterdiagram}
+
+ TODO:SETT INN UML HER
+
+\subsection{Illustrasjoner}
+ 
+TODO:SETT INN TEGNINGER/ILLUSTRASJONER HER
+
+
+\subsection{Spillregler}
+
+\begin{itemize}
+\item Spilleren kan ikke dø i spillet
+\item Spillet resettes hvert 5-10 minutt og spilleren vil havne tilbake til siste checkpoint
+\item Spilleren kan kun bevege seg til gitte punkter i huset (dette er en stor fordel med pek-og-klikk fordi spilleren ikke nødvendigvis kan bevege seg dit spilleren vil)
+\item Spilleren kan plukke opp gitte gjenstander i huset og bruke dem til å løse oppgaver/gåter
+\item Spilleren kan lagre spillet når som helst og starte fra lagringspunket ved et annet tidspunkt.
+\end{itemize}
+
+\end{document}

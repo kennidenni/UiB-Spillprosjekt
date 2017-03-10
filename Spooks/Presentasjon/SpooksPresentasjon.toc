@@ -1,0 +1,4 @@
+\beamer@sectionintoc {1}{Introduksjon}{3}{0}{1}
+\beamer@sectionintoc {2}{Bruksm\IeC {\o }nster}{6}{0}{2}
+\beamer@sectionintoc {3}{Illustrasjoner}{8}{0}{3}
+\beamer@sectionintoc {4}{Gjennomf\IeC {\o }ring}{12}{0}{4}
