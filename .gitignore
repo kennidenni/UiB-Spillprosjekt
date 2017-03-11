@@ -35,8 +35,8 @@ Thumbs.db
 *.tar
 *.zip
 
-# Logs and databases #
+# Latex projects #
 ######################
 *.log
-*.sql
-*.sqlite
+*.aux
+*.synctex.gz
