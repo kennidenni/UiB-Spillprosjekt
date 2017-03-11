@@ -36,7 +36,7 @@ Thumbs.db
 *.zip
 
 # Latex projects #
-######################
+##################
 *.log
 *.aux
 *.synctex.gz
