@@ -1,1 +1,0 @@
-krive dokumentasjon om spillet. Punkt 1-4 fullført. Use-casene er ferdigskrevet + use-case diagram. Delvis ferdig med skisser. Begynte å skrive en helhetning forklaring på spilleregler.
