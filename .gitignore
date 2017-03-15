@@ -40,3 +40,6 @@ Thumbs.db
 *.log
 *.aux
 *.synctex.gz
+
+# Kom en .out fil når jeg opprettet .pdf fra .tex:
+*.out 
