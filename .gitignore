@@ -41,5 +41,6 @@ Thumbs.db
 *.aux
 *.synctex.gz
 
-# Kom en .out fil når jeg opprettet .pdf fra .tex:
+# Kom en .out og .toc fil når jeg opprettet .pdf fra .tex:
 *.out 
+*.toc
