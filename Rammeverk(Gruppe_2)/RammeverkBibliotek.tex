@@ -42,7 +42,7 @@
 \pagestyle{fancy}
 \fancyhf{}
 \setlength\headheight{15pt}
-\fancyhead[L]{Peter, Håvar, Markus og Elias}
+\fancyhead[L]{Peter, H{\aa}var, Markus og Elias}
 \fancyhead[R]{}
 \fancyfoot[R]{Page \thepage\ of \pageref{LastPage}}
 %-------------------------------------------------------------------------------
@@ -62,7 +62,7 @@ biblioteker og konvensjoner}}
 \date{}
 
 \author{
-		Peter, Håvar, Markus og Elias \\ 
+		Peter, H{\aa}var, Markus og Elias \\ 
 		Universitetet i Bergen \\
 		Informatikk }
 
@@ -82,17 +82,17 @@ biblioteker og konvensjoner}}
 \section*{Bygningsprosessen}
 \addcontentsline{toc}{section}{Bygningsprosessen}
 
-Bygningsprosessen definerer vi ved hjelp av Gradle. Færrest mulige steg fra å laste ned prosjektet til det er
-ferdig bygget skal oppnås. Hvis vi får dette til på en god måte blir det mye lettere å sette opp og
-jobbe med prosjektene og vanskeligere å ødelegge prosjektet med uhell slik at det ikke kan kompileres.\\
+Bygningsprosessen definerer vi ved hjelp av Gradle. F{\ae}rrest mulige steg fra {\aa} laste ned prosjektet til det er
+ferdig bygget skal oppn{\aa}s. Hvis vi f{\aa}r dette til p{\aa} en god m{\aa}te blir det mye lettere {\aa} sette opp og
+jobbe med prosjektene og vanskeligere {\aa} {\o}delegge prosjektet med uhell slik at det ikke kan kompileres.\\
 
-Bygningsprosessen Gradle utfører vil gå omtrent slik:
+Bygningsprosessen Gradle utf{\o}rer vil g{\aa} omtrent slik:
 
 \begin{itemize}
-\item Kjøre FindBugs
+\item Kj{\o}re FindBugs
 \item Kompilere Java-filene
-\item Kjøre JUnit
-\item Sette sammen nødvendige filer til en kjørbar JAR-fil (eller andre format hvis spillene skal bli eksportert
+\item Kj{\o}re JUnit
+\item Sette sammen n{\o}dvendige filer til en kj{\o}rbar JAR-fil (eller andre format hvis spillene skal bli eksportert
 til andre platformer)
 \end{itemize}
 
@@ -100,19 +100,19 @@ til andre platformer)
 \section*{Konvensjoner}
 \addcontentsline{toc}{section}{Konvensjoner}
 
-For å redusere individuelle problemer som oppstår på grunn av forskjellige miljø har vi bestemt oss for
-å effektivisere prosessen av å laste ned prosjektet, importere det til en IDE og bygge og teste det. Dette har
-vi gjort ved å automatisere så mye av arbeidet som blir gjort mot prosjektet som mulig.\\
+For {\aa} redusere individuelle problemer som oppst{\aa}r p{\aa} grunn av forskjellige milj{\o} har vi bestemt oss for
+{\aa} effektivisere prosessen av {\aa} laste ned prosjektet, importere det til en IDE og bygge og teste det. Dette har
+vi gjort ved {\aa} automatisere s{\aa} mye av arbeidet som blir gjort mot prosjektet som mulig.\\
 
-I tillegg har vi valgt noen standarder som må bli fulgt for at koden og filene i prosjektet blir lettere å lese
+I tillegg har vi valgt noen standarder som m{\aa} bli fulgt for at koden og filene i prosjektet blir lettere {\aa} lese
 og gjenkjenne.\\
 
-\subsection*{Navn på filer i prosjektet}
-\addcontentsline{toc}{subsection}{Navn på filer i prosjektet}
+\subsection*{Navn p{\aa} filer i prosjektet}
+\addcontentsline{toc}{subsection}{Navn p{\aa} filer i prosjektet}
 
-Navn på filer i prosjektet, spesielt ressursfiler (lyder, bilder, osv{\dots}), skal være på engelsk med
-små bokstaver og understrek i stedet for mellom rom. Selv om selve filnavnene er på engelsk kan innholdet
-være på norsk. Unntak av disse reglene kan forekomme hvis et verktøy forventer et spesifikt filnavn.\\
+Navn p{\aa} filer i prosjektet, spesielt ressursfiler (lyder, bilder, osv{\dots}), skal v{\ae}re p{\aa} engelsk med
+sm{\aa} bokstaver og understrek i stedet for mellom rom. Selv om selve filnavnene er p{\aa} engelsk kan innholdet
+v{\ae}re p{\aa} norsk. Unntak av disse reglene kan forekomme hvis et verkt{\o}y forventer et spesifikt filnavn.\\
 
 Noen eksempler:
 \begin{itemize}
@@ -124,8 +124,8 @@ Noen eksempler:
 \subsection*{Googles kodekonvensjoner for Java}
 \addcontentsline{toc}{subsection}{Googles kodekonvensjoner for Java}
 
-Vi har valgt å bruke Google sine kodekonvensjoner for Java. Oracle sine var utdatert og manglet konvensjoner for
-nyere funksjoner i språket. I tillegg skal all kode og navn på kildekodefiler være på engelsk.\\
+Vi har valgt {\aa} bruke Google sine kodekonvensjoner for Java. Oracle sine var utdatert og manglet konvensjoner for
+nyere funksjoner i spr{\aa}ket. I tillegg skal all kode og navn p{\aa} kildekodefiler v{\ae}re p{\aa} engelsk.\\
 
 \href{https://google.github.io/styleguide/javaguide.html}{\textcolor{blue}{Googles kodekonvensjoner for Java}}
 
@@ -134,9 +134,9 @@ nyere funksjoner i språket. I tillegg skal all kode og navn på kildekodefiler væ
 \subsection*{Format og lesing av filer}
 \addcontentsline{toc}{subsection}{Format og lesing av filer}
 
-Formatet og lesing av eksterne filer burde også være standardisert slik at det er likt gjennom hele prosjektet.
-Dette gjør også at vi kan gjenbruke klasser som leser filformat i stedet for å lage nye løsninger for
-hver fil. Forslaget vårt er følgende: \\
+Formatet og lesing av eksterne filer burde ogs{\aa} v{\ae}re standardisert slik at det er likt gjennom hele prosjektet.
+Dette gj{\o}r ogs{\aa} at vi kan gjenbruke klasser som leser filformat i stedet for {\aa} lage nye l{\o}sninger for
+hver fil. Forslaget v{\aa}rt er f{\o}lgende: \\
 
 \begin{center}
 \begin{tabular}{ | m{5cm} | m{1cm} | m{4cm} | m{5cm} |}
@@ -144,11 +144,11 @@ hver fil. Forslaget vårt er følgende: \\
 Filtype & Format & Leser & Forklaring\\
 \hline
 
-Små-medium størrelse bilder med gjennomsiktighet & PNG & LibGDX bildeklasser. & ~ \\
+Sm{\aa}-medium st{\o}rrelse bilder med gjennomsiktighet & PNG & LibGDX bildeklasser. & ~ \\
 \hline
 
 Store bilder uten gjennomsiktighet & JPG & LibGDX bildeklasser. &
-Gjelder bilder som ikke trenger å bruke tapsfri komprimering. \\
+Gjelder bilder som ikke trenger {\aa} bruke tapsfri komprimering. \\
 \hline
 
 Lydfiler (korte og lange) & OGG & LibGDX lydklasser. & ~ \\
@@ -158,12 +158,12 @@ Rene tekstfiler & TXT & Java sin IO-klasser. & ~ \\
 \hline
 
 Hierarkisk tekstfiler & JSON & GSON-biblioteket. &
-Disse type filer kan brukes til å definere informasjon til elementer i spillene uten å rote til koden. For
-eksempel navnet og egenskaper på forskjellige karakterer i et spill. \\
+Disse type filer kan brukes til {\aa} definere informasjon til elementer i spillene uten {\aa} rote til koden. For
+eksempel navnet og egenskaper p{\aa} forskjellige karakterer i et spill. \\
 \hline
 
-XML (også en hierarkisk tekstfil) & XML & W3 sine XML-klasser (følger med JDK) &
-Dette formatet skal bare brukes hvis nødvendig (for eksempel til YR sin værdata).\\
+XML (ogs{\aa} en hierarkisk tekstfil) & XML & W3 sine XML-klasser (f{\o}lger med JDK) &
+Dette formatet skal bare brukes hvis n{\o}dvendig (for eksempel til YR sin v{\ae}rdata).\\
 \hline
 \end{tabular}
 \end{center}
@@ -178,12 +178,12 @@ Dette formatet skal bare brukes hvis nødvendig (for eksempel til YR sin værdata)
 \subsubsection*{LibGDX}
 \addcontentsline{toc}{subsubsection}{LibGDX}
 
-LibGDX er et omfattende rammeverk basert på Lightweight Java Game Library (LWJGL) for å utvikle spill til web,
-mobil og desktop. Det er laget for Java og består av et hovedbibliotek og flere mindre tilleggsbibliotek. Det har
-eksistert lenge og er veldig mye brukt og har derfor mye dokumentasjon og andre ressurser tilgjengelig på nett. \\
+LibGDX er et omfattende rammeverk basert p{\aa} Lightweight Java Game Library (LWJGL) for {\aa} utvikle spill til web,
+mobil og desktop. Det er laget for Java og best{\aa}r av et hovedbibliotek og flere mindre tilleggsbibliotek. Det har
+eksistert lenge og er veldig mye brukt og har derfor mye dokumentasjon og andre ressurser tilgjengelig p{\aa} nett. \\
 
-Kjernen til LibGDX tilbyr klasser som på det lave nivået tar seg av vindubehandling, brukerinndata, lyd,
-grafikk, filsystem og nettverkslogikk. Alle disse modulene er bygget opp på en slik måte at omtrent alle
+Kjernen til LibGDX tilbyr klasser som p{\aa} det lave niv{\aa}et tar seg av vindubehandling, brukerinndata, lyd,
+grafikk, filsystem og nettverkslogikk. Alle disse modulene er bygget opp p{\aa} en slik m{\aa}te at omtrent alle
 platformspesifikke operasjoner er skjulte og derfor kan utviklere enkelt bygge til forskjellige platform fra en
 kodebase. \\
 
@@ -194,10 +194,10 @@ kodebase. \\
 \addcontentsline{toc}{subsubsection}{Box2D}
 
 Box2D er et fysikkbibliotek for C++ som simulerer stive kropper i 2D. Det kan simulere realistisk, kontinuerlig
-kollisjon mellom mangekanter ved å påvirke kroppene med krefter, gravitasjon og friksjon. \\
+kollisjon mellom mangekanter ved {\aa} p{\aa}virke kroppene med krefter, gravitasjon og friksjon. \\
 
-Takket være arbeidet til LibGDX finnes det en Java-port som i bakgrunnen bruker de kompilerte C++ filene. På
-grunn av dette kjører det bedre enn hvis det hadde vært kjørt i JVM. \\
+Takket v{\ae}re arbeidet til LibGDX finnes det en Java-port som i bakgrunnen bruker de kompilerte C++ filene. P{\aa}
+grunn av dette kj{\o}rer det bedre enn hvis det hadde v{\ae}rt kj{\o}rt i JVM. \\
 
 \href{http://box2d.org/}{\textcolor{blue}{Hjemmeside}} {\textperiodcentered}
 \href{https://en.wikipedia.org/wiki/Box2D}{\textcolor{blue}{Wikipedia}}
@@ -226,13 +226,13 @@ GSON er et Java-bibliotek av Google som tar seg av serialisering og deserialiser
 \addcontentsline{toc}{subsubsection}{JUnit}
 
 JUnit er et rammeverk for testing av komponenter (enheter) i et program. Det er en sentral del av XP (Extreme
-Programming). Testing består blant annet av å:
+Programming). Testing best{\aa}r blant annet av {\aa}:
 
 \begin{itemize}
 \item Teste om objekter er like
-\item Teste om vilkår er sanne eller falske
+\item Teste om vilk{\aa}r er sanne eller falske
 \item Teste om objekter er null
-\item Forvente at unntak oppstår
+\item Forvente at unntak oppst{\aa}r
 \end{itemize}
 
 \href{http://junit.org/junit4/}{\textcolor{blue}{Hjemmeside}} {\textperiodcentered}
@@ -241,7 +241,7 @@ Programming). Testing består blant annet av å:
 \subsubsection*{Mockito}
 \addcontentsline{toc}{subsubsection}{Mockito}
 
-Mockito er et bibliotek for enhetstesting ved hjelp av â€œmock objectsâ€ i Java. Det brukes til Ã¥ simulere et objekts oppfÃ¸rsel i kontekst av programmet og kan derfor simulerere komplekse objekter i et kontrollert miljÃ¸ for Ã¥ teste egenskaper som er tungvinte Ã¥ teste ved kjÃ¸retidsanalyse. \\
+Mockito er et bibliotek for enhetstesting ved hjelp av "Â€Âœmock objects"Â€Â i Java. Det brukes til {\aa} simulere et objekts oppf{\o}rsel i kontekst av programmet og kan derfor simulerere komplekse objekter i et kontrollert milj{\o} for {\aa} teste egenskaper som er tungvinte {\aa} teste ved kj{\o}retidsanalyse. \\
 
 \href{http://site.mockito.org/}{\textcolor{blue}{Hjemmeside}} {\textperiodcentered}
 \href{https://en.wikipedia.org/wiki/Mock_object}{\textcolor{blue}{Wikipedia}}
@@ -249,7 +249,7 @@ Mockito er et bibliotek for enhetstesting ved hjelp av â€œmock objectsâ€ i Java
 \subsubsection*{Sonarlint}
 \addcontentsline{toc}{subsubsection}{Sonarlint}
 
-En plugin i Eclipse og IntelliJ som kontrollerer kodestil i kildekoden fortløpende mens den skrives. Gir
+En plugin i Eclipse og IntelliJ som kontrollerer kodestil i kildekoden fortl{\o}pende mens den skrives. Gir
 tilbakemelding om reglene for god kodestil ikke blir overholdt. \\
 
 \href{http://www.sonarlint.org/}{\textcolor{blue}{Hjemmeside}}
@@ -257,31 +257,31 @@ tilbakemelding om reglene for god kodestil ikke blir overholdt. \\
 \subsubsection*{FindBugs}
 \addcontentsline{toc}{subsubsection}{FindBugs}
 
-Plugin i Eclipse og IntelliJ som gjennomfører statisk kodeanalyse over valgt kodebase og kontrollerer dette opp mot
-fastsatte regler med hensikt å oppdage ``code smell''.  \\
+Plugin i Eclipse og IntelliJ som gjennomf{\o}rer statisk kodeanalyse over valgt kodebase og kontrollerer dette opp mot
+fastsatte regler med hensikt {\aa} oppdage ``code smell''.  \\
 
 \href{http://findbugs.sourceforge.net/}{\textcolor{blue}{Hjemmeside}} {\textperiodcentered}
 \href{https://en.wikipedia.org/wiki/FindBugs}{\textcolor{blue}{Wikipedia}}
 
-\subsection*{Andre verktøy}
-\addcontentsline{toc}{subsection}{Andre Verktøy}
+\subsection*{Andre verkt{\o}y}
+\addcontentsline{toc}{subsection}{Andre Verkt{\o}y}
 
 \subsubsection*{IDE}
 \addcontentsline{toc}{subsubsection}{IDE}
 
-Eclipse eller IntelliJ må brukes for å være sikker på at alle verktøyene som blir brukt fungerer hos
-alle. Ideen er at alle som produserer kode forholder seg til samme programmeringsmiljø og overholder lik kodestil og
-får hyppig tilbakemelding (short feedback loop) fra de forskjellige verktøyene.
+Eclipse eller IntelliJ m{\aa} brukes for {\aa} v{\ae}re sikker p{\aa} at alle verkt{\o}yene som blir brukt fungerer hos
+alle. Ideen er at alle som produserer kode forholder seg til samme programmeringsmilj{\o} og overholder lik kodestil og
+f{\aa}r hyppig tilbakemelding (short feedback loop) fra de forskjellige verkt{\o}yene.
 
 \subsubsection*{IDE plugins}
 \addcontentsline{toc}{subsubsection}{IDE plugins}
 
-Til både Eclipse og IntelliJ finnes følgende plugins:
+Til b{\aa}de Eclipse og IntelliJ finnes f{\o}lgende plugins:
 
 \begin{itemize}
 \item Sonarlint (statisk kodeanalyse)
-\item Findbugs (statisk kodeanalyse). Kan også inkluderes som en del av bygningsprosessen.
-\item JUnit (enhetstesting). Kan også inkluderes som en del av bygningsprosessen.
+\item Findbugs (statisk kodeanalyse). Kan ogs{\aa} inkluderes som en del av bygningsprosessen.
+\item JUnit (enhetstesting). Kan ogs{\aa} inkluderes som en del av bygningsprosessen.
 \item Gradle (definisjon av bygningsprosess). Inkludert i nyere versjoner av Eclipse.
 \end{itemize}
 
