@@ -21,6 +21,7 @@ __MACOSX
 Icon?
 ehthumbs.db
 Thumbs.db
+desktop.ini
 
 # Packages #
 ############
@@ -40,3 +41,7 @@ Thumbs.db
 *.log
 *.aux
 *.synctex.gz
+
+# Kom en .out og .toc fil når jeg opprettet .pdf fra .tex:
+*.out 
+*.toc
