@@ -1,1 +1,0 @@
-To see the front page, open "index.html"
