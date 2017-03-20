@@ -24,13 +24,12 @@
 \usepackage[english]{babel}
 \usepackage{sectsty}
 \usepackage{url, lipsum}
-\usepackage{color}
-\usepackage{hyperref}
-\usepackage{array}
 \usepackage{supertabular}
 \usepackage{hhline}
 \usepackage{enumitem}
 \usepackage{graphicx}
+\usepackage{hyperref}
+
 
 \newcommand{\HRule}[1]{\rule{\linewidth}{#1}}
 \renewcommand{\theenumii}{\arabic{enumii}.}
@@ -67,7 +66,7 @@
 \date{}
 
 \author{
-		Skriv navn her  \\ 
+		Team D  \\ 
 		Universitetet i Bergen \\
 		Informatikk }
 
@@ -86,13 +85,19 @@
 
 \section*{Bruksm{\o}nstertekst:}
 \addcontentsline{toc}{section}{Bruks{\o}nstertekst:}
-
-\textbf{Overview}: Spillet starter, du befinner deg i et hus. Du vet ikke hvor du er,
-og m{\aa} komme deg ut av huset. 
+\textbf{Tittel}: Komme seg ut av huset
 \bigskip \\
-\textbf{Actors}: Spiller, Maskin 
+\textbf{Akt{\o}rer}: Spiller, Maskin 
+\bigskip \\
+\textbf{Prim{\ae}rakt{\o}r}: Spiller
+\bigskip \\
+\textbf{Tid}: Avhenger av spilleren (har spilleren spilt lignende spill tidligere/l{\o}st lignende g{\aa}ter), runder p{\aa} * minutter (avhenger av hvor avansert g{\aa}tene blir)
+\bigskip \\
+\textbf{M{\aa}l}: L{\o}se alle g{\aa}tene og finne alle n{\o}klene for {\aa} komme seg ut av huset
 \bigskip \\
 \textbf{Pre-conditions:} Spillet er startet p{\aa} en datamaskin
+\bigskip \\
+\textbf{Variasjons scenario}: Spilleren kan flytte seg mellom alle {\aa}pne rom, selvom dette ikke er n{\o}dvendig for m{\aa}let
 
 \subsection*{Hovedflyt:}
 
@@ -167,11 +172,11 @@ av huset)}
 \item Systemet plasserer Spiller i utgangspunktrommet
 \item Gjennoppta @4
 \end{enumerate}
-\end{enumerate}
+\end{enumerate} \newpage
 
 \section*{Bruksm{\o}nsterdiagram:}
 \addcontentsline{toc}{section}{Bruksm{\o}nsterdiagram:}
 
-\includegraphics[width=0.8\textwidth,natwidth=610,natheight=642]{use_case_diagram_s.png}
+\includegraphics[width=0.8\textwidth,natwidth=500,natheight=642]{use_case_diagram_s.png}
 
 \end{document}
