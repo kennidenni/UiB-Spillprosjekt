@@ -1,0 +1,50 @@
+
+subprojects {
+	apply plugin: 'java'
+	apply plugin: 'eclipse'
+	apply plugin: 'idea'
+
+	repositories {
+	    mavenCentral()
+	}
+
+	sourceSets.main.java.srcDirs = [ 'src/' ]
+	sourceSets.main.java.srcDirs = [ 'main/java', 'main/resources', 'test/java', 'test/resources']
+}
+
+project(':teamdank-common') {
+	dependencies {
+	    compile 'com.badlogicgames.gdx:gdx:1.9.6'
+		compile 'com.badlogicgames.gdx:gdx-backend-lwjgl:1.9.6'
+		compile 'com.badlogicgames.gdx:gdx-platform:1.9.6:natives-desktop'
+		compile 'com.badlogicgames.gdx:gdx-box2d:1.9.6'
+		compile 'com.badlogicgames.gdx:gdx-box2d-platform:1.9.6:natives-desktop'
+		compile 'org.slf4j:slf4j-api:1.7.13'
+	    testCompile 'junit:junit:4.12'
+	    testCompile 'org.mockito:mockito-all:1.9.5'
+	}
+}
+
+project(':teamdank-cargame') {
+	dependencies {
+		compile project(':teamdank-common')
+	}
+}
+
+project(':teamdank-foodfeud') {
+	dependencies {
+		compile project(':teamdank-common')
+	}
+}
+
+project(':teamdank-nightlife') {
+	dependencies {
+		compile project(':teamdank-common')
+	}
+}
+
+project(':teamdank-spooks') {
+	dependencies {
+		compile project(':teamdank-common')
+	}
+}

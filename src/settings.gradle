@@ -1,0 +1,14 @@
+
+ext.initProject = { name, directory -> 
+	include ':' + name
+	project(':' + name).projectDir = new File(settingsDir, directory)
+	project(':' + name).name = name
+}
+
+initProject('teamdank-common', './common/')
+initProject('teamdank-cargame', './car-game/')
+initProject('teamdank-foodfeud', './food-feud/')
+initProject('teamdank-nightlife', './nightlife/')
+initProject('teamdank-spooks', './spooks/')
+
+rootProject.name = 'inf112api'
