@@ -11,4 +11,4 @@ initProject('teamdank-foodfeud', './food-feud/')
 initProject('teamdank-nightlife', './nightlife/')
 initProject('teamdank-spooks', './spooks/')
 
-rootProject.name = 'inf112api'
+rootProject.name = 'teamdank'
