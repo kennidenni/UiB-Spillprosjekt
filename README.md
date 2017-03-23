@@ -1,11 +1,18 @@
-# Arbeidslag: INF112-v2017-pr2_team_D
+﻿# Arbeidslag: INF112-v2017-pr2_team_D
 # Time: onsdag 14-16
+
+# Til de som skal rette oblig3
+Vi delte opp i 4 forskjellige grupper som tok seg av forskjellige oppgaver.
+Mappene i prosjektet er delt opp etter hvilke oppgaver som skulle bli gjort.
+Referatene ligger i sin egen mappe i lag med bilde av Trello-veggen vår.
+De gamle filene fra oblig2 ligger i "Spillene"-mappen.
+"src" blir brukt i oblig4 til selve programmeringen.
+
+
+
+##Organisering
 <https://inf112v17teamd.slack.com>
-
-<strike>trello.com/b/Bw1dCfyu/inf112-teamd</strike>
-
 For å bli med i trello følg link fra kenneth i #general
-
 <https://trello.com/invite/inf112_teamd/3b38a116f79efcfd11dce1168e4a2e6c>
 
 # Java-prosjektene
