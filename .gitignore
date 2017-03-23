@@ -45,3 +45,20 @@ desktop.ini
 # Kom en .out og .toc fil når jeg opprettet .pdf fra .tex:
 *.out 
 *.toc
+
+# Java
+.class
+
+# Eclipse
+bin/
+.settings/
+.classpath
+.project
+
+# IntelliJ
+.idea
+.iml
+
+# Gradle
+.gradle/
+build/
