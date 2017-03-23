@@ -1,3 +1,4 @@
+% !TEX encoding = UTF-8 Unicode
 
 \documentclass[12pt]{report}
 \usepackage[a4paper]{geometry}
@@ -11,7 +12,6 @@
 \usepackage[protrusion=true, expansion=true]{microtype}
 \usepackage[english]{babel}
 \usepackage{sectsty}
-\usepackage{url, lipsum}
 \usepackage{color}
 \usepackage{hyperref}
 \usepackage{array}
@@ -19,13 +19,12 @@
 \usepackage{hhline}
 \usepackage{enumitem}
 \usepackage[T1]{fontenc}
-\usepackage[utf8x]{inputenc}
+\usepackage[utf8]{inputenc}
 \usepackage{graphicx}
 \newcommand{\HRule}[1]{\rule{\linewidth}{#1}}
 \renewcommand{\theenumii}{\arabic{enumii}.}
 \addto\captionsenglish{
-  \renewcommand{\contentsname}
-    {Innhold}
+	\renewcommand{\contentsname}{Innhold}
 }
 \onehalfspacing
 \setcounter{tocdepth}{5}
@@ -64,9 +63,10 @@
 %-------------------------------------------------------------------------------
 % BODY
 %-------------------------------------------------------------------------------
-\section*{Bruksmønstertekst:}
+\section*{Bruksm{\o}nstertekst:}
 \addcontentsline{toc}{section}{Bruksm{\o}nstertekst:}
-\textbf{Tittel}: Få høyest mulig score
+
+\textbf{Tittel}: F{\aa} h{\o}yest mulig score
 \bigskip \\
 \textbf{Akt{\o}rer}: Spiller, System
 \bigskip \\
@@ -74,22 +74,22 @@
 \bigskip \\
 \textbf{Tid}: Varierende, avhengig av spillers prestasjon
 \bigskip \\
-\textbf{M{\aa}l}: Få høyest mulig highscore før man går tom for bensin
+\textbf{M{\aa}l}: F{\aa} h{\o}yest mulig highscore f{\o}r man g{\aa}r tom for bensin
 \bigskip \\
-\textbf{Pre-conditions:} Spillet er startet på en datamaskin
+\textbf{Pre-conditions:} Spillet er startet p{\aa} en datamaskin
 \subsubsection*{Hovedflyt:}
 \begin{enumerate}
 \item Systemet viser startmeny
-\item Spiller velger å starte spillet
+\item Spiller velger {\aa} starte spillet
 \item Systemet startet spillet
-\item Spiller styrer bil med venstre/høyre piltast
+\item Spiller styrer bil med venstre/h{\o}yre piltast
 \item Systemet flytter bilen i takt med tastetrykk
-\item Spiller unngår hindre
-\item Spiller kjører på folk
-\item Systemet legger til én mynt i spillerens inventar for hver person som blir påkjørt
-\item Spiller kjører over en bensintank
-\item Systemet legger til bensinen i en "counter", som gjør at spilleren kan kjøre lengre
-\item Spiller går tom for bensin
+\item Spiller unng{\aa}r hindre
+\item Spiller kj{\o}rer p{\aa} folk
+\item Systemet legger til én mynt i spillerens inventar for hver person som blir p{\aa}kj{\o}rt
+\item Spiller kj{\o}rer over en bensintank
+\item Systemet legger til bensinen i en "counter", som gj{\o}r at spilleren kan kj{\o}re lengre
+\item Spiller g{\aa}r tom for bensin
 \item Systemet stopper spillet
 \item Systemet lagrer spillers score
 \item Systemet viser spillers score og highscore
@@ -101,9 +101,9 @@
 \item 
 \bigskip
 \begin{enumerate}
-\item @1 Spiller klikker på oppgradering
+\item @1 Spiller klikker p{\aa} oppgradering
 \item Systemet viser spiller mulige oppgraderinger 
-\item Spiller kjøper oppgradering
+\item Spiller kj{\o}per oppgradering
 \item Systemet oppgraderer bilen
 \item Spiller klikker seg tilbake til startmenyen
 \item Gjenoppta @1
@@ -111,7 +111,7 @@
 \item 
 \bigskip
 \begin{enumerate}
-\item @1 Spiller trykker på innstillingsknapp
+\item @1 Spiller trykker p{\aa} innstillingsknapp
 \item Systemet viser spiller mulige innstillinger for spillet
 \item Spiller endrer innstillinger
 \item Systemet lagrer instillingene
@@ -122,7 +122,7 @@
 \begin{enumerate}
 \item @3, 4, 5 Spiller pauser spiller
 \item Systemet viser en pauseskjerm
-\item Spiller velger å avslutte spillet
+\item Spiller velger {\aa} avslutte spillet
 \item Gjenoppta @13
 \end{enumerate}
 \item
@@ -130,12 +130,12 @@
 \begin{enumerate}
 \item @3, 4, 5 Spiller pauser spiller
 \item Systemet viser en pauseskjerm
-\item Spiller velger å gjenoppta spillet
+\item Spiller velger {\aa} gjenoppta spillet
 \item Gjennoppta @3
 \end{enumerate}
 \end{enumerate}
 \pagebreak
-\section*{Bruksmønsterdiagram:}
+\section*{Bruksm{\o}nsterdiagram:}
 \addcontentsline{toc}{section}{Bruksm{\o}nsterdiagram:}
 \vspace{4cm}
 \includegraphics[width=0.8\textwidth,natwidth=500,natheight=642]{use_case_diagram_b.png}
