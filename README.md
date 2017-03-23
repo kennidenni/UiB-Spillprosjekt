@@ -8,6 +8,38 @@ For å bli med i trello følg link fra kenneth i #general
 
 <https://trello.com/invite/inf112_teamd/3b38a116f79efcfd11dce1168e4a2e6c>
 
+# Java-prosjektene
+Hvis du lurer på noe, ta kontakt med hef005 (Markus) eller peterandrejohansen
+(Peter) på Slack.
+
+## Hvordan importere til en IDE
+### Eclipse
+Åpne Eclipse og gå gjennom følgende steg:
+
+    File->Import...->Gradle Project
+
+Hvis du ikke har valget om *Gradle Project*, må du laste ned en nyere versjon
+av Eclipse.
+
+Hvis det kommer opp en velkommen til Gradle melding, trykke neste. Deretter,
+øverst i vinduet, velg *src/* mappen i Git-repoet. Trykk *Finish* og vent på at
+Gradle setter opp og laster ned nødvendige filer.
+
+### IntelliJ
+Se på [denne siden](https://www.jetbrains.com/help/idea/2016.3/gradle.html).
+
+## Forklaring av hvert prosjekt
+Vi har fem Java-prosjekt. Et for hvert spill og ett for felles kode. Hvis du har
+importert prosjektene til en IDE skal du kunde se følgende prosjekt:
+
+    teamdank (representerer alle prosjektene, bruk hvis du bruker Git i en IDE)
+    teamdank-cargame
+    teamdank-common (felles kode)
+    teamdank-foodfeud
+    teamdank-nightlife
+    teamdank-spooks
+
+
 # Coach:
  Gunnar Schulze(Gunnar.Schulze@uib.no)
 # Members:
