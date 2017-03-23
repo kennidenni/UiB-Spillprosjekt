@@ -1,0 +1,23 @@
+Which development process(es) you want to use (e.g. SCRUM), and how?
+
+Vi har valgt den smidige utviklingsmetoden SCRUM, og gjennomføre det som normalt. Vi kommer til å ha hyppige Sprints, hvor vi forteller om fremgang og videre plan, for å holde styr på hvordan folk ligger an, og for å eventuelt kunne reallokere arbeidskraft.
+
+Vi ønsker å dele opp teamet i grupper, hvor en gruppe utvikler backend, en gruppe lager GUI, osv.
+
+Vi kommer til å evaluere fremgang og forutse gjenstående arbeid ved hjelp av en burn-down chart som vil bli oppdatert ved hver Sprint.
+
+Hvis vi skulle møte på problemer som f.eks. at folk slutter, eller ikke møter opp, vil vi først se på muligheten om å reallokere arbeidskraft, og hvis det ikke går vil vi prøve å fjerne trivielle funksjoner fra spillene. Hvis det ikke går vil vi felles avgjøre et spill som ikke blir implementert.
+
+Felles egenskaper for alle spillene inkluderer GUI, innhenting av åpen data (vær) og elementer i spillet. Disse elementene inkluderer highscore, items og andre objekter i spillene.
+
+
+
+What sub-teams you will have (and how you will organize them).
+Will there be regular meetings? How often?
+How will you evaluate progress?
+How will you troubleshoot if things don't go as planned (implement less games, reduce features, etc.)?
+What are the key features that all games need (this should also go in your presentation) ?
+Make a (brief) risk analysis: What features are most important / hardest to implement?
+If you want to use SCRUM as your development process anyway, you could start with a scrum poker kick-off to evaluate difficulty: https://en.wikipedia.org/wiki/Planning_poker
+Other things you want to tell the team for oblig4 ( which is now you  )
+
