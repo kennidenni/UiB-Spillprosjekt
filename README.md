@@ -30,8 +30,8 @@ Hvis du lurer på noe, ta kontakt med hef005 (Markus) eller peterandrejohansen
 
     File->Import...->Gradle Project
 
-Hvis du ikke har valget om *Gradle Project*, må du laste ned en nyere versjon
-av Eclipse.
+Hvis du ikke har valget om *Gradle Project*, <strike>må du laste ned en nyere versjon
+av Eclipse.</strike> må du laste ned gradle fra hjelp -> marketplace eller installere en nyere versjon av Eclipse.
 
 Hvis det kommer opp en velkommen til Gradle melding, trykke neste. Deretter,
 øverst i vinduet, velg *src/* mappen i Git-repoet. Trykk *Finish* og vent på at

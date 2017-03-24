@@ -67,38 +67,88 @@
 %-------------------------------------------------------------------------------
 \section*{Bruksm{\o}nstertekst:}
 \addcontentsline{toc}{section}{Bruksm{\o}nstertekst:}
-\textbf{Tittel}: Få motstandere til å gå hjem.
+\textbf{Tittel}: Eliminere motstanderne
 \bigskip \\
-\textbf{Akt{\o}rer}: Spillere, system
+\textbf{Akt{\o}rer}: Spiller, System
 \bigskip \\
 \textbf{Prim{\ae}rakt{\o}r}: Spiller
 \bigskip \\
-\textbf{Tid}: 45 sekunder før fiender genereres, runden varer frem til alle fiendene er av brettet eller en fiende overlever siste utested. 
+\textbf{Tid}: 45 sekunder før fiender genereres, runden varer frem til alle fiendene er av brettet eller en fiende overlever siste utested 
 \bigskip \\
-\textbf{M{\aa}l}: Sjenke alle motstandere slik at de blir fulle og går hjem. 
+\textbf{M{\aa}l}: Skyte flasker og lignende på alle motstandere slik at de dør
 \bigskip \\
 \textbf{Pre-conditions:} Spillet er startet p{\aa} en datamaskin
 \subsubsection*{Hovedflyt:}
 \begin{enumerate}
-\item Systemet genererer banen. 
-\item Aktøren får 45 sekunder til å sette ut og oppgradere utesteder. 
-\item Systemet genererer fiender som går langs banen. 
-\item Systemet beregner skade utgjort av de forskjellige utestedene. 
-\item Systemet beregner fiendens helse ved hvert utested.  
-\item Dersom en fiende får ferre enn ett helsepoeng så går den tilbake.  
-\item En fiende overlever siste utested, og spiller taper. 
+\item Systemet viser hovedmeny
+\item Spiller velger å starte spillet
+\item Systemet genererer bane
+\item Spiller kan velge sette ut tårn og oppgradere dem
+\item Spiller prøver å sette ut tårn
+\item Systemet beregner om spiller har råd til å sette ut tårn
+\item Systemet plasserer tårn der spiller ønsker
+\item Spiller oppgraderer tårn
+\item Systemet beregner om spiller har råd til å oppgradere tårn
+\item Systemet oppgraderer tårn
+\item Spiller velger å starte runden (slik at fiendene kommer)
+\item Systemet genererer fiender som prøver å komme seg til målet
+\item Systemet beregner skaden til fiende(ne) utgjort av de forskjellige tårnenes våpen
+\item Systemet beregner fiendens helse om fiende ble truffet
+\item Systemet eliminerer fiender med helse mindre enn 1
+\item Spillers tårn har drept alle fiendene
+\item Spiller har vunnet runden
+\item Systemet forteller spiller at spiller har vunnet runden
 \end{enumerate}
-\subsubsection*{Alternativ handlinger:}
+\textit{Steg 4-16 går i loop til x antall runder er vunnet}
+\begin{enumerate}[resume]
+\item Spiller har vunnet x antall runder
+\item Systemet forteller at spiller har vunnet alle rundene
+\item Systemet viset hovedmeny
+\end{enumerate}
+\subsubsection*{Alternative handlinger:}
 \begin{enumerate}[label=\Alph*]
+\item
+\bigskip
+\begin{enumerate}
+\item @1 Spiller velger å avslutte spillet
+\item Systemet avslutter spillet
+\end{enumerate}
+
+\item
+\bigskip
+\begin{enumerate}
+\item @2 Spiller velger å pause spillet
+\item Systemet pauser spillet
+\item Systemet viser pausemeny
+\end{enumerate}
+
+\item
+\bigskip
+\begin{enumerate}
+\item @6 Systemet beregner at spiller ikke har råd til å sette ut tårn
+\item Systemet setter ikke ut tårn
+\item Gjenoppta @4
+\end{enumerate}
+
+\bigskip
+\begin{enumerate}
+\item @9 Systemet beregner at spiller ikke har råd til å oppgradere tårn
+\item Systemet oppgraderer ikke tårn
+\item Gjenoppta @4
+\end{enumerate}
+
 \item 
 \bigskip
 \begin{enumerate}
-\item @7 Ingen motstandere overlever siste utested.
-\item Gjennoppta @2. Men @3 genereres det fiender med flere helsepoeng.  
+\item @16 En eller flere fiender overlever
+\item Spiller har tapt spillet
+\item Systemet forteller at spiller har tapt spillet
+\item Gjenoppta @1
 \end{enumerate}
 \end{enumerate}
+
 \section*{Bruksm{\o}nsterdiagram:}
 \addcontentsline{toc}{section}{Bruksm{\o}nsterdiagram:}
 \vspace{1cm}
-\includegraphics[width=500px]{TDutelivDiagram.jpg}
+\includegraphics{use_case_diagram_t.png}
 \end{document}
