@@ -21,7 +21,6 @@ before_script:
   - cd src/
   - chmod u+x gradle
 
-
 # We redirect the gradle user home using -g so that it caches the
 # wrapper and dependencies.
 # https://docs.gradle.org/current/userguide/gradle_command_line.html
@@ -33,7 +32,8 @@ before_script:
 build:
   stage: build
   script:
-    - gradle build
+  - ls
+#    - gradle build
   allow_failure: false
 
 # Use the generated build output to run the tests.
