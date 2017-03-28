@@ -19,7 +19,9 @@ variables:
 # It is expected that any modern gradle project has a wrapper
 before_script:
   - cd src/
-  - chmod u+x gradle
+  - apt-get update
+  - apt-get -y install gradle
+  - chmod +x gradlew
 
 # We redirect the gradle user home using -g so that it caches the
 # wrapper and dependencies.
@@ -33,8 +35,8 @@ build:
   stage: build
   script:
   - ls
-  - gradle
-#    - gradle build
+#  - gradle
+  - gradle build
   allow_failure: false
 
 # Use the generated build output to run the tests.
