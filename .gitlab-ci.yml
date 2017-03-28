@@ -19,7 +19,7 @@ variables:
 # It is expected that any modern gradle project has a wrapper
 before_script:
   - cd src/
-  - chmod +x gradlew
+  - chmod +x gradle
 
 
 # We redirect the gradle user home using -g so that it caches the
@@ -33,11 +33,11 @@ before_script:
 build:
   stage: build
   script:
-    - ./gradlew -g /cache/.gradle clean assemble
+    - ./gradle build
   allow_failure: false
 
 # Use the generated build output to run the tests.
-test:
-  stage: test
-  script:
-    - ./gradlew -g /cache/.gradle check
+#test:
+#  stage: test
+#  script:
+#    - ./gradlew -g /cache/.gradle check
