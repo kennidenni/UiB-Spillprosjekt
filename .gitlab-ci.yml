@@ -19,7 +19,7 @@ variables:
 # It is expected that any modern gradle project has a wrapper
 before_script:
   - cd src/
-  - chmod +x gradle
+  - chmod u+x gradle
 
 
 # We redirect the gradle user home using -g so that it caches the
