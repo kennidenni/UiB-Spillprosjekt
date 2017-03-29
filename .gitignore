@@ -31,7 +31,7 @@ desktop.ini
 *.dmg
 *.gz
 *.iso
-*.jar
+# *.jar # Denne trengs til Gradle wrapper
 *.rar
 *.tar
 *.zip
