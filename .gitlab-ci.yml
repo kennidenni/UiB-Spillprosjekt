@@ -33,7 +33,7 @@ build:
   stage: build
   script:
   - ls
-  - gradlew build
+  - ./gradlew build
   allow_failure: false
 
 # Use the generated build output to run the tests.
