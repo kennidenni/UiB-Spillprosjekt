@@ -4,7 +4,7 @@
 # This is the Gradle build system for JVM applications
 # https://gradle.org/
 # https://github.com/gradle/gradle
-image: java:8
+image: openjdk:8
 
 # Disable the Gradle daemon for Continuous Integration servers as correctness
 # is usually a priority over speed in CI environments. Using a fresh
@@ -19,8 +19,6 @@ variables:
 # It is expected that any modern gradle project has a wrapper
 before_script:
   - cd src/
-  - apt-get update
-  - apt-get -y install gradle
   - chmod +x gradlew
 
 # We redirect the gradle user home using -g so that it caches the
@@ -35,8 +33,7 @@ build:
   stage: build
   script:
   - ls
-#  - gradle
-  - gradle build
+  - gradlew build
   allow_failure: false
 
 # Use the generated build output to run the tests.
