@@ -39,9 +39,10 @@ build:
 # Sonarqube skann av commit
 sonarqube_preview:
   script:
-    - git checkout origin/master
-    - git merge $CI_BUILD_REF --no-commit --no-ff
-    - ./gradlew sonarqube -Dsonar.analysis.mode=preview -Dsonar.gitlab.project_id=$CI_PROJECT_PATH -Dsonar.gitlab.commit_sha=$CI_BUILD_REF -Dsonar.gitlab.ref_name=$CI_BUILD_REF_NAME
+#    - git checkout origin/master
+#    - git merge $CI_BUILD_REF --no-commit --no-ff
+  - git merge master --no-commit --no-ff
+  - ./gradlew sonarqube -Dsonar.analysis.mode=preview -Dsonar.gitlab.project_id=$CI_PROJECT_PATH -Dsonar.gitlab.commit_sha=$CI_BUILD_REF -Dsonar.gitlab.ref_name=$CI_BUILD_REF_NAME
   stage: test
   except:
 #    - develop
