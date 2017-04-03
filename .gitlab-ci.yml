@@ -36,6 +36,30 @@ build:
   - ./gradlew build
   allow_failure: false
 
+# Sonarqube skann av commit
+sonarqube_preview:
+  script:
+    - git checkout origin/master
+    - git merge $CI_BUILD_REF --no-commit --no-ff
+    - ./gradlew sonarqube -Dsonar.analysis.mode=preview -Dsonar.gitlab.project_id=$CI_PROJECT_PATH -Dsonar.gitlab.commit_sha=$CI_BUILD_REF -Dsonar.gitlab.ref_name=$CI_BUILD_REF_NAME
+  stage: test
+  except:
+#    - develop
+    - master
+#    - /^hotfix_.*$/
+#    - /.*-hotfix$/
+  tags:
+    - java
+
+sonarqube:
+  script:
+    - ./gradlew sonarqube
+  stage: test
+  only:
+    - master
+  tags:
+    - java
+
 # Use the generated build output to run the tests.
 #test:
 #  stage: test
