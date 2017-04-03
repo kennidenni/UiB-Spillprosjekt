@@ -48,8 +48,8 @@ sonarqube_preview:
     - master
 #    - /^hotfix_.*$/
 #    - /.*-hotfix$/
-  tags:
-    - java
+#  tags:
+#    - java
 
 sonarqube:
   script:
@@ -57,8 +57,8 @@ sonarqube:
   stage: test
   only:
     - master
-  tags:
-    - java
+#  tags:
+#    - java
 
 # Use the generated build output to run the tests.
 #test:
