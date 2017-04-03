@@ -1,6 +1,10 @@
 ﻿# Arbeidslag: INF112-v2017-pr2_team_D
 # Time: onsdag 14-16
 
+## SonarQube server:
+[SonarQube](http://129.177.47.54:9000/sonar) dette er Håvar sin macbook, hensikten var å teste oppsettet.
+Om noen har en ide til en server, helst med postgresql, som SonarQube kan bo på hadde det vært fint!
+
 # Til de som skal rette oblig3
 Vi delte opp i 4 forskjellige grupper som tok seg av forskjellige oppgaver.
 
