@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 import uib.teamdank.common.Game;
 import uib.teamdank.common.gui.GameScreen;
+import uib.teamdank.common.gui.HighscoreMenuScreen;
 import uib.teamdank.common.gui.PauseMenuScreen;
 import uib.teamdank.common.gui.StartMenuScreen;
 
@@ -11,6 +12,9 @@ import uib.teamdank.common.gui.StartMenuScreen;
  * The main game class for Car Game.
  */
 public class CarGame extends Game {
+	StartMenuScreen startMenuScreen;
+	GameScreen gameScreen;
+	PauseMenuScreen pauseMenuScreen;
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
@@ -18,25 +22,23 @@ public class CarGame extends Game {
 	
 	@Override
 	public void create() {
-		// TODO Auto-generated method stub
+		startMenuScreen = new uib.teamdank.cargame.gui.StartMenuScreen();
+		setScreen(startMenuScreen);
 	}
 
 	@Override
 	public GameScreen getGameScreen() {
-		// TODO Auto-generated method stub
-		return null;
+		return gameScreen;
 	}
 
 	@Override
 	public PauseMenuScreen getPauseMenuScreen() {
-		// TODO Auto-generated method stub
-		return null;
+		return pauseMenuScreen;
 	}
 
 	@Override
 	public StartMenuScreen getStartMenuScreen() {
-		// TODO Auto-generated method stub
-		return null;
+		return startMenuScreen;
 	}
 
 	@Override
