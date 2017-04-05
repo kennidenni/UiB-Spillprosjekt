@@ -19,6 +19,8 @@ variables:
 # It is expected that any modern gradle project has a wrapper
 before_script:
   - cd src/
+  - git config user.email "heg063@student.uib.no"
+  - git config user.name "Runner"
   - chmod +x gradlew
 
 # We redirect the gradle user home using -g so that it caches the
@@ -35,6 +37,31 @@ build:
   - ls
   - ./gradlew build
   allow_failure: false
+
+# Sonarqube skann av commit
+sonarqube_preview:
+  script:
+#    - git checkout origin/master
+#    - git merge $CI_BUILD_REF --no-commit --no-ff
+  - git merge master --no-commit --no-ff
+  - ./gradlew sonarqube -Dsonar.analysis.mode=preview -Dsonar.gitlab.project_id=$CI_PROJECT_PATH -Dsonar.gitlab.commit_sha=$CI_BUILD_REF -Dsonar.gitlab.ref_name=$CI_BUILD_REF_NAME
+  stage: test
+  except:
+#    - develop
+    - origin/master
+#    - /^hotfix_.*$/
+#    - /.*-hotfix$/
+#  tags:
+#    - java
+
+sonarqube:
+  script:
+    - ./gradlew sonarqube
+  stage: test
+  only:
+    - origin/master
+#  tags:
+#    - java
 
 # Use the generated build output to run the tests.
 #test:
