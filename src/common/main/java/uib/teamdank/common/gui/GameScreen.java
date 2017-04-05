@@ -1,6 +1,16 @@
 package uib.teamdank.common.gui;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+import java.util.function.Consumer;
+
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Vector2;
+
+import uib.teamdank.common.Game;
+import uib.teamdank.common.GameObject;
 
 /**
  * Screen for the main gameplay of a game.
@@ -10,51 +20,100 @@ import com.badlogic.gdx.Screen;
  */
 public class GameScreen implements Screen {
 
-	public void addLayer(Layer layer) {
-		
+	private final List<Layer> layers = new ArrayList<>();
+
+	private final Game game;
+
+	public GameScreen(Game game) {
+		Objects.requireNonNull(game, "game cannot be null");
+		this.game = game;
+	}
+
+	public void addGameObject(Layer layer, GameObject gameObject) {
+		layer.addGameObject(gameObject);
 	}
 	
+	public void addLayer(Layer layer) {
+		Objects.requireNonNull(layer, "layer cannot be null");
+		layers.add(layer);
+	}
+
 	@Override
 	public void dispose() {
-		// TODO Auto-generated method stub
-		
+		forEachGameObject(gameObject -> {
+			gameObject.getTexture().getTexture().dispose();
+		});
+	}
+
+	/**
+	 * Loops through every game object on every layer starting with the first
+	 * layer and passes the game objects to the given action.
+	 */
+	public void forEachGameObject(Consumer<GameObject> action) {
+		for (Layer layer : layers) {
+			layer.forEachGameObject(gameObject -> {
+				action.accept(gameObject);
+			});
+		}
 	}
 
 	@Override
 	public void hide() {
-		// TODO Auto-generated method stub
-		
+		// Not necessary as of yet
 	}
 
 	/**
 	 * Pauses the game and shows a {@link PauseMenuScreen}.
 	 */
 	public void pause() {
-		
+		game.setScreen(game.getPauseMenuScreen());
 	}
 
 	@Override
 	public void render(float delta) {
-		// TODO Auto-generated method stub
 		
+		 SpriteBatch batch = game.getSpriteBatch();
+		 batch.begin();
+		 forEachGameObject(gameObject -> {
+			 Vector2 pos = gameObject.getPosisiton();
+			 batch.draw(gameObject.getTexture(), pos.x, pos.y);
+		 });
+		 batch.end();
+		 
 	}
 
 	@Override
 	public void resize(int width, int height) {
-		// TODO Auto-generated method stub
-		
+		// Not necessary as of yet
 	}
 
 	@Override
 	public void resume() {
-		// TODO Auto-generated method stub
-		
+		// Not necessary as of yet
 	}
 
 	@Override
 	public void show() {
-		// TODO Auto-generated method stub
+		// Not necessary as of yet
+	}
+
+	public void update(float delta) {
+		
+		// Remove marked objects
+		for (Layer layer : layers) {
+			layer.removeMarkedGameObjects();
+		}
+		
+		forEachGameObject(gameObject -> {
+			
+			// Calculate movement
+			Vector2 pos = gameObject.getPosisiton();
+			Vector2 vel = gameObject.getVelocity();
+			pos.x += (vel.x * delta);
+			pos.y += (vel.y * delta);
+			
+		});
 		
 	}
-	
+
 }
