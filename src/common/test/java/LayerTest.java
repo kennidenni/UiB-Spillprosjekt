@@ -86,11 +86,7 @@ public class LayerTest {
 		}
 	}
 
-	/*
-	 * //TODO
-	 * Denne er kommentert ut for å teste build. 5. april
-	 * Må åpnes igjen.
-	 * 
+
 	@Test
 	public void testRemovalOfMarkedGameObjectsInLayer() {
 		testAddGameObjectsToLayer();
@@ -109,5 +105,4 @@ public class LayerTest {
 		
 		assertEquals(0, l.getSize());
 	}
-	*/
 }
