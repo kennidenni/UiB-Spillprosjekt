@@ -1,5 +1,9 @@
-﻿# Arbeidslag: INF112-v2017-pr2_team_D
+# Arbeidslag: INF112-v2017-pr2_team_D
 # Time: onsdag 14-16
+
+## SonarQube server:
+[SonarQube](http://158.39.74.42:9000/) Statisk kodeanalyse.
+Prosjektet som ligger der skal i teorien være den nyeste analysen av master.
 
 # Til de som skal rette oblig3
 Vi delte opp i 4 forskjellige grupper som tok seg av forskjellige oppgaver.
