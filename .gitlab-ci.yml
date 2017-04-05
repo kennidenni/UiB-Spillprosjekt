@@ -48,7 +48,7 @@ sonarqube_preview:
   stage: test
   except:
 #    - develop
-    - master
+    - origin/master
 #    - /^hotfix_.*$/
 #    - /.*-hotfix$/
 #  tags:
@@ -59,7 +59,7 @@ sonarqube:
     - ./gradlew sonarqube
   stage: test
   only:
-    - master
+    - origin/master
 #  tags:
 #    - java
 
