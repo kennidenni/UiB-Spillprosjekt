@@ -17,11 +17,29 @@ public class GameObject {
 		return false;
 	}
 
+	/**
+	 *
+	 * @return height of object
+	 */
 	public int getHeight() {
 		// TODO Auto-generated method stub
 		return -1;
 	}
 
+	/**
+	 * remove this object
+	 */
+	public void remove(){
+
+	}
+
+	/**
+	 *
+	 * @return true if object is to be removed in the next step, false otherwise
+	 */
+	public boolean toBeRemoved(){
+
+	}
 	/**
 	 * 
 	 * @return the current position of this game object
