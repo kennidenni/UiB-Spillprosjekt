@@ -1,5 +1,7 @@
 package uib.teamdank.cargame;
 
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+
 import uib.teamdank.common.Game;
 import uib.teamdank.common.gui.GameScreen;
 import uib.teamdank.common.gui.PauseMenuScreen;
@@ -42,5 +44,10 @@ public class CarGame extends Game {
 		// TODO Auto-generated method stub
 		return null;
 	}
-	
+
+	@Override
+	public SpriteBatch getSpriteBatch() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }
