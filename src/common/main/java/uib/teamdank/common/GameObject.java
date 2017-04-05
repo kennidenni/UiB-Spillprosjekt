@@ -38,7 +38,7 @@ public class GameObject {
 	 * @return true if object is to be removed in the next step, false otherwise
 	 */
 	public boolean toBeRemoved(){
-
+		return true;
 	}
 	/**
 	 * 
