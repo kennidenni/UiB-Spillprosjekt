@@ -2,7 +2,7 @@
 # Time: onsdag 14-16
 
 ## SonarQube server:
-[SonarQube](http://158.39.74.42:9000/) Statisk kodeanalyse.
+[SonarQube prosjektet](http://158.39.74.42:9000/dashboard?id=teamdank) Statisk kodeanalyse.
 Prosjektet som ligger der skal i teorien være den nyeste analysen av master.
 
 # Til de som skal rette oblig3
