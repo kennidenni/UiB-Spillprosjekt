@@ -26,8 +26,8 @@ project(':teamdank-common') {
 		compile 'com.badlogicgames.gdx:gdx-box2d:1.9.6'
 		compile 'com.badlogicgames.gdx:gdx-box2d-platform:1.9.6:natives-desktop'
 		compile 'org.slf4j:slf4j-api:1.7.13'
-	    testCompile 'junit:junit:4.12'
-	    testCompile 'org.mockito:mockito-all:1.9.5'
+	  compile 'junit:junit:4.12'
+	  compile 'org.mockito:mockito-all:1.9.5'
 	}
 }
 
