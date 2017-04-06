@@ -59,7 +59,7 @@ sonarqube:
     - ./gradlew sonarqube
   stage: test
   only:
-    - origin/master
+    - master
 #  tags:
 #    - java
 
