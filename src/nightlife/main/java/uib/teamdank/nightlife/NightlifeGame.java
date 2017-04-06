@@ -21,6 +21,8 @@ public class NightlifeGame extends Game {
 	@Override
 	public void create() {
 		startMenuScreen = new uib.teamdank.nightlife.gui.StartMenuScreen();
+		gameScreen = new uib.teamdank.nightlife.gui.GameScreen();
+		pauseMenuScreen = new uib.teamdank.nightlife.gui.PauseMenuScreen();
 		setScreen(startMenuScreen);
 	}
 

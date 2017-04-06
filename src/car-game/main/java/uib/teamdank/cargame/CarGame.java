@@ -23,6 +23,8 @@ public class CarGame extends Game {
 	@Override
 	public void create() {
 		startMenuScreen = new uib.teamdank.cargame.gui.StartMenuScreen();
+		gameScreen = new uib.teamdank.cargame.gui.GameScreen();
+		pauseMenuScreen = new uib.teamdank.cargame.gui.PauseMenuScreen();
 		setScreen(startMenuScreen);
 	}
 

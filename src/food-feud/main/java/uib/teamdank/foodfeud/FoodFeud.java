@@ -21,6 +21,8 @@ public class FoodFeud extends Game {
 	@Override
 	public void create() {
 		startMenuScreen = new uib.teamdank.foodfeud.gui.StartMenuScreen();
+		gameScreen = new uib.teamdank.foodfeud.gui.GameScreen();
+		pauseMenuScreen = new uib.teamdank.foodfeud.gui.PauseMenuScreen();
 		setScreen(startMenuScreen);
 	}
 

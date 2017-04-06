@@ -21,6 +21,8 @@ public class SpooksGame extends Game {
 	@Override
 	public void create() {
 		startMenuScreen = new uib.teamdank.spooks.gui.StartMenuScreen();
+		gameScreen = new uib.teamdank.spooks.gui.GameScreen();
+		pauseMenuScreen = new uib.teamdank.spooks.gui.PauseMenuScreen();
 		setScreen(startMenuScreen);
 	}
 
