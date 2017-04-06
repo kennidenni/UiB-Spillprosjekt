@@ -30,7 +30,7 @@ public class GameObject {
 	 * remove this object
 	 */
 	public void remove(){
-
+		// TODO Auto-generated method stub
 	}
 
 	/**
