@@ -8,7 +8,11 @@ import uib.teamdank.common.Item;
  */
 public class Weapon extends Item {
 
-	/**
+    public Weapon(String n, String d) {
+        super(n, d);
+    }
+
+    /**
 	 * @return amount of damage this weapon inflicts
 	 */
 	public double getDamage() {
