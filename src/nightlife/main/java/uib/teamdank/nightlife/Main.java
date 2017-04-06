@@ -8,6 +8,6 @@ public class Main{
         config.title = "Nightlife";
         config.width = 1280;
         config.heigth = 720;
-        new LwjglApplication(new Nightlifegame(), config) ;
+        new LwjglApplication(new NightlifeGame(), config) ;
     }
 }
