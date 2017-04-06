@@ -32,8 +32,10 @@ public class LayerTest {
 		try {
 			l.addGameObject(null);
 			assertTrue(false);
-		} catch (Exception e) {
+		} catch(NullPointerException e) {
 			assertTrue(true);
+		} catch (Exception e) {
+			assertTrue(false);
 		}
 	}
 
@@ -42,8 +44,10 @@ public class LayerTest {
 		try {
 			l.forEachGameObject(null);
 			assertTrue(false);
-		} catch (Exception e) {
+		} catch(NullPointerException e) {
 			assertTrue(true);
+		} catch (Exception e) {
+			assertTrue(false);
 		}
 	}
 
