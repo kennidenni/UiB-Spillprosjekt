@@ -9,6 +9,19 @@ public class Actor extends GameObject {
 	private int currentHealth;
 	private String name;
 
+	public Actor(){
+	    this(100, 100, "Default");
+    }
+	public Actor (int h, String n){
+	    this(h, h, n);
+    }
+
+    public Actor (int mh, int ch, String n){
+	    super();
+	    this.maxHealth = mh;
+	    this.currentHealth = ch;
+	    this.name = n;
+    }
 	/**
 	 * @return how much health this actor currently has (if it is {@code zero},
 	 *         the actor is dead)

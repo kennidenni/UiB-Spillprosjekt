@@ -8,6 +8,11 @@ public class Item extends GameObject {
     private String description;
     private String name;
 
+    public Item (String n, String d){
+    	super();
+    	this.name = n;
+    	this.description = d;
+	}
     /**
      *
      * @return description of this item
