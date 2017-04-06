@@ -4,36 +4,31 @@ package uib.teamdank.common;
  * For a generic controlled actor in a game (e.g. a player or an NPC).
  */
 public class Actor extends GameObject {
-	/**
-	 * @param amount
-	 *            the amount of health to subtract
-	 */
-	public void decreaseHealth(int amount) {
-		// TODO Auto-generated method stub
-	}
+
+	private int maxHealth;
+	private int currentHealth;
+	private String name;
 
 	/**
 	 * @return how much health this actor currently has (if it is {@code zero},
 	 *         the actor is dead)
 	 */
 	public int getHealth() {
-		// TODO Auto-generated method stub
-		return -1;
+		return this.currentHealth;
 	}
 
 	/**
 	 * @return the maximum health this actor can have
 	 */
 	public int getMaxHealth() {
-		// TODO Auto-generated method stub
-		return -1;
+		return this.maxHealth;
 	}
 
 	/**
 	 * @return the name of this actor
 	 */
 	public String getName() {
-		return null;
+		return this.name;
 	}
 
 	/**
@@ -41,7 +36,19 @@ public class Actor extends GameObject {
 	 *            the amount of health to add
 	 */
 	public void increaseHealth(int amount) {
-		// TODO Auto-generated method stub
+		this.currentHealth = this.currentHealth + amount;
+		if (this.currentHealth > this.maxHealth)
+			this.currentHealth = this.maxHealth;
+	}
+
+	/**
+	 * @param amount
+	 *            the amount of health to subtract
+	 */
+	public void decreaseHealth(int amount) {
+		this.currentHealth = this.currentHealth - amount;
+		if (this.currentHealth <= 0)
+			this.remove();
 	}
 
 	/**
@@ -52,6 +59,8 @@ public class Actor extends GameObject {
 	 *            the new health of this actor
 	 */
 	public void setHealth(int health) {
-		// TODO Auto-generated method stub
+		if (health <= 0 || health > this.maxHealth)
+			throw new IllegalArgumentException();
+		this.currentHealth = health;
 	}
 }
