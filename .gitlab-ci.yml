@@ -34,7 +34,7 @@ before_script:
 build branch:
   stage: build
   script:
-  - git merge origin/master --no-commit --no-ff
+  - git merge master --no-commit --no-ff
   - ./gradlew build
   allow_failure: false
   except:
