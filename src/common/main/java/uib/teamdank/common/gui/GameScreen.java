@@ -51,9 +51,7 @@ public class GameScreen implements Screen {
 	 */
 	public void forEachGameObject(Consumer<GameObject> action) {
 		for (Layer layer : layers) {
-			layer.forEachGameObject(gameObject -> {
-				action.accept(gameObject);
-			});
+			layer.forEachGameObject(action);
 		}
 	}
 
