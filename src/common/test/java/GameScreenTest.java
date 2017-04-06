@@ -118,4 +118,5 @@ public class GameScreenTest {
 		assertEquals(new Vector2(2, 3), mockO1.getPosisiton());
 	}
 
+	
 }
