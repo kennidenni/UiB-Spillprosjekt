@@ -6,6 +6,7 @@ import java.util.function.Consumer;
 import org.junit.Before;
 import org.junit.Test;
 
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 
 import uib.teamdank.common.Game;
@@ -23,7 +24,6 @@ public class GameScreenTest {
 		mockG = mock(Game.class);
 		gs = new GameScreen(mockG);
 		mockL1 = mock(Layer.class);
-		
 	}
 
 	@Test
@@ -42,6 +42,18 @@ public class GameScreenTest {
 	public void testAddLayerToGameScreen() {
 		try{
 			gs.addLayer(mockL1);
+			assertTrue(true);
+		} catch (Exception e){
+			assertTrue(false);
+		}
+	}
+	
+	@Test
+	public void testAddGameObjectToLayerInGameScreen() {
+		testAddLayerToGameScreen();
+		try{
+			gs.addGameObject(mockL1, mock(GameObject.class));
+			verify(mockL1).addGameObject(any(GameObject.class));
 			assertTrue(true);
 		} catch (Exception e){
 			assertTrue(false);
@@ -117,6 +129,18 @@ public class GameScreenTest {
 		
 		assertEquals(new Vector2(2, 3), mockO1.getPosisiton());
 	}
-
 	
+	
+	@Test
+	public void testRenderInGameScreen() {
+		SpriteBatch mockBatch = mock(SpriteBatch.class);
+		when(mockG.getSpriteBatch()).thenReturn(mockBatch);
+		
+		testAddLayerToGameScreen();
+		
+		gs.render(1);
+		
+		verify(mockBatch).begin();
+		verify(mockBatch).end();
+	}
 }
