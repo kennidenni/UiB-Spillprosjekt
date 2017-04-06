@@ -31,6 +31,79 @@ before_script:
 # cleaning removes reminants of any cached builds.
 # The assemble task actually builds the project.
 # If it fails here, the tests can't run.
+build branch:
+  stage: build
+  script:
+  - git merge origin/master --no-commit --no-ff
+  - ./gradlew build
+  allow_failure: false
+  except:
+    - master
+
+build master:
+  stage: build 
+  script:
+  - ./gradlew build
+  allow_failure: false
+  only:
+    - master
+
+# Sonarqube skann av commit
+sonarqube_preview:
+  script:
+#    - git checkout origin/master
+#    - git merge $CI_BUILD_REF --no-commit --no-ff
+  - git merge origin/master --no-commit --no-ff
+  - ./gradlew sonarqube -Dsonar.analysis.mode=preview -Dsonar.gitlab.project_id=$CI_PROJECT_PATH -Dsonar.gitlab.commit_sha=$CI_BUILD_REF -Dsonar.gitlab.ref_name=$CI_BUILD_REF_NAME
+  stage: test
+  except:
+    - master
+
+sonarqube:
+  script:
+    - ./gradlew sonarqube
+  stage: test
+  only:
+    - master
+
+# Use the generated build output to run the tests.
+#test:
+#  stage: test
+#  script:
+#    - ./gradlew -g /cache/.gradle check
+# This template uses the java:8 docker image because there isn't any
+# official Gradle image at this moment
+#
+# This is the Gradle build system for JVM applications
+# https://gradle.org/
+# https://github.com/gradle/gradle
+image: openjdk:8
+
+# Disable the Gradle daemon for Continuous Integration servers as correctness
+# is usually a priority over speed in CI environments. Using a fresh
+# runtime for each build is more reliable since the runtime is completely
+# isolated from any previous builds.
+variables:
+    GRADLE_OPTS: "-Dorg.gradle.daemon=false"
+
+# Make the gradle wrapper executable. This essentially downloads a copy of
+# Gradle to build the project with.
+# https://docs.gradle.org/current/userguide/gradle_wrapper.html
+# It is expected that any modern gradle project has a wrapper
+before_script:
+  - cd src/
+  - git config user.email "heg063@student.uib.no"
+  - git config user.name "Runner"
+  - chmod +x gradlew
+
+# We redirect the gradle user home using -g so that it caches the
+# wrapper and dependencies.
+# https://docs.gradle.org/current/userguide/gradle_command_line.html
+#
+# Unfortunately it also caches the build output so
+# cleaning removes reminants of any cached builds.
+# The assemble task actually builds the project.
+# If it fails here, the tests can't run.
 build:
   stage: build
   script:
