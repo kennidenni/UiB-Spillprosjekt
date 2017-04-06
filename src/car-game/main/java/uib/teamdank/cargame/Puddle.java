@@ -8,4 +8,7 @@ import uib.teamdank.common.Item;
  */
 public class Puddle extends Item {
 
+    public Puddle(String n, String d) {
+        super(n, d);
+    }
 }

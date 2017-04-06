@@ -61,6 +61,7 @@ public class Actor extends GameObject {
 	public void decreaseHealth(int amount) {
 		this.currentHealth = this.currentHealth - amount;
 		if (this.currentHealth <= 0)
+		    this.currentHealth = 0;
 			this.remove();
 	}
 
@@ -72,7 +73,7 @@ public class Actor extends GameObject {
 	 *            the new health of this actor
 	 */
 	public void setHealth(int health) {
-		if (health <= 0 || health > this.maxHealth)
+		if (health < 0 || health > this.maxHealth)
 			throw new IllegalArgumentException();
 		this.currentHealth = health;
 	}

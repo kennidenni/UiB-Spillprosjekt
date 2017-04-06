@@ -6,6 +6,6 @@ public enum Difficulty {
 	EASY,
 	NORMAL,
 	HARD,
-	EXTERME
+	EXTREME
 	
 }
