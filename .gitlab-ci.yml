@@ -32,36 +32,39 @@ before_script:
 # The assemble task actually builds the project.
 # If it fails here, the tests can't run.
 build:
-  stage: build
+  stage: build branch
   script:
-  - ls
+  - git merge origin/master --no-commit --no-ff
   - ./gradlew build
   allow_failure: false
+  except:
+    - master
+
+build:
+  stage: build master
+  script:
+  - ./gradlew build
+  allow_failure: false
+  only:
+    - master
 
 # Sonarqube skann av commit
 sonarqube_preview:
   script:
 #    - git checkout origin/master
 #    - git merge $CI_BUILD_REF --no-commit --no-ff
-  - git merge master --no-commit --no-ff
+  - git merge origin/master --no-commit --no-ff
   - ./gradlew sonarqube -Dsonar.analysis.mode=preview -Dsonar.gitlab.project_id=$CI_PROJECT_PATH -Dsonar.gitlab.commit_sha=$CI_BUILD_REF -Dsonar.gitlab.ref_name=$CI_BUILD_REF_NAME
   stage: test
   except:
-#    - develop
-    - origin/master
-#    - /^hotfix_.*$/
-#    - /.*-hotfix$/
-#  tags:
-#    - java
+    - master
 
 sonarqube:
   script:
     - ./gradlew sonarqube
   stage: test
   only:
-    - origin/master
-#  tags:
-#    - java
+    - master
 
 # Use the generated build output to run the tests.
 #test:
