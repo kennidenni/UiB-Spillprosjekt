@@ -48,7 +48,7 @@ sonarqube_preview:
   stage: test
   except:
 #    - develop
-    - origin/master
+    - master
 #    - /^hotfix_.*$/
 #    - /.*-hotfix$/
 #  tags:
