@@ -99,7 +99,6 @@ sonarqube:
 
 publiserapi:
   stage: staging
-  image: bash
   script:
     - cp -R car-game/build/docs/javadoc/ /srv/nginx/pages/gitlabapi/public/
 #  environment:
@@ -109,6 +108,8 @@ publiserapi:
   - apidocs
   only:
     - master
+  tags:
+  - bash
     
 # Use the generated build output to run the tests.
 #test:
