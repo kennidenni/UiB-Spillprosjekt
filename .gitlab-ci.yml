@@ -53,11 +53,11 @@ apidocs:
     - ./gradlew javadoc
   artifacts:
     paths:
-      - car-game/build/docs/javadoc/
-      - common/build/docs/javadoc/
-      - spooks/build/docs/javadoc/
-      - nightlife/build/docs/javadoc/
-      - food-feud/build/docs/javadoc/
+      - src/car-game/build/docs/javadoc/
+      - src/common/build/docs/javadoc/
+      - spooks/build/docs/javadoc/*
+      - nightlife/build/docs/javadoc/*
+      - food-feud/build/docs/javadoc/index.html
   stage: build
   only:
     - master
