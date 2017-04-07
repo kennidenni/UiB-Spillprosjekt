@@ -100,8 +100,7 @@ sonarqube:
 publiserapi:
   stage: staging
   script:
-    - apt-get install rsync
-    - rsync -av --delete masterapi /srv/nginx/pages/gitlabapi/public/
+    - cp -Ru masterapi /srv/nginx/pages/gitlabapi/public/
   environment:
     name: api/$CI_BUILD_REF_NAME
     url: http://158.39.74.42:80/
