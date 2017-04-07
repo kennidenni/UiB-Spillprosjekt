@@ -5,6 +5,10 @@
 [SonarQube prosjektet](http://158.39.74.42:9000/dashboard?id=teamdank) Statisk kodeanalyse.
 Prosjektet som ligger der skal i teorien være den nyeste analysen av master.
 
+## API fra origin/master
+[Oppdatert API](http://158.39.74.42:80/) Tester ut deploy.
+første mål er å ha oppdatert API fra master brach på denne adressen.
+
 # Til de som skal rette oblig3
 Vi delte opp i 4 forskjellige grupper som tok seg av forskjellige oppgaver.
 
@@ -61,7 +65,7 @@ importert prosjektene til en IDE skal du kunde se følgende prosjekt:
 # Members:
 Malin Øien (but005)
 
-Bjørnar Herland (kiy005)
+~~Bjørnar Herland (kiy005)~~
 
 Anna Fossen-Helle (afo035)
 
@@ -87,6 +91,6 @@ Eirik Strøm (qaj004)
 
 Amund Lindberg (dag004)
 
-Ola Næss Kaldestad (oka010)
+~~Ola Næss Kaldestad (oka010)~~
 
 Ole Magnus Lie (oli007)
