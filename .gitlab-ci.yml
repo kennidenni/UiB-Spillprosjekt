@@ -55,9 +55,9 @@ apidocs:
     paths:
       - src/car-game/build/docs/javadoc/
       - src/common/build/docs/javadoc/
-      - spooks/build/docs/javadoc/*
-      - nightlife/build/docs/javadoc/*
-      - food-feud/build/docs/javadoc/index.html
+      - src/spooks/build/docs/javadoc/
+      - src/nightlife/build/docs/javadoc/
+      - src/food-feud/build/docs/javadoc/
   stage: build
   only:
     - master
