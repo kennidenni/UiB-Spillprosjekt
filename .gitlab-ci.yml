@@ -100,7 +100,7 @@ sonarqube:
 publiserapi:
   stage: staging
   script:
-    - cp -Ru car-game/build/docs/javadoc/ /srv/nginx/pages/gitlabapi/public/
+    - cp -R car-game/build/docs/javadoc/ /srv/nginx/pages/gitlabapi/public/
   environment:
     name: api/$CI_BUILD_REF_NAME
     url: http://158.39.74.42:80/
