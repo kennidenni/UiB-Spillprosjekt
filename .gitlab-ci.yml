@@ -100,7 +100,8 @@ sonarqube:
 publiserapi:
   stage: staging
   script:
-    - cp -Ru apidocs /srv/nginx/pages/gitlabapi/public/
+    - ls
+    - cp -Ru src/ /srv/nginx/pages/gitlabapi/public/
   environment:
     name: api/$CI_BUILD_REF_NAME
     url: http://158.39.74.42:80/
