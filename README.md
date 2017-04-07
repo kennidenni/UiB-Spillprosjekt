@@ -5,6 +5,10 @@
 [SonarQube prosjektet](http://158.39.74.42:9000/dashboard?id=teamdank) Statisk kodeanalyse.
 Prosjektet som ligger der skal i teorien være den nyeste analysen av master.
 
+## API fra origin/master
+[Oppdatert API](http://158.39.74.42:80/) Tester ut deploy.
+første mål er å ha oppdatert API fra master brach på denne adressen.
+
 # Til de som skal rette oblig3
 Vi delte opp i 4 forskjellige grupper som tok seg av forskjellige oppgaver.
 
