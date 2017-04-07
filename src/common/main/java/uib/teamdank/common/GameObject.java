@@ -17,7 +17,7 @@ public class GameObject {
 	 * Creates a GameObject that spans no area, in the origin (0, 0).
 	 */
 	public GameObject() {
-		this(0, 0);
+		this(new Vector2(0, 0));
 	}
 
 	/**
@@ -27,33 +27,35 @@ public class GameObject {
 	 * @param tRegion
 	 */
 	public GameObject(TextureRegion tRegion) {
-		this(0, 0, tRegion);
+		this(new Vector2(0, 0), tRegion);
 	}
 
 	/**
-	 * Creates a GameObject that spans no area, in the position (x, y).
+	 * Creates a GameObject that spans no area, in the position 
+	 * ({@link Vector2#x}, {@link Vector2#y}).
 	 * 
 	 * @param x
 	 * @param y
 	 */
-	public GameObject(int x, int y) {
-		this(x, y, 0, 0);
+	public GameObject(Vector2 pos) {
+		this(pos, 0, 0);
 	}
 
 	/**
-	 * Creates a GameObject in the position (x, y), that spans the area of the
-	 * given {@link TextureRegion}.
+	 * Creates a GameObject in the position ({@link Vector2#x}, {@link Vector2#y}),
+	 * that spans the area of the given {@link TextureRegion}.
 	 * 
 	 * @param x
 	 * @param y
 	 * @param tRegion
 	 */
-	public GameObject(int x, int y, TextureRegion tRegion) {
-		this(x, y, Math.abs(tRegion.getRegionWidth()), Math.abs(tRegion.getRegionHeight()));
+	public GameObject(Vector2 pos, TextureRegion tRegion) {
+		this(pos, Math.abs(tRegion.getRegionWidth()), Math.abs(tRegion.getRegionHeight()));
 	}
 
 	/**
-	 * Creates a GameObject in the position (x, y), that spans the area (width,
+	 * Creates a GameObject in the position ({@link Vector2#x}, {@link Vector2#y}),
+	 * that spans the area (width,
 	 * height).
 	 * 
 	 * @param x
@@ -62,8 +64,8 @@ public class GameObject {
 	 * @param height
 	 */
 	//Did some assumptions here.
-	public GameObject(int x, int y, int width, int height) {
-		if (x < 0 || y < 0) {
+	public GameObject(Vector2 pos, int width, int height) {
+		if (pos.x < 0 || pos.y < 0) {
 			throw new IllegalArgumentException("Expected positive coordinates.");
 		}
 		if (width < 0 || height < 0) {
@@ -72,7 +74,7 @@ public class GameObject {
 
 		this.width = width;
 		this.height = height;
-		pos = new Vector2(x, y);
+		this.pos = pos;
 	}
 
 	/**
@@ -120,7 +122,7 @@ public class GameObject {
 
 	/**
 	 * 
-	 * @return The current position of this game object.
+	 * @return The current position of this GameObject.
 	 */
 	public Vector2 getPosisiton() {
 		return pos;
