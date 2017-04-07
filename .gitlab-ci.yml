@@ -48,6 +48,20 @@ build master:
   only:
     - master
 
+apidocs:
+  script:
+    - ./gradlew javadoc
+  artifacts:
+    paths:
+      - car-game/build/docs/javadoc/
+      - common/build/docs/javadoc/
+      - spooks/build/docs/javadoc/
+      - nightlife/build/docs/javadoc/
+      - food-feud/build/docs/javadoc/
+  stage: build
+  only:
+    - master
+
 # Sonarqube skann av commit
 sonarqube_branch_preview:
   script:
@@ -76,6 +90,7 @@ sonarqube:
   only:
     - master
 
+    
 # Use the generated build output to run the tests.
 #test:
 #  stage: test
