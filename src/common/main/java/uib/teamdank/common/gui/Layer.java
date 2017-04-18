@@ -58,7 +58,7 @@ public class Layer {
 		Iterator<GameObject> it = gameObjects.iterator();
 		while (it.hasNext()) {
 			GameObject obj = it.next();
-			if (obj.toBeRemoved()) {
+			if (obj.isMarkedForRemoval()) {
 				it.remove();
 			}
 		}
