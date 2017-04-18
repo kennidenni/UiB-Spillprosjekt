@@ -15,6 +15,7 @@ public class CarGame extends Game {
 	StartMenuScreen startMenuScreen;
 	GameScreen gameScreen;
 	PauseMenuScreen pauseMenuScreen;
+	SpriteBatch batch;
 	String title = "Carl The Crasher";
 	
 	public static void main(String[] args) {
@@ -26,6 +27,7 @@ public class CarGame extends Game {
 		startMenuScreen = new uib.teamdank.cargame.gui.StartMenuScreen();
 		gameScreen = new uib.teamdank.cargame.gui.GameScreen();
 		pauseMenuScreen = new uib.teamdank.cargame.gui.PauseMenuScreen();
+		batch = new SpriteBatch();
 		setScreen(startMenuScreen);
 	}
 
@@ -51,7 +53,11 @@ public class CarGame extends Game {
 
 	@Override
 	public SpriteBatch getSpriteBatch() {
-		// TODO Auto-generated method stub
-		return null;
+		return batch;
+	}
+	
+	@Override 
+	public void dispose() {
+		batch.dispose();
 	}
 }
