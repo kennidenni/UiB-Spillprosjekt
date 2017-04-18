@@ -1,55 +1,24 @@
 package uib.teamdank.spooks.gui;
 
-import uib.teamdank.common.gui.Layer;
+import java.util.Objects;
+
+import uib.teamdank.common.Game;
 import uib.teamdank.spooks.Room;
 
 /**
  * The main gameplay screen.
  */
-public class GameScreen implements uib.teamdank.common.gui.GameScreen {
+public class GameScreen extends uib.teamdank.common.gui.GameScreen {
+
+	private Room currentRoom;
 	
-	@Override
-	public void addLayer(Layer layer) {
-		// TODO Auto-generated method stub
-	}
-	
-	@Override
-	public void dispose() {
-		// TODO Auto-generated method stub
-	}
-
-	@Override
-	public void hide() {
-		// TODO Auto-generated method stub
-	}
-
-	@Override
-	public void pause() {
-		// TODO Auto-generated method stub
-	}
-
-	@Override
-	public void render(float delta) {
-		// TODO Auto-generated method stub
-	}
-
-	@Override
-	public void resize(int width, int height) {
-		// TODO Auto-generated method stub
-	}
-
-	@Override
-	public void resume() {
-		// TODO Auto-generated method stub
+	public GameScreen(Game game) {
+		super(game);
 	}
 
 	public void setRoom(Room room) {
-		// TODO Auto-generated method stub
-	}
-
-	@Override
-	public void show() {
-		// TODO Auto-generated method stub
+		Objects.requireNonNull(room, "room cannot be null");
+		this.currentRoom = room;
 	}
 
 }
