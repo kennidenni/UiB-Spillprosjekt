@@ -1,3 +1,5 @@
+package uib.teamdank.common;
+
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import org.junit.Before;
@@ -9,13 +11,8 @@ import java.util.Random;
 import static org.hamcrest.core.Is.is;
 import static org.hamcrest.core.IsEqual.equalTo;
 import static org.junit.Assert.assertThat;
-import static org.junit.Assert.fail;
 import static org.mockito.Mockito.*;
 
-/**
- * TODO: With actual textures?
- *
- */
 public class GameObjTests {
 	
 	private final Random r = new Random();
@@ -25,7 +22,6 @@ public class GameObjTests {
 	
 	private GameObject obj;
 	
-	private Vector2 pos;
 	private int width, height;
 	
 	@Before

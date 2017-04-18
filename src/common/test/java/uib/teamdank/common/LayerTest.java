@@ -97,14 +97,14 @@ public class LayerTest {
 		testAddGameObjectsToLayer();
 
 		l.forEachGameObject((gObj -> {
-			when(gObj.toBeRemoved()).thenReturn(false);
+			when(gObj.isMarkedForRemoval()).thenReturn(false);
 		}));
 		l.removeMarkedGameObjects();
 
 		assertEquals(21, l.getSize());
 
 		l.forEachGameObject((gObj -> {
-			when(gObj.toBeRemoved()).thenReturn(true);
+			when(gObj.isMarkedForRemoval()).thenReturn(true);
 		}));
 		l.removeMarkedGameObjects();
 		

@@ -123,7 +123,7 @@ public class GameScreenTest {
 		Layer l = new Layer(false);
 		when(mockO1.getPosisiton()).thenReturn(new Vector2(1, 1));
 		when(mockO1.getVelocity()).thenReturn(new Vector2(1, 2));
-		when(mockO1.toBeRemoved()).thenReturn(false);
+		when(mockO1.isMarkedForRemoval()).thenReturn(false);
 		l.addGameObject(mockO1);
 		
 		gs.addLayer(l);

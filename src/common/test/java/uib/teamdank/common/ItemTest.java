@@ -1,3 +1,5 @@
+package uib.teamdank.common;
+
 import org.junit.Before;
 import org.junit.Test;
 import uib.teamdank.common.Item;
