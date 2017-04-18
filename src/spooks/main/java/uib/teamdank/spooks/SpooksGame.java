@@ -15,6 +15,8 @@ public class SpooksGame extends Game {
 	private StartMenuScreen startMenuScreen;
     private GameScreen gameScreen;
 	private PauseMenuScreen pauseMenuScreen;
+	private static final String title = "Spooks";
+	private SpriteBatch batch;
 
     public static void main(String[] args){
         LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
@@ -27,15 +29,9 @@ public class SpooksGame extends Game {
 
 	@Override
 	public void create() {
-<<<<<<< HEAD
-		startMenuScreen = new uib.teamdank.spooks.gui.StartMenuScreen();
-		gameScreen = new uib.teamdank.spooks.gui.GameScreen();
-		pauseMenuScreen = new uib.teamdank.spooks.gui.PauseMenuScreen();
-=======
 		startMenuScreen = new StartMenuScreen();
 		gameScreen = new GameScreen(this);
 		pauseMenuScreen = new PauseMenuScreen();
->>>>>>> master
 		setScreen(startMenuScreen);
 	}
 
@@ -56,14 +52,16 @@ public class SpooksGame extends Game {
 
 	@Override
 	public String getTitle() {
-		// TODO Auto-generated method stub
-		return null;
+		return title;
 	}
 
 	@Override
 	public SpriteBatch getSpriteBatch() {
-		// TODO Auto-generated method stub
-		return null;
+		return batch;
 	}
 	
+	@Override 
+	public void dispose() {
+		batch.dispose();
+	}
 }

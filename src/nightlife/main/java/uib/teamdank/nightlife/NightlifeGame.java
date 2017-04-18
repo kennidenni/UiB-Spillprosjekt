@@ -13,13 +13,15 @@ import uib.teamdank.nightlife.gui.StartMenuScreen;
  */
 public class NightlifeGame extends Game {
 	private StartMenuScreen startMenuScreen;
-	private GameScreen gameScreen;
+    private GameScreen gameScreen;
 	private PauseMenuScreen pauseMenuScreen;
+	private static final String title = "NightlifeGame";
+	private SpriteBatch batch;
 
     public static void main(String[] args){
         LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
         config.fullscreen = true;
-        config.title = "Nightlife";
+        config.title = "NightlifeGame";
         config.width = 1280;
         config.height = 720;
         new LwjglApplication(new NightlifeGame(), config) ;
@@ -27,15 +29,9 @@ public class NightlifeGame extends Game {
 
 	@Override
 	public void create() {
-<<<<<<< HEAD
-		startMenuScreen = new uib.teamdank.nightlife.gui.StartMenuScreen();
-		gameScreen = new uib.teamdank.nightlife.gui.GameScreen();
-		pauseMenuScreen = new uib.teamdank.nightlife.gui.PauseMenuScreen();
-=======
 		startMenuScreen = new StartMenuScreen();
 		gameScreen = new GameScreen(this);
 		pauseMenuScreen = new PauseMenuScreen();
->>>>>>> master
 		setScreen(startMenuScreen);
 	}
 
@@ -56,13 +52,16 @@ public class NightlifeGame extends Game {
 
 	@Override
 	public String getTitle() {
-		// TODO Auto-generated method stub
-		return null;
+		return title;
 	}
 
 	@Override
 	public SpriteBatch getSpriteBatch() {
-		// TODO Auto-generated method stub
-		return null;
+		return batch;
+	}
+	
+	@Override 
+	public void dispose() {
+		batch.dispose();
 	}
 }

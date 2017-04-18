@@ -8,13 +8,16 @@ import uib.teamdank.foodfeud.gui.GameScreen;
 import uib.teamdank.foodfeud.gui.PauseMenuScreen;
 import uib.teamdank.foodfeud.gui.StartMenuScreen;
 
+
 /**
  * The main game class for Food Feud.
  */
 public class FoodFeud extends Game {
 	private StartMenuScreen startMenuScreen;
-	private GameScreen gameScreen;
+    private GameScreen gameScreen;
 	private PauseMenuScreen pauseMenuScreen;
+	private static final String title = "FoodFeud";
+	private SpriteBatch batch;
 
     public static void main(String[] args){
         LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
@@ -27,15 +30,9 @@ public class FoodFeud extends Game {
 
 	@Override
 	public void create() {
-<<<<<<< HEAD
-		startMenuScreen = new uib.teamdank.foodfeud.gui.StartMenuScreen();
-		gameScreen = new uib.teamdank.foodfeud.gui.GameScreen();
-		pauseMenuScreen = new uib.teamdank.foodfeud.gui.PauseMenuScreen();
-=======
 		startMenuScreen = new StartMenuScreen();
 		gameScreen = new GameScreen(this);
 		pauseMenuScreen = new PauseMenuScreen();
->>>>>>> master
 		setScreen(startMenuScreen);
 	}
 
@@ -56,14 +53,16 @@ public class FoodFeud extends Game {
 
 	@Override
 	public String getTitle() {
-		// TODO Auto-generated method stub
-		return null;
+		return title;
 	}
 
 	@Override
 	public SpriteBatch getSpriteBatch() {
-		// TODO Auto-generated method stub
-		return null;
+		return batch;
 	}
 	
+	@Override 
+	public void dispose() {
+		batch.dispose();
+	}
 }
