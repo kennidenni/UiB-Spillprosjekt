@@ -54,3 +54,17 @@ project(':teamdank-spooks') {
 		compile project(':teamdank-common')
 	}
 }
+
+def exportedProjects= [
+        ":teamdank-common",
+        ":teamdank-cargame",
+        ":teamdank-foodfeud",
+        ":teamdank-nightlife",
+        ":teamdank-spooks"
+]
+
+task alljavadoc(type: Javadoc) {
+    source exportedProjects.collect { project(it).sourceSets.main.allJava }
+    classpath = files(exportedProjects.collect { project(it).sourceSets.main.compileClasspath })
+    destinationDir = file("docs/javadoc")
+}
