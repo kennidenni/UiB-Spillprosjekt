@@ -33,7 +33,7 @@ public class NightlifeGame extends Game {
 		pauseMenuScreen = new uib.teamdank.nightlife.gui.PauseMenuScreen();
 =======
 		startMenuScreen = new StartMenuScreen();
-		gameScreen = new GameScreen();
+		gameScreen = new GameScreen(this);
 		pauseMenuScreen = new PauseMenuScreen();
 >>>>>>> master
 		setScreen(startMenuScreen);

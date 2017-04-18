@@ -33,7 +33,7 @@ public class SpooksGame extends Game {
 		pauseMenuScreen = new uib.teamdank.spooks.gui.PauseMenuScreen();
 =======
 		startMenuScreen = new StartMenuScreen();
-		gameScreen = new GameScreen();
+		gameScreen = new GameScreen(this);
 		pauseMenuScreen = new PauseMenuScreen();
 >>>>>>> master
 		setScreen(startMenuScreen);
