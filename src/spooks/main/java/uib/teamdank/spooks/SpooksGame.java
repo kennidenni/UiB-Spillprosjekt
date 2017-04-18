@@ -28,7 +28,7 @@ public class SpooksGame extends Game {
 	@Override
 	public void create() {
 		startMenuScreen = new StartMenuScreen();
-		gameScreen = new GameScreen();
+		gameScreen = new GameScreen(this);
 		pauseMenuScreen = new PauseMenuScreen();
 		setScreen(startMenuScreen);
 	}

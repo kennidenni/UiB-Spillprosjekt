@@ -105,10 +105,12 @@ public class GameScreen implements Screen {
 		forEachGameObject(gameObject -> {
 			
 			// Calculate movement
-			Vector2 pos = gameObject.getPosisiton();
-			Vector2 vel = gameObject.getVelocity();
-			pos.x += (vel.x * delta);
-			pos.y += (vel.y * delta);
+			if (gameObject.isMovable()) {
+				Vector2 pos = gameObject.getPosisiton();
+				Vector2 vel = gameObject.getVelocity();
+				pos.x += (vel.x * delta);
+				pos.y += (vel.y * delta);
+			}
 			
 		});
 		
