@@ -131,9 +131,8 @@ public class GameObject {
 	 * 
 	 * @return Whether or not this GameObject can move.
 	 */
-	// TODO: Subclasses must remember to override
 	public boolean isMovable() {
-		return false;
+		return true;
 	}
 
 	/**

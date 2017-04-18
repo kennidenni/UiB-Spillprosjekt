@@ -119,17 +119,17 @@ public class GameScreenTest {
 	 */
 	@Test
 	public void testUpdateInGameScreen() {
-		GameObject mockO1 = mock(GameObject.class);
+		GameObject obj = new GameObject();
+		obj.getPosisiton().set(1, 1);
+		obj.getVelocity().set(1, 2);
+		
 		Layer l = new Layer(false);
-		when(mockO1.getPosisiton()).thenReturn(new Vector2(1, 1));
-		when(mockO1.getVelocity()).thenReturn(new Vector2(1, 2));
-		when(mockO1.isMarkedForRemoval()).thenReturn(false);
-		l.addGameObject(mockO1);
+		l.addGameObject(obj);
 		
 		gs.addLayer(l);
 		gs.update(1);
 		
-		assertEquals(new Vector2(2, 3), mockO1.getPosisiton());
+		assertEquals(new Vector2(2, 3), obj.getPosisiton());
 	}
 	
 	
