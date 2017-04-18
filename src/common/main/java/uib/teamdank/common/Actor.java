@@ -5,9 +5,9 @@ package uib.teamdank.common;
  */
 public class Actor extends GameObject {
 
-	private int maxHealth;
+	private final int maxHealth;
 	private int currentHealth;
-	private String name;
+	private final String name;
 
 	public Actor(){
 	    this(100, 100, "Default");
@@ -62,7 +62,6 @@ public class Actor extends GameObject {
 		this.currentHealth = this.currentHealth - amount;
 		if (this.currentHealth <= 0)
 		    this.currentHealth = 0;
-			this.remove();
 	}
 
 	/**
