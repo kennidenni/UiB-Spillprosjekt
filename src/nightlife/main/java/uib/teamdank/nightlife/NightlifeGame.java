@@ -12,14 +12,16 @@ import uib.teamdank.nightlife.gui.StartMenuScreen;
  * The main class for Nightlife.
  */
 public class NightlifeGame extends Game {
+	private static final String TITLE = "Nightlife";
 	private StartMenuScreen startMenuScreen;
-	private GameScreen gameScreen;
+    private GameScreen gameScreen;
 	private PauseMenuScreen pauseMenuScreen;
+	private SpriteBatch batch;
 
     public static void main(String[] args){
         LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
         config.fullscreen = true;
-        config.title = "Nightlife";
+        config.title = TITLE;
         config.width = 1280;
         config.height = 720;
         new LwjglApplication(new NightlifeGame(), config) ;
@@ -50,13 +52,18 @@ public class NightlifeGame extends Game {
 
 	@Override
 	public String getTitle() {
-		// TODO Auto-generated method stub
-		return null;
+		return TITLE;
 	}
 
 	@Override
 	public SpriteBatch getSpriteBatch() {
-		// TODO Auto-generated method stub
-		return null;
+		return batch;
+	}
+	
+	@Override 
+	public void dispose() {
+		super.dispose();
+		batch.dispose();
+		screen.dispose();
 	}
 }
