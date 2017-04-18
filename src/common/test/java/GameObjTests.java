@@ -1,17 +1,16 @@
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Vector2;
+import org.junit.Before;
+import org.junit.Test;
+import uib.teamdank.common.GameObject;
+
+import java.util.Random;
+
 import static org.hamcrest.core.Is.is;
 import static org.hamcrest.core.IsEqual.equalTo;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.fail;
-
-import java.util.Random;
-
-import org.junit.Before;
-import org.junit.Test;
-
-import com.badlogic.gdx.math.Vector2;
-
-
-import uib.teamdank.common.GameObject;
+import static org.mockito.Mockito.*;
 
 /**
  * TODO: With actual textures?
@@ -35,9 +34,10 @@ public class GameObjTests {
 		int y = r.nextInt(HIGHER - LOWER) + LOWER;
 		width = r.nextInt(HIGHER - LOWER) + LOWER;
 		height = r.nextInt(HIGHER - LOWER) + LOWER;
-		
-		pos = new Vector2(x, y);
-		obj = new GameObject(pos, width, height);
+		TextureRegion texture = mock(TextureRegion.class);
+        when(texture.getRegionWidth()).thenReturn(width);
+        when(texture.getRegionHeight()).thenReturn(height);
+		obj = new GameObject(x, y, texture);
 	}
 	
 	
@@ -66,29 +66,14 @@ public class GameObjTests {
 		int x = r.nextInt(HIGHER);
 		int y = r.nextInt(HIGHER);
 		Vector2 p = new Vector2(x, y);
-		obj.setPosition(p);
+		obj.getPosisiton().set(p);
 		assertThat(p, is(equalTo(obj.getPosisiton())));
 	}
 	
 	@Test
 	public void velocityChanges() {
 		Vector2 v = new Vector2(r.nextFloat(), r.nextFloat());
-		obj.setVelocity(v);
+		obj.getVelocity().set(v);
 		assertThat(v, is(equalTo(obj.getVelocity())));
 	}
-	
-	@Test
-	public void failsWithNegativeSize() {
-		try {
-			new GameObject(pos, -width, -height);
-			fail("GameObject with negative size passed through");
-		} catch (IllegalArgumentException i) {}
-	}
-	
-	@Test
-	public void hasNoTexture() {
-		assertThat(null, is(equalTo(obj.getTexture())));
-	}
-	
-
 }
