@@ -16,13 +16,7 @@ subprojects {
 
 	sourceSets.main.java.srcDirs = [ 'src/' ]
 	sourceSets.main.java.srcDirs = [ 'main/java', 'main/resources']
-        sourceSets{
-          test{
-             resources{
-                srcDir "test"
-             }
-          }
-        }
+  sourceSets.test.java.srcDirs = [ 'test/java', 'test/resources']
 }
 
 project(':teamdank-common') {
