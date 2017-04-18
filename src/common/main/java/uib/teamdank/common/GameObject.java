@@ -63,11 +63,7 @@ public class GameObject {
 	 * @param width
 	 * @param height
 	 */
-	//Did some assumptions here.
 	public GameObject(Vector2 pos, int width, int height) {
-		if (pos.x < 0 || pos.y < 0) {
-			throw new IllegalArgumentException("Expected positive coordinates.");
-		}
 		if (width < 0 || height < 0) {
 			throw new IllegalArgumentException("Width and height must be positive.");
 		}
