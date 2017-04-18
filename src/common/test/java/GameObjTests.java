@@ -57,8 +57,8 @@ public class GameObjTests {
 	
 	@Test
 	public void marksForRemoval() {
-		obj.remove();
-		assertThat(true, is(equalTo(obj.toBeRemoved())));
+		obj.markForRemoval();
+		assertThat(true, is(equalTo(obj.isMarkedForRemoval())));
 	}
 	
 	@Test
@@ -75,16 +75,6 @@ public class GameObjTests {
 		Vector2 v = new Vector2(r.nextFloat(), r.nextFloat());
 		obj.setVelocity(v);
 		assertThat(v, is(equalTo(obj.getVelocity())));
-	}
-	
-	@Test
-	public void failsWithNegativePos() {
-		try {
-			float x = -pos.x;
-			float y = -pos.y;
-			new GameObject(new Vector2(x, y), width, height);
-			fail("Position with negative coordinate passed through");
-		} catch (IllegalArgumentException i) {}
 	}
 	
 	@Test

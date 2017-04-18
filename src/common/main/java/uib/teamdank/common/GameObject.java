@@ -102,8 +102,7 @@ public class GameObject {
 	/**
 	 * Mark this object for removal.
 	 */
-	// TODO: Rename to markForRemoval (?)
-	public void remove() {
+	public void markForRemoval() {
 		marked = true;
 	}
 
@@ -111,8 +110,7 @@ public class GameObject {
 	 *
 	 * @return Whether or not this object is marked for removal.
 	 */
-	// TODO: Rename to isMarkedForRemoval (?)
-	public boolean toBeRemoved() {
+	public boolean isMarkedForRemoval() {
 		return marked;
 	}
 
