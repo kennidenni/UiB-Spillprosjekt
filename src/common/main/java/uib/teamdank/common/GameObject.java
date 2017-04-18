@@ -155,6 +155,14 @@ public class GameObject {
 		return tRegion;
 	}
 
+    /**
+     * Sets the texture of this object
+     * @param texture
+     */
+	public void setTexture(TextureRegion texture){
+	    this.tRegion = texture;
+    }
+
 	/**
 	 * 
 	 * @return Whether or not this GameObject can move.
