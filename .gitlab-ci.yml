@@ -56,15 +56,11 @@ build master:
 
 apidocs:
   script:
-    - ./gradlew javadoc
+    - ./gradlew alljavadoc
   artifacts:
     name: "masterapi"
     paths:
-      - src/car-game/build/docs/javadoc/
-      - src/common/build/docs/javadoc/
-      - src/spooks/build/docs/javadoc/
-      - src/nightlife/build/docs/javadoc/
-      - src/food-feud/build/docs/javadoc/
+      - src/docs/javadoc/
   stage: build
   only:
     - master
