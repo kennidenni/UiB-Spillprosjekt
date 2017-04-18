@@ -8,21 +8,20 @@ import uib.teamdank.foodfeud.gui.GameScreen;
 import uib.teamdank.foodfeud.gui.PauseMenuScreen;
 import uib.teamdank.foodfeud.gui.StartMenuScreen;
 
-
 /**
  * The main game class for Food Feud.
  */
 public class FoodFeud extends Game {
+	private static final String TITLE = "Food Feud";
 	private StartMenuScreen startMenuScreen;
     private GameScreen gameScreen;
 	private PauseMenuScreen pauseMenuScreen;
-	private static final String title = "FoodFeud";
 	private SpriteBatch batch;
 
     public static void main(String[] args){
         LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
         config.fullscreen = true;
-        config.title = "FoodFeud";
+        config.title = TITLE;
         config.width = 1280;
         config.height = 720;
         new LwjglApplication(new FoodFeud(), config) ;
@@ -53,7 +52,7 @@ public class FoodFeud extends Game {
 
 	@Override
 	public String getTitle() {
-		return title;
+		return TITLE;
 	}
 
 	@Override
@@ -63,6 +62,8 @@ public class FoodFeud extends Game {
 	
 	@Override 
 	public void dispose() {
+		super.dispose();
 		batch.dispose();
+		screen.dispose();
 	}
 }
