@@ -15,7 +15,14 @@ subprojects {
     targetCompatibility = 1.8
 
 	sourceSets.main.java.srcDirs = [ 'src/' ]
-	sourceSets.main.java.srcDirs = [ 'main/java', 'main/resources', 'test/java', 'test/resources']
+	sourceSets.main.java.srcDirs = [ 'main/java', 'main/resources']
+        sourceSets{
+          test{
+             resources{
+                srcDir "test"
+             }
+          }
+        }
 }
 
 project(':teamdank-common') {
@@ -26,8 +33,8 @@ project(':teamdank-common') {
 		compile 'com.badlogicgames.gdx:gdx-box2d:1.9.6'
 		compile 'com.badlogicgames.gdx:gdx-box2d-platform:1.9.6:natives-desktop'
 		compile 'org.slf4j:slf4j-api:1.7.13'
-	  compile 'junit:junit:4.12'
-	  compile 'org.mockito:mockito-all:1.9.5'
+	       testCompile 'junit:junit:4.12'
+	       testCompile 'org.mockito:mockito-all:1.9.5'
 	}
 }
 
