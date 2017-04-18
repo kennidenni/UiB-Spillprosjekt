@@ -12,9 +12,9 @@ import uib.teamdank.spooks.gui.StartMenuScreen;
  * The main game class for Spooks.
  */
 public class SpooksGame extends Game {
-	StartMenuScreen startMenuScreen;
-	GameScreen gameScreen;
-	PauseMenuScreen pauseMenuScreen;
+	private StartMenuScreen startMenuScreen;
+    private GameScreen gameScreen;
+	private PauseMenuScreen pauseMenuScreen;
 
     public static void main(String[] args){
         LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
