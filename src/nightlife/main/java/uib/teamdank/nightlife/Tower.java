@@ -8,8 +8,12 @@ import uib.teamdank.common.Upgradeable;
  * A player-owned tower.
  */
 public class Tower extends Item implements Upgradeable {
-	
-	@Override
+
+    public Tower(String n, String d) {
+        super(n, d);
+    }
+
+    @Override
 	public void applyUpgrade(Upgrade upgrade) {
 		// TODO Auto-generated method stub
 	}

@@ -7,103 +7,142 @@ import com.badlogic.gdx.math.Vector2;
  * Represent an object in a game.
  */
 public class GameObject {
-	
+
+	private boolean marked;
+	private final Vector2 pos = new Vector2();
+    private final Vector2 velocity = new Vector2();
+	private TextureRegion tRegion;
+
 	/**
-	 * @return whether the given coordinates are contained within this game
-	 *         object
+	 * Creates a GameObject that spans no area, in the origin (0, 0).
+	 */
+	public GameObject() {
+		this(null);
+	}
+
+	/**
+	 * Creates a GameObject in the origin, that spans the area of the given
+	 * {@link TextureRegion}.
+	 * 
+	 * @param tRegion
+	 */
+	public GameObject(TextureRegion tRegion) {
+		this(0,0, tRegion);
+	}
+
+	/**
+	 * Creates a GameObject that spans no area, in the position 
+	 * ({@link Vector2#x}, {@link Vector2#y}).
+	 * 
+	 * @param x
+	 * @param y
+	 */
+	public GameObject(float x, float y) {
+		this(x, y, null);
+	}
+
+	/**
+	 * Creates a GameObject in the position ({@link Vector2#x}, {@link Vector2#y}),
+	 * that spans the area of the given {@link TextureRegion}.
+	 * 
+	 * @param x
+	 * @param y
+	 * @param tRegion
+	 */
+	public GameObject(float x, float y, TextureRegion tRegion) {
+	    this.pos.set(x, y);
+	    setTexture(tRegion);
+	}
+
+	/**
+	 * 
+	 * @param x
+	 * @param y
+	 * @return Whether the given coordinates are contained within this GameObject.
 	 */
 	public boolean contains(double x, double y) {
-		// TODO Auto-generated method stub
-		return false;
+		return x >= pos.x && x <= (pos.x + getWidth()) && y >= pos.y && y <= (pos.y + getHeight());
+	}
+
+	/**
+	 * 
+	 * @return The width of this GameObject.
+	 */
+	public int getWidth() {
+		return tRegion.getRegionWidth();
 	}
 
 	/**
 	 *
-	 * @return height of object
+	 * @return The height of this GameObject.
 	 */
 	public int getHeight() {
-		// TODO Auto-generated method stub
-		return -1;
+		return tRegion.getRegionHeight();
 	}
 
 	/**
-	 * remove this object
+	 * Mark this object for removal.
 	 */
-	public void remove(){
-		// TODO Auto-generated method stub
+	public void markForRemoval() {
+		marked = true;
 	}
 
 	/**
 	 *
-	 * @return true if object is to be removed in the next step, false otherwise
+	 * @return Whether or not this object is marked for removal.
 	 */
-	public boolean toBeRemoved(){
-		return true;
+	public boolean isMarkedForRemoval() {
+		return marked;
 	}
+
 	/**
 	 * 
-	 * @return the current position of this game object
+	 * @return The current position of this GameObject.
 	 */
 	public Vector2 getPosisiton() {
-		// TODO Auto-generated method stub
-		return null;
+		return pos;
 	}
 
 	/**
-	 * 
-	 * @return the image representation of this game object
-	 */
-	public TextureRegion getTexture() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	/**
-	 * @return the current velocity of this game object
+	 * @return The current velocity of this GameObject.
 	 */
 	public Vector2 getVelocity() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public int getWidth() {
-		// TODO Auto-generated method stub
-		return -1;
+		return velocity;
 	}
 
 	/**
 	 * 
-	 * @return whether or not this game object can move
+	 * @return The rectangular area eventually containing a texture that is the
+	 *         image representation of this GameObject.
 	 */
+	public TextureRegion getTexture() {
+		return tRegion;
+	}
+
+    /**
+     * Sets the texture of this object
+     * @param texture
+     */
+	public void setTexture(TextureRegion texture){
+	    this.tRegion = texture;
+    }
+
+	/**
+	 * 
+	 * @return Whether or not this GameObject can move.
+	 */
+	// TODO: Subclasses must remember to override
 	public boolean isMovable() {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	/**
-	 * @return whether or not this game object can share space with other
-	 *         objects
+	 * @return Whether or not this GameObject can share space with other
+	 *         GameObject's.
 	 */
+	// TODO: Subclasses must remember to override
 	public boolean isSolid() {
-		// TODO Auto-generated method stub
 		return false;
-	}
-
-	/**
-	 * 
-	 * @param position
-	 *            the new position of this game object
-	 */
-	public void setPosition(Vector2 position) {
-		// TODO Auto-generated method stub
-	}
-
-	/**
-	 * @param velocity
-	 *            the new velocity of this game object
-	 */
-	public void setVelocity(Vector2 velocity) {
-		// TODO Auto-generated method stub
 	}
 
 }

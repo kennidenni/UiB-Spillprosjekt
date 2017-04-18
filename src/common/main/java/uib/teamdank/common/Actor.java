@@ -5,10 +5,23 @@ package uib.teamdank.common;
  */
 public class Actor extends GameObject {
 
-	private int maxHealth;
+	private final int maxHealth;
 	private int currentHealth;
-	private String name;
+	private final String name;
 
+	public Actor(){
+	    this(100, 100, "Default");
+    }
+	public Actor (int h, String n){
+	    this(h, h, n);
+    }
+
+    public Actor (int mh, int ch, String n){
+	    super();
+	    this.maxHealth = mh;
+	    this.currentHealth = ch;
+	    this.name = n;
+    }
 	/**
 	 * @return how much health this actor currently has (if it is {@code zero},
 	 *         the actor is dead)
@@ -48,7 +61,7 @@ public class Actor extends GameObject {
 	public void decreaseHealth(int amount) {
 		this.currentHealth = this.currentHealth - amount;
 		if (this.currentHealth <= 0)
-			this.remove();
+		    this.currentHealth = 0;
 	}
 
 	/**
@@ -59,7 +72,7 @@ public class Actor extends GameObject {
 	 *            the new health of this actor
 	 */
 	public void setHealth(int health) {
-		if (health <= 0 || health > this.maxHealth)
+		if (health < 0 || health > this.maxHealth)
 			throw new IllegalArgumentException();
 		this.currentHealth = health;
 	}

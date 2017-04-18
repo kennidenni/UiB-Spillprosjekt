@@ -15,19 +15,26 @@ subprojects {
     targetCompatibility = 1.8
 
 	sourceSets.main.java.srcDirs = [ 'src/' ]
-	sourceSets.main.java.srcDirs = [ 'main/java', 'main/resources', 'test/java', 'test/resources']
+	sourceSets.main.java.srcDirs = [ 'main/java', 'main/resources']
+        sourceSets{
+          test{
+             resources{
+                srcDir "test"
+             }
+          }
+        }
 }
 
 project(':teamdank-common') {
 	dependencies {
-	    compile 'com.badlogicgames.gdx:gdx:1.9.6'
+	  compile 'com.badlogicgames.gdx:gdx:1.9.6'
 		compile 'com.badlogicgames.gdx:gdx-backend-lwjgl:1.9.6'
 		compile 'com.badlogicgames.gdx:gdx-platform:1.9.6:natives-desktop'
 		compile 'com.badlogicgames.gdx:gdx-box2d:1.9.6'
 		compile 'com.badlogicgames.gdx:gdx-box2d-platform:1.9.6:natives-desktop'
 		compile 'org.slf4j:slf4j-api:1.7.13'
-	    compile 'junit:junit:4.12'
-	    compile 'org.mockito:mockito-all:1.9.5'
+	       testCompile 'junit:junit:4.12'
+	       testCompile 'org.mockito:mockito-all:1.9.5'
 	}
 }
 
@@ -53,4 +60,18 @@ project(':teamdank-spooks') {
 	dependencies {
 		compile project(':teamdank-common')
 	}
+}
+
+def exportedProjects= [
+        ":teamdank-common",
+        ":teamdank-cargame",
+        ":teamdank-foodfeud",
+        ":teamdank-nightlife",
+        ":teamdank-spooks"
+]
+
+task alljavadoc(type: Javadoc) {
+    source exportedProjects.collect { project(it).sourceSets.main.allJava }
+    classpath = files(exportedProjects.collect { project(it).sourceSets.main.compileClasspath })
+    destinationDir = file("docs/javadoc")
 }

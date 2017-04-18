@@ -1,28 +1,41 @@
 package uib.teamdank.foodfeud;
 
+import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
+import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import uib.teamdank.common.Game;
-import uib.teamdank.common.gui.GameScreen;
-import uib.teamdank.common.gui.PauseMenuScreen;
-import uib.teamdank.common.gui.StartMenuScreen;
+import uib.teamdank.foodfeud.gui.GameScreen;
+import uib.teamdank.foodfeud.gui.PauseMenuScreen;
+import uib.teamdank.foodfeud.gui.StartMenuScreen;
 
 /**
  * The main game class for Food Feud.
  */
 public class FoodFeud extends Game {
-	StartMenuScreen startMenuScreen;
-	GameScreen gameScreen;
-	PauseMenuScreen pauseMenuScreen;
+	private StartMenuScreen startMenuScreen;
+	private GameScreen gameScreen;
+	private PauseMenuScreen pauseMenuScreen;
 
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-	}
+    public static void main(String[] args){
+        LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
+        config.fullscreen = true;
+        config.title = "FoodFeud";
+        config.width = 1280;
+        config.height = 720;
+        new LwjglApplication(new FoodFeud(), config) ;
+    }
 
 	@Override
 	public void create() {
+<<<<<<< HEAD
 		startMenuScreen = new uib.teamdank.foodfeud.gui.StartMenuScreen();
 		gameScreen = new uib.teamdank.foodfeud.gui.GameScreen();
 		pauseMenuScreen = new uib.teamdank.foodfeud.gui.PauseMenuScreen();
+=======
+		startMenuScreen = new StartMenuScreen();
+		gameScreen = new GameScreen();
+		pauseMenuScreen = new PauseMenuScreen();
+>>>>>>> master
 		setScreen(startMenuScreen);
 	}
 
