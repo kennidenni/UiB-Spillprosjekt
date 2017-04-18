@@ -15,7 +15,8 @@ public class CarGame extends Game {
 	StartMenuScreen startMenuScreen;
 	GameScreen gameScreen;
 	PauseMenuScreen pauseMenuScreen;
-
+	String title = "Carl The Crasher";
+	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 	}
@@ -45,8 +46,7 @@ public class CarGame extends Game {
 
 	@Override
 	public String getTitle() {
-		// TODO Auto-generated method stub
-		return null;
+		return title;
 	}
 
 	@Override
