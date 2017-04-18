@@ -9,7 +9,6 @@ import uib.teamdank.cargame.gui.PauseMenuScreen;
 import uib.teamdank.cargame.gui.StartMenuScreen;
 
 
-
 /**
  * The main game class for Car Game.
  */
@@ -22,7 +21,6 @@ public class CarGame extends Game {
 
     public static void main(String[] args){
     	LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
-        config.fullscreen = true;
         config.title = TITLE;
         config.width = 1280;
         config.height = 720;
