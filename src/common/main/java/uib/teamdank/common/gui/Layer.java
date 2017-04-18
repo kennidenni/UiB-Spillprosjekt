@@ -1,10 +1,10 @@
 package uib.teamdank.common.gui;
 
-import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Objects;
 import java.util.function.Consumer;
+
+import com.badlogic.gdx.utils.Array;
 
 import uib.teamdank.common.GameObject;
 
@@ -12,7 +12,7 @@ import uib.teamdank.common.GameObject;
  * A layer of {@link GameObject}s.
  */
 public class Layer {
-	private final List<GameObject> gameObjects = new ArrayList<>();
+	private final Array<GameObject> gameObjects = new Array<>();
 
 	private boolean solid;
 
@@ -38,7 +38,7 @@ public class Layer {
 	 * @return amount of game objects in this layer
 	 */
 	public int getSize() {
-		return gameObjects.size();
+		return gameObjects.size;
 	}
 
 	/**
