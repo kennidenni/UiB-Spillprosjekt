@@ -14,30 +14,14 @@ import uib.teamdank.common.Game;
  * The main game class for Car Game.
  */
 public class CarGame extends Game {
-<<<<<<< HEAD
-	StartMenuScreen startMenuScreen;
-	GameScreen gameScreen;
-	PauseMenuScreen pauseMenuScreen;
-	SpriteBatch batch;
-	String title = "Carl The Crasher";
-	
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-	}
-	
-	@Override
-	public void create() {
-		startMenuScreen = new uib.teamdank.cargame.gui.StartMenuScreen();
-		gameScreen = new uib.teamdank.cargame.gui.GameScreen();
-		pauseMenuScreen = new uib.teamdank.cargame.gui.PauseMenuScreen();
-		batch = new SpriteBatch();
-=======
 	private StartMenuScreen startMenuScreen;
 	private GameScreen gameScreen;
 	private PauseMenuScreen pauseMenuScreen;
+	private static final String title = "Carl the Crasher";
+	private SpriteBatch batch;
 
     public static void main(String[] args){
-        LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
+    	LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
         config.fullscreen = true;
         config.title = "CarGame";
         config.width = 1280;
@@ -48,9 +32,9 @@ public class CarGame extends Game {
 	@Override
 	public void create() {
 		startMenuScreen = new StartMenuScreen();
-		gameScreen = new GameScreen();
+		gameScreen = new GameScreen(this);
 		pauseMenuScreen = new PauseMenuScreen();
->>>>>>> master
+
 		setScreen(startMenuScreen);
 	}
 
