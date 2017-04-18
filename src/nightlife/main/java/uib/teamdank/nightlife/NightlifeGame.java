@@ -1,26 +1,35 @@
 package uib.teamdank.nightlife;
 
+import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
+import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import uib.teamdank.common.Game;
-import uib.teamdank.common.gui.GameScreen;
-import uib.teamdank.common.gui.PauseMenuScreen;
-import uib.teamdank.common.gui.StartMenuScreen;
+import uib.teamdank.nightlife.gui.GameScreen;
+import uib.teamdank.nightlife.gui.PauseMenuScreen;
+import uib.teamdank.nightlife.gui.StartMenuScreen;
 
 /**
  * The main class for Nightlife.
  */
 public class NightlifeGame extends Game {
-	StartMenuScreen startMenuScreen;
-	GameScreen gameScreen;
-	PauseMenuScreen pauseMenuScreen;
+	private StartMenuScreen startMenuScreen;
+	private GameScreen gameScreen;
+	private PauseMenuScreen pauseMenuScreen;
 
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-	}
+    public static void main(String[] args){
+        LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
+        config.fullscreen = true;
+        config.title = "Nightlife";
+        config.width = 1280;
+        config.height = 720;
+        new LwjglApplication(new NightlifeGame(), config) ;
+    }
 
 	@Override
 	public void create() {
-		startMenuScreen = new uib.teamdank.nightlife.gui.StartMenuScreen();
+		startMenuScreen = new StartMenuScreen();
+		gameScreen = new GameScreen();
+		pauseMenuScreen = new PauseMenuScreen();
 		setScreen(startMenuScreen);
 	}
 

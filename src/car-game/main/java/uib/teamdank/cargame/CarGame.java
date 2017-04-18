@@ -1,28 +1,37 @@
 package uib.teamdank.cargame;
 
+import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
+import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
+import uib.teamdank.cargame.gui.GameScreen;
+import uib.teamdank.cargame.gui.PauseMenuScreen;
+import uib.teamdank.cargame.gui.StartMenuScreen;
 import uib.teamdank.common.Game;
-import uib.teamdank.common.gui.GameScreen;
-import uib.teamdank.common.gui.HighscoreMenuScreen;
-import uib.teamdank.common.gui.PauseMenuScreen;
-import uib.teamdank.common.gui.StartMenuScreen;
+
 
 /**
  * The main game class for Car Game.
  */
 public class CarGame extends Game {
-	StartMenuScreen startMenuScreen;
-	GameScreen gameScreen;
-	PauseMenuScreen pauseMenuScreen;
+	private StartMenuScreen startMenuScreen;
+	private GameScreen gameScreen;
+	private PauseMenuScreen pauseMenuScreen;
 
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-	}
+    public static void main(String[] args){
+        LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
+        config.fullscreen = true;
+        config.title = "CarGame";
+        config.width = 1280;
+        config.height = 720;
+        new LwjglApplication(new CarGame(), config) ;
+    }
 	
 	@Override
 	public void create() {
-		startMenuScreen = new uib.teamdank.cargame.gui.StartMenuScreen();
+		startMenuScreen = new StartMenuScreen();
+		gameScreen = new GameScreen();
+		pauseMenuScreen = new PauseMenuScreen();
 		setScreen(startMenuScreen);
 	}
 

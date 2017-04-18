@@ -8,4 +8,7 @@ import uib.teamdank.common.Item;
  */
 public class Hole extends Item {
 
+    public Hole(String n, String d) {
+        super(n, d);
+    }
 }

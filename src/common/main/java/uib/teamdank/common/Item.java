@@ -5,9 +5,13 @@ package uib.teamdank.common;
  */
 public class Item extends GameObject {
 
-    private String description;
-    private String name;
+    private final String description;
+    private final String name;
 
+    public Item (String n, String d){
+    	this.name = n;
+    	this.description = d;
+	}
     /**
      *
      * @return description of this item
