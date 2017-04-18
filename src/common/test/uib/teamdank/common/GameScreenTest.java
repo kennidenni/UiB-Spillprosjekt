@@ -1,3 +1,5 @@
+package uib.teamdank.common;
+
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
