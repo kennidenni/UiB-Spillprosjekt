@@ -8,6 +8,7 @@ import java.util.Random;
  *
  * @param <T> the type the generator produces
  */
+@FunctionalInterface
 public interface Generator<T> {
 
 	/**
