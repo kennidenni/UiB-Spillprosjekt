@@ -64,7 +64,7 @@ public class CarGame extends Game {
 	@Override 
 	public void dispose() {
 		super.dispose();
-		batch.dispose();
+		//batch.dispose();
 		screen.dispose();
 	}
 }
