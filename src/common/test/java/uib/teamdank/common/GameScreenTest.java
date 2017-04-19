@@ -8,7 +8,6 @@ import java.util.function.Consumer;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 
 import uib.teamdank.common.Game;
@@ -132,17 +131,4 @@ public class GameScreenTest {
 		assertEquals(new Vector2(2, 3), obj.getPosisiton());
 	}
 	
-	
-	@Test
-	public void testRenderInGameScreen() {
-		SpriteBatch mockBatch = mock(SpriteBatch.class);
-		when(mockG.getSpriteBatch()).thenReturn(mockBatch);
-		
-		testAddLayerToGameScreen();
-		
-		gs.render(1);
-		
-		verify(mockBatch).begin();
-		verify(mockBatch).end();
-	}
 }
