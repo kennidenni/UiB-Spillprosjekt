@@ -5,7 +5,9 @@ import java.util.List;
 import java.util.Objects;
 import java.util.function.Consumer;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 
@@ -74,15 +76,18 @@ public class GameScreen implements Screen {
 	@Override
 	public void render(float delta) {
 		
-		 update(delta);
+		Gdx.gl.glClearColor( 0, 1, 0, 1 );
+		Gdx.gl.glClear( GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT );
 		
-		 SpriteBatch batch = game.getSpriteBatch();
-		 batch.begin();
-		 forEachGameObject(gameObject -> {
-			 Vector2 pos = gameObject.getPosisiton();
-			 batch.draw(gameObject.getTexture(), pos.x, pos.y, gameObject.getWidth(), gameObject.getHeight());
-		 });
-		 batch.end();
+		update(delta);
+		
+		SpriteBatch batch = game.getSpriteBatch();
+		batch.begin();
+		forEachGameObject(gameObject -> {
+			Vector2 pos = gameObject.getPosisiton();
+			batch.draw(gameObject.getTexture(), pos.x, pos.y, gameObject.getWidth(), gameObject.getHeight());
+		});
+		batch.end();
 		 
 	}
 
