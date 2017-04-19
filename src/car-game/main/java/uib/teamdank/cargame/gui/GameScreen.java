@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Vector2;
 
 import uib.teamdank.cargame.Player;
 import uib.teamdank.common.Game;
@@ -37,9 +38,8 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 		
 		addLayer(backgroundLayer);
 		addLayer(carLayer);
-
 		
-		player.getVelocity().set(0, -5);
+		player.getVelocity().set(10, 20);
 	}
 	
 	@Override
@@ -47,11 +47,13 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 		final int screenWidth = Gdx.graphics.getWidth();
 		final int screenHeight = Gdx.graphics.getHeight();
 		
-		
 		SpriteBatch batch = getGame().getSpriteBatch();
 		batch.begin();
 		batch.draw(backgroundTexture, 0, 0, screenWidth, screenHeight);
 		batch.end();
+		
+		Vector2 playerPos = player.getPosisiton();
+		camera.position.set(playerPos.x + player.getWidth() / 2, playerPos.y + player.getHeight() / 2, 0);
 		
 		camera.viewportWidth = screenWidth;
 		camera.viewportHeight = screenHeight;
@@ -64,7 +66,6 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 	@Override
 	public void update(float delta) {
 		super.update(delta);
-		System.out.println("ey");
 		
 	}
 
