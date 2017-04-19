@@ -61,7 +61,7 @@ importert prosjektene til en IDE skal du kunde se følgende prosjekt:
 # Members:
 Malin Øien (but005)
 
-~~Bjørnar Herland (kiy005)~~
+Bjørnar Herland (kiy005)
 
 Anna Fossen-Helle (afo035)
 
@@ -87,6 +87,6 @@ Eirik Strøm (qaj004)
 
 Amund Lindberg (dag004)
 
-~~Ola Næss Kaldestad (oka010)~~
+Ola Næss Kaldestad (oka010)
 
 Ole Magnus Lie (oli007)
