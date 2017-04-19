@@ -1,16 +1,71 @@
 package uib.teamdank.cargame.gui;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+
+import uib.teamdank.cargame.Player;
 import uib.teamdank.common.Game;
+import uib.teamdank.common.gui.Layer;
 
 /**
  * The main gameplay screen.
  */
 public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 
+	private final Layer backgroundLayer = new Layer(false);
+	private final Layer carLayer = new Layer(true);
+
+	private final OrthographicCamera camera = new OrthographicCamera();
+	
+	private final Player player = new Player();
+	
+	private final Texture backgroundTexture;
+	
 	public GameScreen(Game game) {
 		super(game);
+		
+		// Background texture
+		backgroundTexture = new Texture(Gdx.files.internal("Images/background.png"));
+		
+		// Player
+		player.setTexture(new TextureRegion(new Texture(Gdx.files.internal("Images/car.png"))));
+		player.setScale(.4f);
+		carLayer.addGameObject(player);
+		
+		addLayer(backgroundLayer);
+		addLayer(carLayer);
+
+		
+		player.getVelocity().set(0, -5);
 	}
 	
+	@Override
+	public void render(float delta) {
+		final int screenWidth = Gdx.graphics.getWidth();
+		final int screenHeight = Gdx.graphics.getHeight();
+		
+		
+		SpriteBatch batch = getGame().getSpriteBatch();
+		batch.begin();
+		batch.draw(backgroundTexture, 0, 0, screenWidth, screenHeight);
+		batch.end();
+		
+		camera.viewportWidth = screenWidth;
+		camera.viewportHeight = screenHeight;
+		camera.update();
+		batch.setProjectionMatrix(camera.combined);
+		
+		super.render(delta);
+	}
 	
+	@Override
+	public void update(float delta) {
+		super.update(delta);
+		System.out.println("ey");
+		
+	}
 
 }
