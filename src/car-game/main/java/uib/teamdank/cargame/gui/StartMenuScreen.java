@@ -65,7 +65,7 @@ public class StartMenuScreen implements uib.teamdank.common.gui.StartMenuScreen,
 		textButtonStyle = new TextButtonStyle();
 		textButtonStyle.font = font;
 		
-		myTexture = new Texture(Gdx.files.internal("images/CarGameLogo.png"));
+		myTexture = new Texture(Gdx.files.internal("Images/CarGameLogo.png"));
 		TextureRegion myTextureRegion = new TextureRegion(myTexture);
 		TextureRegionDrawable myTexRegionDrawable = new TextureRegionDrawable(myTextureRegion);
 		ImageButton logo = new ImageButton(myTexRegionDrawable); //Set the button up
