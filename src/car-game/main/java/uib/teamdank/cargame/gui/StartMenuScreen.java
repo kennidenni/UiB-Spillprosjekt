@@ -3,7 +3,6 @@ package uib.teamdank.cargame.gui;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.input.GestureDetector.GestureListener;
 import com.badlogic.gdx.math.Vector2;
@@ -12,9 +11,8 @@ import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.FitViewport;
@@ -29,21 +27,16 @@ import uib.teamdank.cargame.CarGame;
 public class StartMenuScreen implements uib.teamdank.common.gui.StartMenuScreen, GestureListener {
 	
 	private Stage stage;
-	private CarGame game;
-	private Array<Button> buttons;
-	private ImageButton logo;
-	private ImageButton play;
-	private ImageButton highscore;
-	private ImageButton settings;
-	private ImageButton quit;
 	private Texture myTexture;
     private Table menu;
     
     private static final String LOGO = "Images/CarGameLogo.png";
-    private static final String PLAY = "Image/playButton";
-    private static final String HIGHSCORE = "Images/CarGameLogo.png";
-    private static final String SETTINGS = "Images/CarGameLogo.png";
-    private static final String EXIT = "Images/CarGameLogo.png";
+    private static final String PLAY = "Images/Buttons/start.png";
+    private static final String HIGHSCORE = "Images/Buttons/cg_highscore.png";
+    private static final String SETTINGS = "Images/Buttons/bs_menu.png";
+    private static final String EXIT = "Images/Buttons/bs_quit.png";
+    
+	private Array<Button> buttons = new Array<Button>();
     
     private InputListener touchTest = new InputListener(){
 	    @Override
@@ -61,49 +54,38 @@ public class StartMenuScreen implements uib.teamdank.common.gui.StartMenuScreen,
 	            System.out.println("TOUCH UP");
 	        }
 	    }
-		};
-	public StartMenuScreen(CarGame game){
-		this.game = game;
-		stage = new Stage(new FitViewport(1280, 720));
-
-		
-		logo = findButton(LOGO);
-		play = findButton(PLAY);
-		highscore = findButton(HIGHSCORE);
-		settings = findButton(SETTINGS);
-		quit = findButton(EXIT);
-		
-		buttons = new Array<Button>();
-
-		buttons.add(logo);
-		buttons.add(play);
-		buttons.add(highscore);
-		buttons.add(settings);
-		buttons.add(quit);
+	};
 	
-		
+	public StartMenuScreen(CarGame game){
+		stage = new Stage(new FitViewport(1920, 1080));
+
+		setupButton(LOGO);
+		setupButton(PLAY);
+		setupButton(HIGHSCORE);
+		setupButton(SETTINGS);
+		setupButton(EXIT);
+	
 		menu = new Table();
-		menu.add(logo).width(500);
-		menu.row();
+		//vise linjene for debugging
+		menu.debug();
 		
 		for(Button button : buttons){
 			button.addListener(touchTest);
-			menu.add(button).width(100);
-			menu.row();
+			menu.add(button).expand();
+			menu.row().height(90);
 		}
 		
 		menu.setFillParent(true);
 		stage.addActor(menu);
 		Gdx.input.setInputProcessor(stage);
-		
 	}
 	
-	public ImageButton findButton (String imageString) {
+	public void setupButton (String imageString) {
 		myTexture = new Texture(Gdx.files.internal(imageString));
 		TextureRegion myTextureRegion = new TextureRegion(myTexture);
 		TextureRegionDrawable myTexRegionDrawable = new TextureRegionDrawable(myTextureRegion);
 		ImageButton logo = new ImageButton(myTexRegionDrawable); //Set the button up
-		return logo;
+		buttons.add(logo);
 	}
 	
 	@Override
@@ -122,7 +104,8 @@ public class StartMenuScreen implements uib.teamdank.common.gui.StartMenuScreen,
 	}
 
 	@Override
-	public void newGame() { // TODO 
+	public void newGame() { 
+		// TODO 
 	}
 
 	@Override
