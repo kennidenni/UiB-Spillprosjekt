@@ -29,6 +29,10 @@ public class GameScreen implements Screen {
 		this.game = game;
 	}
 
+	public Game getGame(){
+		return game;
+	}
+	
 	public void addGameObject(Layer layer, GameObject gameObject) {
 		layer.addGameObject(gameObject);
 	}
