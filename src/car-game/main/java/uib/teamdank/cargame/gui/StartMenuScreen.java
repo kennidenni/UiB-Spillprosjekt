@@ -31,13 +31,20 @@ public class StartMenuScreen implements uib.teamdank.common.gui.StartMenuScreen,
 	private Stage stage;
 	private CarGame game;
 	private Array<Button> buttons;
-	private TextButton button1;
-	private TextButton button2;
-	private TextButton button3;
+	private ImageButton logo;
+	private ImageButton play;
+	private ImageButton highscore;
+	private ImageButton settings;
+	private ImageButton quit;
 	private Texture myTexture;
-    private TextButtonStyle textButtonStyle;
-    private BitmapFont font;
     private Table menu;
+    
+    private static final String LOGO = "Images/CarGameLogo.png";
+    private static final String PLAY = "Image/playButton";
+    private static final String HIGHSCORE = "Images/CarGameLogo.png";
+    private static final String SETTINGS = "Images/CarGameLogo.png";
+    private static final String EXIT = "Images/CarGameLogo.png";
+    
     private InputListener touchTest = new InputListener(){
 	    @Override
 	    public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
@@ -55,29 +62,24 @@ public class StartMenuScreen implements uib.teamdank.common.gui.StartMenuScreen,
 	        }
 	    }
 		};
-	private Texture texture;
-    
-    
 	public StartMenuScreen(CarGame game){
 		this.game = game;
 		stage = new Stage(new FitViewport(1280, 720));
-		font = new BitmapFont();
-		textButtonStyle = new TextButtonStyle();
-		textButtonStyle.font = font;
+
 		
-		myTexture = new Texture(Gdx.files.internal("Images/CarGameLogo.png"));
-		TextureRegion myTextureRegion = new TextureRegion(myTexture);
-		TextureRegionDrawable myTexRegionDrawable = new TextureRegionDrawable(myTextureRegion);
-		ImageButton logo = new ImageButton(myTexRegionDrawable); //Set the button up
+		logo = findButton(LOGO);
+		play = findButton(PLAY);
+		highscore = findButton(HIGHSCORE);
+		settings = findButton(SETTINGS);
+		quit = findButton(EXIT);
 		
-		button1 = new TextButton("Hello world", textButtonStyle);
-		button2 = new TextButton("hei", textButtonStyle);
-		button3 = new TextButton("hallo", textButtonStyle);
 		buttons = new Array<Button>();
 
-		buttons.add(button1);
-		buttons.add(button2);
-		buttons.add(button3);
+		buttons.add(logo);
+		buttons.add(play);
+		buttons.add(highscore);
+		buttons.add(settings);
+		buttons.add(quit);
 	
 		
 		menu = new Table();
@@ -94,6 +96,14 @@ public class StartMenuScreen implements uib.teamdank.common.gui.StartMenuScreen,
 		stage.addActor(menu);
 		Gdx.input.setInputProcessor(stage);
 		
+	}
+	
+	public ImageButton findButton (String imageString) {
+		myTexture = new Texture(Gdx.files.internal(imageString));
+		TextureRegion myTextureRegion = new TextureRegion(myTexture);
+		TextureRegionDrawable myTexRegionDrawable = new TextureRegionDrawable(myTextureRegion);
+		ImageButton logo = new ImageButton(myTexRegionDrawable); //Set the button up
+		return logo;
 	}
 	
 	@Override
