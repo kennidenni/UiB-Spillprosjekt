@@ -74,7 +74,7 @@ public class GameScreen implements Screen {
 		 batch.begin();
 		 forEachGameObject(gameObject -> {
 			 Vector2 pos = gameObject.getPosisiton();
-			 batch.draw(gameObject.getTexture(), pos.x, pos.y);
+			 batch.draw(gameObject.getTexture(), pos.x, pos.y, gameObject.getWidth(), gameObject.getHeight());
 		 });
 		 batch.end();
 		 

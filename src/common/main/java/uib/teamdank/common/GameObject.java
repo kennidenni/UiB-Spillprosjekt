@@ -12,12 +12,14 @@ public class GameObject {
 	private final Vector2 pos = new Vector2();
     private final Vector2 velocity = new Vector2();
 	private TextureRegion tRegion;
+	private float scale;
 
 	/**
 	 * Creates a GameObject that spans no area, in the origin (0, 0).
 	 */
 	public GameObject() {
 		this(null);
+		
 	}
 
 	/**
@@ -52,8 +54,17 @@ public class GameObject {
 	public GameObject(float x, float y, TextureRegion tRegion) {
 	    this.pos.set(x, y);
 	    setTexture(tRegion);
+	    this.setScale(1);
 	}
 
+	/**
+	 * Set the scaling of the item.
+	 * @param s
+	 */
+	public void setScale(float s){
+		this.scale = s;
+	}
+	
 	/**
 	 * 
 	 * @param x
@@ -69,7 +80,7 @@ public class GameObject {
 	 * @return The width of this GameObject.
 	 */
 	public int getWidth() {
-		return tRegion.getRegionWidth();
+		return (int) (tRegion.getRegionWidth()*scale);
 	}
 
 	/**
@@ -77,7 +88,7 @@ public class GameObject {
 	 * @return The height of this GameObject.
 	 */
 	public int getHeight() {
-		return tRegion.getRegionHeight();
+		return (int) (tRegion.getRegionHeight()*scale);
 	}
 
 	/**
