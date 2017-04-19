@@ -74,6 +74,8 @@ public class GameScreen implements Screen {
 	@Override
 	public void render(float delta) {
 		
+		 update(delta);
+		
 		 SpriteBatch batch = game.getSpriteBatch();
 		 batch.begin();
 		 forEachGameObject(gameObject -> {
