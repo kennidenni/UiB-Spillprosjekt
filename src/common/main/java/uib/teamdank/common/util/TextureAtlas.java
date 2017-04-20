@@ -2,6 +2,7 @@ package uib.teamdank.common.util;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
@@ -20,6 +21,7 @@ import com.google.gson.annotations.SerializedName;
 public class TextureAtlas {
 
 	public static TextureAtlas createFromJson(FileHandle handle){
+		Objects.requireNonNull(handle, "file handle cannot be null");
 		return new Gson().fromJson(handle.reader(), TextureAtlas.class);
 	}
 	
