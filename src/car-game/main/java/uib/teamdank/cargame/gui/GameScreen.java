@@ -15,7 +15,10 @@ import uib.teamdank.common.gui.Layer;
  * The main gameplay screen.
  */
 public class GameScreen extends uib.teamdank.common.gui.GameScreen {
-
+	private final static float CAR_HORIZONTAL_ACCELERATION = 50f;
+	private final static float CAR_VERTICAL_SPEED = 512f;
+	private final static float CAR_HORIZONTAL_FRICTION = .9f;
+	
 	private final OrthographicCamera camera = new OrthographicCamera();
 	
 	private final Layer backgroundLayer = new BackgroundLayer(camera);
@@ -26,15 +29,16 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 	public GameScreen(Game game) {
 		super(game);
 				
-		// Player
+		// Player initialization
 		player.setTexture(new TextureRegion(new Texture(Gdx.files.internal("Images/car.png"))));
 		player.setScale(.4f);
+		player.getVelocity().y = CAR_VERTICAL_SPEED;
 		carLayer.addGameObject(player);
 		
+		// Layers
 		addLayer(backgroundLayer);
 		addLayer(carLayer);
 		
-		player.getVelocity().set(0, 512);
 	}
 	
 	@Override
@@ -64,9 +68,9 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 		// Player movement
 		boolean left = Gdx.input.isKeyPressed(Keys.A);
 		boolean right = Gdx.input.isKeyPressed(Keys.D);
-		if (left) player.getVelocity().x -= 30;
-		if (right) player.getVelocity().x += 30;
-		player.getVelocity().x = (player.getVelocity().x * .9f);
+		if (left) player.getVelocity().x -= CAR_HORIZONTAL_ACCELERATION;
+		if (right) player.getVelocity().x += CAR_HORIZONTAL_ACCELERATION;
+		player.getVelocity().x *= CAR_HORIZONTAL_FRICTION;
 		
 	}
 
