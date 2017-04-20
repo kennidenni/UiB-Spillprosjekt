@@ -37,6 +37,10 @@ public class TextureAtlas {
 	private transient  Map<String, TextureRegion> textureCache = new HashMap<>();
 	private transient Texture tileset;
 	
+	private TextureAtlas() {
+		// Hide constructor
+	}
+	
 	/**
 	 * @return the texture region with the given name 
 	 */
