@@ -17,32 +17,25 @@ import uib.teamdank.common.gui.Layer;
  */
 public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 
-	private final Layer backgroundLayer = new Layer(false);
-	private final Layer carLayer = new Layer(true);
-
 	private final OrthographicCamera camera = new OrthographicCamera();
+	
+	private final Layer backgroundLayer = new BackgroundLayer(camera);
+	private final Layer carLayer = new Layer(true);
 	
 	private final Player player = new Player();
 	
-	private final Texture backgroundTexture;
-	private final ScrollingImage scrollingRoad;
-	
 	public GameScreen(Game game) {
 		super(game);
-		
-		// Background
-		backgroundTexture = new Texture(Gdx.files.internal("Images/background.png"));
-		scrollingRoad = new ScrollingImage(camera, new Texture(Gdx.files.internal("Images/road.png")));
-		
+				
 		// Player
 		player.setTexture(new TextureRegion(new Texture(Gdx.files.internal("Images/car.png"))));
 		player.setScale(.4f);
 		carLayer.addGameObject(player);
 		
-		// addLayer(backgroundLayer);
+		addLayer(backgroundLayer);
 		addLayer(carLayer);
 		
-		 player.getVelocity().set(10, 20);
+		player.getVelocity().set(0, 80);
 	}
 	
 	@Override
@@ -50,28 +43,25 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 		final int screenWidth = Gdx.graphics.getWidth();
 		final int screenHeight = Gdx.graphics.getHeight();
 		
-		// Draw background
-		SpriteBatch batch = getGame().getSpriteBatch();
-		batch.begin();
-		batch.draw(backgroundTexture, 0, 0, screenWidth, screenHeight);
-		scrollingRoad.render(batch, delta);
-		batch.end();
-		
-		// Camera
+		// Update camera
 		Vector2 playerPos = player.getPosisiton();
 		camera.position.set(playerPos.x + player.getWidth() / 2, playerPos.y + player.getHeight() / 2, 0);
 		camera.viewportWidth = screenWidth;
 		camera.viewportHeight = screenHeight;
 		camera.update();
-		batch.setProjectionMatrix(camera.combined);
+		getGame().getSpriteBatch().setProjectionMatrix(camera.combined);
 		
+		// Render layers
 		super.render(delta);
+		
 	}
 	
 	@Override
 	public void update(float delta) {
+		
+		// Update game objects
 		super.update(delta);
-		scrollingRoad.update(delta);
+		
 	}
 
 }
