@@ -33,7 +33,6 @@ public class TextureAtlasTest extends LibGdxDependentTest {
 			public void create() {
 				this.batch = new SpriteBatch();
 				this.atlas = TextureAtlas.createFromJson(Gdx.files.internal("bird_atlas.json"));
-				atlas.load();
 
 				this.birdAnim = new Animation<>(.1f, atlas.getRegion("bird1"), atlas.getRegion("bird2"), atlas.getRegion("bird3"), atlas.getRegion("bird4"), atlas.getRegion("bird5"));
 				birdAnim.setPlayMode(PlayMode.LOOP);
@@ -65,7 +64,6 @@ public class TextureAtlasTest extends LibGdxDependentTest {
 	@Test
 	public void testTextureAtlasLoadedProperply() {
 		TextureAtlas atlas = TextureAtlas.createFromJson(Gdx.files.internal("bird_atlas.json"));
-		atlas.load();
 		String[] regions = { "bird1", "bird2", "bird3", "bird4", "bird5" };
 		for (String region : regions) {
 			assertThat(atlas.getRegion(region), notNullValue());

@@ -3,13 +3,12 @@ package uib.teamdank.cargame.gui;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 
 import uib.teamdank.cargame.Player;
 import uib.teamdank.common.Game;
 import uib.teamdank.common.gui.Layer;
+import uib.teamdank.common.util.TextureAtlas;
 
 /**
  * The main gameplay screen.
@@ -32,13 +31,15 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 	public GameScreen(Game game) {
 		super(game);
 		
+		TextureAtlas gameObjectTextures = TextureAtlas.createFromJson(Gdx.files.internal("Images/game_objects.json"));
+		
 		// Cameras
 		this.playerCamera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		this.screenCamera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		
 		// Player initialization
 		player = new Player();
-		player.setTexture(new TextureRegion(new Texture(Gdx.files.internal("Images/car.png"))));
+		player.setTexture(gameObjectTextures.getRegion("car_forward"));
 		player.setScale(.4f);
 		player.getVelocity().y = CAR_VERTICAL_SPEED;
 		

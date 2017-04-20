@@ -15,22 +15,24 @@ import com.google.gson.annotations.SerializedName;
  * A texture atlas manages named regions on a larger tileset which can be
  * retrieved by calling {@link #getRegion(String)}.
  * <p>
- * <b>Note:</b>When {@link #load()} is called the entire tileset image
+ * <b>Note:</b>When an atlas is created the entire tileset image
  * is loaded into memory. Call {@link #dispose()} when done.
  */
 public class TextureAtlas {
 
-	public static TextureAtlas createFromJson(FileHandle handle){
-		Objects.requireNonNull(handle, "file handle cannot be null");
-		return new Gson().fromJson(handle.reader(), TextureAtlas.class);
-	}
-	
 	private static class Region {
 		String name;
 		int x;
 		int y;
 		int w;
 		int h;
+	}
+	
+	public static TextureAtlas createFromJson(FileHandle handle){
+		Objects.requireNonNull(handle, "file handle cannot be null");
+		TextureAtlas atlas = new Gson().fromJson(handle.reader(), TextureAtlas.class);
+		atlas.load();
+		return atlas;
 	}
 	
 	@SerializedName("tileset") private String tilesetFile;	
@@ -41,6 +43,10 @@ public class TextureAtlas {
 	
 	private TextureAtlas() {
 		// Hide constructor
+	}
+	
+	public void dispose() {
+		tileset.dispose();
 	}
 	
 	/**
@@ -56,7 +62,7 @@ public class TextureAtlas {
 		return textureCache.get(name);
 	}
 	
-	public void load() {
+	private void load() {
 		FileHandle sheetFile = Gdx.files.internal(tilesetFile);
 		if (sheetFile == null) {
 			throw new IllegalArgumentException("no such tileset: " + tilesetFile);
@@ -65,10 +71,6 @@ public class TextureAtlas {
 		for (Region region : regions) {
 			textureCache.put(region.name, new TextureRegion(tileset, region.x, region.y, region.w, region.h));
 		}
-	}
-	
-	public void dispose() {
-		tileset.dispose();
 	}
 	
 }
