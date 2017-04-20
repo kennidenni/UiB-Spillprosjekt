@@ -104,6 +104,7 @@ public class WeatherData {
 				DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 				DocumentBuilder builder = factory.newDocumentBuilder();
 				Document document = builder.parse(url.openStream());
+				previousPullTime = System.currentTimeMillis();
 				previousWeatherType = parseWeatherDocument(document);
 			}
 		} catch (Exception e) {
