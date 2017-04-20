@@ -5,7 +5,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-import uib.teamdank.cargame.util.ScrollingImage;
+import uib.teamdank.cargame.util.LoopingBackground;
 import uib.teamdank.common.gui.Layer;
 
 public class BackgroundLayer extends Layer {
@@ -14,7 +14,7 @@ public class BackgroundLayer extends Layer {
 	private final OrthographicCamera screenCamera;
 	
 	private final Texture backgroundTexture;
-	private final ScrollingImage scrollingRoad;
+	private final LoopingBackground scrollingRoad;
 	
 	public BackgroundLayer(OrthographicCamera playerCamera, OrthographicCamera screenCamera) {
 		super(false);
@@ -23,7 +23,7 @@ public class BackgroundLayer extends Layer {
 		this.screenCamera = screenCamera;
 		
 		this.backgroundTexture = new Texture(Gdx.files.internal("Images/background.png"));
-		this.scrollingRoad = new ScrollingImage(playerCamera, new Texture(Gdx.files.internal("Images/road.png")), .5f);
+		this.scrollingRoad = new LoopingBackground(playerCamera, new Texture(Gdx.files.internal("Images/road.png")), .5f);
 	}
 	
 	@Override
