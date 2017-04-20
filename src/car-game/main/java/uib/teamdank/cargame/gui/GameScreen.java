@@ -20,25 +20,33 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 	private static final float CAR_VERTICAL_SPEED = 512f;
 	private static final float CAR_HORIZONTAL_FRICTION = .9f;
 	
-	private final OrthographicCamera camera = new OrthographicCamera();
+	private final OrthographicCamera playerCamera;
+	private final OrthographicCamera screenCamera;
 	
-	private final Layer backgroundLayer = new BackgroundLayer(camera);
-	private final Layer carLayer = new Layer(true);
+	private final Layer backgroundLayer;
+	private final Layer carLayer;
 	
-	private final Player player = new Player();
+	private final Player player;
 	
 	public GameScreen(Game game) {
 		super(game);
+		
+		// Cameras
+		this.playerCamera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+		this.screenCamera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+		
+		// Layers
+		backgroundLayer = new BackgroundLayer(playerCamera, screenCamera);
+		carLayer = new Layer(true);
+		addLayer(backgroundLayer);
+		addLayer(carLayer);
 				
 		// Player initialization
+		player = new Player();
 		player.setTexture(new TextureRegion(new Texture(Gdx.files.internal("Images/car.png"))));
 		player.setScale(.4f);
 		player.getVelocity().y = CAR_VERTICAL_SPEED;
 		carLayer.addGameObject(player);
-		
-		// Layers
-		addLayer(backgroundLayer);
-		addLayer(carLayer);
 		
 	}
 	
@@ -47,15 +55,15 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 		final int screenWidth = Gdx.graphics.getWidth();
 		final int screenHeight = Gdx.graphics.getHeight();
 		
-		// Update camera
+		// Update player camera
 		Vector2 playerPos = player.getPosisiton();
 		float cameraX = playerPos.x + player.getWidth() / 2;
 		float cameraY = playerPos.y + screenHeight / 2 - CAR_VERTICAL_POSITION;
-		camera.position.set(cameraX, cameraY, 0);
-		camera.viewportWidth = screenWidth;
-		camera.viewportHeight = screenHeight;
-		camera.update();
-		getGame().getSpriteBatch().setProjectionMatrix(camera.combined);
+		playerCamera.position.set(cameraX, cameraY, 0);
+		playerCamera.viewportWidth = screenWidth;
+		playerCamera.viewportHeight = screenHeight;
+		playerCamera.update();
+		getGame().getSpriteBatch().setProjectionMatrix(playerCamera.combined);
 		
 		// Render layers
 		super.render(delta);

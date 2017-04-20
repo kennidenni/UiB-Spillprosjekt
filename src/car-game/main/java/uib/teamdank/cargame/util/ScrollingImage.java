@@ -5,20 +5,20 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class ScrollingImage {
-	private final OrthographicCamera camera;
+	private final OrthographicCamera playerCamera;
 	private final Texture texture;
 	private final float scale;
 	
 	private int lowestRoadY;
 	
 	public ScrollingImage(OrthographicCamera camera, Texture texture, float scale) {
-		this.camera = camera;
+		this.playerCamera = camera;
 		this.texture = texture;
 		this.scale = scale;
 	}
 	
 	public void render(SpriteBatch batch, float delta) {
-		if (!camera.frustum.pointInFrustum(0, lowestRoadY + texture.getHeight(), 0)) {
+		if (!playerCamera.frustum.pointInFrustum(0, lowestRoadY + texture.getHeight(), 0)) {
 			batch.draw(texture, 0, lowestRoadY + getHeight(), getWidth(), getHeight());
 		} else {
 			lowestRoadY += getHeight() / 2;
