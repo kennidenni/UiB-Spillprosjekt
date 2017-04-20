@@ -40,6 +40,6 @@ Eirik Strøm (qaj004)
 
 Amund Lindberg (dag004)
 
-Ola Næss Kaldestad (oka010)
+~~Ola Næss Kaldestad (oka010)~~
 
 Ole Magnus Lie (oli007)
