@@ -36,7 +36,7 @@ public class CarGame extends Game {
 
 		batch = new SpriteBatch();
 		
-		setScreen(gameScreen);
+		setScreen(startMenuScreen);
 	}
 
 	@Override
