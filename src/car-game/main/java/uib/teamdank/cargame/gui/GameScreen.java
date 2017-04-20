@@ -15,9 +15,10 @@ import uib.teamdank.common.gui.Layer;
  * The main gameplay screen.
  */
 public class GameScreen extends uib.teamdank.common.gui.GameScreen {
-	private final static float CAR_HORIZONTAL_ACCELERATION = 50f;
-	private final static float CAR_VERTICAL_SPEED = 512f;
-	private final static float CAR_HORIZONTAL_FRICTION = .9f;
+	private static final int CAR_VERTICAL_POSITION = 25;
+	private static final float CAR_HORIZONTAL_ACCELERATION = 50f;
+	private static final float CAR_VERTICAL_SPEED = 512f;
+	private static final float CAR_HORIZONTAL_FRICTION = .9f;
 	
 	private final OrthographicCamera camera = new OrthographicCamera();
 	
@@ -48,7 +49,9 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 		
 		// Update camera
 		Vector2 playerPos = player.getPosisiton();
-		camera.position.set(playerPos.x + player.getWidth() / 2, playerPos.y + player.getHeight() / 2 + 200, 0);
+		float cameraX = playerPos.x + player.getWidth() / 2;
+		float cameraY = playerPos.y + screenHeight / 2 - CAR_VERTICAL_POSITION;
+		camera.position.set(cameraX, cameraY, 0);
 		camera.viewportWidth = screenWidth;
 		camera.viewportHeight = screenHeight;
 		camera.update();
