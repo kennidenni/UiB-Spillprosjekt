@@ -1,5 +1,7 @@
 package uib.teamdank.common;
 
+import com.badlogic.gdx.utils.Array;
+
 import java.util.List;
 
 /**
@@ -7,72 +9,102 @@ import java.util.List;
  */
 public class Inventory {
 
+    private int gold;
+    private Array<Item> inventory;
+    private int maxCapacity;
+    private boolean full;
+
+
+    public Inventory () {
+        this(20);
+    }
+
+    public Inventory (int size){
+        this(size, 0);
+    }
+
+    public Inventory (int size, int gold){
+        this.inventory = new Array<>(size);
+        this.maxCapacity = size;
+        this.gold = gold;
+        this.full = false;
+    }
 	/**
 	 * @param amount the amount of gold to add to this inventory
 	 */
 	public void addGold(int amount) {
-		// TODO Auto-generated method stub
+		this.gold += amount;
 	}
 	
 	/**
 	 * Adds the given item to this inventory, if there is space.
 	 */
 	public void addItem(Item item) {
-		// TODO Auto-generated method stub
+		if(this.inventory.size != maxCapacity)
+            this.inventory.add(item);
+
+		if(this.inventory.size == maxCapacity)
+		    this.full = true;
+
 	}
 	
 	/**
 	 * @return the maximum amount of items this inventory can hold
 	 */
 	public int getCapacity() {
-		// TODO Auto-generated method stub
-		return -1;
+		return this.maxCapacity;
 	}
 	
 	/**
 	 * @return the amount of gold this inventory contains
 	 */
 	public int getGold() {
-		// TODO Auto-generated method stub
-		return -1;
+		return this.gold;
 	}
 
 	/**
 	 * @return the amount of items currently in this inventory
 	 */
 	public int getItemCount() {
-		// TODO Auto-generated method stub
-		return -1;
+		return this.inventory.size;
 	}
 
+    /**
+     * @param index
+     * @return the Item at @index
+     */
+	public Item getItem(int index){
+	    if(index >= inventory.size)
+	        return null;
+
+        return inventory.get(index);
+    }
 	/**
 	 * @return an immutable list of the items in this inventory
 	 */
-	public List<Item> getItems() {
-		// TODO Auto-generated method stub
-		return null;
+	public Array<Item> getItems() {
+		return this.inventory;
 	}
 
 	/**
 	 * @return whether or not this inventory is full
 	 */
 	public boolean isFull() {
-		// TODO Auto-generated method stub
-		return false;
+		return this.full;
 	}
 
 	/**
 	 * @param amount the amount of gold to remove from this inventory
 	 */
 	public void removeGold(int amount) {
-		// TODO Auto-generated method stub
+		this.gold = this.gold - amount;
 	}
 
 	/**
 	 * Removes the item with the given index.
 	 */
 	public void removeItem(int index) {
-		// TODO Auto-generated method stub
+		inventory.removeIndex(index);
 	}
 
 }
