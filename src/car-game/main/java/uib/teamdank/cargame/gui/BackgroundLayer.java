@@ -34,7 +34,7 @@ public class BackgroundLayer extends Layer {
 		batch.setProjectionMatrix(screenCamera.combined);
 		batch.draw(backgroundTexture, -screenWidth / 2f, -screenHeight / 2f, screenWidth, screenHeight);
 		batch.setProjectionMatrix(playerCamera.combined);
-		scrollingRoad.render(batch, delta);
+		scrollingRoad.render(batch);
 	}
 	
 }
