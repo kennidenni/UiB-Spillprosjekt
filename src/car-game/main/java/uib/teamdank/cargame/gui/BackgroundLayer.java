@@ -10,6 +10,8 @@ import uib.teamdank.common.gui.Layer;
 
 public class BackgroundLayer extends Layer {
 
+	
+	
 	private final Texture backgroundTexture;
 	private final ScrollingImage scrollingRoad;
 	

@@ -1,6 +1,7 @@
 package uib.teamdank.cargame.gui;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -35,7 +36,7 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 		addLayer(backgroundLayer);
 		addLayer(carLayer);
 		
-		player.getVelocity().set(0, 80);
+		player.getVelocity().set(0, 512);
 	}
 	
 	@Override
@@ -45,7 +46,7 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 		
 		// Update camera
 		Vector2 playerPos = player.getPosisiton();
-		camera.position.set(playerPos.x + player.getWidth() / 2, playerPos.y + player.getHeight() / 2, 0);
+		camera.position.set(playerPos.x + player.getWidth() / 2, playerPos.y + player.getHeight() / 2 + 200, 0);
 		camera.viewportWidth = screenWidth;
 		camera.viewportHeight = screenHeight;
 		camera.update();
@@ -61,6 +62,13 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 		
 		// Update game objects
 		super.update(delta);
+		
+		// Player movement
+		boolean left = Gdx.input.isKeyPressed(Keys.A);
+		boolean right = Gdx.input.isKeyPressed(Keys.D);
+		if (left) player.getVelocity().x -= 30;
+		if (right) player.getVelocity().x += 30;
+		player.getVelocity().x = (player.getVelocity().x * .9f);
 		
 	}
 
