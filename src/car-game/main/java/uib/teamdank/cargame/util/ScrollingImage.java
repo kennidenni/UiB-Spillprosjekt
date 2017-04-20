@@ -1,6 +1,5 @@
 package uib.teamdank.cargame.util;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -19,9 +18,6 @@ public class ScrollingImage {
 	}
 	
 	public void render(SpriteBatch batch, float delta) {
-		final int width = Gdx.graphics.getWidth();
-		final int height = Gdx.graphics.getHeight();
-		
 		if (!camera.frustum.pointInFrustum(0, lowestRoadY + texture.getHeight(), 0)) {
 			batch.draw(texture, 0, lowestRoadY + getHeight(), getWidth(), getHeight());
 		} else {
