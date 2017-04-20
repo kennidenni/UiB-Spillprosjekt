@@ -26,7 +26,6 @@ public class BackgroundLayer extends Layer {
 		final int screenHeight = Gdx.graphics.getHeight();
 		
 		batch.draw(backgroundTexture, 0, 0, screenWidth, screenHeight);
-		scrollingRoad.update(delta);
 		scrollingRoad.render(batch, delta);
 	}
 	

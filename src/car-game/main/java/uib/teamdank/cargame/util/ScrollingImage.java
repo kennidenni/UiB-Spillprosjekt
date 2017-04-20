@@ -10,6 +10,8 @@ public class ScrollingImage {
 	private final Texture texture;
 	private final float scale;
 	
+	private int lowestRoadY;
+	
 	public ScrollingImage(OrthographicCamera camera, Texture texture, float scale) {
 		this.camera = camera;
 		this.texture = texture;
@@ -20,10 +22,20 @@ public class ScrollingImage {
 		final int width = Gdx.graphics.getWidth();
 		final int height = Gdx.graphics.getHeight();
 		
-		batch.draw(texture, 0, 0, (int) (width * scale), (int) (height * scale));
+		if (!camera.frustum.pointInFrustum(0, lowestRoadY + texture.getHeight(), 0)) {
+			batch.draw(texture, 0, lowestRoadY + getHeight(), getWidth(), getHeight());
+		} else {
+			lowestRoadY += getHeight() / 2;
+		}
+		
+		batch.draw(texture, 0, lowestRoadY, getWidth(), getHeight());
 	}
-
-	public void update(float delta) {
-		// Temporarily empty
+	
+	public int getWidth() {
+		return (int) (texture.getHeight() * scale);
+	}
+	
+	public int getHeight() {
+		return (int) (texture.getWidth() * scale);
 	}
 }
