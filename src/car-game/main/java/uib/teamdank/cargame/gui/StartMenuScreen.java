@@ -1,32 +1,22 @@
 package uib.teamdank.cargame.gui;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.input.GestureDetector.GestureListener;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import uib.teamdank.cargame.CarGame;
-import uib.teamdank.common.Game;
 
-/**
- * har lagt inn hele dette objectet som GestureListener, dette er nok feil da
- * det er Stage som skal vÃ¦re GestureListener. Dette mÃ¥ endres slik at
- * TextButton kan fÃ¥ tak i touchDown Event og agere pÃ¥ denne.
- **/
-
-public class StartMenuScreen implements uib.teamdank.common.gui.StartMenuScreen, GestureListener {
+public class StartMenuScreen implements uib.teamdank.common.gui.StartMenuScreen {
 	private static final String LOGO = "Images/CarGameLogo.png";
 	private static final String PLAY = "Images/Buttons/start.png";
 	private static final String HIGHSCORE = "Images/Buttons/cg_highscore.png";
@@ -180,49 +170,5 @@ public class StartMenuScreen implements uib.teamdank.common.gui.StartMenuScreen,
 	@Override
 	public void viewHighscores() {
 		// TODO
-	}
-
-	@Override
-	public boolean tap(float x, float y, int count, int button) {
-		return false;
-	}
-
-	@Override
-	public boolean longPress(float x, float y) {
-		return false;
-	}
-
-	@Override
-	public boolean fling(float velocityX, float velocityY, int button) {
-		return false;
-	}
-
-	@Override
-	public boolean pan(float x, float y, float deltaX, float deltaY) {
-		return false;
-	}
-
-	@Override
-	public boolean panStop(float x, float y, int pointer, int button) {
-		return false;
-	}
-
-	@Override
-	public boolean zoom(float initialDistance, float distance) {
-		return false;
-	}
-
-	@Override
-	public boolean pinch(Vector2 initialPointer1, Vector2 initialPointer2, Vector2 pointer1, Vector2 pointer2) {
-		return false;
-	}
-
-	@Override
-	public boolean touchDown(float x, float y, int pointer, int button) {
-		return false;
-	}
-
-	@Override
-	public void pinchStop() { // TODO
 	}
 }
