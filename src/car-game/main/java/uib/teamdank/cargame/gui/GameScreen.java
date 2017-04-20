@@ -1,7 +1,6 @@
 package uib.teamdank.cargame.gui;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -9,7 +8,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 
 import uib.teamdank.cargame.Player;
-import uib.teamdank.cargame.ScrollingImage;
+import uib.teamdank.cargame.util.ScrollingImage;
 import uib.teamdank.common.Game;
 import uib.teamdank.common.gui.Layer;
 
@@ -40,10 +39,10 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 		player.setScale(.4f);
 		carLayer.addGameObject(player);
 		
-		addLayer(backgroundLayer);
+		// addLayer(backgroundLayer);
 		addLayer(carLayer);
 		
-		player.getVelocity().set(10, 20);
+		 player.getVelocity().set(10, 20);
 	}
 	
 	@Override
