@@ -13,6 +13,7 @@ public class LoopingBackground {
 	private final Texture texture;
 	private final float scale;
 	
+	private int horizontalPosition;
 	private int lowestRoadY;
 	
 	public LoopingBackground(OrthographicCamera camera, Texture texture, float scale) {
@@ -21,21 +22,27 @@ public class LoopingBackground {
 		this.scale = scale;
 	}
 	
+	public void setHorizontalPosition(int x) {
+		this.horizontalPosition = x;
+	}
+	
 	public void render(SpriteBatch batch) {
 		if (!camera.frustum.pointInFrustum(0, lowestRoadY + texture.getHeight(), 0)) {
-			batch.draw(texture, 0, lowestRoadY + getHeight(), getWidth(), getHeight());
+			batch.draw(texture, horizontalPosition, lowestRoadY + getHeight(), getWidth(), getHeight());
 		} else {
 			lowestRoadY += getHeight() / 2;
 		}
 		
-		batch.draw(texture, 0, lowestRoadY, getWidth(), getHeight());
+		batch.draw(texture, horizontalPosition, lowestRoadY, getWidth(), getHeight());
 	}
 	
 	public int getWidth() {
 		return (int) (texture.getHeight() * scale);
 	}
 	
-	public int getHeight() {
+	private int getHeight() {
+		// Method is private because the background loops
+		// vertically, which makes the height obsolete
 		return (int) (texture.getWidth() * scale);
 	}
 }

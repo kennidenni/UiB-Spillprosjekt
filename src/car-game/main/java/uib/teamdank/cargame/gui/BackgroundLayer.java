@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
+import uib.teamdank.cargame.Player;
 import uib.teamdank.cargame.util.LoopingBackground;
 import uib.teamdank.common.gui.Layer;
 
@@ -16,7 +17,7 @@ public class BackgroundLayer extends Layer {
 	private final Texture backgroundTexture;
 	private final LoopingBackground scrollingRoad;
 	
-	public BackgroundLayer(OrthographicCamera playerCamera, OrthographicCamera screenCamera) {
+	public BackgroundLayer(OrthographicCamera playerCamera, OrthographicCamera screenCamera, Player player) {
 		super(false);
 		
 		this.playerCamera = playerCamera;
@@ -24,6 +25,7 @@ public class BackgroundLayer extends Layer {
 		
 		this.backgroundTexture = new Texture(Gdx.files.internal("Images/background.png"));
 		this.scrollingRoad = new LoopingBackground(playerCamera, new Texture(Gdx.files.internal("Images/road.png")), .5f);
+		scrollingRoad.setHorizontalPosition(-scrollingRoad.getWidth() / 2 + player.getWidth() / 2);
 	}
 	
 	@Override
@@ -35,6 +37,7 @@ public class BackgroundLayer extends Layer {
 		batch.draw(backgroundTexture, -screenWidth / 2f, -screenHeight / 2f, screenWidth, screenHeight);
 		batch.setProjectionMatrix(playerCamera.combined);
 		scrollingRoad.render(batch);
+		
 	}
 	
 }

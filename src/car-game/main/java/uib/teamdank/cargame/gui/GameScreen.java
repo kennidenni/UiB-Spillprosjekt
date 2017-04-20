@@ -16,6 +16,7 @@ import uib.teamdank.common.gui.Layer;
  */
 public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 	private static final int CAR_VERTICAL_POSITION = 25;
+	
 	private static final float CAR_HORIZONTAL_ACCELERATION = 50f;
 	private static final float CAR_VERTICAL_SPEED = 512f;
 	private static final float CAR_HORIZONTAL_FRICTION = .9f;
@@ -35,17 +36,17 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 		this.playerCamera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		this.screenCamera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		
-		// Layers
-		backgroundLayer = new BackgroundLayer(playerCamera, screenCamera);
-		carLayer = new Layer(true);
-		addLayer(backgroundLayer);
-		addLayer(carLayer);
-				
 		// Player initialization
 		player = new Player();
 		player.setTexture(new TextureRegion(new Texture(Gdx.files.internal("Images/car.png"))));
 		player.setScale(.4f);
 		player.getVelocity().y = CAR_VERTICAL_SPEED;
+		
+		// Layers
+		backgroundLayer = new BackgroundLayer(playerCamera, screenCamera, player);
+		carLayer = new Layer(true);
+		addLayer(backgroundLayer);
+		addLayer(carLayer);
 		carLayer.addGameObject(player);
 		
 	}
