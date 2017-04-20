@@ -119,7 +119,7 @@ publiserweb:
     name: nettside
     url: http://158.39.74.42:80/
   only:
-    - /.*gitlab-ci.*$/
+    - /.*deploy-web.*$/
   tags:
     - bash
 # Use the generated build output to run the tests.
