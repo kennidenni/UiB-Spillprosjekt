@@ -2,8 +2,6 @@ package uib.teamdank.common;
 
 import com.badlogic.gdx.utils.Array;
 
-import java.util.List;
-
 /**
  * A collection of {@link Item}s with a maximum capacity.
  */
