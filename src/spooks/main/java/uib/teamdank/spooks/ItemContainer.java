@@ -1,6 +1,5 @@
 package uib.teamdank.spooks;
 
-import com.badlogic.gdx.utils.Array;
 import uib.teamdank.common.Inventory;
 import uib.teamdank.common.Item;
 import uib.teamdank.common.ItemHolder;

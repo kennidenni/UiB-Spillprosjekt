@@ -8,7 +8,7 @@ import com.badlogic.gdx.utils.Array;
 public class Inventory {
 
     private int gold;
-    private Array<Item> inventory;
+    private Array<Item> bag;
     private int maxCapacity;
     private boolean full;
 
@@ -22,7 +22,7 @@ public class Inventory {
     }
 
     public Inventory (int size, int gold){
-        this.inventory = new Array<>(size);
+        this.bag = new Array<>(size);
         this.maxCapacity = size;
         this.gold = gold;
         this.full = false;
@@ -38,10 +38,10 @@ public class Inventory {
 	 * Adds the given item to this inventory, if there is space.
 	 */
 	public void addItem(Item item) {
-		if(this.inventory.size != maxCapacity)
-            this.inventory.add(item);
+		if(this.bag.size != maxCapacity)
+            this.bag.add(item);
 
-		if(this.inventory.size == maxCapacity)
+		if(this.bag.size == maxCapacity)
 		    this.full = true;
 
 	}
@@ -64,7 +64,7 @@ public class Inventory {
 	 * @return the amount of items currently in this inventory
 	 */
 	public int getItemCount() {
-		return this.inventory.size;
+		return this.bag.size;
 	}
 
     /**
@@ -72,16 +72,16 @@ public class Inventory {
      * @return the Item at @index
      */
 	public Item getItem(int index){
-	    if(index >= inventory.size)
+	    if(index >= bag.size)
 	        return null;
 
-        return inventory.get(index);
+        return bag.get(index);
     }
 	/**
 	 * @return an immutable list of the items in this inventory
 	 */
 	public Array<Item> getItems() {
-		return this.inventory;
+		return this.bag;
 	}
 
 	/**
@@ -102,7 +102,7 @@ public class Inventory {
 	 * Removes the item with the given index.
 	 */
 	public void removeItem(int index) {
-		inventory.removeIndex(index);
+		bag.removeIndex(index);
 	}
 
 }
