@@ -21,7 +21,7 @@ public class LoopingBackground {
 		this.scale = scale;
 	}
 	
-	public void render(SpriteBatch batch, float delta) {
+	public void render(SpriteBatch batch) {
 		if (!camera.frustum.pointInFrustum(0, lowestRoadY + texture.getHeight(), 0)) {
 			batch.draw(texture, 0, lowestRoadY + getHeight(), getWidth(), getHeight());
 		} else {
