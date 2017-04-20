@@ -32,7 +32,7 @@ public class BackgroundLayer extends Layer {
 		final int screenHeight = Gdx.graphics.getHeight();
 		
 		batch.setProjectionMatrix(screenCamera.combined);
-		batch.draw(backgroundTexture, -screenWidth / 2, -screenHeight / 2, screenWidth, screenHeight);
+		batch.draw(backgroundTexture, -screenWidth / 2f, -screenHeight / 2f, screenWidth, screenHeight);
 		batch.setProjectionMatrix(playerCamera.combined);
 		scrollingRoad.render(batch, delta);
 	}
