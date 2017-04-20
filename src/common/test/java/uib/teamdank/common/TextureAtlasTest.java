@@ -72,9 +72,4 @@ public class TextureAtlasTest extends LibGdxDependentTest {
 		}
 	}
 	
-	@Test(expected = IllegalStateException.class)
-	public void testTextureAtlasNotLoaded() {
-		TextureAtlas atlas = TextureAtlas.createFromJson(Gdx.files.internal("bird_atlas.json"));
-		atlas.getRegion("bird1");
-	}
 }
