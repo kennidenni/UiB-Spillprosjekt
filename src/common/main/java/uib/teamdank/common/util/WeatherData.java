@@ -97,21 +97,24 @@ public class WeatherData {
 	 * @return the current weather type in the specified location
 	 */
 	public WeatherType pullWeather(String country, String county, String municipality, String placeName) {
-		try {
-			if (System.currentTimeMillis() - previousPullTime > WEATHER_FETCH_LIMIT_SECONDS * 1000) {
+		if (System.currentTimeMillis() - previousPullTime > WEATHER_FETCH_LIMIT_SECONDS * 1000) {
+			try {
+				
 				URL url = new URL(String.format(XML_URL_FORMAT, country, county, municipality, placeName));
 				
 				DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 				DocumentBuilder builder = factory.newDocumentBuilder();
 				Document document = builder.parse(url.openStream());
 				previousWeatherType = parseWeatherDocument(document);
-			}
-		} catch (Exception e) {
-			Logger logger = LoggerFactory.getLogger(WeatherData.class);
-			logger.error(e.getMessage());
 			
-			// Could not fetch weather data, pick a random one
-			previousWeatherType = pickRandomType();
+			} catch (Exception e) {
+				Logger logger = LoggerFactory.getLogger(WeatherData.class);
+				logger.error(e.getMessage());
+			
+				// Could not fetch weather data, pick a random one
+				previousWeatherType = pickRandomType();
+			}
+			previousPullTime = System.currentTimeMillis();
 		}
 		
 		return previousWeatherType;

@@ -3,10 +3,11 @@ package uib.teamdank.cargame;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import uib.teamdank.common.Game;
+
 import uib.teamdank.cargame.gui.GameScreen;
 import uib.teamdank.cargame.gui.PauseMenuScreen;
 import uib.teamdank.cargame.gui.StartMenuScreen;
+import uib.teamdank.common.Game;
 
 
 /**
@@ -33,7 +34,9 @@ public class CarGame extends Game {
 		gameScreen = new GameScreen(this);
 		pauseMenuScreen = new PauseMenuScreen();
 
-		setScreen(startMenuScreen);
+		batch = new SpriteBatch();
+		
+		setScreen(gameScreen);
 	}
 
 	@Override

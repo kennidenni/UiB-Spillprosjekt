@@ -83,10 +83,7 @@ public class GameScreen implements Screen {
 		
 		SpriteBatch batch = game.getSpriteBatch();
 		batch.begin();
-		forEachGameObject(gameObject -> {
-			Vector2 pos = gameObject.getPosisiton();
-			batch.draw(gameObject.getTexture(), pos.x, pos.y, gameObject.getWidth(), gameObject.getHeight());
-		});
+		layers.forEach(layer -> layer.render(batch, delta));
 		batch.end();
 		 
 	}
