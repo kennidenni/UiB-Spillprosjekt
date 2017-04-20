@@ -3,9 +3,7 @@ package uib.teamdank.cargame.gui;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.input.GestureDetector.GestureListener;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
@@ -13,106 +11,134 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import uib.teamdank.cargame.CarGame;
 
+public class StartMenuScreen implements uib.teamdank.common.gui.StartMenuScreen {
+	private static final String LOGO = "Images/CarGameLogo.png";
+	private static final String PLAY = "Images/Buttons/start.png";
+	private static final String HIGHSCORE = "Images/Buttons/cg_highscore.png";
+	private static final String EXIT = "Images/Buttons/bs_quit.png";
 
-/**
- * har lagt inn hele dette objectet som GestureListener, dette er nok feil da det er Stage som skal vÃ¦re GestureListener.
- * Dette mÃ¥ endres slik at TextButton kan fÃ¥ tak i touchDown Event og agere pÃ¥ denne.
-**/
-
-public class StartMenuScreen implements uib.teamdank.common.gui.StartMenuScreen, GestureListener {
-	
 	private Stage stage;
-	private CarGame game;
-	private Array<Button> buttons;
-	private TextButton button1;
-	private TextButton button2;
-	private TextButton button3;
 	private Texture myTexture;
-    private TextButtonStyle textButtonStyle;
-    private BitmapFont font;
-    private Table menu;
-    private InputListener touchTest = new InputListener(){
-	    @Override
-	    public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-			System.out.println("TOUCH DOWN");
-			return true;
-	    }
-	    
-	    @Override
-	    public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-	        Stage stage = event.getTarget().getStage();
-	        Vector2 mouse = stage.screenToStageCoordinates( new Vector2(Gdx.input.getX(), Gdx.input.getY()) );
+	private Table menu;
+	private ImageButton logoButton;
+	private ImageButton playButton;
+	private ImageButton highscoreButton;
+	private ImageButton exitButton;
+	private Array<Button> buttons;
 
-	        if(stage.hit(mouse.x, mouse.y, true) == event.getTarget()) {
-	            System.out.println("TOUCH UP");
-	        }
-	    }
-		};
-	private Texture texture;
-    
-    
-	public StartMenuScreen(CarGame game){
-		this.game = game;
-		stage = new Stage(new FitViewport(1280, 720));
-		font = new BitmapFont();
-		textButtonStyle = new TextButtonStyle();
-		textButtonStyle.font = font;
-		
-		myTexture = new Texture(Gdx.files.internal("Images/CarGameLogo.png"));
-		TextureRegion myTextureRegion = new TextureRegion(myTexture);
-		TextureRegionDrawable myTexRegionDrawable = new TextureRegionDrawable(myTextureRegion);
-		ImageButton logo = new ImageButton(myTexRegionDrawable); //Set the button up
-		
-		button1 = new TextButton("Hello world", textButtonStyle);
-		button2 = new TextButton("hei", textButtonStyle);
-		button3 = new TextButton("hallo", textButtonStyle);
+	public StartMenuScreen(CarGame game) {
+		stage = new Stage(new FitViewport(1920, 1080));
+		new HighscoreMenuScreen();
+
+		logoButton = setupButton(LOGO);
+		playButton = setupButton(PLAY);
+		highscoreButton = setupButton(HIGHSCORE);
+		exitButton = setupButton(EXIT);
+
+		menu = new Table();
 		buttons = new Array<Button>();
 
-		buttons.add(button1);
-		buttons.add(button2);
-		buttons.add(button3);
-	
-		
-		menu = new Table();
-		menu.add(logo).width(500);
+		buttons.add(playButton);
+		buttons.add(highscoreButton);
+		buttons.add(exitButton);
+
+		menu.add(logoButton).pad(0, 0, 20, 0);
 		menu.row();
-		
-		for(Button button : buttons){
-			button.addListener(touchTest);
-			menu.add(button).width(100);
+		menu.pad(50);
+		for (Button button : buttons) {
+			menu.add(button).width((float) (button.getWidth() / 4)).height((float) (button.getHeight() / 4)).pad(5);
 			menu.row();
 		}
-		
+
 		menu.setFillParent(true);
 		stage.addActor(menu);
 		Gdx.input.setInputProcessor(stage);
-		
+
+		// Her kommer alle lytterene for input
+		playButton.addListener(new InputListener() {
+			@Override
+			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+				return true;
+			}
+
+			@Override
+			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+				Stage stage = event.getTarget().getStage();
+				Vector2 mouse = stage.screenToStageCoordinates(new Vector2(Gdx.input.getX(), Gdx.input.getY()));
+
+				if (stage.hit(mouse.x, mouse.y, true) == event.getTarget()) {
+					game.setScreen(game.getGameScreen());
+				}
+			}
+		});
+
+		highscoreButton.addListener(new InputListener() {
+			@Override
+			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+				return true;
+			}
+
+			@Override
+			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+				Stage stage = event.getTarget().getStage();
+				Vector2 mouse = stage.screenToStageCoordinates(new Vector2(Gdx.input.getX(), Gdx.input.getY()));
+
+				if (stage.hit(mouse.x, mouse.y, true) == event.getTarget()) {
+					// game.setScreen(highscoreMenuScreen);
+				}
+			}
+		});
+
+		exitButton.addListener(new InputListener() {
+			@Override
+			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+				return true;
+			}
+
+			@Override
+			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+				Stage stage = event.getTarget().getStage();
+				Vector2 mouse = stage.screenToStageCoordinates(new Vector2(Gdx.input.getX(), Gdx.input.getY()));
+
+				if (stage.hit(mouse.x, mouse.y, true) == event.getTarget()) {
+					exitGame();
+				}
+			}
+		});
 	}
-	
-	@Override
-	public void dispose() {
-		stage.dispose();
-	}
-	
-	@Override
-	public void exitGame() { 
-		// TODO
+
+	// Setting the buttons up
+	public ImageButton setupButton(String imageString) {
+		myTexture = new Texture(Gdx.files.internal(imageString));
+		TextureRegion myTextureRegion = new TextureRegion(myTexture);
+		TextureRegionDrawable myTexRegionDrawable = new TextureRegionDrawable(myTextureRegion);
+		ImageButton logo = new ImageButton(myTexRegionDrawable);
+		return logo;
 	}
 
 	@Override
-	public void hide() { 
+	public void dispose() {
+		// screen.dispose();
+	}
+
+	@Override
+	public void exitGame() {
+		Gdx.app.exit();
+	}
+
+	@Override
+	public void hide() {
 		Gdx.input.setInputProcessor(null);
 	}
 
 	@Override
-	public void newGame() { // TODO 
+	public void newGame() {
+		// TODO
 	}
 
 	@Override
@@ -124,7 +150,6 @@ public class StartMenuScreen implements uib.teamdank.common.gui.StartMenuScreen,
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		stage.act(delta);
 		stage.draw();
-		 
 	}
 
 	@Override
@@ -139,37 +164,11 @@ public class StartMenuScreen implements uib.teamdank.common.gui.StartMenuScreen,
 
 	@Override
 	public void show() {
-		//TODO 
-	}
-
-	@Override
-	public void viewHighscores() {
-		// TODO Auto-generated method stub
-	}
-
-	
-	@Override public boolean tap(float x, float y, int count, int button) {return false;}
-
-	@Override public boolean longPress(float x, float y){ return false;}
-
-	@Override public boolean fling(float velocityX, float velocityY, int button) {return false;}
-
-	@Override public boolean pan(float x, float y, float deltaX, float deltaY) {return false;}
-
-	@Override public boolean panStop(float x, float y, int pointer, int button) {return false;}
-
-	@Override public boolean zoom(float initialDistance, float distance) {return false;}
-
-	@Override public boolean pinch(Vector2 initialPointer1, Vector2 initialPointer2, Vector2 pointer1, Vector2 pointer2) {return false;}
-
-	@Override public void pinchStop() {
 		// TODO
 	}
 
 	@Override
-	public boolean touchDown(float x, float y, int pointer, int button) {
-		// TODO Auto-generated method stub
-		return false;
+	public void viewHighscores() {
+		// TODO
 	}
-
 }
