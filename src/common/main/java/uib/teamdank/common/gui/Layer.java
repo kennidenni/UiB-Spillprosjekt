@@ -4,6 +4,8 @@ import java.util.Iterator;
 import java.util.Objects;
 import java.util.function.Consumer;
 
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 
 import uib.teamdank.common.GameObject;
@@ -30,7 +32,6 @@ public class Layer {
 	 * specified consumer.
 	 */
 	public void forEachGameObject(Consumer<GameObject> action) {
-		Objects.requireNonNull(action, "action cannot be null");
 		gameObjects.forEach(action);
 	}
 
@@ -47,6 +48,14 @@ public class Layer {
 	public boolean isSolid() {
 		return solid;
 	}
+	
+	/**
+	 * This method is called before the rendering of the game
+	 * objects in this layer ({@link #render(SpriteBatch, float)}.
+	 */
+	protected void preRender(SpriteBatch batch, float delta) {
+		// Can be overridden
+	}
 
 	/**
 	 * Removes every game object in this layer that is marked for removal.
@@ -62,6 +71,16 @@ public class Layer {
 				it.remove();
 			}
 		}
+	}
+	
+	public void render(SpriteBatch batch, float delta) {
+		preRender(batch, delta);
+		forEachGameObject(gameObject -> {
+			if (gameObject.getTexture() != null) {
+				Vector2 pos = gameObject.getPosisiton();
+				batch.draw(gameObject.getTexture(), pos.x, pos.y, gameObject.getWidth(), gameObject.getHeight());
+			}
+		});
 	}
 
 	public void setSolid(boolean solid) {
