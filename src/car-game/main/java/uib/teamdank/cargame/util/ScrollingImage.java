@@ -22,6 +22,6 @@ public class ScrollingImage {
 	}
 
 	public void update(float delta) {
-		
+		// Temporarily empty
 	}
 }
