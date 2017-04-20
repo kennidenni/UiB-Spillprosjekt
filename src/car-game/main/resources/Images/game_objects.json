@@ -1,0 +1,12 @@
+{
+	"tileset": "Images/game_objects.png",
+	"regions": [
+		{
+			"name": "car_forward",
+			"x": "0",
+			"y": "0",
+			"w": "212",
+			"h": "317"
+		}
+	]
+}
