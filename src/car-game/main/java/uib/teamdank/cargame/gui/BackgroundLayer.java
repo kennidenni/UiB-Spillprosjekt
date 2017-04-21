@@ -31,7 +31,6 @@ public class BackgroundLayer extends Layer {
 		
 		this.backgroundTexture = new Texture(Gdx.files.internal("Images/background.png"));
 		this.scrollingRoad = new LoopingBackground(playerCamera, new Texture(Gdx.files.internal("Images/road.png")), .5f);
-		scrollingRoad.setHorizontalPosition(-scrollingRoad.getWidth() / 2 + player.getWidth() / 2);
 		
 		TextureAtlas structuresAtlas = TextureAtlas.createFromJson(Gdx.files.internal("Images/structures.json")); 
 		TextureRegion[] structureTextures = structuresAtlas.getAllRegions();
