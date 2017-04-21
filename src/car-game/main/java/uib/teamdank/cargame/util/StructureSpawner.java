@@ -41,6 +41,7 @@ public class StructureSpawner implements Generator<TextureRegion> {
 		GameObject structure = new GameObject();
 		structure.getPosisiton().y = camera.position.y + camera.viewportHeight / 2 + SPACE_BETWEEN_STRUCTURES;
 		structure.setTexture(generate(random));
+		structure.setFlipHorizontally(flipped);
 		structures.add(structure);
 		layer.addGameObject(structure);
 		return structure;
