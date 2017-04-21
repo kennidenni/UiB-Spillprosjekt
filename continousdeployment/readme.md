@@ -35,4 +35,8 @@ SonarQube -> sonar.sh
 
 ---
 
+/opt/sonar/extensions/plugins/sonar-gitlab-plugin-2.0.1.jar
+
+---
+
 ![pipeline](GitLab Pipeline.png)
