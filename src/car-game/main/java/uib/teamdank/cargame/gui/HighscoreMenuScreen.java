@@ -2,7 +2,6 @@ package uib.teamdank.cargame.gui;
 
 import java.util.List;
 
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
@@ -26,7 +25,6 @@ public class HighscoreMenuScreen implements uib.teamdank.common.gui.HighscoreMen
 	private Texture myTexture;
 	private ImageButton backButton;
 	private Table menu;
-	private Object startMenuScreen;
 	private CarGame game;
 
 	public HighscoreMenuScreen(CarGame game) {
@@ -76,7 +74,7 @@ public class HighscoreMenuScreen implements uib.teamdank.common.gui.HighscoreMen
 
 	@Override
 	public void goBack() {
-		hide();
+		//hide();
 		game.getStartMenuScreen().show();
 		game.setScreen(game.getStartMenuScreen());
 	}
