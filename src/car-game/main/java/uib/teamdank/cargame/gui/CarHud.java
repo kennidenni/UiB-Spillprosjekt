@@ -1,7 +1,6 @@
 package uib.teamdank.cargame.gui;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -36,8 +35,8 @@ public class CarHud {
 		bar.setValue(fuel);
 
 		menu = new Table();
-		menu.add(fuelImage).width((float) (fuelImage.getWidth() / 4)).height((float) (fuelImage.getHeight() / 4)).pad(900, 600, 0, 0);
-		menu.add(bar).width((float) (bar.getWidth() / 4)).height((float) (bar.getHeight() / 4)).pad(900, 600, 0, 0);
+		menu.add(fuelImage).width((float) (fuelImage.getWidth() / 2)).height((float) (fuelImage.getHeight() / 2)).pad(900, 1650, 0, 0);
+		menu.add(bar).pad(900, 10, 0, 0);
 
 		menu.setFillParent(true);
 		stage.addActor(menu);
@@ -52,7 +51,6 @@ public class CarHud {
 	}
 
 	public void render(float delta) {
-		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		stage.act(delta);
 		bar.act(delta);
 		stage.draw();
