@@ -1,5 +1,6 @@
 package uib.teamdank.cargame.gui;
 
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
@@ -30,10 +31,13 @@ public class StartMenuScreen implements uib.teamdank.common.gui.StartMenuScreen 
 	private ImageButton highscoreButton;
 	private ImageButton exitButton;
 	private Array<Button> buttons;
+	private HighscoreMenuScreen highscoreMenuScreen;
+	private Game game;
 
 	public StartMenuScreen(CarGame game) {
+		this.game = game;
 		stage = new Stage(new FitViewport(1920, 1080));
-		new HighscoreMenuScreen();
+		highscoreMenuScreen = new HighscoreMenuScreen(game);
 
 		logoButton = setupButton(LOGO);
 		playButton = setupButton(PLAY);
@@ -89,7 +93,7 @@ public class StartMenuScreen implements uib.teamdank.common.gui.StartMenuScreen 
 				Vector2 mouse = stage.screenToStageCoordinates(new Vector2(Gdx.input.getX(), Gdx.input.getY()));
 
 				if (stage.hit(mouse.x, mouse.y, true) == event.getTarget()) {
-					// game.setScreen(highscoreMenuScreen);
+					viewHighscores();
 				}
 			}
 		});
@@ -169,6 +173,6 @@ public class StartMenuScreen implements uib.teamdank.common.gui.StartMenuScreen 
 
 	@Override
 	public void viewHighscores() {
-		// TODO
+		game.setScreen(highscoreMenuScreen);
 	}
 }
