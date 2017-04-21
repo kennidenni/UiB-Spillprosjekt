@@ -53,17 +53,21 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 	}
 
 	@Override
+	public void resize(int width, int height) {
+		playerCamera.viewportWidth = screenCamera.viewportWidth = width;
+		playerCamera.viewportHeight = screenCamera.viewportHeight = height;
+		playerCamera.update();
+		screenCamera.update();
+	}
+	
+	@Override
 	public void render(float delta) {
-		final int screenWidth = Gdx.graphics.getWidth();
-		final int screenHeight = Gdx.graphics.getHeight();
 
 		// Update player camera
 		Vector2 playerPos = player.getPosisiton();
 		float cameraX = playerPos.x + player.getWidth() / 2;
-		float cameraY = playerPos.y + screenHeight / 2 - CAR_VERTICAL_POSITION;
+		float cameraY = playerPos.y + Gdx.graphics.getHeight() / 2 - CAR_VERTICAL_POSITION;
 		playerCamera.position.set(cameraX, cameraY, 0);
-		playerCamera.viewportWidth = screenWidth;
-		playerCamera.viewportHeight = screenHeight;
 		playerCamera.update();
 		getGame().getSpriteBatch().setProjectionMatrix(playerCamera.combined);
 
