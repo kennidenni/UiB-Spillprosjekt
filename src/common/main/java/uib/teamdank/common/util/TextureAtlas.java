@@ -48,6 +48,13 @@ public class TextureAtlas {
 	public void dispose() {
 		tileset.dispose();
 	}
+
+	/**
+	 * @return a copy of all regions in this texture atlas
+	 */
+	public TextureRegion[] getAllRegions() {
+		return textureCache.values().toArray(new TextureRegion[textureCache.size()]);
+	}
 	
 	/**
 	 * @return the texture region with the given name 
