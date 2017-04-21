@@ -2,6 +2,7 @@ package uib.teamdank.cargame.gui;
 
 import java.util.List;
 
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
@@ -25,7 +26,7 @@ public class HighscoreMenuScreen implements uib.teamdank.common.gui.HighscoreMen
 	private Texture myTexture;
 	private ImageButton backButton;
 	private Table menu;
-	private CarGame game;
+	private Game game;
 
 	public HighscoreMenuScreen(CarGame game) {
 		this.game = game;
@@ -33,7 +34,7 @@ public class HighscoreMenuScreen implements uib.teamdank.common.gui.HighscoreMen
 		
 		backButton = setupButton(BACK);
 		menu = new Table();
-		menu.add(backButton).pad(0, 0, 20, 100);
+		menu.add(backButton).width((float) (backButton.getWidth() / 4)).height((float) (backButton.getHeight() / 4)).pad(900, 0, 0, 0);
 		
 		
 		menu.setFillParent(true);
@@ -52,7 +53,7 @@ public class HighscoreMenuScreen implements uib.teamdank.common.gui.HighscoreMen
 				Vector2 mouse = stage.screenToStageCoordinates(new Vector2(Gdx.input.getX(), Gdx.input.getY()));
 
 				if (stage.hit(mouse.x, mouse.y, true) == event.getTarget()) {
-					goBack();
+					game.setScreen((game.getStartMenuScreen()));
 				}
 			}
 		});
@@ -74,9 +75,8 @@ public class HighscoreMenuScreen implements uib.teamdank.common.gui.HighscoreMen
 
 	@Override
 	public void goBack() {
-		//hide();
-		game.getStartMenuScreen().show();
-		game.setScreen(game.getStartMenuScreen());
+		hide();
+		game.setScreen((((uib.teamdank.common.Game) game).getStartMenuScreen()));
 	}
 
 	@Override
@@ -113,7 +113,7 @@ public class HighscoreMenuScreen implements uib.teamdank.common.gui.HighscoreMen
 
 	@Override
 	public void show() {
-		// TODO Auto-generated method stub
+		Gdx.input.setInputProcessor(stage);
 	}
 
 }

@@ -168,7 +168,7 @@ public class StartMenuScreen implements uib.teamdank.common.gui.StartMenuScreen 
 
 	@Override
 	public void show() {
-		// TODO
+		Gdx.input.setInputProcessor(stage);
 	}
 
 	@Override
