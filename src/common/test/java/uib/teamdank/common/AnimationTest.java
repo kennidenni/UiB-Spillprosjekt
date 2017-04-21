@@ -53,7 +53,7 @@ public class AnimationTest extends LibGdxDependentTest {
 	}
 
 	@Test
-	public void testAnimationLoadedProperply() {
+	public void testAnimationLoadedProperly() {
 		Animation animation = Animation.createFromJson(Gdx.files.internal("bird_anim.json"));
 		assertThat(animation.getTexture(), notNullValue());
 	}

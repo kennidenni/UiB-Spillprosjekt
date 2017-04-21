@@ -62,7 +62,7 @@ public class TextureAtlasTest extends LibGdxDependentTest {
 	}
 
 	@Test
-	public void testTextureAtlasLoadedProperply() {
+	public void testTextureAtlasLoadedProperly() {
 		TextureAtlas atlas = TextureAtlas.createFromJson(Gdx.files.internal("bird_atlas.json"));
 		String[] regions = { "bird1", "bird2", "bird3", "bird4", "bird5" };
 		for (String region : regions) {
