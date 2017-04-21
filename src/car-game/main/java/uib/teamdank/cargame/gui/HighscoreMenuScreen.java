@@ -23,7 +23,6 @@ public class HighscoreMenuScreen implements uib.teamdank.common.gui.HighscoreMen
 	private static final String BACK = "Images/Buttons/bs_back.png";
 	
 	private Stage stage;
-	private Texture myTexture;
 	private ImageButton backButton;
 	private Table menu;
 	private Game game;
@@ -49,22 +48,21 @@ public class HighscoreMenuScreen implements uib.teamdank.common.gui.HighscoreMen
 
 			@Override
 			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-				Stage stage = event.getTarget().getStage();
-				Vector2 mouse = stage.screenToStageCoordinates(new Vector2(Gdx.input.getX(), Gdx.input.getY()));
+				Stage myStage = event.getTarget().getStage();
+				Vector2 mouse = myStage.screenToStageCoordinates(new Vector2(Gdx.input.getX(), Gdx.input.getY()));
 
-				if (stage.hit(mouse.x, mouse.y, true) == event.getTarget()) {
-					game.setScreen((game.getStartMenuScreen()));
+				if (myStage.hit(mouse.x, mouse.y, true) == event.getTarget()) {
+					game.setScreen(game.getStartMenuScreen());
 				}
 			}
 		});
 	}
 	
 	public ImageButton setupButton(String imageString) {
-		myTexture = new Texture(Gdx.files.internal(imageString));
+		Texture myTexture = new Texture(Gdx.files.internal(imageString));
 		TextureRegion myTextureRegion = new TextureRegion(myTexture);
 		TextureRegionDrawable myTexRegionDrawable = new TextureRegionDrawable(myTextureRegion);
-		ImageButton logo = new ImageButton(myTexRegionDrawable);
-		return logo;
+		return new ImageButton(myTexRegionDrawable);
 	}
 
 
@@ -76,7 +74,7 @@ public class HighscoreMenuScreen implements uib.teamdank.common.gui.HighscoreMen
 	@Override
 	public void goBack() {
 		hide();
-		game.setScreen((((uib.teamdank.common.Game) game).getStartMenuScreen()));
+		game.setScreen(((uib.teamdank.common.Game) game).getStartMenuScreen());
 	}
 
 	@Override

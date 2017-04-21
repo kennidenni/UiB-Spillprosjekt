@@ -122,7 +122,7 @@ public class StartMenuScreen implements uib.teamdank.common.gui.StartMenuScreen 
 		TextureRegion myTextureRegion = new TextureRegion(myTexture);
 		TextureRegionDrawable myTexRegionDrawable = new TextureRegionDrawable(myTextureRegion);
 		ImageButton logo = new ImageButton(myTexRegionDrawable);
-		return logo;
+		//return logo;
 	}
 
 	@Override
