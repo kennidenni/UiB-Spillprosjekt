@@ -45,17 +45,20 @@ public class BackgroundLayer extends Layer {
 		final int screenWidth = Gdx.graphics.getWidth();
 		final int screenHeight = Gdx.graphics.getHeight();
 		
+		final int roadLeftX = (int) (-(scrollingRoad.getWidth() - player.getWidth()) / 2);
+		final int roadRightX = (int) ((scrollingRoad.getWidth() + player.getWidth()) / 2);
+		
 		batch.setProjectionMatrix(screenCamera.combined);
 		batch.draw(backgroundTexture, -screenWidth / 2f, -screenHeight / 2f, screenWidth, screenHeight);
 		batch.setProjectionMatrix(playerCamera.combined);
 		scrollingRoad.render(batch);
-		scrollingRoad.setHorizontalPosition(-(scrollingRoad.getWidth() - player.getWidth()) / 2);
+		scrollingRoad.updateHorizontalPosition(roadLeftX);
 		for (StructureSpawner spawner : structureSpawners) {
 			spawner.spawnNewStructures();
 			spawner.deleteOldStructures();
 		}
-		structureSpawners[0].updateHorizontalPosition(-(scrollingRoad.getWidth() - player.getWidth()) / 2);
-		structureSpawners[1].updateHorizontalPosition((scrollingRoad.getWidth() + player.getWidth()) / 2);
+		structureSpawners[0].updateHorizontalPosition(roadLeftX);
+		structureSpawners[1].updateHorizontalPosition(roadRightX);
 		
 	}
 	
