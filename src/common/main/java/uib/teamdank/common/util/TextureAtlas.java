@@ -21,13 +21,17 @@ import com.google.gson.annotations.SerializedName;
 public class TextureAtlas {
 
 	private static class Region {
-		String name;
-		int x;
-		int y;
-		int w;
-		int h;
+		@SerializedName("name") String name;
+		@SerializedName("x") int x;
+		@SerializedName("y") int y;
+		@SerializedName("w") int w;
+		@SerializedName("h") int h;
 	}
 	
+	/**
+	 * Creates a new texture atlas from the specification in the given
+	 * JSON-file.
+	 */
 	public static TextureAtlas createFromJson(FileHandle handle){
 		Objects.requireNonNull(handle, "file handle cannot be null");
 		TextureAtlas atlas = new Gson().fromJson(handle.reader(), TextureAtlas.class);
