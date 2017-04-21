@@ -1,6 +1,7 @@
 # Arbeidslag: INF112-v2017-pr2_team_D
 # Time: onsdag 14-16
 
+## [Nettside for publisering av spill](http://158.39.74.42/)
 ## [Arbeidsflyt](https://gitlab.uib.no/inf112-v2017/inf112-v2017-pr2_team_d/wikis/arbeidsflyt)
 ## [Slack](https://inf112v17teamd.slack.com)
 ## [Trello](https://trello.com/invite/inf112_teamd/3b38a116f79efcfd11dce1168e4a2e6c)
