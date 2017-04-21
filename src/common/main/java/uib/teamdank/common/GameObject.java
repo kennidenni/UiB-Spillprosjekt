@@ -13,6 +13,8 @@ public class GameObject {
     private final Vector2 velocity = new Vector2();
 	private TextureRegion tRegion;
 	private float scale;
+	private boolean flipHorizontally;
+	private boolean flipVertically;
 
 	/**
 	 * Creates a GameObject that spans no area, in the origin (0, 0).
@@ -53,8 +55,10 @@ public class GameObject {
 	 */
 	public GameObject(float x, float y, TextureRegion tRegion) {
 	    this.pos.set(x, y);
-	    setTexture(tRegion);
+	    this.setTexture(tRegion);
 	    this.setScale(1);
+	    this.setFlipHorizontally(false);
+	    this.setFlipVertically(false);
 	}
 
 	/**
@@ -130,6 +134,30 @@ public class GameObject {
 		return tRegion;
 	}
 
+	/**
+	 * Sets this game object's texture to be flipped along the vertical
+	 * axis when rendered.
+	 */
+	public void setFlipHorizontally(boolean flipHorizontally) {
+		this.flipHorizontally = flipHorizontally;
+	}
+	
+	public boolean getFlipHorizontally() {
+		return flipHorizontally;
+	}
+	
+	/**
+	 * Sets this game object's texture to be flipped along the horizontal
+	 * axis when rendered.
+	 */
+	public void setFlipVertically(boolean flipVertically) {
+		this.flipVertically = flipVertically;
+	}
+	
+	public boolean getFlipVertically() {
+		return flipVertically;
+	}
+	
     /**
      * Sets the texture of this object
      * @param texture
