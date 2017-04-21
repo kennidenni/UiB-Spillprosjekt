@@ -18,10 +18,10 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import uib.teamdank.cargame.CarGame;
 
 public class StartMenuScreen implements uib.teamdank.common.gui.StartMenuScreen {
-	private static final String LOGO = "Images/CarGameLogo.png";
-	private static final String PLAY = "Images/Buttons/start.png";
-	private static final String HIGHSCORE = "Images/Buttons/cg_highscore.png";
-	private static final String EXIT = "Images/Buttons/bs_quit.png";
+	private static final String LOGO = "images/CarGameLogo.png";
+	private static final String PLAY = "images/Buttons/start.png";
+	private static final String HIGHSCORE = "images/buttons/cg_highscore.png";
+	private static final String EXIT = "images/buttons/bs_quit.png";
 
 	private Stage stage;
 	private Texture myTexture;
@@ -168,7 +168,7 @@ public class StartMenuScreen implements uib.teamdank.common.gui.StartMenuScreen 
 
 	@Override
 	public void show() {
-		// TODO
+		Gdx.input.setInputProcessor(stage);
 	}
 
 	@Override

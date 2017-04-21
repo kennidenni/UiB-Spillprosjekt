@@ -20,7 +20,7 @@ import uib.teamdank.cargame.CarGame;
 import uib.teamdank.common.Score;
 
 public class HighscoreMenuScreen implements uib.teamdank.common.gui.HighscoreMenuScreen {
-	private static final String BACK = "Images/Buttons/bs_back.png";
+	private static final String BACK = "images/buttons/bs_back.png";
 	
 	private Stage stage;
 	private Texture myTexture;
@@ -54,6 +54,7 @@ public class HighscoreMenuScreen implements uib.teamdank.common.gui.HighscoreMen
 				Vector2 mouse = stage.screenToStageCoordinates(new Vector2(Gdx.input.getX(), Gdx.input.getY()));
 
 				if (stage.hit(mouse.x, mouse.y, true) == event.getTarget()) {
+					System.out.println("denne funker");
 					goBack();
 				}
 			}
@@ -76,8 +77,6 @@ public class HighscoreMenuScreen implements uib.teamdank.common.gui.HighscoreMen
 
 	@Override
 	public void goBack() {
-		hide();
-		game.getStartMenuScreen().show();
 		game.setScreen(game.getStartMenuScreen());
 	}
 
@@ -115,7 +114,7 @@ public class HighscoreMenuScreen implements uib.teamdank.common.gui.HighscoreMen
 
 	@Override
 	public void show() {
-		// TODO Auto-generated method stub
+		Gdx.input.setInputProcessor(stage);
 	}
 
 }
