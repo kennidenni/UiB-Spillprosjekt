@@ -104,7 +104,7 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 		
 		// Update HUD
 		hud.setCurrentFuel(player.getHealth());
-		player.decreaseHealth(75);
+		player.setHealth(player.getMaxHealth() - (int) (player.getPosisiton().y / 100));
 
 	}
 
