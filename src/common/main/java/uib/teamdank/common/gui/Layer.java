@@ -77,7 +77,18 @@ public class Layer {
 		preRender(batch, delta);
 		forEachGameObject(gameObject -> {
 			if (gameObject.getTexture() != null) {
+				
+				// Game objects should have an origin in the lower left
+				// corner, but to correctly flip textures the origin
+				// will be in the center and the game object will be
+				// offset to be positioned correctly in the lower left.
+				
 				Vector2 pos = gameObject.getPosisiton();
+				final float width = gameObject.getWidth();
+				final float height = gameObject.getHeight();
+				final float flipX = gameObject.getFlipHorizontally() ? -1 : 1;
+				final float flipY = gameObject.getFlipVertically() ? -1 : 1;
+				batch.draw(gameObject.getTexture(), pos.x, pos.y, width / 2, height / 2, width, height, flipX, flipY, 0);
 				batch.draw(gameObject.getTexture(), pos.x, pos.y, gameObject.getWidth(), gameObject.getHeight());
 			}
 		});
