@@ -22,4 +22,17 @@ ligger i /srv/nginx/pages/gitlabapi/public/
 
 ---
 
+ubuntu@sonarqubedank:~$ whereis nginx  
+nginx: /usr/sbin/nginx /etc/nginx /usr/share/nginx  
+ubuntu@sonarqubedank:~$ whereis gitlab-runner  
+gitlab-runner: /usr/bin/gitlab-runner /etc/gitlab-runner /usr/share/gitlab-runner  
+ubuntu@sonarqubedank:~$ whereis mysql  
+mysql: /usr/bin/mysql /usr/lib/mysql /etc/mysql /usr/share/mysql /usr/share/man/man1/mysql.1.gz  
+ubuntu@sonarqubedank:~$ whereis docker  
+docker: /usr/bin/docker /usr/lib/docker /etc/docker /usr/share/man/man1/docker.1.gz  
+SonarQube -> sonar.sh  
+/opt/sonar/bin/linux-x86-64  
+
+---
+
 ![pipeline](GitLab Pipeline.png)
