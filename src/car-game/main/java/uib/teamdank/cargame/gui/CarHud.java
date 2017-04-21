@@ -27,17 +27,17 @@ public class CarHud {
 		fuelImage = setupButton(FUELTANK);
 
 		ProgressBar.ProgressBarStyle style = new ProgressBar.ProgressBarStyle();
-		style.background = new TextureRegionDrawable(new TextureRegion(new Texture("background.png")));
-		style.knob = new TextureRegionDrawable(new TextureRegion(new Texture("loading.png")));
-		style.knobBefore = style.knob;
+		style.background = new TextureRegionDrawable(new TextureRegion(new Texture("images/background.png")));
+		//style.knob = new TextureRegionDrawable(new TextureRegion(new Texture("images/road.png")));
+		//style.knobBefore = style.knob;
 
 		bar = new ProgressBar(0, 100, 1, false, style);
 		bar.setAnimateDuration(1);
-		bar.setValue(50);
+		bar.setValue(fuel);
 
 		menu = new Table();
-		menu.add(fuelImage).width((float) (fuelImage.getWidth() / 4)).height((float) (fuelImage.getHeight() / 4))
-				.pad(900, 600, 0, 0);
+		menu.add(fuelImage).width((float) (fuelImage.getWidth() / 4)).height((float) (fuelImage.getHeight() / 4)).pad(900, 600, 0, 0);
+		menu.add(bar).width((float) (bar.getWidth() / 4)).height((float) (bar.getHeight() / 4)).pad(900, 600, 0, 0);
 
 		menu.setFillParent(true);
 		stage.addActor(menu);
