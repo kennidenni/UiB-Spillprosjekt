@@ -40,7 +40,7 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 		// Player initialization
 		player = new Player();
 		player.setTexture(gameObjectTextures.getRegion("car_forward"));
-		player.setScale(.4f);
+		player.setScale(.5f);
 		player.getVelocity().y = CAR_VERTICAL_SPEED;
 		
 		// Layers
