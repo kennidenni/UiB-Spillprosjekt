@@ -1,5 +1,6 @@
 package uib.teamdank.cargame.gui;
 
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
@@ -17,10 +18,10 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import uib.teamdank.cargame.CarGame;
 
 public class StartMenuScreen implements uib.teamdank.common.gui.StartMenuScreen {
-	private static final String LOGO = "Images/CarGameLogo.png";
-	private static final String PLAY = "Images/Buttons/start.png";
-	private static final String HIGHSCORE = "Images/Buttons/cg_highscore.png";
-	private static final String EXIT = "Images/Buttons/bs_quit.png";
+	private static final String LOGO = "images/CarGameLogo.png";
+	private static final String PLAY = "images/Buttons/start.png";
+	private static final String HIGHSCORE = "images/buttons/cg_highscore.png";
+	private static final String EXIT = "images/buttons/bs_quit.png";
 
 	private Stage stage;
 	private Texture myTexture;
@@ -30,10 +31,13 @@ public class StartMenuScreen implements uib.teamdank.common.gui.StartMenuScreen 
 	private ImageButton highscoreButton;
 	private ImageButton exitButton;
 	private Array<Button> buttons;
+	private HighscoreMenuScreen highscoreMenuScreen;
+	private Game game;
 
 	public StartMenuScreen(CarGame game) {
+		this.game = game;
 		stage = new Stage(new FitViewport(1920, 1080));
-		new HighscoreMenuScreen();
+		highscoreMenuScreen = new HighscoreMenuScreen(game);
 
 		logoButton = setupButton(LOGO);
 		playButton = setupButton(PLAY);
@@ -89,7 +93,7 @@ public class StartMenuScreen implements uib.teamdank.common.gui.StartMenuScreen 
 				Vector2 mouse = stage.screenToStageCoordinates(new Vector2(Gdx.input.getX(), Gdx.input.getY()));
 
 				if (stage.hit(mouse.x, mouse.y, true) == event.getTarget()) {
-					// game.setScreen(highscoreMenuScreen);
+					viewHighscores();
 				}
 			}
 		});
@@ -164,11 +168,11 @@ public class StartMenuScreen implements uib.teamdank.common.gui.StartMenuScreen 
 
 	@Override
 	public void show() {
-		// TODO
+		Gdx.input.setInputProcessor(stage);
 	}
 
 	@Override
 	public void viewHighscores() {
-		// TODO
+		game.setScreen(highscoreMenuScreen);
 	}
 }
