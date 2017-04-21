@@ -33,10 +33,11 @@ public class CarHud {
 		bar = new ProgressBar(0, 100, 1, false, style);
 		bar.setAnimateDuration(1);
 		bar.setValue(fuel);
+		bar.setRange(1, 100);
 
 		menu = new Table();
 		menu.add(fuelImage).width((float) (fuelImage.getWidth() / 2)).height((float) (fuelImage.getHeight() / 2)).pad(900, 1650, 0, 0);
-		menu.add(bar).pad(900, 10, 0, 0);
+		menu.add(bar).pad(900, 10, 100, 50);
 
 		menu.setFillParent(true);
 		stage.addActor(menu);
@@ -58,9 +59,14 @@ public class CarHud {
 
 	public void setCurrentFuel(int fuel) {
 		this.fuel = fuel;
+		bar.setValue(fuel);
 	}
 
 	public int getCurrentFuel() {
 		return fuel;
+	}
+	
+	public void resize(int width, int height) {
+		stage.getViewport().update(width, height, true);
 	}
 }
