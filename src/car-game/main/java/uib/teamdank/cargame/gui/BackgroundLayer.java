@@ -49,6 +49,7 @@ public class BackgroundLayer extends Layer {
 		batch.draw(backgroundTexture, -screenWidth / 2f, -screenHeight / 2f, screenWidth, screenHeight);
 		batch.setProjectionMatrix(playerCamera.combined);
 		scrollingRoad.render(batch);
+		scrollingRoad.setHorizontalPosition(-(scrollingRoad.getWidth() - player.getWidth()) / 2);
 		for (StructureSpawner spawner : structureSpawners) {
 			spawner.spawnNewStructures();
 			spawner.deleteOldStructures();
