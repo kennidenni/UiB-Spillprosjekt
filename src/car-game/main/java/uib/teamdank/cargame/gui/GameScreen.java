@@ -101,6 +101,10 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 			player.getPosisiton().x = backgroundLayer.getRoadRightX() - player.getWidth();
 			player.getVelocity().x *= -1;
 		}
+		
+		// Update HUD
+		hud.setCurrentFuel(player.getHealth());
+		player.decreaseHealth(75);
 
 	}
 
