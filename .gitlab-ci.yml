@@ -106,7 +106,22 @@ publiserapi:
     - master
   tags:
   - bash
-    
+
+publiserweb:
+  stage: staging
+  script:
+    - cd ../continousdeployment/web/
+    - cp index.html /srv/nginx/pages/gitlabapi/public/
+    - cp -R apps/ /srv/nginx/pages/gitlabapi/public/
+    - cp -R img/ /srv/nginx/pages/gitlabapi/public/
+    - cp -R staging/ /srv/nginx/pages/gitlabapi/public/
+  environment:
+    name: nettside
+    url: http://158.39.74.42:80/
+  only:
+    - /.*deploy-web.*$/
+  tags:
+    - bash
 # Use the generated build output to run the tests.
 #test:
 #  stage: test
