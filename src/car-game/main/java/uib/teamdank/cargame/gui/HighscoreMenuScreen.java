@@ -27,12 +27,11 @@ public class HighscoreMenuScreen implements uib.teamdank.common.gui.HighscoreMen
 	private ImageButton backButton;
 	private Table menu;
 	private Object startMenuScreen;
-	private Game game;
+	private CarGame game;
 
 	public HighscoreMenuScreen(CarGame game) {
 		this.game = game;
 		stage = new Stage(new FitViewport(1920, 1080));
-		startMenuScreen = new StartMenuScreen(game);
 		
 		backButton = setupButton(BACK);
 		menu = new Table();
@@ -77,7 +76,9 @@ public class HighscoreMenuScreen implements uib.teamdank.common.gui.HighscoreMen
 
 	@Override
 	public void goBack() {
-		game.setScreen(startMenuScreen);
+		hide();
+		game.getStartMenuScreen().show();
+		game.setScreen(game.getStartMenuScreen());
 	}
 
 	@Override
