@@ -40,26 +40,30 @@ public class BackgroundLayer extends Layer {
 		};
 	}
 	
+	public int getRoadLeftX() {
+		return (int) (-(scrollingRoad.getWidth() - player.getWidth()) / 2);
+	}
+	
+	public int getRoadRightX() {
+		return (int) ((scrollingRoad.getWidth() + player.getWidth()) / 2);
+	}
+	
 	@Override
 	protected void preRender(SpriteBatch batch, float delta) {
 		final int screenWidth = Gdx.graphics.getWidth();
 		final int screenHeight = Gdx.graphics.getHeight();
 		
-		final int roadLeftX = (int) (-(scrollingRoad.getWidth() - player.getWidth()) / 2);
-		final int roadRightX = (int) ((scrollingRoad.getWidth() + player.getWidth()) / 2);
-		
 		batch.setProjectionMatrix(screenCamera.combined);
 		batch.draw(backgroundTexture, -screenWidth / 2f, -screenHeight / 2f, screenWidth, screenHeight);
 		batch.setProjectionMatrix(playerCamera.combined);
 		scrollingRoad.render(batch);
-		scrollingRoad.updateHorizontalPosition(roadLeftX);
+		scrollingRoad.updateHorizontalPosition(getRoadLeftX());
 		for (StructureSpawner spawner : structureSpawners) {
 			spawner.spawnNewStructures();
 			spawner.deleteOldStructures();
 		}
-		structureSpawners[0].updateHorizontalPosition(roadLeftX);
-		structureSpawners[1].updateHorizontalPosition(roadRightX);
-		
+		structureSpawners[0].updateHorizontalPosition(getRoadLeftX());
+		structureSpawners[1].updateHorizontalPosition(getRoadRightX());
 	}
 	
 }
