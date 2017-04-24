@@ -9,7 +9,7 @@ import uib.teamdank.common.ItemHolder;
  */
 public class ItemContainer extends Item implements ItemHolder {
 
-    private Inventory bag;
+    private final Inventory bag;
 
     public ItemContainer(String n, String d) {
         super(n, d);
