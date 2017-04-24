@@ -8,6 +8,7 @@ import com.badlogic.gdx.math.Vector2;
 import uib.teamdank.cargame.Player;
 import uib.teamdank.common.Game;
 import uib.teamdank.common.gui.Layer;
+import uib.teamdank.common.util.AssetManager;
 import uib.teamdank.common.util.TextureAtlas;
 
 /**
@@ -20,6 +21,8 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 	private static final float CAR_VERTICAL_SPEED = 512f;
 	private static final float CAR_HORIZONTAL_FRICTION = .9f;
 
+	private final AssetManager assets;
+	
 	private final OrthographicCamera playerCamera;
 	private final OrthographicCamera screenCamera;
 
@@ -31,7 +34,8 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 	public GameScreen(Game game) {
 		super(game);
 
-		TextureAtlas gameObjectTextures = TextureAtlas.createFromJson(Gdx.files.internal("Images/game_objects.json"));
+		this.assets = new AssetManager();
+		TextureAtlas gameObjectTextures = assets.getAtlas("Images/game_objects.json");
 
 		// Cameras
 		this.playerCamera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
@@ -44,7 +48,7 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 		player.getVelocity().y = CAR_VERTICAL_SPEED;
 
 		// Layers
-		backgroundLayer = new BackgroundLayer(playerCamera, screenCamera, player);
+		backgroundLayer = new BackgroundLayer(assets, playerCamera, screenCamera, player);
 		carLayer = new Layer(true);
 		addLayer(backgroundLayer);
 		addLayer(carLayer);
@@ -96,6 +100,12 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 			player.getVelocity().x *= -1;
 		}
 
+	}
+	
+	@Override
+	public void dispose() {
+		super.dispose();
+		assets.dispose();
 	}
 
 }
