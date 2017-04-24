@@ -9,14 +9,16 @@ import uib.teamdank.common.ItemHolder;
  */
 public class ItemContainer extends Item implements ItemHolder {
 
+    private Inventory bag;
+
     public ItemContainer(String n, String d) {
         super(n, d);
+        this.bag = new Inventory();
     }
 
     @Override
 	public Inventory getInventory() {
-		// TODO Auto-generated method stub
-        return null;
+        return this.bag;
 	}
 
 }
