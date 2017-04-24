@@ -8,24 +8,27 @@ import uib.teamdank.common.Item;
  */
 public class Weapon extends Item {
 
-    public Weapon(String n, String d) {
+	private double damage;
+	private double weight;
+	
+    public Weapon(String n, String d, double dmg, double wgt) {
         super(n, d);
+        this.damage = dmg;
+        this.weight = wgt;
     }
 
     /**
 	 * @return amount of damage this weapon inflicts
 	 */
 	public double getDamage() {
-		// TODO Auto-generated method stub
-		return -1;
+		return this.damage;
 	}
 
 	/**
 	 * @return the weight of this weapon
 	 */
 	public double getWeight() {
-		// TODO Auto-generated method stub
-		return -1;
+		return this.weight;
 	}
 	
 }
