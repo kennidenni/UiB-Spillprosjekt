@@ -4,21 +4,35 @@ package uib.teamdank.common;
  *
  * Represent an accumulated amount of points.
  */
-public interface Score extends Comparable<Score> {
-	public default void addToScore(long score) {
-		// TODO Auto-generated method stub
+public class Score implements Comparable<Score> {
+	
+	long score = 0;
+	
+	public void addToScore(long score) {
+			this.score += score;
 	}
 
 	@Override
-	public default int compareTo(Score o) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int compareTo(Score o) {
+		if (this.getScore() == o.getScore()){
+			return 0;
+		}
+		else if (this.getScore() < o.getScore()){
+			return 1;
+		}
+		else {
+			return -1;
+		}
 	}
 
-	public long getScore();
+	public long getScore(){
+		return this.score;
+	}
 	
 	/**
 	 * Sets the new score. The score cannot be less than zero.
 	 */
-	public void setScore(long score);
+	public void setScore(long score){
+		this.score = score;
+	}
 }
