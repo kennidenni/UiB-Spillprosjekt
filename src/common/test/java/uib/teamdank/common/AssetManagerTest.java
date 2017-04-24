@@ -1,6 +1,6 @@
 package uib.teamdank.common;
 
-import static org.hamcrest.core.IsNull.notNullValue;
+import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 
 import org.junit.Test;
@@ -13,26 +13,30 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 import uib.teamdank.common.util.Animation;
+import uib.teamdank.common.util.AssetManager;
 
-public class AnimationTest extends LibGdxDependentTest {
+public class AssetManagerTest extends LibGdxDependentTest {
 
 	public static void main(String[] args) {
 		new LwjglApplication(new Game() {
 			private static final float BIRD_SCALE = 12f;
 
 			private SpriteBatch batch;
+			private AssetManager assets;
 			private Animation animation;
 
 			@Override
 			public void create() {
 				this.batch = new SpriteBatch();
-				this.animation = Animation.createFromJson(Gdx.files.internal("bird_anim.json"));
+				this.assets = new AssetManager();
+				assets.getAtlas("bird_atlas.json");
+				this.animation = assets.getAnimation("bird_anim.json");
 			}
 			
 			@Override
 			public void dispose() {
 				batch.dispose();
-				animation.getTextureAtlas().dispose();
+				assets.dispose();
 			}
 
 			public void render() {
@@ -53,15 +57,28 @@ public class AnimationTest extends LibGdxDependentTest {
 		});
 	}
 
-	@Test(expected = NullPointerException.class)
-	public void testAnimationFactoryNull() {
-		Animation.createFromJson(null);
+	@Test
+	public void testAnimationCached() {
+		AssetManager assets = new AssetManager();
+		assets.getAnimation("bird_anim.json");
+		assets.getAnimation("bird_anim.json");
+		assertThat(assets.getLoadedAnimationCount(), is(1));
 	}
 
 	@Test
-	public void testAnimationLoadedProperly() {
-		Animation animation = Animation.createFromJson(Gdx.files.internal("bird_anim.json"));
-		assertThat(animation.getTexture(), notNullValue());
+	public void testAtlasCached() {
+		AssetManager assets = new AssetManager();
+		assets.getAtlas("bird_atlas.json");
+		assets.getAtlas("bird_atlas.json");
+		assertThat(assets.getLoadedAtlasCount(), is(1));
+	}
+	
+	@Test
+	public void testSharedAtlas() {
+		AssetManager assets = new AssetManager();
+		assets.getAtlas("bird_atlas.json");
+		assets.getAnimation("bird_anim.json");
+		assertThat(assets.getLoadedAtlasCount(), is(1));
 	}
 	
 }

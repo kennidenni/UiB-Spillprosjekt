@@ -8,6 +8,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.utils.Disposable;
 import com.google.gson.Gson;
 import com.google.gson.annotations.SerializedName;
 
@@ -18,7 +19,7 @@ import com.google.gson.annotations.SerializedName;
  * <b>Note:</b>When an atlas is created the entire tileset image
  * is loaded into memory. Call {@link #dispose()} when done.
  */
-public class TextureAtlas {
+public class TextureAtlas implements Disposable {
 
 	private static class Region {
 		@SerializedName("name") String name;
@@ -26,6 +27,7 @@ public class TextureAtlas {
 		@SerializedName("y") int y;
 		@SerializedName("w") int w;
 		@SerializedName("h") int h;
+		
 	}
 	
 	/**
@@ -42,13 +44,14 @@ public class TextureAtlas {
 	@SerializedName("tileset") private String tilesetFile;	
 	@SerializedName("regions") private Region[] regions;
 	
-	private transient  Map<String, TextureRegion> textureCache = new HashMap<>();
+	private transient Map<String, TextureRegion> textureCache = new HashMap<>();
 	private transient Texture tileset;
 	
 	private TextureAtlas() {
 		// Hide constructor
 	}
 	
+	@Override
 	public void dispose() {
 		tileset.dispose();
 	}
@@ -65,7 +68,7 @@ public class TextureAtlas {
 		}
 		return textureCache.get(name);
 	}
-	
+
 	private void load() {
 		FileHandle sheetFile = Gdx.files.internal(tilesetFile);
 		if (sheetFile == null) {
