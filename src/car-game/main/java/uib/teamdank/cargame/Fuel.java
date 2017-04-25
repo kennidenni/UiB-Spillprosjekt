@@ -13,12 +13,8 @@ public class Fuel extends Item {
         super(n, d);
         this.fuel = 100;
     }
-<<<<<<< HEAD
 
     public double getFuelIncrease() {
-=======
-    public double getFuelIncrease (){
->>>>>>> 9c9deaa70786eea6f5f41535eb0acd055a10bddd
         return fuel;
     }
 }
