@@ -30,12 +30,12 @@ public class CarHud {
 		fuelImage = setupButton(FUELTANK);
 		
 		Skin skin = new Skin();
-		Pixmap pixmap = new Pixmap(40, 500, Format.RGBA8888);
+		Pixmap pixmap = new Pixmap(40, 110, Format.RGBA8888);
 		pixmap.setColor(Color.RED);
 		pixmap.fill();
 		skin.add("red", new Texture(pixmap));
 		
-		pixmap = new Pixmap(40, 500, Format.RGBA8888);
+		pixmap = new Pixmap(40, 110, Format.RGBA8888);
 		pixmap.setColor(Color.GREEN);
 		pixmap.fill();
 		skin.add("green", new Texture(pixmap));
@@ -43,16 +43,13 @@ public class CarHud {
 		ProgressBar.ProgressBarStyle style = new ProgressBar.ProgressBarStyle();
 		style.background = skin.getDrawable("red");
 		style.knobBefore = skin.getDrawable("green");
-//		style.background = new TextureRegionDrawable(new TextureRegion(new Texture("Images/road.png")));
-//		style.knobBefore = new TextureRegionDrawable(new TextureRegion(new Texture("Images/background.png")));
-//		style.knobBefore = style.knob;
 
 		bar = new ProgressBar(1, 100, 1, false, style);
 		bar.setValue(fuel);
 		
 		menu = new Table();
-		menu.add(fuelImage).width((float) (fuelImage.getWidth() / 2)).height((float) (fuelImage.getHeight() / 2)).pad(900, 1650, 0, 0);
-		menu.add(bar).width(bar.getWidth()).pad(900, 10, 100, 50);
+		menu.add(fuelImage).width((float) (fuelImage.getWidth() / 2)).height((float) (fuelImage.getHeight() / 2)).pad(900, 1300, 0, 0);
+		menu.add(bar).width(bar.getWidth()*3).pad(900, 10, 0, 0);
 
 		menu.setFillParent(true);
 		stage.addActor(menu);
@@ -75,8 +72,6 @@ public class CarHud {
 	public void setCurrentFuel(int fuel) {
 		this.fuel = fuel;
 		bar.setValue(fuel);
-		//for debuggging
-		System.out.println(fuel);
 	}
 
 	public int getCurrentFuel() {
