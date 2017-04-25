@@ -1,6 +1,5 @@
 package uib.teamdank.cargame.gui;
 
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
@@ -16,6 +15,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import uib.teamdank.cargame.CarGame;
+import uib.teamdank.common.Game;
 
 public class StartMenuScreen implements uib.teamdank.common.gui.StartMenuScreen {
 	private static final String LOGO = "images/CarGameLogo.png";
@@ -142,7 +142,7 @@ public class StartMenuScreen implements uib.teamdank.common.gui.StartMenuScreen 
 
 	@Override
 	public void newGame() {
-		// TODO
+		game.newGame();
 	}
 
 	@Override

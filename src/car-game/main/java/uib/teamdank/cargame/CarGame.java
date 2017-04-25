@@ -40,6 +40,12 @@ public class CarGame extends Game {
 	}
 
 	@Override
+	public void newGame() {
+    	gameScreen = new GameScreen(this);
+    	setScreen(gameScreen);
+	}
+
+	@Override
 	public GameScreen getGameScreen() {
 		return gameScreen;
 	}
