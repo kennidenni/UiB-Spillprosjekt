@@ -10,14 +10,10 @@ public class Puddle extends Item {
 
     public Puddle(String n, String d) {
         super(n, d);
-        this.Penalty = 100;
+        this.penalty = 100;
     }
-    public int getFuelPenalty (){
-        return penalty;
+    public double getFuelPenalty (){
+        return this.penalty;
         }
 
-    @Override
-    public boolean isMoveable (){
-        return false;
-    }
 }
