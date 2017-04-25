@@ -28,6 +28,7 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 
 	private final BackgroundLayer backgroundLayer;
 	private final Layer carLayer;
+	private final CarHud hud;
 
 	private final Player player;
 
@@ -53,6 +54,8 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 		addLayer(backgroundLayer);
 		addLayer(carLayer);
 		carLayer.addGameObject(player);
+		
+		this.hud = new CarHud();
 
 	}
 
@@ -77,6 +80,9 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 
 		// Render layers
 		super.render(delta);
+		
+		// Render HUD
+		hud.render(delta);
 
 	}
 
@@ -99,6 +105,9 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 			player.getPosisiton().x = backgroundLayer.getRoadRightX() - player.getWidth();
 			player.getVelocity().x *= -1;
 		}
+		
+		// Update HUD
+		hud.setCurrentFuel(player.getHealth());
 
 	}
 	
