@@ -15,9 +15,4 @@ public class Puddle extends Item {
     public int getFuelPenalty (){
         return penalty;
         }
-
-    @Override
-    public boolean isMoveable (){
-        return false;
-    }
 }

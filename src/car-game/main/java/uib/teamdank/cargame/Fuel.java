@@ -12,12 +12,7 @@ public class Fuel extends Item {
         super(n, d);
         this.fuel = 100;
     }
-    public int getFuelIncrease (){
+    public double getFuelIncrease (){
         return fuel;
-    }
-
-    @Override
-    public boolean isMoveable (){
-        return false;
     }
 }
