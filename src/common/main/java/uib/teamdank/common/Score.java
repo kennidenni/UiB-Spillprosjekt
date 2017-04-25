@@ -6,18 +6,21 @@ package uib.teamdank.common;
  */
 public class Score implements Comparable<Score> {
 	
-	long score = 0;
+	private long score = 0;
 	
 	public void addToScore(long score) {
 			this.score += score;
 	}
-
+	/**
+	 *
+	 * Compares the two scores.
+	 */
 	@Override
 	public int compareTo(Score o) {
-		if (this.getScore() == o.getScore()){
+		if (score == o.getScore()){
 			return 0;
 		}
-		else if (this.getScore() < o.getScore()){
+		else if (score > o.getScore()){
 			return 1;
 		}
 		else {
