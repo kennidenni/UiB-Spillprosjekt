@@ -19,15 +19,7 @@ public class Score implements Comparable<Score> {
 	 */
 	@Override
 	public int compareTo(Score o) {
-		if (score == o.getScore()){
-			return 0;
-		}
-		else if (score > o.getScore()){
-			return 1;
-		}
-		else {
-			return -1;
-		}
+		return (int) Math.signum((score - o.getScore()));
 	}
 
 	public long getScore(){
