@@ -45,7 +45,6 @@ public class CarHud {
 		style.knobBefore = skin.getDrawable("green");
 
 		bar = new ProgressBar(1, 100, 1, false, style);
-		bar.setValue(fuel);
 		
 		menu = new Table();
 		menu.add(fuelImage).width((float) (fuelImage.getWidth() / 2)).height((float) (fuelImage.getHeight() / 2)).pad(900, 1300, 0, 0);
@@ -69,9 +68,10 @@ public class CarHud {
 		stage.draw();
 	}
 
-	public void setCurrentFuel(int fuel) {
+	public void setCurrentFuel(int fuel, int max) {
 		this.fuel = fuel;
 		bar.setValue(fuel);
+		bar.setRange(0, max);
 	}
 
 	public int getCurrentFuel() {
