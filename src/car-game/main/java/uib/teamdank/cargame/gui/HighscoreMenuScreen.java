@@ -18,7 +18,7 @@ import uib.teamdank.cargame.CarGame;
 import uib.teamdank.common.Score;
 
 public class HighscoreMenuScreen implements uib.teamdank.common.gui.HighscoreMenuScreen {
-	private static final String BACK = "images/buttons/bs_back.png";
+	private static final String BACK = "Images/Buttons/bs_back.png";
 	
 	private Stage stage;
 	private ImageButton backButton;
