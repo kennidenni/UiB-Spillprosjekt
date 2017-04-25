@@ -11,5 +11,8 @@ public class Hole extends Item {
     public Hole(String n, String d) {
         super(n, d);
     }
+<<<<<<< HEAD
 
+=======
+>>>>>>> 9c9deaa70786eea6f5f41535eb0acd055a10bddd
 }

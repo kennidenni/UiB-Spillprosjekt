@@ -15,5 +15,8 @@ public class Puddle extends Item {
     public double getFuelPenalty (){
         return this.penalty;
         }
+<<<<<<< HEAD
 
+=======
+>>>>>>> 9c9deaa70786eea6f5f41535eb0acd055a10bddd
 }
