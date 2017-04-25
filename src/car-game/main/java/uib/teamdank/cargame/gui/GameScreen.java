@@ -91,6 +91,11 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 
 		// Update game objects
 		super.update(delta);
+		if (player.getHealth() == 0) {
+			// TODO Switch to game over screen
+		} else {
+			player.decreaseHealth(1);
+		}
 
 		// Player movement
 		boolean left = Gdx.input.isKeyPressed(Keys.A);
@@ -107,7 +112,7 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 		}
 		
 		// Update HUD
-		hud.setCurrentFuel(player.getHealth());
+		hud.setCurrentFuel(player.getHealth(), player.getMaxHealth());
 
 	}
 	
