@@ -27,7 +27,7 @@ public class CarHud {
 	public CarHud() {
 		stage = new Stage(new FitViewport(1920, 1080));
 
-		fuelImage = setupButton(FUELTANK);
+		fuelImage = setupImage(FUELTANK);
 		
 		Skin skin = new Skin();
 		Pixmap pixmap = new Pixmap(40, 110, Format.RGBA8888);
@@ -56,7 +56,7 @@ public class CarHud {
 		Gdx.input.setInputProcessor(stage);
 	}
 
-	public ImageButton setupButton(String imageString) {
+	private ImageButton setupImage(String imageString) {
 		Texture myTexture = new Texture(Gdx.files.internal(imageString));
 		TextureRegion myTextureRegion = new TextureRegion(myTexture);
 		TextureRegionDrawable myTexRegionDrawable = new TextureRegionDrawable(myTextureRegion);
