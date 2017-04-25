@@ -11,7 +11,6 @@ public class Fuel extends Item {
     public Fuel(String n, String d) {
         super(n, d);
         this.fuel = 100;
-        this.moveable = false
     }
     public int getFuelIncrease (){
         return fuel;
