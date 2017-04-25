@@ -35,7 +35,19 @@ public class ScoreTest {
 		score1.setScore(stor);
 		score2.setScore(liten);
 		int compare1 = score1.compareTo(score2);
-		System.out.println(score1.compareTo(score2));
-		assertEquals(compare1,1);
+		assertEquals(compare1, 1);
 	}
+	
+	@Test(expected=IllegalArgumentException.class)
+	public void subtractScoreTest(){
+		Score score = new Score();
+		score.addToScore(-1);
+	}
+	
+	@Test(expected=IllegalArgumentException.class)
+	public void setNegativeScoreTest(){
+		Score score = new Score();
+		score.setScore(-1);
+	}
+	
 }

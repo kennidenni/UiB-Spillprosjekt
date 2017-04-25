@@ -9,7 +9,9 @@ public class Score implements Comparable<Score> {
 	private long score = 0;
 	
 	public void addToScore(long score) {
-			this.score += score;
+		if(score < 0)
+			throw new IllegalArgumentException("Score can not be negative: " + score);
+		this.score += score;
 	}
 	/**
 	 *
@@ -36,6 +38,8 @@ public class Score implements Comparable<Score> {
 	 * Sets the new score. The score cannot be less than zero.
 	 */
 	public void setScore(long score){
+		if(score < 0)
+			throw new IllegalArgumentException("Score can not be negative: " + score);
 		this.score = score;
 	}
 }
