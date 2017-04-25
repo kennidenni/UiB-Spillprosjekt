@@ -53,7 +53,6 @@ public class CarGame extends Game {
 	public StartMenuScreen getStartMenuScreen() {
 		return startMenuScreen;
 	}
-
 	@Override
 	public String getTitle() {
 		return TITLE;
