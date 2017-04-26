@@ -50,4 +50,15 @@ public class ScoreTest {
 		score.setScore(-1);
 	}
 	
+	@Test
+	public void setAndGetNameTest(){
+		Score s1 = new Score();
+		Score s2 = new Score("test");
+		assertEquals("Anonymous", s1.getName());
+		assertEquals("test", s2.getName());
+		
+		s1.setName("test2");
+		assertEquals("test2", s1.getName());
+	}
+	
 }
