@@ -1,10 +1,13 @@
 package uib.teamdank.cargame.gui;
 
 import java.util.List;
+
+import com.badlogic.gdx.Screen;
+
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -12,57 +15,28 @@ import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 
 import uib.teamdank.cargame.CarGame;
 
-public class CreditScreen implements uib.teamdank.common.gui.CreditScreen {
+public class ShopScreen implements Screen {
 	private static final String BACK = "Images/Buttons/bs_back.png";
 	
 	private Stage stage;
 	private ImageButton backButton;
 	private Table menu;
 	private CarGame game;
-	private TextButton credits;
-	private BitmapFont font;
-	private TextButtonStyle textButtonStyle;
 
-	private TextButton text;
-
-	private TextButton text1;
-
-	
-	public CreditScreen(CarGame game) {
+	public ShopScreen(CarGame game) {
 		this.game = game;
 		stage = new Stage(new FitViewport(1920, 1080));
 		
 		backButton = setupButton(BACK);
 		
-		font = new BitmapFont();
-		textButtonStyle = new TextButtonStyle();
-		textButtonStyle.font = font;
-		
-		credits = new TextButton("Credits", textButtonStyle);
-		credits.getLabel().setFontScale(10, 10);
-		
-		text = new TextButton("Created by", textButtonStyle);
-		text.getLabel().setFontScale(5,5);
-		
-		text1 = new TextButton("TeamDank", textButtonStyle);
-		text1.getLabel().setFontScale(3,3);
-		
 		menu = new Table();
-		menu.add(credits);
-		menu.row();
-		menu.add(text);
-		menu.row();
-		menu.add(text1);
-		menu.row();
-		menu.add(backButton).width((float) (backButton.getWidth() / 4)).height((float) (backButton.getHeight() / 4)).pad(100, 0, 0, 0);
-
+		menu.add(backButton).width((float) (backButton.getWidth() / 4)).height((float) (backButton.getHeight() / 4)).pad(900, 0, 0, 0);
+		
 		menu.setFillParent(true);
 		stage.addActor(menu);
 		Gdx.input.setInputProcessor(stage);
@@ -83,7 +57,6 @@ public class CreditScreen implements uib.teamdank.common.gui.CreditScreen {
 				}
 			}
 		});
-		
 	}
 	
 	public ImageButton setupButton(String imageString) {
@@ -134,9 +107,8 @@ public class CreditScreen implements uib.teamdank.common.gui.CreditScreen {
 		
 	}
 
-	@Override
+	
 	public void goBack() {
 		game.setScreen(game.getStartMenuScreen());
 	}
-
 }

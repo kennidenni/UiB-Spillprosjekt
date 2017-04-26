@@ -1,6 +1,7 @@
 package uib.teamdank.cargame.gui;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -21,9 +22,9 @@ public class StartMenuScreen implements uib.teamdank.common.gui.StartMenuScreen 
 	private static final String LOGO = "Images/CarGameLogo.png";
 	private static final String PLAY = "Images/Buttons/start.png";
 	private static final String HIGHSCORE = "Images/Buttons/cg_highscore.png";
-	private static final String EXIT = "Images/Buttons/bs_quit.png";
 	private static final String CREDIT = "Images/Buttons/start.png";
 	private static final String SHOP = "Images/Buttons/start.png";
+	private static final String EXIT = "Images/Buttons/bs_quit.png";
 
 	private Stage stage;
 	private Texture myTexture;
@@ -31,28 +32,30 @@ public class StartMenuScreen implements uib.teamdank.common.gui.StartMenuScreen 
 	private ImageButton logoButton;
 	private ImageButton playButton;
 	private ImageButton highscoreButton;
-	private ImageButton exitButton;
-	private ImageButton creditButton;
 	private ImageButton shopButton;
+	private ImageButton creditButton;
+	private ImageButton exitButton;
 	private Array<Button> buttons;
 	private HighscoreMenuScreen highscoreMenuScreen;
 	private CreditScreen creditScreen;
 	private Game game;
+	private ShopScreen shopScreen;
 
 	public StartMenuScreen(CarGame game) {
 		this.game = game;
 		stage = new Stage(new FitViewport(1920, 1080));
 		highscoreMenuScreen = new HighscoreMenuScreen(game);
 		creditScreen = new CreditScreen(game);
+		shopScreen = new ShopScreen(game);
 		buttons = new Array<Button>();
 		menu = new Table();
 		
 		logoButton = setupButton(LOGO);
 		playButton = setupButton(PLAY);
 		highscoreButton = setupButton(HIGHSCORE);
-		exitButton = setupButton(EXIT);
-		creditButton = setupButton(CREDIT);
 		shopButton = setupButton(SHOP);
+		creditButton = setupButton(CREDIT);
+		exitButton = setupButton(EXIT);
 
 		addButtonListener();
 		addToTables();
@@ -66,9 +69,9 @@ public class StartMenuScreen implements uib.teamdank.common.gui.StartMenuScreen 
 	private void addToTables() {
 		buttons.add(playButton);
 		buttons.add(highscoreButton);
-		buttons.add(exitButton);
-		buttons.add(creditButton);
 		buttons.add(shopButton);
+		buttons.add(creditButton);
+		buttons.add(exitButton);
 		
 		menu.add(logoButton).height((float) (logoButton.getHeight() /1.3)).pad(10, 0, 0, 0);
 		menu.row();
@@ -121,6 +124,10 @@ public class StartMenuScreen implements uib.teamdank.common.gui.StartMenuScreen 
 
 	public void viewCredit() {
 		game.setScreen(creditScreen);
+	}
+	
+	public void viewShop() {
+		game.setScreen(shopScreen);
 	}
 	
 	@Override
@@ -219,7 +226,7 @@ public class StartMenuScreen implements uib.teamdank.common.gui.StartMenuScreen 
 				Vector2 mouse = stage.screenToStageCoordinates(new Vector2(Gdx.input.getX(), Gdx.input.getY()));
 
 				if (stage.hit(mouse.x, mouse.y, true) == event.getTarget()) {
-					//skift til shop her
+					viewShop();
 				}
 			}
 		});
