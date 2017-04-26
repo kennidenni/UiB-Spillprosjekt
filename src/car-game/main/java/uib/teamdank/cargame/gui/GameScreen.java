@@ -35,6 +35,7 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 	private final CarHud hud;
 
 	private final Sound carSound;
+	private float carVolume = 0.5f;
 
 	private final Player player;
 	private float timeSinceScore = 0;
@@ -68,7 +69,8 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 
 		// Sounds
 		carSound = Gdx.audio.newSound(Gdx.files.internal("Sounds/car_sound.wav"));
-		carSound.play(0.5f); // 0.5f er volumet
+		carSound.play(carVolume);
+		carSound.loop();
 
 	}
 
@@ -83,6 +85,11 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 		super.dispose();
 		assets.dispose();
 		carSound.dispose();
+	}
+
+	@Override
+	public void hide() {
+		carSound.stop();
 	}
 
 	@Override
@@ -110,6 +117,11 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 		playerCamera.viewportHeight = screenCamera.viewportHeight = height;
 		playerCamera.update();
 		screenCamera.update();
+	}
+
+	@Override
+	public void show() {
+		carSound.resume();
 	}
 
 	@Override
@@ -141,7 +153,7 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 		}
 
 	}
-
+	
 	private void updateFuel(float delta) {
 		timeSinceFuelLoss += delta;
 		if (timeSinceFuelLoss >= TIME_BETWEEN_FUEL_LOSS) {
@@ -149,12 +161,12 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 			timeSinceFuelLoss -= TIME_BETWEEN_FUEL_LOSS;
 		}
 	}
-
+	
 	private void updateHUD() {
 		hud.setCurrentFuel(player.getHealth(), player.getMaxHealth());
 		hud.setScore(player.getScore().getScore());
 	}
-
+	
 	private void updateScore(float delta) {
 		timeSinceScore += delta;
 		if (timeSinceScore >= TIME_BETWEEN_SCORE) {
