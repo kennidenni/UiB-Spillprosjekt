@@ -79,8 +79,6 @@ public class CarHud {
 		menu.add(second);
 		first.debug();
 		
-		
-		
 		menu.setFillParent(true);
 		stage.addActor(menu);
 		Gdx.input.setInputProcessor(stage);
