@@ -40,6 +40,8 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 	private final Sound carSound;
 
 	private final Player player;
+	private float timeSinceScore;
+	
 	private final EndingScreen endScreen;
 
 	public GameScreen(Game game) {
@@ -104,6 +106,13 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 
 	@Override
 	public void update(float delta) {
+		
+		// Update score
+		timeSinceScore += delta;
+		if(timeSinceScore >= 1) {
+			player.getScore().addToScore(1);
+			timeSinceScore = 0;
+		}
 
 		// Update HUD
 		hud.setCurrentFuel(player.getHealth(), player.getMaxHealth());
