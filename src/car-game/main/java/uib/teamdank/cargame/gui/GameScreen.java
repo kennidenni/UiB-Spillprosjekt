@@ -28,6 +28,8 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 	private static final float CAR_VERTICAL_MAX_SPEED = 512f;
 	private static final float CAR_VERTICAL_FRICTION = .985f;
 
+	private Game game;
+
 	private final AssetManager assets;
 
 	private final OrthographicCamera playerCamera;
@@ -44,6 +46,8 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 
 	public GameScreen(Game game) {
 		super(game);
+
+		this.game = game;
 
 		this.assets = new AssetManager();
 		TextureAtlas carTextures = assets.getAtlas("Images/car_sheet.json");
@@ -105,6 +109,10 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 
 	@Override
 	public void update(float delta) {
+		if(Gdx.input.isKeyPressed(Keys.ESCAPE)) {
+			game.setScreen(game.getPauseMenuScreen());
+			return;
+		}
 
 		// Update HUD
 		hud.setCurrentFuel(player.getHealth(), player.getMaxHealth());
