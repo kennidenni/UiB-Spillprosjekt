@@ -7,5 +7,12 @@ import uib.teamdank.common.Actor;
  * {@link Player}.
  */
 public class Pedestrian extends Actor {
-	
+	private long score;
+	public Pedestrian (long s){
+    this.score = s;
+    }
+    public long getScore(){
+	    return score;
+
+    }
 }

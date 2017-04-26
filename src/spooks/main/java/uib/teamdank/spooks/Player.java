@@ -9,10 +9,16 @@ import uib.teamdank.common.ItemHolder;
  */
 public class Player extends Actor implements ItemHolder {
 
-	@Override
-	public Inventory getInventory() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    Inventory bag;
+
+    public Player() {
+        super();
+        bag = new Inventory();
+    }
+
+    @Override
+    public Inventory getInventory() {
+        return this.bag;
+    }
 
 }

@@ -1,64 +1,64 @@
 {
-	"tileset": "Images/cg_cars.png",
+	"tileset": "Images/car_sheet.png",
 	"regions": [
 		{
-			"name": "cg_car",
+			"name": "car_forward",
 			"x": "0",
 			"y": "0",
 			"w": "290",
 			"h": "430"
 		},
 		{
-			"name": "cg_car_blue",
+			"name": "car_forward_blue",
 			"x": "291",
 			"y": "0",
 			"w": "290",
 			"h": "430"
 		},
 		{
-			"name": "cg_car_flag",
+			"name": "car_forward_flag",
 			"x": "582",
 			"y": "0",
 			"w": "290",
 			"h": "430"
 		},
 		{
-			"name": "cg_car_grey",
+			"name": "car_forward_grey",
 			"x": "0",
 			"y": "431",
 			"w": "290",
 			"h": "430"
 		},
 		{
-			"name": "cg_car_hot",
+			"name": "car_forward_hot",
 			"x": "291",
 			"y": "431",
 			"w": "290",
 			"h": "430"
 		},
 		{
-			"name": "cg_car_orange",
+			"name": "car_forward_orange",
 			"x": "582",
 			"y": "431",
 			"w": "290",
 			"h": "430"
 		},
 		{
-			"name": "cg_car_pink",
+			"name": "car_forward_pink",
 			"x": "873",
 			"y": "0",
 			"w": "290",
 			"h": "430"
 		},
 		{
-			"name": "cg_car_red",
+			"name": "car_forward_red",
 			"x": "1641",
 			"y": "0",
 			"w": "290",
 			"h": "430"
 		},
 		{
-			"name": "cg_car_splat",
+			"name": "car_forward_splat",
 			"x": "873",
 			"y": "431",
 			"w": "290",
