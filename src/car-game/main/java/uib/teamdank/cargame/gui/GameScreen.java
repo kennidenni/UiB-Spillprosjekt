@@ -110,8 +110,8 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 		// Update score
 		timeSinceScore += delta;
 		if(timeSinceScore >= 1) {
-			player.getScore().addToScore(100);
-			timeSinceScore = 0;
+			player.getScore().addToScore(1);
+			timeSinceScore -= 1;
 		}
 
 		// Update HUD
