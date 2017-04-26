@@ -1,5 +1,5 @@
 {
-	"tileset": "Images/game_objects.png",
+	"tileset": "Images/game_elements.png",
 	"regions": [
 		{
 			"name": "coin",
