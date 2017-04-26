@@ -41,7 +41,7 @@ public class CarHud {
 		pixmap.fill();
 		skin.add("red", new Texture(pixmap));
 		
-		pixmap = new Pixmap(40, 110, Format.RGBA8888);
+		pixmap = new Pixmap(1, 110, Format.RGBA8888);
 		pixmap.setColor(Color.GREEN);
 		pixmap.fill();
 		skin.add("green", new Texture(pixmap));
