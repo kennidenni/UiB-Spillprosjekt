@@ -3,7 +3,8 @@ package uib.teamdank.cargame;
 import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
-
+import static org.hamcrest.core.Is.is;
+import static org.hamcrest.core.IsEqual.equalTo;
 /**
  * Created by sel023.
  */
@@ -17,7 +18,7 @@ public class FuelTest {
 
     @org.junit.Test
     public void getFuelIncrease() throws Exception {
-    asserThat(fuel.getFuelIncrease(), is(equalTo(100)));
+    assertThat(fuel.getFuelIncrease(), is(equalTo(100)));
     }
 
 } 
