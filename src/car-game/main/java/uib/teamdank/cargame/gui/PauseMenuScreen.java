@@ -1,6 +1,7 @@
 package uib.teamdank.cargame.gui;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -126,11 +127,17 @@ public class PauseMenuScreen implements uib.teamdank.common.gui.PauseMenuScreen 
 
 	@Override
 	public void render(float delta) {
+		
+		if(Gdx.input.isKeyJustPressed(Keys.ESCAPE)) {
+			resume();
+			return;
+		}
+		
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		stage.act(delta);
 		stage.draw();
 	}
-
+	
 	@Override
 	public void resize(int width, int height) {
 		stage.getViewport().update(width, height, true);

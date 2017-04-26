@@ -109,7 +109,7 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 
 	@Override
 	public void update(float delta) {
-		if(Gdx.input.isKeyPressed(Keys.ESCAPE)) {
+		if(Gdx.input.isKeyJustPressed(Keys.ESCAPE)) {
 			game.setScreen(game.getPauseMenuScreen());
 			return;
 		}
