@@ -1,9 +1,6 @@
 package uib.teamdank.cargame.gui;
 
-import java.util.List;
-
 import com.badlogic.gdx.Screen;
-
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;

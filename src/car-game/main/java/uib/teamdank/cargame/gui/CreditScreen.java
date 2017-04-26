@@ -1,6 +1,5 @@
 package uib.teamdank.cargame.gui;
 
-import java.util.List;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
@@ -26,13 +25,12 @@ public class CreditScreen implements uib.teamdank.common.gui.CreditScreen {
 	private ImageButton backButton;
 	private Table menu;
 	private CarGame game;
-	private TextButton credits;
 	private BitmapFont font;
 	private TextButtonStyle textButtonStyle;
 
-	private TextButton text;
-
-	private TextButton text1;
+	private TextButton credits;
+	private TextButton created;
+	private TextButton creators;
 
 	
 	public CreditScreen(CarGame game) {
@@ -48,18 +46,18 @@ public class CreditScreen implements uib.teamdank.common.gui.CreditScreen {
 		credits = new TextButton("Credits", textButtonStyle);
 		credits.getLabel().setFontScale(10, 10);
 		
-		text = new TextButton("Created by", textButtonStyle);
-		text.getLabel().setFontScale(5,5);
+		created = new TextButton("Created by", textButtonStyle);
+		created.getLabel().setFontScale(5,5);
 		
-		text1 = new TextButton("TeamDank", textButtonStyle);
-		text1.getLabel().setFontScale(3,3);
+		creators = new TextButton("TeamDank", textButtonStyle);
+		creators.getLabel().setFontScale(3,3);
 		
 		menu = new Table();
 		menu.add(credits);
 		menu.row();
-		menu.add(text);
+		menu.add(created);
 		menu.row();
-		menu.add(text1);
+		menu.add(creators);
 		menu.row();
 		menu.add(backButton).width((float) (backButton.getWidth() / 4)).height((float) (backButton.getHeight() / 4)).pad(100, 0, 0, 0);
 
