@@ -6,7 +6,25 @@ package uib.teamdank.common;
  */
 public class Score implements Comparable<Score> {
 	
-	private long score = 0;
+	private long score;
+	private String name;
+	
+	public Score(long score, String name){
+		this.score = score;
+		this.name = name;
+	}
+	
+	public Score(long score){
+		this(score, "Anonymous");
+	}
+	
+	public Score(String name){
+		this(0, name);
+	}
+	
+	public Score(){
+		this(0, "Anonymous");
+	}
 	
 	public void addToScore(long score) {
 		if(score < 0)
@@ -26,6 +44,10 @@ public class Score implements Comparable<Score> {
 		return this.score;
 	}
 	
+	public String getName(){
+		return name;
+	}
+	
 	/**
 	 * Sets the new score. The score cannot be less than zero.
 	 */
@@ -34,4 +56,9 @@ public class Score implements Comparable<Score> {
 			throw new IllegalArgumentException("Score can not be negative: " + score);
 		this.score = score;
 	}
+	
+	public void setName(String name){
+		this.name = name;
+	}
+	
 }

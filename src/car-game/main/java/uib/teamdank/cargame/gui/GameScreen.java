@@ -2,9 +2,11 @@ package uib.teamdank.cargame.gui;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector2;
 
+import uib.teamdank.cargame.CarGame;
 import uib.teamdank.cargame.Player;
 import uib.teamdank.common.Game;
 import uib.teamdank.common.gui.Layer;
@@ -22,7 +24,7 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 	private static final float CAR_HORIZONTAL_FRICTION = .9f;
 
 	private final AssetManager assets;
-	
+
 	private final OrthographicCamera playerCamera;
 	private final OrthographicCamera screenCamera;
 
@@ -30,7 +32,10 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 	private final Layer carLayer;
 	private final CarHud hud;
 
+	private final Sound carSound;
+
 	private final Player player;
+	private final EndingScreen endScreen;
 
 	public GameScreen(Game game) {
 		super(game);
@@ -54,8 +59,14 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 		addLayer(backgroundLayer);
 		addLayer(carLayer);
 		carLayer.addGameObject(player);
-		
+
 		this.hud = new CarHud();
+
+		// Sounds
+		carSound = Gdx.audio.newSound(Gdx.files.internal("Sounds/car_sound.wav"));
+		carSound.play(0.5f); // 0.5f er volumet
+
+		endScreen = new EndingScreen((CarGame) game);
 
 	}
 
@@ -66,7 +77,7 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 		playerCamera.update();
 		screenCamera.update();
 	}
-	
+
 	@Override
 	public void render(float delta) {
 
@@ -80,7 +91,7 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 
 		// Render layers
 		super.render(delta);
-		
+
 		// Render HUD
 		hud.render(delta);
 
@@ -89,10 +100,14 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 	@Override
 	public void update(float delta) {
 
+		// Update HUD
+		hud.setCurrentFuel(player.getHealth(), player.getMaxHealth());
+
 		// Update game objects
 		super.update(delta);
 		if (player.getHealth() == 0) {
-			// TODO Switch to game over screen
+			getGame().setScreen(endScreen);
+			dispose();
 		} else {
 			player.decreaseHealth(1);
 		}
@@ -100,8 +115,10 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 		// Player movement
 		boolean left = Gdx.input.isKeyPressed(Keys.A);
 		boolean right = Gdx.input.isKeyPressed(Keys.D);
-		if (left) player.getVelocity().x -= CAR_HORIZONTAL_ACCELERATION;
-		if (right) player.getVelocity().x += CAR_HORIZONTAL_ACCELERATION;
+		if (left)
+			player.getVelocity().x -= CAR_HORIZONTAL_ACCELERATION;
+		if (right)
+			player.getVelocity().x += CAR_HORIZONTAL_ACCELERATION;
 		player.getVelocity().x *= CAR_HORIZONTAL_FRICTION;
 		if (player.getPosisiton().x < backgroundLayer.getRoadLeftX()) {
 			player.getPosisiton().x = backgroundLayer.getRoadLeftX();
@@ -110,16 +127,12 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 			player.getPosisiton().x = backgroundLayer.getRoadRightX() - player.getWidth();
 			player.getVelocity().x *= -1;
 		}
-		
-		// Update HUD
-		hud.setCurrentFuel(player.getHealth(), player.getMaxHealth());
-
 	}
-	
+
 	@Override
 	public void dispose() {
 		super.dispose();
 		assets.dispose();
+		carSound.dispose();
 	}
-
 }
