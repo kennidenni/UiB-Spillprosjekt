@@ -110,12 +110,13 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 		// Update score
 		timeSinceScore += delta;
 		if(timeSinceScore >= 1) {
-			player.getScore().addToScore(1);
+			player.getScore().addToScore(100);
 			timeSinceScore = 0;
 		}
 
 		// Update HUD
 		hud.setCurrentFuel(player.getHealth(), player.getMaxHealth());
+		hud.setScore(player.getScore().getScore());
 
 		// Update game objects
 		super.update(delta);
