@@ -26,30 +26,72 @@ public class CreditScreen implements uib.teamdank.common.gui.CreditScreen {
 	private ImageButton backButton;
 	private Table menu;
 	private CarGame game;
+	private TextButton credits;
 	private BitmapFont font;
 	private TextButtonStyle textButtonStyle;
+
 	
-	public CreditScreen(CarGame Game) {
+	public CreditScreen(CarGame game) {
 		this.game = game;
 		stage = new Stage(new FitViewport(1920, 1080));
+		
+		backButton = setupButton(BACK);
+		
+		menu = new Table();
+		menu.row();
+		menu.add(backButton).width((float) (backButton.getWidth() / 4)).height((float) (backButton.getHeight() / 4)).pad(100, 0, 0, 0);
+
+		font = new BitmapFont();
+		textButtonStyle = new TextButtonStyle();
+		textButtonStyle.font = font;
+		credits = new TextButton("Credit", textButtonStyle);
+		
+		menu.setFillParent(true);
+		stage.addActor(menu);
+		Gdx.input.setInputProcessor(stage);
+		
+		backButton.addListener(new InputListener() {
+			@Override
+			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+				return true;
+			}
+
+			@Override
+			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+				Stage myStage = event.getTarget().getStage();
+				Vector2 mouse = myStage.screenToStageCoordinates(new Vector2(Gdx.input.getX(), Gdx.input.getY()));
+
+				if (myStage.hit(mouse.x, mouse.y, true) == event.getTarget()) {
+					game.setScreen(game.getStartMenuScreen());
+				}
+			}
+		});
+		
+	}
+	
+	public ImageButton setupButton(String imageString) {
+		Texture myTexture = new Texture(Gdx.files.internal(imageString));
+		TextureRegion myTextureRegion = new TextureRegion(myTexture);
+		TextureRegionDrawable myTexRegionDrawable = new TextureRegionDrawable(myTextureRegion);
+		return new ImageButton(myTexRegionDrawable);
 	}
 	
 	@Override
 	public void show() {
-		
+		Gdx.input.setInputProcessor(stage);
 		
 	}
 
 	@Override
 	public void render(float delta) {
-		// TODO Auto-generated method stub
-		
+		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+		stage.act(delta);
+		stage.draw();
 	}
 
 	@Override
 	public void resize(int width, int height) {
-		// TODO Auto-generated method stub
-		
+		stage.getViewport().update(width, height, true);
 	}
 
 	@Override
@@ -66,8 +108,7 @@ public class CreditScreen implements uib.teamdank.common.gui.CreditScreen {
 
 	@Override
 	public void hide() {
-		// TODO Auto-generated method stub
-		
+		Gdx.input.setInputProcessor(null);
 	}
 
 	@Override
@@ -78,8 +119,7 @@ public class CreditScreen implements uib.teamdank.common.gui.CreditScreen {
 
 	@Override
 	public void goBack() {
-		// TODO Auto-generated method stub
-		
+		game.setScreen(game.getStartMenuScreen());
 	}
 
 }
