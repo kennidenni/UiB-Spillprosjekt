@@ -8,9 +8,15 @@ import uib.teamdank.common.ItemHolder;
  * Represents a player in the game.
  */
 public class Player extends Actor implements ItemHolder {
+	
+	private Inventory weapons;
+	
+	public Player() {
+		weapons = new Inventory();
+	}
+	
 	@Override
 	public Inventory getInventory() {
-		// TODO Auto-generated method stub
-		return null;
+		return weapons;
 	}
 }

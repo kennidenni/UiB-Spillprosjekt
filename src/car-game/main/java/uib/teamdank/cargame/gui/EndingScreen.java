@@ -53,8 +53,6 @@ public class EndingScreen implements uib.teamdank.common.gui.HighscoreMenuScreen
 		menu.add(backButton).width((float) (backButton.getWidth() / 4)).height((float) (backButton.getHeight() / 4)).pad(100, 0, 0, 0);
 		menu.debug();
 		
-		
-		
 		menu.setFillParent(true);
 		stage.addActor(menu);
 		Gdx.input.setInputProcessor(stage);

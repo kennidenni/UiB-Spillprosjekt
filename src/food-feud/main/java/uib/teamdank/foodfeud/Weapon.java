@@ -8,27 +8,42 @@ import uib.teamdank.common.Item;
  */
 public class Weapon extends Item {
 
-	private double damage;
-	private double weight;
+	private double dmg, weight;
 	
-    public Weapon(String n, String d, double dmg, double wgt) {
-        super(n, d);
-        this.damage = dmg;
-        this.weight = wgt;
+	/**
+	 * 
+	 * @param name
+	 * @param descr weapon description
+	 * @param dmg damage
+	 * @param weight
+	 */
+	public Weapon(String name, String descr, double dmg, double weight) {
+		this(name, descr);
+		this.dmg = dmg;
+		this.weight = weight;
+	}
+	
+	/**
+	 * Creates a weapon that does no damage and weighs nothing.
+	 * @param name
+	 * @param descr weapon description
+	 */
+    public Weapon(String name, String descr) {
+        super(name, descr);
     }
 
     /**
 	 * @return amount of damage this weapon inflicts
 	 */
 	public double getDamage() {
-		return this.damage;
+		return dmg;
 	}
 
 	/**
 	 * @return the weight of this weapon
 	 */
 	public double getWeight() {
-		return this.weight;
+		return weight;
 	}
 	
-}
+}
