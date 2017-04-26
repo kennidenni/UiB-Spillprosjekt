@@ -1,14 +1,13 @@
 
-ext.initProject = { name, directory -> 
-	include ':' + name
-	project(':' + name).projectDir = new File(settingsDir, directory)
-	project(':' + name).name = name
-}
-
-initProject('teamdank-common', './common/')
-initProject('teamdank-cargame', './car-game/')
-initProject('teamdank-foodfeud', './food-feud/')
-initProject('teamdank-nightlife', './nightlife/')
-initProject('teamdank-spooks', './spooks/')
+include 'common'
+include 'car-game'
+include 'food-feud'
+include 'nightlife'
+include 'spooks'
 
 rootProject.name = 'teamdank'
+
+rootProject.children.each {
+	it.name = it.name.replace('-', '')
+	it.name = rootProject.name + '-' + it.name
+}

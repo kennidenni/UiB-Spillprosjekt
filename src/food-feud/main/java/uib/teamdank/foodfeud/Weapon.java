@@ -46,4 +46,4 @@ public class Weapon extends Item {
 		return weight;
 	}
 	
-}
+}

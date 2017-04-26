@@ -5,9 +5,11 @@ import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector2;
 
+import uib.teamdank.cargame.CarGame;
 import uib.teamdank.cargame.Player;
 import uib.teamdank.common.Game;
 import uib.teamdank.common.gui.Layer;
+import uib.teamdank.common.util.AssetManager;
 import uib.teamdank.common.util.TextureAtlas;
 
 /**
@@ -20,18 +22,23 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 	private static final float CAR_VERTICAL_SPEED = 512f;
 	private static final float CAR_HORIZONTAL_FRICTION = .9f;
 
+	private final AssetManager assets;
+
 	private final OrthographicCamera playerCamera;
 	private final OrthographicCamera screenCamera;
 
 	private final BackgroundLayer backgroundLayer;
 	private final Layer carLayer;
+	private final CarHud hud;
 
 	private final Player player;
+	private final EndingScreen endScreen;
 
 	public GameScreen(Game game) {
 		super(game);
 
-		TextureAtlas gameObjectTextures = TextureAtlas.createFromJson(Gdx.files.internal("Images/game_objects.json"));
+		this.assets = new AssetManager();
+		TextureAtlas gameObjectTextures = assets.getAtlas("Images/game_objects.json");
 
 		// Cameras
 		this.playerCamera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
@@ -44,11 +51,15 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 		player.getVelocity().y = CAR_VERTICAL_SPEED;
 
 		// Layers
-		backgroundLayer = new BackgroundLayer(playerCamera, screenCamera, player);
+		backgroundLayer = new BackgroundLayer(assets, playerCamera, screenCamera, player);
 		carLayer = new Layer(true);
 		addLayer(backgroundLayer);
 		addLayer(carLayer);
 		carLayer.addGameObject(player);
+
+		this.hud = new CarHud();
+
+		endScreen = new EndingScreen((CarGame) game);
 
 	}
 
@@ -59,7 +70,7 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 		playerCamera.update();
 		screenCamera.update();
 	}
-	
+
 	@Override
 	public void render(float delta) {
 
@@ -74,19 +85,32 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 		// Render layers
 		super.render(delta);
 
+		// Render HUD
+		hud.render(delta);
+
 	}
 
 	@Override
 	public void update(float delta) {
 
+		// Update HUD
+		hud.setCurrentFuel(player.getHealth(), player.getMaxHealth());
+
 		// Update game objects
 		super.update(delta);
+		if (player.getHealth() == 0) {
+			getGame().setScreen(endScreen);
+		} else {
+			player.decreaseHealth(1);
+		}
 
 		// Player movement
 		boolean left = Gdx.input.isKeyPressed(Keys.A);
 		boolean right = Gdx.input.isKeyPressed(Keys.D);
-		if (left) player.getVelocity().x -= CAR_HORIZONTAL_ACCELERATION;
-		if (right) player.getVelocity().x += CAR_HORIZONTAL_ACCELERATION;
+		if (left)
+			player.getVelocity().x -= CAR_HORIZONTAL_ACCELERATION;
+		if (right)
+			player.getVelocity().x += CAR_HORIZONTAL_ACCELERATION;
 		player.getVelocity().x *= CAR_HORIZONTAL_FRICTION;
 		if (player.getPosisiton().x < backgroundLayer.getRoadLeftX()) {
 			player.getPosisiton().x = backgroundLayer.getRoadLeftX();
@@ -95,7 +119,12 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 			player.getPosisiton().x = backgroundLayer.getRoadRightX() - player.getWidth();
 			player.getVelocity().x *= -1;
 		}
+	}
 
+	@Override
+	public void dispose() {
+		super.dispose();
+		assets.dispose();
 	}
 
 }
