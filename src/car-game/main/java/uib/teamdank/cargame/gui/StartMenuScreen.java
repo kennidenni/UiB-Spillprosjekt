@@ -76,7 +76,7 @@ public class StartMenuScreen implements uib.teamdank.common.gui.StartMenuScreen 
 				Vector2 mouse = stage.screenToStageCoordinates(new Vector2(Gdx.input.getX(), Gdx.input.getY()));
 
 				if (stage.hit(mouse.x, mouse.y, true) == event.getTarget()) {
-					game.setScreen(game.getGameScreen());
+					game.setScreen(game.newGame());
 				}
 			}
 		});
