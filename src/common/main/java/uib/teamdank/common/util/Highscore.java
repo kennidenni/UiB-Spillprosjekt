@@ -3,8 +3,6 @@ package uib.teamdank.common.util;
 import java.util.Objects;
 
 import com.badlogic.gdx.files.FileHandle;
-import com.badlogic.gdx.scenes.scene2d.ui.List;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.annotations.SerializedName;
@@ -13,7 +11,6 @@ import uib.teamdank.common.Score;
 
 public class Highscore {
 
-	@SerializedName("name") private String[] names;
 	@SerializedName("score") private Score[] scores;
 //	private Score[] scores;
 	
@@ -28,14 +25,13 @@ public class Highscore {
 		return new Gson().fromJson(handle.reader(), Highscore.class);
 	}
 	
-	public static void writeToJson(FileHandle handle, String[] names, Score[] scores){
+	public static void writeToJson(FileHandle handle, Score[] scores){
 		Gson gson = new GsonBuilder().create();
-		handle.writeString(gson.toJson(new Highscore(names, scores)), false);
+		handle.writeString(gson.toJson(new Highscore(scores)), false);
 	}
 
 	// Hide constructor
-	private Highscore(String[] names, Score[] scores) {
-		this.names = names;
+	private Highscore(Score[] scores) {
 		this.scores = scores;
 	}
 	
@@ -44,16 +40,13 @@ public class Highscore {
 //		nameList.setItems(names);
 //		return nameList;
 //	}
-	public String[] getNames(){
-		return names;
-	}
 	
 //	public List<Score> getScore(){
 //		List<Score> scoreList = new List<>((Skin) null);
 //		scoreList.setItems(scoresNum);
 //		return scoreList;
 //	}
-	public Score[] getScore(){
+	public Score[] getScores(){
 		return scores;
 	}
 
