@@ -8,7 +8,7 @@ public class Score implements Comparable<Score> {
 	
 	private long score;
 	private String name;
-	
+
 	public Score(long score, String name){
 		this.score = score;
 		this.name = name;
@@ -31,6 +31,7 @@ public class Score implements Comparable<Score> {
 			throw new IllegalArgumentException("Score can not be negative: " + score);
 		this.score += score;
 	}
+
 	/**
 	 *
 	 * Compares the two scores.
@@ -39,6 +40,25 @@ public class Score implements Comparable<Score> {
 	public int compareTo(Score o) {
 		return (int) Math.signum((score - o.getScore()));
 	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Score other = (Score) obj;
+		if (name == null) {
+			if (other.name != null)
+				return false;
+		} else if (!name.equals(other.name))
+			return false;
+		if (score != other.score)
+			return false;
+		return true;
+	}
 
 	public long getScore(){
 		return this.score;
@@ -46,6 +66,15 @@ public class Score implements Comparable<Score> {
 	
 	public String getName(){
 		return name;
+	}
+	
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((name == null) ? 0 : name.hashCode());
+		result = prime * result + (int) (score ^ (score >>> 32));
+		return result;
 	}
 	
 	/**
