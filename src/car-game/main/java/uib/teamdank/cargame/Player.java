@@ -67,7 +67,7 @@ public class Player extends Actor implements Upgradeable {
 	}
 
 	public boolean isOutOfFuel() {
-		return (getHealth() == 0);
+		return getHealth() == 0;
 	}
 
 	public void restrictHorizontally(int minX, int maxX) {
@@ -75,7 +75,7 @@ public class Player extends Actor implements Upgradeable {
 			getPosisiton().x = minX;
 			getVelocity().x *= -1;
 		} else if (getPosisiton().x > maxX - getWidth()) {
-			getPosisiton().x = maxX - getWidth();
+			getPosisiton().x = (float) (maxX - getWidth());
 			getVelocity().x *= -1;
 		}
 	}

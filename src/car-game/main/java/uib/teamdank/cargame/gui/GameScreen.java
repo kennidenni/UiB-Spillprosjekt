@@ -76,7 +76,9 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 
 	private boolean checkForPauseRequest() {
 		final boolean pause = Gdx.input.isKeyJustPressed(Keys.ESCAPE);
-		if (pause) getGame().setScreen(getGame().getPauseMenuScreen());
+		if (pause) {
+			getGame().setScreen(getGame().getPauseMenuScreen());
+		}
 		return pause;
 	}
 
@@ -142,10 +144,14 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 
 		// Player input
 		checkForPauseRequest();
-		boolean inputTurnLeft = (Gdx.input.isKeyPressed(Keys.A) || Gdx.input.isKeyPressed(Keys.LEFT));
-		boolean inputTurnRight = (Gdx.input.isKeyPressed(Keys.D) || Gdx.input.isKeyPressed(Keys.RIGHT));
-		if (inputTurnLeft) player.turnLeft();
-		if (inputTurnRight) player.turnRight();
+		boolean inputTurnLeft = Gdx.input.isKeyPressed(Keys.A) || Gdx.input.isKeyPressed(Keys.LEFT);
+		boolean inputTurnRight = Gdx.input.isKeyPressed(Keys.D) || Gdx.input.isKeyPressed(Keys.RIGHT);
+		if (inputTurnLeft) {
+			player.turnLeft();
+		}
+		if (inputTurnRight) {
+			player.turnRight();
+		}
 
 		// Check for game over
 		if (player.isOutOfFuel() && player.getVelocity().y == 0) {
