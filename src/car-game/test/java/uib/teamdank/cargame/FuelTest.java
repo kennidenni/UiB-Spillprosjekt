@@ -12,7 +12,7 @@ import org.junit.Test;
  */
 public class FuelTest {
 	private Fuel fuel;
-
+	//Kommentar her
 	@Before
 	public void setUp() throws Exception {
 		Fuel f = new Fuel("name", "desc");
