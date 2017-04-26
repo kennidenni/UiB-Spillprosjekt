@@ -69,4 +69,11 @@ public class CarGame extends Game {
 		batch.dispose();
 		screen.dispose();
 	}
+
+	@Override
+	public GameScreen newGame() {
+		gameScreen = new GameScreen(this);
+		return gameScreen;
+		
+	}
 }

@@ -35,6 +35,12 @@ public class NightlifeGame extends Game {
 	}
 
 	@Override
+	public GameScreen newGame() {
+		gameScreen = new GameScreen(this);
+		return gameScreen;
+	}
+
+	@Override
 	public GameScreen getGameScreen() {
 		return gameScreen;
 	}

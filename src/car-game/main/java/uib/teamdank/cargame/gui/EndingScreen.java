@@ -4,6 +4,7 @@ import java.util.List;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -11,27 +12,47 @@ import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 
 import uib.teamdank.cargame.CarGame;
 import uib.teamdank.common.Score;
 
-public class HighscoreMenuScreen implements uib.teamdank.common.gui.HighscoreMenuScreen {
+public class EndingScreen implements uib.teamdank.common.gui.HighscoreMenuScreen {
 	private static final String BACK = "Images/Buttons/bs_back.png";
+	private static final String GAMEOVER = "Images/gameOver.png";
 	
 	private Stage stage;
 	private ImageButton backButton;
 	private Table menu;
 	private CarGame game;
+	private ImageButton gameOverButton;
+	private TextButton highscore;
+	private BitmapFont font;
+	private TextButtonStyle textButtonStyle;
 
-	public HighscoreMenuScreen(CarGame game) {
+	public EndingScreen(CarGame game) {
 		this.game = game;
 		stage = new Stage(new FitViewport(1920, 1080));
 		
 		backButton = setupButton(BACK);
+		gameOverButton = setupButton(GAMEOVER);
+		
+		font = new BitmapFont();
+		textButtonStyle = new TextButtonStyle();
+		textButtonStyle.font = font;
+		highscore = new TextButton("Din score her", textButtonStyle);
+		
 		menu = new Table();
-		menu.add(backButton).width((float) (backButton.getWidth() / 4)).height((float) (backButton.getHeight() / 4)).pad(900, 0, 0, 0);
+		menu.add(gameOverButton).width(gameOverButton.getWidth() / 2).height((float) (gameOverButton.getHeight() / 2)).pad(0, 0, 100, 0);
+		menu.row();
+		menu.add(highscore);
+		menu.row();
+		menu.add(backButton).width((float) (backButton.getWidth() / 4)).height((float) (backButton.getHeight() / 4)).pad(100, 0, 0, 0);
+		menu.debug();
+		
 		
 		
 		menu.setFillParent(true);

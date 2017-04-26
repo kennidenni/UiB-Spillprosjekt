@@ -9,6 +9,10 @@ import uib.teamdank.common.Upgradeable;
  */
 public class Player extends Actor implements Upgradeable {
 
+	public Player() {
+		super(1000, "Per");
+	}
+	
 	@Override
 	public void applyUpgrade(Upgrade upgrade) {
 		// TODO Auto-generated method stub

@@ -2,6 +2,10 @@ package uib.teamdank.cargame.gui;
 
 public class PauseMenuScreen implements uib.teamdank.common.gui.PauseMenuScreen {
 
+	public PauseMenuScreen() {
+		// TODO Auto-generated constructor stub
+	}
+
 	@Override
 	public void dispose() {
 		// TODO Auto-generated method stub
