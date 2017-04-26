@@ -127,15 +127,13 @@ public class PauseMenuScreen implements uib.teamdank.common.gui.PauseMenuScreen 
 
 	@Override
 	public void render(float delta) {
-		
-		if(Gdx.input.isKeyJustPressed(Keys.ESCAPE)) {
-			resume();
-			return;
-		}
-		
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		stage.act(delta);
 		stage.draw();
+		
+		if(Gdx.input.isKeyJustPressed(Keys.ESCAPE)) {
+			resume();
+		}
 	}
 	
 	@Override

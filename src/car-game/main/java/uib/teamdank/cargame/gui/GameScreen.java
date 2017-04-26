@@ -114,10 +114,6 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 
 	@Override
 	public void update(float delta) {
-		if(Gdx.input.isKeyJustPressed(Keys.ESCAPE)) {
-			game.setScreen(game.getPauseMenuScreen());
-			return;
-		}
 		
 		// Update score
 		timeSinceScore += delta;
@@ -173,6 +169,10 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 		playerVelocity.x *= CAR_HORIZONTAL_FRICTION;
 		if (playerVelocity.epsilonEquals(0, playerVelocity.y, CAR_HORIZONTAL_ZERO_SPEED_TOLERANCE)) {
 			playerVelocity.x = 0;
+		}
+		
+		if(Gdx.input.isKeyJustPressed(Keys.ESCAPE)) {
+			game.setScreen(game.getPauseMenuScreen());
 		}
 		
 	}
