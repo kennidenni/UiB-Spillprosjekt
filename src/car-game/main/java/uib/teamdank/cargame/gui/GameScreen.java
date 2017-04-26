@@ -1,5 +1,7 @@
 package uib.teamdank.cargame.gui;
 
+import org.lwjgl.opengl.Display;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.audio.Sound;
@@ -21,7 +23,7 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 	private static final float TIME_BETWEEN_SCORE = 1f;
 	
 	private static final int CAR_VERTICAL_POSITION = 25;
-
+	
 	private static final float CAR_HORIZONTAL_ZERO_SPEED_TOLERANCE = 4f;
 	private static final float CAR_HORIZONTAL_ACCELERATION = 50f;
 	private static final float CAR_HORIZONTAL_FRICTION = .9f;
@@ -43,6 +45,8 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 	private final CarHud hud;
 
 	private final Sound carSound;
+	private final long carSoundID;
+	private float carVolume = 0.5f;
 
 	private final Player player;
 	private float timeSinceScore;
@@ -79,7 +83,9 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 
 		// Sounds
 		carSound = Gdx.audio.newSound(Gdx.files.internal("Sounds/car_sound.wav"));
-		carSound.play(0.5f); // 0.5f er volumet
+		carSoundID = carSound.play(carVolume);
+		carSound.loop();
+		System.out.println(carSoundID);
 
 		endScreen = new EndingScreen((CarGame) game);
 
@@ -114,7 +120,7 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 
 	@Override
 	public void update(float delta) {
-		
+		carSound.resume();
 		checkForPauseRequest();
 		
 		// Update score
@@ -136,6 +142,7 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 		// Player vertical movement
 		if (player.getVelocity().y == 0) {
 			getGame().setScreen(endScreen);
+			carSound.stop();
 		} else if (player.getHealth() == 0) {
 			player.getVelocity().y *= CAR_VERTICAL_FRICTION;
 		} else {
@@ -175,10 +182,12 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 		
 	}
 	
-	private boolean checkForPauseRequest() {
+	private void checkForPauseRequest() {
 		final boolean pause = Gdx.input.isKeyJustPressed(Keys.ESCAPE);
-		if (pause) game.setScreen(game.getPauseMenuScreen());
-		return pause;
+		if (pause) {
+			carSound.pause();
+			game.setScreen(game.getPauseMenuScreen());
+		}
 	}
 
 	@Override
