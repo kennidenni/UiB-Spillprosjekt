@@ -22,6 +22,7 @@ public class StartMenuScreen implements uib.teamdank.common.gui.StartMenuScreen 
 	private static final String PLAY = "Images/Buttons/start.png";
 	private static final String HIGHSCORE = "Images/Buttons/cg_highscore.png";
 	private static final String EXIT = "Images/Buttons/bs_quit.png";
+	private static final String CREDIT = "Images/Buttons/start.png";
 
 	private Stage stage;
 	private Texture myTexture;
@@ -30,6 +31,7 @@ public class StartMenuScreen implements uib.teamdank.common.gui.StartMenuScreen 
 	private ImageButton playButton;
 	private ImageButton highscoreButton;
 	private ImageButton exitButton;
+	private ImageButton creditButton;
 	private Array<Button> buttons;
 	private HighscoreMenuScreen highscoreMenuScreen;
 	private Game game;
@@ -43,22 +45,34 @@ public class StartMenuScreen implements uib.teamdank.common.gui.StartMenuScreen 
 		playButton = setupButton(PLAY);
 		highscoreButton = setupButton(HIGHSCORE);
 		exitButton = setupButton(EXIT);
+		creditButton = setupButton(CREDIT);
 
 		menu = new Table();
+		
 		buttons = new Array<Button>();
 
 		buttons.add(playButton);
 		buttons.add(highscoreButton);
 		buttons.add(exitButton);
+		buttons.add(creditButton);
 
 		menu.add(logoButton).pad(0, 0, 20, 0);
 		menu.row();
 		menu.pad(50);
-		for (Button button : buttons) {
-			menu.add(button).width((float) (button.getWidth() / 4)).height((float) (button.getHeight() / 4)).pad(5);
-			menu.row();
-		}
-
+//		for (Button button : buttons) {
+//			
+//		}
+		menu.add(playButton).width((float) (playButton.getWidth() / 4)).height((float) (playButton.getHeight() / 4)).pad(5);
+		menu.row();
+		menu.add(highscoreButton).width((float) (highscoreButton.getWidth() / 4)).height((float) (highscoreButton.getHeight() / 4)).pad(5);
+		menu.row();
+		menu.add(exitButton).width((float) (exitButton.getWidth() / 4)).height((float) (exitButton.getHeight() / 4)).pad(5);
+		
+		menu.add(creditButton).width((float) (creditButton.getWidth() / 4)).height((float) (creditButton.getHeight() / 4)).pad(5);
+		
+		
+		menu.debug();
+		
 		menu.setFillParent(true);
 		stage.addActor(menu);
 		Gdx.input.setInputProcessor(stage);
