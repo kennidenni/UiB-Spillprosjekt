@@ -25,6 +25,7 @@ public class Highscore {
 	private Highscore(Score[] scores) {
 		this.scores = scores;
 	}
+	
 	public Score[] getScores(){
 		return scores;
 	}
