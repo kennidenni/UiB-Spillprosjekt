@@ -115,6 +115,8 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 	@Override
 	public void update(float delta) {
 		
+		checkForPauseRequest();
+		
 		// Update score
 		timeSinceScore += delta;
 		if (timeSinceScore >= TIME_BETWEEN_SCORE) {
@@ -171,10 +173,12 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 			playerVelocity.x = 0;
 		}
 		
-		if(Gdx.input.isKeyJustPressed(Keys.ESCAPE)) {
-			game.setScreen(game.getPauseMenuScreen());
-		}
-		
+	}
+	
+	private boolean checkForPauseRequest() {
+		final boolean pause = Gdx.input.isKeyJustPressed(Keys.ESCAPE);
+		if (pause) game.setScreen(game.getPauseMenuScreen());
+		return pause;
 	}
 
 	@Override
