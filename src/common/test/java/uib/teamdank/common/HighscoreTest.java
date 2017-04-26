@@ -17,8 +17,6 @@ import com.badlogic.gdx.files.FileHandle;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
-import uib.teamdank.common.util.Highscore;
-
 public class HighscoreTest {
 
 	Gson gson;
