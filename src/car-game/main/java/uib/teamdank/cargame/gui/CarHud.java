@@ -19,23 +19,15 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 
 public class CarHud {
 	private static final String FUELTANK = "Images/Game/gastank.png";
-
-	private int fuel;
+	
 	private Stage stage;
 	private Table menu;
 	private ImageButton fuelImage;
-	private long score;
-
 	private ProgressBar bar;
-
 	private BitmapFont font;
-
 	private TextButtonStyle textButtonStyle;
-
 	private TextButton highscore;
-
 	private Table first;
-
 	private Table second;
 
 	public CarHud() {
@@ -64,20 +56,19 @@ public class CarHud {
 		textButtonStyle = new TextButtonStyle();
 		textButtonStyle.font = font;
 		
-		highscore = new TextButton(String.valueOf(score), textButtonStyle);
+		highscore = new TextButton("0", textButtonStyle);
 		highscore.getLabel().setFontScale(10, 10);
 		
 		menu = new Table();
 		first = new Table();
-		first.add(highscore).width(40).pad(900, 20, 0, 0);
+		first.add(highscore).width(300).pad(900, 20, 0, 0);
 		
 		second = new Table();
-		second.add(fuelImage).width((float) (fuelImage.getWidth() / 2)).height((float) (fuelImage.getHeight() / 2)).pad(900, 1100, 0, 0);
+		second.add(fuelImage).width((float) (fuelImage.getWidth() / 2)).height((float) (fuelImage.getHeight() / 2)).pad(900, 1000, 0, 0);
 		second.add(bar).width(bar.getWidth()*3).pad(900, 10, 0, 0);
 		
 		menu.add(first);
 		menu.add(second);
-		first.debug();
 		
 		menu.setFillParent(true);
 		stage.addActor(menu);
@@ -99,17 +90,11 @@ public class CarHud {
 	}
 
 	public void setCurrentFuel(int fuel, int max) {
-		this.fuel = fuel;
 		bar.setValue(fuel);
 		bar.setRange(0, max);
 	}
-
-	public int getCurrentFuel() {
-		return fuel;
-	}
 	
 	public void setScore (long l) {
-		this.score = l;
 		highscore.setText(String.valueOf(l));
 	}
 	
