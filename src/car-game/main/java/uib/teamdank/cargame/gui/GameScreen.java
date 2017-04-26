@@ -31,6 +31,8 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 	private static final float CAR_VERTICAL_MAX_SPEED = 512f;
 	private static final float CAR_VERTICAL_FRICTION = .985f;
 
+	private Game game;
+
 	private final AssetManager assets;
 
 	private final OrthographicCamera playerCamera;
@@ -49,6 +51,8 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 
 	public GameScreen(Game game) {
 		super(game);
+
+		this.game = game;
 
 		this.assets = new AssetManager();
 		TextureAtlas carTextures = assets.getAtlas("Images/car_sheet.json");
@@ -111,6 +115,8 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 	@Override
 	public void update(float delta) {
 		
+		checkForPauseRequest();
+		
 		// Update score
 		timeSinceScore += delta;
 		if (timeSinceScore >= TIME_BETWEEN_SCORE) {
@@ -167,6 +173,12 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 			playerVelocity.x = 0;
 		}
 		
+	}
+	
+	private boolean checkForPauseRequest() {
+		final boolean pause = Gdx.input.isKeyJustPressed(Keys.ESCAPE);
+		if (pause) game.setScreen(game.getPauseMenuScreen());
+		return pause;
 	}
 
 	@Override
