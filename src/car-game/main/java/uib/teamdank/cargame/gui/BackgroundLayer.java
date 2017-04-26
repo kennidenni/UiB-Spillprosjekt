@@ -33,7 +33,7 @@ public class BackgroundLayer extends Layer {
 		this.backgroundTexture = new Texture(Gdx.files.internal("Images/background.png"));
 		this.scrollingRoad = new LoopingBackground(playerCamera, new Texture(Gdx.files.internal("Images/road.png")), .5f);
 		
-		TextureAtlas structuresAtlas = assets.getAtlas("Images/structures.json"); 
+		TextureAtlas structuresAtlas = assets.getAtlas("Images/structure_sheet.json"); 
 		TextureRegion[] structureTextures = structuresAtlas.getAllRegions();
 		this.structureSpawners = new StructureSpawner[] {
 				new StructureSpawner(this, playerCamera, false, structureTextures),

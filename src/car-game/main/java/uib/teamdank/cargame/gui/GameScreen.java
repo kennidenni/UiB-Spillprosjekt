@@ -46,7 +46,8 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 		super(game);
 
 		this.assets = new AssetManager();
-		TextureAtlas gameObjectTextures = assets.getAtlas("Images/game_objects.json");
+		TextureAtlas carTextures = assets.getAtlas("Images/car_sheet.json");
+		// TextureAtlas gameObjectTextures = assets.getAtlas("Images/game_object_sheet.json");
 
 		// Cameras
 		this.playerCamera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
@@ -54,7 +55,7 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 
 		// Player initialization
 		player = new Player();
-		player.setTexture(gameObjectTextures.getRegion("car_forward"));
+		player.setTexture(carTextures.getRegion("car_forward_flag"));
 		player.setScale(.5f);
 		player.getVelocity().y = CAR_VERTICAL_MAX_SPEED;
 
