@@ -2,11 +2,8 @@ package uib.teamdank.cargame.gui;
 
 import java.util.List;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.Pixmap.Format;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
@@ -34,7 +31,6 @@ public class EndingScreen implements uib.teamdank.common.gui.HighscoreMenuScreen
 	private CarGame game;
 	private ImageButton gameOverButton;
 	private TextButton highscore;
-	private Skin buttonSkin;
 	private BitmapFont font;
 	private TextButtonStyle textButtonStyle;
 
