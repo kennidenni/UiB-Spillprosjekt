@@ -11,7 +11,7 @@ public class Pedestrian extends Actor {
 	public Pedestrian (long s){
     this.score = s;
     }
-    public long getscore(){
+    public long getScore(){
 	    return score;
 
     }

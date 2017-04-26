@@ -6,14 +6,14 @@ import uib.teamdank.common.Item;
  * {@link Player}.
  */
 public class Puddle extends Item {
-	private double penalty;
+	private final int penalty = 100;
 
     public Puddle(String n, String d) {
         super(n, d);
-        this.penalty = 100;
     }
+    
     public double getFuelPenalty (){
         return this.penalty;
-        }
+    }
 
 }

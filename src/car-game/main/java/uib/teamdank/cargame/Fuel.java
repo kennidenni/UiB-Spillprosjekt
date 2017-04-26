@@ -7,11 +7,10 @@ import uib.teamdank.common.Item;
  * {@link Player}.
  */
 public class Fuel extends Item {
-    private double fuel;
+    private double fuel = 100;
 
     public Fuel(String n, String d) {
         super(n, d);
-        this.fuel = 100;
     }
 
     public double getFuelIncrease() {

@@ -16,13 +16,12 @@ public class PedestrianTest {
 
 	@Before
 	public void setUp() throws Exception {
-		Pedestrian ped = new Pedestrian(10);
-		pede = ped;
+		pede = new Pedestrian(10);
 	}
 
 	@Test
-	public void getscore() throws Exception {
-		assertThat(pede.getscore(), is(equalTo(10)));
+	public void getScore() throws Exception {
+		assertThat(pede.getScore(), is(equalTo(10l)));
 	}
 
 }
