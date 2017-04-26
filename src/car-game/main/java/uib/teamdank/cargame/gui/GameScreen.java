@@ -43,7 +43,6 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 	private final CarHud hud;
 
 	private final Sound carSound;
-	private final long carSoundID;
 	private float carVolume = 0.5f;
 
 	private final Player player;
@@ -81,7 +80,7 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 
 		// Sounds
 		carSound = Gdx.audio.newSound(Gdx.files.internal("Sounds/car_sound.wav"));
-		carSoundID = carSound.play(carVolume);
+		carSound.play(carVolume);
 		carSound.loop();
 
 		endScreen = new EndingScreen((CarGame) game);
