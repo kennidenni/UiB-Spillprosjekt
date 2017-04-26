@@ -19,7 +19,8 @@ public class Pedestrian extends Actor {
 
     }
     public void driveOver(Player player){
-    	player.getScore().addToScore(this.score);
+    	//temporary fix
+    	//player.getScore().addToScore(this.score);
     	this.markForRemoval();
     }
 }
