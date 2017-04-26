@@ -35,9 +35,9 @@ public class NightlifeGame extends Game {
 	}
 
 	@Override
-	public void newGame() {
+	public GameScreen newGame() {
 		gameScreen = new GameScreen(this);
-		setScreen(gameScreen);
+		return gameScreen;
 	}
 
 	@Override
