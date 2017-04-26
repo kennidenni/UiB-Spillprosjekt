@@ -10,13 +10,14 @@ import static org.hamcrest.core.IsEqual.equalTo;
  */
 public class FuelTest {
     private Fuel fuel;
-	@org.junit.Before
+
+	@Before
     public void setUp() throws Exception {
     Fuel f = new Fuel("name","desc");
     Fuel fuel = f;
     }
 
-    @org.junit.Test
+    @Test
     public void getFuelIncrease() throws Exception {
     assertThat(fuel.getFuelIncrease(), is(equalTo(100)));
     }
