@@ -1,5 +1,5 @@
 {
-	"tileset": "Images/game_objects.png",
+	"tileset": "Images/car_sheet.png",
 	"regions": [
 		{
 			"name": "car_forward",

@@ -1,5 +1,5 @@
 {
-	"tileset": "Images/structures.png",
+	"tileset": "Images/structure_sheet.png",
 	"regions": [
 		{
 			"name": "building_left_1",

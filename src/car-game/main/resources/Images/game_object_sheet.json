@@ -1,5 +1,5 @@
 {
-	"tileset": "Images/game_elements.png",
+	"tileset": "Images/game_object_sheet.png",
 	"regions": [
 		{
 			"name": "coin",
@@ -16,7 +16,7 @@
 			"h": "215"
 		},
 				{
-			"name": "hole,
+			"name": "hole",
 			"x": "304",
 			"y": "0",
 			"w": "204",
