@@ -2,6 +2,7 @@ package uib.teamdank.cargame.gui;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector2;
 
@@ -36,6 +37,8 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 	private final Layer carLayer;
 	private final CarHud hud;
 
+	private final Sound carSound;
+
 	private final Player player;
 	private final EndingScreen endScreen;
 
@@ -63,6 +66,10 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 		carLayer.addGameObject(player);
 
 		this.hud = new CarHud();
+
+		// Sounds
+		carSound = Gdx.audio.newSound(Gdx.files.internal("Sounds/car_sound.wav"));
+		carSound.play(0.5f); // 0.5f er volumet
 
 		endScreen = new EndingScreen((CarGame) game);
 
@@ -152,6 +159,6 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 	public void dispose() {
 		super.dispose();
 		assets.dispose();
+		carSound.dispose();
 	}
-
 }
