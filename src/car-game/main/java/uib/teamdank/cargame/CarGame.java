@@ -31,7 +31,7 @@ public class CarGame extends Game {
 	@Override
 	public void create() {
 		startMenuScreen = new StartMenuScreen(this);
-		pauseMenuScreen = new PauseMenuScreen();
+		pauseMenuScreen = new PauseMenuScreen(this);
 
 		batch = new SpriteBatch();
 		
@@ -52,7 +52,6 @@ public class CarGame extends Game {
 	public StartMenuScreen getStartMenuScreen() {
 		return startMenuScreen;
 	}
-
 	@Override
 	public String getTitle() {
 		return TITLE;
