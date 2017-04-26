@@ -6,17 +6,21 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 /**
- * Created by oml35 on 25-Apr-17.
+ * Created by sel023.
  */
 public class PedestrianTest {
-    @Before
+    
+	private Pedestrian pede;
+	
+	@Before
     public void setUp() throws Exception {
-
+    Pedestrian ped = new Pedestrian(10);
+    pede = ped;
     }
 
     @Test
     public void getscore() throws Exception {
-
+    assertThat(pede.getscore(),is(equalTo(10)));
     }
 
 }
