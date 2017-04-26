@@ -1,7 +1,5 @@
 package uib.teamdank.cargame.gui;
 
-import org.lwjgl.opengl.Display;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.audio.Sound;
@@ -85,7 +83,6 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 		carSound = Gdx.audio.newSound(Gdx.files.internal("Sounds/car_sound.wav"));
 		carSoundID = carSound.play(carVolume);
 		carSound.loop();
-		System.out.println(carSoundID);
 
 		endScreen = new EndingScreen((CarGame) game);
 
