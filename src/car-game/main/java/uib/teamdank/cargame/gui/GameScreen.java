@@ -17,6 +17,9 @@ import uib.teamdank.common.util.TextureAtlas;
  * The main gameplay screen.
  */
 public class GameScreen extends uib.teamdank.common.gui.GameScreen {
+	private static final int AMOUNT_PER_SCORE = 1;
+	private static final float TIME_BETWEEN_SCORE = 1f;
+	
 	private static final int CAR_VERTICAL_POSITION = 25;
 
 	private static final float CAR_HORIZONTAL_ZERO_SPEED_TOLERANCE = 4f;
@@ -42,6 +45,8 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 	private final Sound carSound;
 
 	private final Player player;
+	private float timeSinceScore;
+	
 	private final EndingScreen endScreen;
 
 	public GameScreen(Game game) {
@@ -113,9 +118,17 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 			game.setScreen(game.getPauseMenuScreen());
 			return;
 		}
+		
+		// Update score
+		timeSinceScore += delta;
+		if (timeSinceScore >= TIME_BETWEEN_SCORE) {
+			player.getScore().addToScore(AMOUNT_PER_SCORE);
+			timeSinceScore -= TIME_BETWEEN_SCORE;
+		}
 
 		// Update HUD
 		hud.setCurrentFuel(player.getHealth(), player.getMaxHealth());
+		hud.setScore(player.getScore().getScore());
 
 		// Update game objects
 		super.update(delta);
