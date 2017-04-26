@@ -18,9 +18,14 @@ import uib.teamdank.common.util.TextureAtlas;
 public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 	private static final int CAR_VERTICAL_POSITION = 25;
 
+	private static final float CAR_HORIZONTAL_ZERO_SPEED_TOLERANCE = 4f;
 	private static final float CAR_HORIZONTAL_ACCELERATION = 50f;
-	private static final float CAR_VERTICAL_SPEED = 512f;
 	private static final float CAR_HORIZONTAL_FRICTION = .9f;
+	
+	private static final float CAR_VERTICAL_ZERO_SPEED_TOLERANCE = 48f;
+	private static final float CAR_VERTICAL_ACCELERATION = 10f;
+	private static final float CAR_VERTICAL_MAX_SPEED = 512f;
+	private static final float CAR_VERTICAL_FRICTION = .985f;
 
 	private final AssetManager assets;
 
@@ -48,7 +53,7 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 		player = new Player();
 		player.setTexture(gameObjectTextures.getRegion("car_forward"));
 		player.setScale(.5f);
-		player.getVelocity().y = CAR_VERTICAL_SPEED;
+		player.getVelocity().y = CAR_VERTICAL_MAX_SPEED;
 
 		// Layers
 		backgroundLayer = new BackgroundLayer(assets, playerCamera, screenCamera, player);
@@ -98,20 +103,37 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 
 		// Update game objects
 		super.update(delta);
-		if (player.getHealth() == 0) {
+		
+		final Vector2 playerVelocity = player.getVelocity();
+		
+		// Player vertical movement
+		if (player.getVelocity().y == 0) {
 			getGame().setScreen(endScreen);
+		} else if (player.getHealth() == 0) {
+			player.getVelocity().y *= CAR_VERTICAL_FRICTION;
 		} else {
 			player.decreaseHealth(1);
+			
+			if (playerVelocity.y != CAR_VERTICAL_MAX_SPEED) {
+				playerVelocity.y += CAR_VERTICAL_ACCELERATION;
+				if (playerVelocity.y > CAR_VERTICAL_MAX_SPEED) {
+					playerVelocity.y = CAR_VERTICAL_MAX_SPEED;
+				}
+			}
 		}
-
-		// Player movement
+		if (playerVelocity.epsilonEquals(playerVelocity.x, 0, CAR_VERTICAL_ZERO_SPEED_TOLERANCE)) {
+			playerVelocity.y = 0;
+		}
+		
+		// Player horizontal movement
 		boolean left = Gdx.input.isKeyPressed(Keys.A);
 		boolean right = Gdx.input.isKeyPressed(Keys.D);
+		float playerHorizontalAcceleration = (playerVelocity.y / CAR_VERTICAL_MAX_SPEED)
+												* CAR_HORIZONTAL_ACCELERATION;
 		if (left)
-			player.getVelocity().x -= CAR_HORIZONTAL_ACCELERATION;
+			player.getVelocity().x -= playerHorizontalAcceleration;
 		if (right)
-			player.getVelocity().x += CAR_HORIZONTAL_ACCELERATION;
-		player.getVelocity().x *= CAR_HORIZONTAL_FRICTION;
+			player.getVelocity().x += playerHorizontalAcceleration;
 		if (player.getPosisiton().x < backgroundLayer.getRoadLeftX()) {
 			player.getPosisiton().x = backgroundLayer.getRoadLeftX();
 			player.getVelocity().x *= -1;
@@ -119,6 +141,11 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 			player.getPosisiton().x = backgroundLayer.getRoadRightX() - player.getWidth();
 			player.getVelocity().x *= -1;
 		}
+		playerVelocity.x *= CAR_HORIZONTAL_FRICTION;
+		if (playerVelocity.epsilonEquals(0, playerVelocity.y, CAR_HORIZONTAL_ZERO_SPEED_TOLERANCE)) {
+			playerVelocity.x = 0;
+		}
+		
 	}
 
 	@Override
