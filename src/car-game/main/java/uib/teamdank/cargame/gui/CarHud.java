@@ -44,7 +44,7 @@ public class CarHud {
 		style.background = skin.getDrawable("red");
 		style.knobBefore = skin.getDrawable("green");
 
-		bar = new ProgressBar(1, 100, 1, false, style);
+		bar = new ProgressBar(0, 100, 1, false, style);
 		
 		menu = new Table();
 		menu.add(fuelImage).width((float) (fuelImage.getWidth() / 2)).height((float) (fuelImage.getHeight() / 2)).pad(900, 1300, 0, 0);

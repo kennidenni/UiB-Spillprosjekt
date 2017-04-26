@@ -10,7 +10,7 @@ import uib.teamdank.common.gui.StartMenuScreen;
  * Interface for a game.
  */
 public abstract class Game extends com.badlogic.gdx.Game {
-	public abstract void newGame();
+	public abstract GameScreen newGame();
 
 	public abstract GameScreen getGameScreen();
 

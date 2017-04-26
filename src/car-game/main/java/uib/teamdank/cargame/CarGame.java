@@ -40,12 +40,6 @@ public class CarGame extends Game {
 	}
 
 	@Override
-	public void newGame() {
-    	gameScreen = new GameScreen(this);
-    	setScreen(gameScreen);
-	}
-
-	@Override
 	public GameScreen getGameScreen() {
 		return gameScreen;
 	}
@@ -75,5 +69,12 @@ public class CarGame extends Game {
 		super.dispose();
 		batch.dispose();
 		screen.dispose();
+	}
+
+	@Override
+	public GameScreen newGame() {
+		gameScreen = new GameScreen(this);
+		return gameScreen;
+		
 	}
 }
