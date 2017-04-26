@@ -30,12 +30,13 @@ public class CreditScreen implements uib.teamdank.common.gui.CreditScreen {
 	private TextButtonStyle textButtonStyle;
 	
 	public CreditScreen(CarGame Game) {
-		
+		this.game = game;
+		stage = new Stage(new FitViewport(1920, 1080));
 	}
 	
 	@Override
 	public void show() {
-		// TODO Auto-generated method stub
+		
 		
 	}
 

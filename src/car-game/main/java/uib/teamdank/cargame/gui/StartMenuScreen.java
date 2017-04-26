@@ -34,12 +34,14 @@ public class StartMenuScreen implements uib.teamdank.common.gui.StartMenuScreen 
 	private ImageButton creditButton;
 	private Array<Button> buttons;
 	private HighscoreMenuScreen highscoreMenuScreen;
+	private CreditScreen creditScreen;
 	private Game game;
 
 	public StartMenuScreen(CarGame game) {
 		this.game = game;
 		stage = new Stage(new FitViewport(1920, 1080));
 		highscoreMenuScreen = new HighscoreMenuScreen(game);
+		creditScreen = new CreditScreen(game);
 
 		logoButton = setupButton(LOGO);
 		playButton = setupButton(PLAY);
@@ -128,6 +130,23 @@ public class StartMenuScreen implements uib.teamdank.common.gui.StartMenuScreen 
 				}
 			}
 		});
+		
+		creditButton.addListener(new InputListener() {
+			@Override
+			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+				return true;
+			}
+			
+			@Override
+			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+				Stage stage = event.getTarget().getStage();
+				Vector2 mouse = stage.screenToStageCoordinates(new Vector2(Gdx.input.getX(), Gdx.input.getY()));
+				
+				if (stage.hit(mouse.x, mouse.y, true) == event.getTarget()) {
+					viewCredit();
+				}
+			}
+		});
 	}
 
 	// Setting the buttons up
@@ -188,5 +207,9 @@ public class StartMenuScreen implements uib.teamdank.common.gui.StartMenuScreen 
 	@Override
 	public void viewHighscores() {
 		game.setScreen(highscoreMenuScreen);
+	}
+	
+	public void viewCredit() {
+		game.setScreen(creditScreen);
 	}
 }
