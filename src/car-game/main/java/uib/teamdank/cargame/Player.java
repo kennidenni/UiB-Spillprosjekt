@@ -1,5 +1,8 @@
 package uib.teamdank.cargame;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import com.badlogic.gdx.math.Vector2;
 
 import uib.teamdank.common.Actor;
@@ -23,12 +26,13 @@ public class Player extends Actor implements Upgradeable {
 	private static final float VERTICAL_TOP_SPEED = 512f;
 
 	private final Inventory inventory = new Inventory();
+	private final Set<String> unlockedSkins = new HashSet<>();
 	
 	private final Score score;
 	
 	public Player() {
 		super(100, "Per");
-		score = new Score(getName());
+		score = new Score(getName());		
 	}
 
 	public void accelerate() {
@@ -72,11 +76,19 @@ public class Player extends Actor implements Upgradeable {
 	public Score getScore() {
 		return score;
 	}
+	
+	public boolean hasUnlockedSkin(String name) {
+		return unlockedSkins.contains(name);
+	}
 
 	public boolean isOutOfFuel() {
 		return getHealth() == 0;
 	}
 
+	public void unlockSkin(String name) {
+		this.unlockedSkins.add(name);
+	}
+	
 	public void restrictHorizontally(int minX, int maxX) {
 		if (getPosisiton().x < minX) {
 			getPosisiton().x = minX;

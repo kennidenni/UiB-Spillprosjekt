@@ -19,6 +19,8 @@ public class CarGame extends Game {
 	private GameScreen gameScreen;
 	private PauseMenuScreen pauseMenuScreen;
 	private SpriteBatch batch;
+	
+	private Player player;
 
     public static void main(String[] args){
     	LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
@@ -30,6 +32,8 @@ public class CarGame extends Game {
 	
 	@Override
 	public void create() {
+		player = new Player();
+		
 		startMenuScreen = new StartMenuScreen(this);
 		pauseMenuScreen = new PauseMenuScreen(this);
 
@@ -60,6 +64,10 @@ public class CarGame extends Game {
 	@Override
 	public SpriteBatch getSpriteBatch() {
 		return batch;
+	}
+	
+	public Player getPlayer() {
+		return player;
 	}
 	
 	@Override 

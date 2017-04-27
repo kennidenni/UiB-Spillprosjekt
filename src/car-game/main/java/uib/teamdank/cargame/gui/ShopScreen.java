@@ -14,26 +14,24 @@ import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 
 import uib.teamdank.cargame.CarGame;
+import uib.teamdank.cargame.Player;
 import uib.teamdank.common.util.AssetManager;
 
 public class ShopScreen extends ScreenAdapter {
 
 	private static class CarButton extends ImageButton {
+		private final TextureRegion texture;
 		private boolean unlocked;
 
-		public CarButton(String name, Drawable imageUp) {
-			super(imageUp);
+		public CarButton(String name, TextureRegion texture) {
+			super(new TextureRegionDrawable(texture));
+			this.texture = texture;
 			setName(name);
 			setUnlocked(false);
-		}
-
-		public boolean isUnlocked() {
-			return unlocked;
 		}
 
 		public void setUnlocked(boolean unlocked) {
@@ -59,8 +57,9 @@ public class ShopScreen extends ScreenAdapter {
 			Vector2 mouse = myStage.screenToStageCoordinates(new Vector2(Gdx.input.getX(), Gdx.input.getY()));
 
 			if (myStage.hit(mouse.x, mouse.y, true) == event.getTarget()) {
-				if (source.isUnlocked()) {
-					System.out.println("Player pressed (unlocked): " + source.getName()); // TODO Replace
+				if (source.unlocked) {
+					game.getPlayer().setTexture(source.texture);
+					// TODO Marker som knapp som valgt
 				} else {
 					System.out.println("Player pressed (locked): " + source.getName()); // TODO Replace
 				}
@@ -80,7 +79,7 @@ public class ShopScreen extends ScreenAdapter {
 	
 	private Table menu;
 	private Table cars;
-
+	
 	public ShopScreen(CarGame game) {
 		this.game = game;
 		stage = new Stage(new FitViewport(1920, 1080));
@@ -96,7 +95,7 @@ public class ShopScreen extends ScreenAdapter {
 		backButton = new ImageButton(myTexRegionDrawable);
 
 		assets.getAtlas("Images/car_sheet.json").forEachRegion((name, texture) -> {
-			CarButton carButton = new CarButton(name, new TextureRegionDrawable(texture));
+			CarButton carButton = new CarButton(name, texture);
 			carButton.addListener(new CarListener(carButton));
 			carButtons.add(carButton);
 		});
@@ -109,7 +108,7 @@ public class ShopScreen extends ScreenAdapter {
 		stage.addActor(menu);
 		Gdx.input.setInputProcessor(stage);
 	}
-
+	
 	private void backListener() {
 		backButton.addListener(new InputListener() {
 			@Override
@@ -169,6 +168,11 @@ public class ShopScreen extends ScreenAdapter {
 	@Override
 	public void show() {
 		Gdx.input.setInputProcessor(stage);
+		
+		final Player player = game.getPlayer();
+		for (CarButton button : carButtons) {
+			button.unlocked = player.hasUnlockedSkin(button.getName());
+		}
 	}
 
 }

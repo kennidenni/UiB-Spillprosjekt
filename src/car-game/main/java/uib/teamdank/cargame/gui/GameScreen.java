@@ -58,7 +58,8 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 		this.screenCamera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
 		// Player initialization
-		player = new Player();
+		player = ((CarGame) game).getPlayer();
+		player.unlockSkin("car_forward_flag");
 		player.setTexture(carTextures.getRegion("car_forward_flag"));
 		player.setScale(.5f);
 		addTimedEvent(new TimedEvent(TIME_BETWEEN_FUEL_LOSS, true, () -> {
