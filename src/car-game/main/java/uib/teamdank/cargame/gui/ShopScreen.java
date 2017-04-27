@@ -57,12 +57,11 @@ public class ShopScreen extends ScreenAdapter {
 			Vector2 mouse = myStage.screenToStageCoordinates(new Vector2(Gdx.input.getX(), Gdx.input.getY()));
 
 			if (myStage.hit(mouse.x, mouse.y, true) == event.getTarget()) {
-				System.out.println(source.unlocked);
 				if (source.unlocked) {
 					game.getPlayer().setTexture(source.texture);
 					// TODO Marker som knapp som valgt
 				} else {
-					System.out.println("Player pressed (locked): " + source.getName()); // TODO Replace
+					// TODO Si at den ikke er kjøpt
 				}
 			}
 		}
