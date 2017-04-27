@@ -81,7 +81,6 @@ public class ScoreTest {
 		Score.writeToJson(mockhandle, new Score[]{new Score()});
 		
 		verify(mockhandle).writeString(jsonCapture.capture(), anyBoolean());
-		System.out.println(jsonCapture.getValue());
 		
 		assertEquals(expectedJson, jsonCapture.getValue());
 	}
