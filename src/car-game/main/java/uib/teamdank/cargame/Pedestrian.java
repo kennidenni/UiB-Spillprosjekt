@@ -1,6 +1,5 @@
 package uib.teamdank.cargame;
 
-import uib.teamdank.cargame.gui.GameScreen;
 import uib.teamdank.common.Actor;
 
 /**
@@ -10,6 +9,7 @@ import uib.teamdank.common.Actor;
 public class Pedestrian extends Actor {
 	private long score;
 	private long speed;
+	
 	public Pedestrian (long sp,long sc){
     this.score = sc;
     this.speed=sp;
@@ -19,8 +19,7 @@ public class Pedestrian extends Actor {
 
     }
     public void driveOver(Player player){
-    	//temporary fix
-    	//player.getScore().addToScore(this.score);
+    	player.getScore().addToScore(this.score);
     	this.markForRemoval();
     }
 }
