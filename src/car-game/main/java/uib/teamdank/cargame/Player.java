@@ -1,5 +1,8 @@
 package uib.teamdank.cargame;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import com.badlogic.gdx.math.Vector2;
 
 import uib.teamdank.common.Actor;
@@ -7,6 +10,7 @@ import uib.teamdank.common.Inventory;
 import uib.teamdank.common.Score;
 import uib.teamdank.common.Upgrade;
 import uib.teamdank.common.Upgradeable;
+import uib.teamdank.common.util.AssetManager;
 
 /**
  * The player/the car.
@@ -23,9 +27,13 @@ public class Player extends Actor implements Upgradeable {
 	private static final float VERTICAL_TOP_SPEED = 512f;
 
 	private final Inventory inventory = new Inventory();
-	
+	private final Set<String> unlockedSkins = new HashSet<>();
+
 	private final Score score;
-	
+
+	private uib.teamdank.common.util.TextureAtlas carTextures;
+	private AssetManager assets;
+
 	public Player() {
 		super(100, "Per");
 		score = new Score(getName());
@@ -64,13 +72,17 @@ public class Player extends Actor implements Upgradeable {
 	public void applyUpgrade(Upgrade upgrade) {
 		// TODO Auto-generated method stub
 	}
-	
+
 	public Inventory getInventory() {
 		return inventory;
 	}
 
 	public Score getScore() {
 		return score;
+	}
+
+	public boolean hasUnlockedSkin(String name) {
+		return unlockedSkins.contains(name);
 	}
 
 	public boolean isOutOfFuel() {
@@ -87,6 +99,12 @@ public class Player extends Actor implements Upgradeable {
 		}
 	}
 
+	public void setImage(String car) {
+		this.assets = new AssetManager();
+		carTextures = assets.getAtlas("Images/car_sheet.json");
+		setTexture(carTextures.getRegion(car));
+	}
+
 	private void turn(int direction) {
 		final Vector2 velocity = getVelocity();
 		float horizontalAcceleration = (velocity.y / VERTICAL_TOP_SPEED) * HORIZONTAL_ACCELERATION;
@@ -101,4 +119,7 @@ public class Player extends Actor implements Upgradeable {
 		turn(1);
 	}
 
+	public void unlockSkin(String name) {
+		this.unlockedSkins.add(name);
+	}
 }
