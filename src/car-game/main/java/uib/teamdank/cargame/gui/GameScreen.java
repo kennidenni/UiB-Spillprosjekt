@@ -15,6 +15,7 @@ import uib.teamdank.common.Game;
 import uib.teamdank.common.gui.Layer;
 import uib.teamdank.common.util.AssetManager;
 import uib.teamdank.common.util.TextureAtlas;
+import uib.teamdank.common.util.TimedEvent;
 
 /**
  * The main gameplay screen.
@@ -42,8 +43,6 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 	private float carVolume = 0.5f;
 	
 	private final Player player;
-	private float timeSinceScore = 0;
-	private float timeSinceFuelLoss = 0;
 	
 	private final ScrollingSpawner roadEntitySpawner;
 
@@ -62,6 +61,12 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 		player = new Player();
 		player.setTexture(carTextures.getRegion("car_forward_flag"));
 		player.setScale(.5f);
+		addTimedEvent(new TimedEvent(TIME_BETWEEN_FUEL_LOSS, true, () -> {
+			player.decreaseHealth(AMOUNT_PER_FUEL_LOSS);
+		}));
+		addTimedEvent(new TimedEvent(TIME_BETWEEN_SCORE, true, () -> {
+			player.getScore().addToScore(AMOUNT_PER_SCORE);
+		}));
 
 		// Layers
 		backgroundLayer = new BackgroundLayer(assets, playerCamera, screenCamera, player);
@@ -147,7 +152,6 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 	public void update(float delta) {
 
 		// Update HUD
-		updateScore(delta);
 		updateHUD();
 
 		// Updates game objects
@@ -163,7 +167,6 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 		player.accelerate();
 		player.applyFriction();
 		player.restrictHorizontally(backgroundLayer.getRoadLeftX(), backgroundLayer.getRoadRightX());
-		updateFuel(delta);
 
 		// Player input
 		checkForPauseRequest();
@@ -187,24 +190,8 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 
 	}
 	
-	private void updateFuel(float delta) {
-		timeSinceFuelLoss += delta;
-		if (timeSinceFuelLoss >= TIME_BETWEEN_FUEL_LOSS) {
-			player.decreaseHealth(AMOUNT_PER_FUEL_LOSS);
-			timeSinceFuelLoss -= TIME_BETWEEN_FUEL_LOSS;
-		}
-	}
-	
 	private void updateHUD() {
 		hud.setCurrentFuel(player.getHealth(), player.getMaxHealth());
 		hud.setScore(player.getScore().getScore());
-	}
-	
-	private void updateScore(float delta) {
-		timeSinceScore += delta;
-		if (timeSinceScore >= TIME_BETWEEN_SCORE) {
-			player.getScore().addToScore(AMOUNT_PER_SCORE);
-			timeSinceScore -= TIME_BETWEEN_SCORE;
-		}
 	}
 }
