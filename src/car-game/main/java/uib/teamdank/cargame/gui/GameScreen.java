@@ -23,7 +23,7 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 	private static final float TIME_BETWEEN_SCORE = 1f;
 
 	private static final int AMOUNT_PER_FUEL_LOSS = 1;
-	private static final float TIME_BETWEEN_FUEL_LOSS = .1f;
+	private static final float TIME_BETWEEN_FUEL_LOSS = .2f;
 
 	private static final int CAR_VERTICAL_POSITION = 25;
 
