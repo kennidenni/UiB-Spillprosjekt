@@ -91,7 +91,7 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 
 	@Override
 	public void hide() {
-		carSound.stop();
+		carSound.pause();
 	}
 
 	@Override
