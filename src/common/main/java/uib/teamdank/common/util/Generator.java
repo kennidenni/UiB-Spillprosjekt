@@ -1,6 +1,7 @@
 package uib.teamdank.common.util;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Random;
 
 /**
@@ -22,7 +23,14 @@ public interface Generator<T> {
 	 * specified list with the results.
 	 */
 	public default void generate(Random random, int amount, List<T> list) {
-		// TODO Auto-generated method stub
+		Objects.requireNonNull(random, "random cannot be null");
+		if (amount < 0) {
+			throw new IllegalArgumentException("amount must be larger than zero");
+		}
+		Objects.requireNonNull(list, "list cannot be null");
+		for (int i = 0; i < amount; i++) {
+			list.add(generate(random));
+		}
 	}
 
 }

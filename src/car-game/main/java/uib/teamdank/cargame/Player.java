@@ -3,6 +3,7 @@ package uib.teamdank.cargame;
 import com.badlogic.gdx.math.Vector2;
 
 import uib.teamdank.common.Actor;
+import uib.teamdank.common.Inventory;
 import uib.teamdank.common.Score;
 import uib.teamdank.common.Upgrade;
 import uib.teamdank.common.Upgradeable;
@@ -21,6 +22,8 @@ public class Player extends Actor implements Upgradeable {
 	private static final float VERTICAL_FRICTION = .98f;
 	private static final float VERTICAL_TOP_SPEED = 512f;
 
+	private final Inventory inventory = new Inventory();
+	
 	private final Score score;
 	
 	public Player() {
@@ -60,6 +63,10 @@ public class Player extends Actor implements Upgradeable {
 	@Override
 	public void applyUpgrade(Upgrade upgrade) {
 		// TODO Auto-generated method stub
+	}
+	
+	public Inventory getInventory() {
+		return inventory;
 	}
 
 	public Score getScore() {

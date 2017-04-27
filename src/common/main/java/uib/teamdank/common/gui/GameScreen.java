@@ -1,6 +1,7 @@
 package uib.teamdank.common.gui;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
 import java.util.function.Consumer;
@@ -13,6 +14,7 @@ import com.badlogic.gdx.math.Vector2;
 
 import uib.teamdank.common.Game;
 import uib.teamdank.common.GameObject;
+import uib.teamdank.common.util.TimedEvent;
 
 /**
  * Screen for the main gameplay of a game.
@@ -23,6 +25,7 @@ import uib.teamdank.common.GameObject;
 public class GameScreen implements Screen {
 
 	private final List<Layer> layers = new ArrayList<>();
+	private final List<TimedEvent> timedEvents = new ArrayList<>();
 
 	private final Game game;
 
@@ -43,7 +46,11 @@ public class GameScreen implements Screen {
 		Objects.requireNonNull(layer, "layer cannot be null");
 		layers.add(layer);
 	}
-
+	
+	public void addTimedEvent(TimedEvent event) {
+		this.timedEvents.add(Objects.requireNonNull(event, "timed event cannot be null"));
+	}
+	
 	@Override
 	public void dispose() {
 		forEachGameObject(gameObject -> {
@@ -121,6 +128,17 @@ public class GameScreen implements Screen {
 			}
 			
 		});
+		
+		// Update timed events
+		Iterator<TimedEvent> eventIterator = timedEvents.iterator();
+		while (eventIterator.hasNext()) {
+			TimedEvent event = eventIterator.next();
+			if (event.isDone()) {
+				eventIterator.remove();
+			} else {
+				event.update(delta);
+			}
+		}
 		
 	}
 

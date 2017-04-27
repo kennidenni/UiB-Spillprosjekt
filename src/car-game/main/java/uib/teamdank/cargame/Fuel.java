@@ -1,19 +1,25 @@
 package uib.teamdank.cargame;
 
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+
 import uib.teamdank.common.Item;
 
 /**
- * A puddle in the road. Has negative effects if driven over by the
+ * A fuel can in the road. Has positive effects if driven over by the
  * {@link Player}.
  */
-public class Fuel extends Item {
-    private double fuel = 100;
+public class Fuel extends Item implements RoadEntity {
+    private static final int DEFAULT_FUEL_AMOUNT = 15;
 
-    public Fuel(String n, String d) {
-        super(n, d);
+    public Fuel(TextureRegion texture) {
+        super("Fuel", "A jerry can full of delicious fuel.");
+        setTexture(texture);
+        setScale(.25f);
     }
 
-    public double getFuelIncrease() {
-        return fuel;
-    }
+	@Override
+	public void drivenOverBy(Player player) {
+		player.increaseHealth(DEFAULT_FUEL_AMOUNT);
+		this.markForRemoval();
+	}
 }

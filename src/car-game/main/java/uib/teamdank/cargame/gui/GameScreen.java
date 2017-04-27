@@ -8,10 +8,14 @@ import com.badlogic.gdx.math.Vector2;
 
 import uib.teamdank.cargame.CarGame;
 import uib.teamdank.cargame.Player;
+import uib.teamdank.cargame.RoadEntity;
+import uib.teamdank.cargame.util.RoadEntityGenerator;
+import uib.teamdank.cargame.util.ScrollingSpawner;
 import uib.teamdank.common.Game;
 import uib.teamdank.common.gui.Layer;
 import uib.teamdank.common.util.AssetManager;
 import uib.teamdank.common.util.TextureAtlas;
+import uib.teamdank.common.util.TimedEvent;
 
 /**
  * The main gameplay screen.
@@ -21,7 +25,7 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 	private static final float TIME_BETWEEN_SCORE = 1f;
 
 	private static final int AMOUNT_PER_FUEL_LOSS = 1;
-	private static final float TIME_BETWEEN_FUEL_LOSS = .1f;
+	private static final float TIME_BETWEEN_FUEL_LOSS = .2f;
 
 	private static final int CAR_VERTICAL_POSITION = 25;
 
@@ -31,23 +35,23 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 	private final OrthographicCamera screenCamera;
 
 	private final BackgroundLayer backgroundLayer;
+	private final Layer roadEntityLayer;
 	private final Layer carLayer;
 	private final CarHud hud;
 
 	private final Sound carSound;
 	private float carVolume = 0.5f;
-
+	
 	private final Player player;
-	private float timeSinceScore = 0;
-	private float timeSinceFuelLoss = 0;
+	
+	private final ScrollingSpawner roadEntitySpawner;
 
 	public GameScreen(Game game) {
 		super(game);
 
 		this.assets = new AssetManager();
 		TextureAtlas carTextures = assets.getAtlas("Images/car_sheet.json");
-		// TextureAtlas gameObjectTextures =
-		// assets.getAtlas("Images/game_object_sheet.json");
+		TextureAtlas roadEntityTextures = assets.getAtlas("Images/road_entity_sheet.json");
 
 		// Cameras
 		this.playerCamera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
@@ -57,14 +61,32 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 		player = new Player();
 		player.setTexture(carTextures.getRegion("car_forward_flag"));
 		player.setScale(.5f);
+		addTimedEvent(new TimedEvent(TIME_BETWEEN_FUEL_LOSS, true, () -> {
+			player.decreaseHealth(AMOUNT_PER_FUEL_LOSS);
+		}));
+		addTimedEvent(new TimedEvent(TIME_BETWEEN_SCORE, true, () -> {
+			player.getScore().addToScore(AMOUNT_PER_SCORE);
+		}));
 
 		// Layers
 		backgroundLayer = new BackgroundLayer(assets, playerCamera, screenCamera, player);
+		roadEntityLayer = new Layer(true);
 		carLayer = new Layer(true);
 		addLayer(backgroundLayer);
+		addLayer(roadEntityLayer);
 		addLayer(carLayer);
 		carLayer.addGameObject(player);
 
+		// Road entity spawner initialization
+		this.roadEntitySpawner = new ScrollingSpawner(roadEntityLayer,
+														playerCamera,
+														new RoadEntityGenerator(roadEntityTextures));
+		roadEntitySpawner.setHorizontalPositionRange(backgroundLayer.getRoadLeftX(),
+														backgroundLayer.getRoadRightX());
+		roadEntitySpawner.setChanceOfSpawn(.01f);
+		roadEntitySpawner.setExtraVerticalSpaceBetweenSpawns(50);
+		
+		// HUD
 		this.hud = new CarHud();
 
 		// Sounds
@@ -130,17 +152,21 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 	public void update(float delta) {
 
 		// Update HUD
-		updateScore(delta);
 		updateHUD();
 
 		// Updates game objects
-		super.update(delta);
+		super.update(delta); // Movement and deletion
+		roadEntityLayer.forEachGameObject(gameObject -> {
+			if (gameObject instanceof RoadEntity
+					&& player.contains(gameObject.getPosisiton().x, gameObject.getPosisiton().y)) {
+				((RoadEntity) gameObject).drivenOverBy(player);
+			}
+		});
 
 		// Update player
 		player.accelerate();
 		player.applyFriction();
 		player.restrictHorizontally(backgroundLayer.getRoadLeftX(), backgroundLayer.getRoadRightX());
-		updateFuel(delta);
 
 		// Player input
 		checkForPauseRequest();
@@ -153,6 +179,10 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 			player.turnRight();
 		}
 
+		// Spawn new road entities
+		roadEntitySpawner.update(delta);
+		roadEntitySpawner.setHorizontalPositionRange(backgroundLayer.getRoadLeftX(), backgroundLayer.getRoadRightX());
+		
 		// Check for game over
 		if (player.isOutOfFuel() && player.getVelocity().y == 0) {
 			getGame().setScreen(new EndingScreen((CarGame) getGame()));
@@ -160,24 +190,8 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 
 	}
 	
-	private void updateFuel(float delta) {
-		timeSinceFuelLoss += delta;
-		if (timeSinceFuelLoss >= TIME_BETWEEN_FUEL_LOSS) {
-			player.decreaseHealth(AMOUNT_PER_FUEL_LOSS);
-			timeSinceFuelLoss -= TIME_BETWEEN_FUEL_LOSS;
-		}
-	}
-	
 	private void updateHUD() {
 		hud.setCurrentFuel(player.getHealth(), player.getMaxHealth());
 		hud.setScore(player.getScore().getScore());
-	}
-	
-	private void updateScore(float delta) {
-		timeSinceScore += delta;
-		if (timeSinceScore >= TIME_BETWEEN_SCORE) {
-			player.getScore().addToScore(AMOUNT_PER_SCORE);
-			timeSinceScore -= TIME_BETWEEN_SCORE;
-		}
 	}
 }
