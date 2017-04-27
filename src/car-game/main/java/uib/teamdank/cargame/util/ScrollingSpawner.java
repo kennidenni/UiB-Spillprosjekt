@@ -35,7 +35,7 @@ public class ScrollingSpawner implements Generator<GameObject> {
 		this.generator = Objects.requireNonNull(generator, "generator cannot be null");
 		
 		setFlipTexture(false);
-		setExtraVerticalSpaceBetweenSpawns(300);
+		setExtraVerticalSpaceBetweenSpawns(0);
 		setTimeBetweenSpawns(0f);
 		setChanceOfSpawn(1f);
 	}
@@ -50,7 +50,7 @@ public class ScrollingSpawner implements Generator<GameObject> {
 		return spawn;
 	}
 	
-	public void deleteOldStructures() {
+	private void deleteOldStructures() {
 		GameObject firstSpawn = spawns.get(0);
 		if (firstSpawn.isMarkedForRemoval()) {
 			// Object has already been removed elsewhere
@@ -72,16 +72,17 @@ public class ScrollingSpawner implements Generator<GameObject> {
 	
 	private int getNewHorizontalPosition(int width) {
 		final int min = minHorizontalPosition;
-		final int max = maxHorizontalPosition - width;
+		final int max = maxHorizontalPosition;
 		
 		int position;
 		if (min == max) {
-			position = min;
+			position = min - width;
 		} else {
-			position = random.nextInt(max - min) + min;
+			position = random.nextInt(Math.abs((max - width) - min)) + min;
 		}
+		
 		if (flipTexture) {
-			position -= width;
+			position += width;
 		}
 		return position;
 	}
@@ -112,18 +113,19 @@ public class ScrollingSpawner implements Generator<GameObject> {
 		this.minHorizontalPosition = min;
 		this.maxHorizontalPosition = max;
 	}
-	
+
 	public void setTimeBetweenSpawns(float timeBetweenSpawns) {
 		this.timeBetweenSpawns = timeBetweenSpawns;
 	}
 	
-	public void spawnNewGameObjects(float delta) {
+	public void update(float delta) {
 		timeSinceSpawn += delta;
 		if (timeSinceSpawn >= timeBetweenSpawns
 							&& (spawns.size == 0 || previousSpawnHasBeenVisible())
 							&& random.nextFloat() < chanceOfSpawn) {
 			layer.addGameObject(createNewSpawn());
 			timeSinceSpawn -= timeBetweenSpawns;
+			deleteOldStructures();
 		}
 	}
 }

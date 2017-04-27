@@ -77,9 +77,10 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 														new RoadEntityGenerator(roadEntityTextures));
 		roadEntitySpawner.setHorizontalPositionRange(backgroundLayer.getRoadLeftX(),
 														backgroundLayer.getRoadRightX());
-		roadEntitySpawner.setChanceOfSpawn(.01f);
+		roadEntitySpawner.setChanceOfSpawn(1f);
 		roadEntitySpawner.setExtraVerticalSpaceBetweenSpawns(50);
 		
+		// HUD
 		this.hud = new CarHud();
 
 		// Sounds
@@ -169,7 +170,8 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 		}
 
 		// Spawn new road entities
-		roadEntitySpawner.spawnNewGameObjects(delta);
+		roadEntitySpawner.update(delta);
+		roadEntitySpawner.setHorizontalPositionRange(backgroundLayer.getRoadLeftX(), backgroundLayer.getRoadRightX());
 		
 		// Check for game over
 		if (player.isOutOfFuel() && player.getVelocity().y == 0) {

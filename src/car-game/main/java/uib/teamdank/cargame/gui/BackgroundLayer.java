@@ -1,5 +1,8 @@
 package uib.teamdank.cargame.gui;
 
+import java.util.Objects;
+import java.util.Random;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -8,7 +11,8 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 import uib.teamdank.cargame.Player;
 import uib.teamdank.cargame.util.LoopingBackground;
-import uib.teamdank.cargame.util.StructureSpawner;
+import uib.teamdank.cargame.util.ScrollingSpawner;
+import uib.teamdank.common.GameObject;
 import uib.teamdank.common.gui.Layer;
 import uib.teamdank.common.util.AssetManager;
 import uib.teamdank.common.util.TextureAtlas;
@@ -21,7 +25,7 @@ public class BackgroundLayer extends Layer {
 	
 	private final Texture backgroundTexture;
 	private final LoopingBackground scrollingRoad;
-	private final StructureSpawner[] structureSpawners;
+	private final ScrollingSpawner[] structureSpawners;
 	
 	public BackgroundLayer(AssetManager assets, OrthographicCamera playerCamera, OrthographicCamera screenCamera, Player player) {
 		super(false);
@@ -35,10 +39,27 @@ public class BackgroundLayer extends Layer {
 		
 		TextureAtlas structuresAtlas = assets.getAtlas("Images/structure_sheet.json"); 
 		TextureRegion[] structureTextures = structuresAtlas.getAllRegions();
-		this.structureSpawners = new StructureSpawner[] {
-				new StructureSpawner(this, playerCamera, false, structureTextures),
-				new StructureSpawner(this, playerCamera, true, structureTextures)
+		this.structureSpawners = new ScrollingSpawner[] {
+			setupStructureSpawner(structureTextures, false),
+			setupStructureSpawner(structureTextures, true)
 		};
+	}
+	
+	private ScrollingSpawner setupStructureSpawner(TextureRegion[] textures, boolean leftSide) {
+		Objects.requireNonNull(textures, "texture scannot be null");
+		if (textures.length == 0) {
+			throw new IllegalArgumentException("there must be at least one structure texture");
+		}
+		ScrollingSpawner spawner = new ScrollingSpawner(this, playerCamera, rand -> {
+			GameObject structure = new GameObject();
+			structure.setTexture(textures[new Random().nextInt(textures.length)]);
+			return structure;
+		});
+		spawner.setExtraVerticalSpaceBetweenSpawns(40);
+		spawner.setTimeBetweenSpawns(0);
+		spawner.setChanceOfSpawn(1);
+		spawner.setFlipTexture(leftSide);
+		return spawner;
 	}
 	
 	public int getRoadLeftX() {
@@ -59,12 +80,11 @@ public class BackgroundLayer extends Layer {
 		batch.setProjectionMatrix(playerCamera.combined);
 		scrollingRoad.render(batch);
 		scrollingRoad.updateHorizontalPosition(getRoadLeftX());
-		for (StructureSpawner spawner : structureSpawners) {
-			spawner.spawnNewStructures();
-			spawner.deleteOldStructures();
+		structureSpawners[0].setHorizontalPositionRange(getRoadLeftX(), getRoadLeftX());
+		structureSpawners[1].setHorizontalPositionRange(getRoadRightX(), getRoadRightX());
+		for (ScrollingSpawner spawner : structureSpawners) {
+			spawner.update(delta);
 		}
-		structureSpawners[0].updateHorizontalPosition(getRoadLeftX());
-		structureSpawners[1].updateHorizontalPosition(getRoadRightX());
 	}
 	
 }
