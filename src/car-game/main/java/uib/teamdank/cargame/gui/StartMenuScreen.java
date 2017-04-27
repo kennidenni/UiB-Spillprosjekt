@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -14,8 +15,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.FitViewport;
-
 import uib.teamdank.cargame.CarGame;
+import uib.teamdank.cargame.Player;
 import uib.teamdank.common.Game;
 
 public class StartMenuScreen implements uib.teamdank.common.gui.StartMenuScreen {
@@ -40,6 +41,7 @@ public class StartMenuScreen implements uib.teamdank.common.gui.StartMenuScreen 
 	private CreditScreen creditScreen;
 	private Game game;
 	private ShopScreen shopScreen;
+	private Player player;
 
 	public StartMenuScreen(CarGame game) {
 		this.game = game;
@@ -60,6 +62,12 @@ public class StartMenuScreen implements uib.teamdank.common.gui.StartMenuScreen 
 		addButtonListener();
 		addToTables();
 		
+		// Player initialization
+		player = new Player();
+		player.getTexture();
+		player.setScale(.5f);
+				
+				
 		menu.setFillParent(true);
 		stages.addActor(menu);
 		Gdx.input.setInputProcessor(stages);
@@ -147,6 +155,10 @@ public class StartMenuScreen implements uib.teamdank.common.gui.StartMenuScreen 
 	@Override
 	public void resume() { 
 		//TODO
+	}
+	
+	public Player getPlayer(){
+		return player;
 	}
 	
 	// 
