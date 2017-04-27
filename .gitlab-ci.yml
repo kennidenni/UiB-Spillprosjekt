@@ -42,6 +42,7 @@ build branch:
   script:
   - git merge origin/master --no-commit --no-ff
   - ./gradlew build
+  - ./gradlew jacocoTestReport
   allow_failure: false
   except:
     - master
@@ -50,6 +51,7 @@ build master:
   stage: build 
   script:
   - ./gradlew build
+  - ./gradlew jacocoTestReport
   allow_failure: false
   only:
     - master

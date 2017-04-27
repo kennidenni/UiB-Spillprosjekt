@@ -16,7 +16,7 @@ public class PedestrianTest {
 
 	@Before
 	public void setUp() throws Exception {
-		pede = new Pedestrian(10);
+		pede = new Pedestrian(10, 10);
 	}
 
 	@Test

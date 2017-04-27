@@ -1,27 +1,14 @@
 plugins {
     id "org.sonarqube" version "2.3"
+ //   id "jacoco"
 }
 
 subprojects {
 	apply plugin: 'java'
+  apply plugin: 'jacoco'
 	apply plugin: 'eclipse'
 	apply plugin: 'idea'
-
-	repositories {
-	    mavenCentral()
-	}
-    
-    sourceCompatibility = 1.8
-    targetCompatibility = 1.8
-
-	sourceSets.main.java.srcDirs = [ 'main/java']
-	sourceSets.main.resources.srcDirs = ['main/resources']
-	sourceSets.test.java.srcDirs = [ 'test/java']
-	sourceSets.test.resources.srcDirs = [ 'test/resources']
-}
-
-project(':teamdank-common') {
-	dependencies {
+  dependencies {
 	  compile 'com.badlogicgames.gdx:gdx:1.9.6'
 		compile 'com.badlogicgames.gdx:gdx-backend-lwjgl:1.9.6'
 		compile 'com.badlogicgames.gdx:gdx-platform:1.9.6:natives-desktop'
@@ -29,12 +16,34 @@ project(':teamdank-common') {
 		compile 'com.badlogicgames.gdx:gdx-box2d-platform:1.9.6:natives-desktop'
 		compile 'org.slf4j:slf4j-api:1.7.13'
 		compile 'com.google.code.gson:gson:2.8.0'
-		compile 'junit:junit:4.12' // Temporary fix
-		testCompile "com.badlogicgames.gdx:gdx-backend-headless:1.9.6"
+    	testCompile "com.badlogicgames.gdx:gdx-backend-headless:1.9.6"
 	    testCompile 'junit:junit:4.12'
 	    testCompile 'org.mockito:mockito-all:1.9.5'
+  }
+
+	repositories {
+	    mavenCentral()
 	}
+    sourceCompatibility = 1.8
+    targetCompatibility = 1.8
+
+	sourceSets.main.java.srcDirs = [ 'main/java']
+	sourceSets.main.resources.srcDirs = ['main/resources']
+	sourceSets.test.java.srcDirs = [ 'test/java']
+	sourceSets.test.resources.srcDirs = [ 'test/resources']
+
+  jacocoTestReport {
+        additionalSourceDirs = files(sourceSets.main.allSource.srcDirs)
+        sourceDirectories = files(sourceSets.main.allSource.srcDirs)
+        classDirectories =  files(sourceSets.main.output)
+        reports {
+            html.enabled = true
+            xml.enabled = true
+            csv.enabled = false
+        }
+    }
 }
+
 
 project(':teamdank-cargame') {
 	dependencies {
@@ -72,4 +81,17 @@ task alljavadoc(type: Javadoc) {
     source exportedProjects.collect { project(it).sourceSets.main.allJava }
     classpath = files(exportedProjects.collect { project(it).sourceSets.main.compileClasspath })
     destinationDir = file("docs/javadoc")
+}
+
+task jacocoRootReport(type: org.gradle.testing.jacoco.tasks.JacocoReport) {
+    dependsOn = subprojects.test
+    additionalSourceDirs = files(subprojects.sourceSets.main.allSource.srcDirs)
+    sourceDirectories = files(subprojects.sourceSets.main.allSource.srcDirs)
+    classDirectories =  files(subprojects.sourceSets.main.output)
+    executionData = files(subprojects.jacocoTestReport.executionData)
+    reports {
+        html.enabled = true
+        xml.enabled = true
+        csv.enabled = false
+    }
 }
