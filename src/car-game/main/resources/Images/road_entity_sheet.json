@@ -1,5 +1,5 @@
 {
-	"tileset": "Images/game_object_sheet.png",
+	"tileset": "Images/road_entity_sheet.png",
 	"regions": [
 		{
 			"name": "coin",

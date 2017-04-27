@@ -15,12 +15,12 @@ public class FuelTest {
 
 	@Before
 	public void setUp() throws Exception {
-		fuel = new Fuel("name", "desc"); 
+		fuel = new Fuel(null); 
 	}
 
 	@Test
 	public void getFuelIncrease() throws Exception {
-		assertThat(fuel.getFuelIncrease(), is(equalTo(100.0)));
+		assertThat(fuel.getFuelIncrease(), is(equalTo(100)));
 	}
 
 }
