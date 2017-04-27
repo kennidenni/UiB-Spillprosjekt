@@ -61,7 +61,7 @@ public class ShopScreen extends ScreenAdapter {
 					game.getPlayer().setTexture(source.texture);
 					// TODO Marker som knapp som valgt
 				} else {
-					// TODO Si at den ikke er kjøpt
+					// TODO Si at den ikke er kjÃ¸pt
 				}
 			}
 		}
