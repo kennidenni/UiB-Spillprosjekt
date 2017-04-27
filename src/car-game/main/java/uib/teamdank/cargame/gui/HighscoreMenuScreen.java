@@ -24,7 +24,7 @@ import uib.teamdank.common.Score;
 public class HighscoreMenuScreen implements uib.teamdank.common.gui.HighscoreMenuScreen {
 	private static final String BACK = "Images/Buttons/bs_back.png";
 	private static final String HIGHSCORE = "Images/Buttons/cg_highscore.png";
-	private static final String SCORES = "Data/highscore.json";
+	private static final String SCORES = "TeamDank/Carl the Crasher/highscore.json";
 	
 	private Stage stage;
 	private ImageButton backButton;
@@ -46,12 +46,13 @@ public class HighscoreMenuScreen implements uib.teamdank.common.gui.HighscoreMen
 		menu.row();
 		menu.add(backButton).width((float) (backButton.getWidth() / 4)).height((float) (backButton.getHeight() / 4)).pad(700, 0, 0, 0);
 		
-		FileHandle handle = Gdx.files.internal(SCORES);
+		FileHandle handle = Gdx.files.external(SCORES);
 		batch = new SpriteBatch();
 		font = new BitmapFont();
 		font.getData().setScale(2);
-		if(handle.exists())
-			setScores(Arrays.asList(Score.createFromJson(handle)));
+		if(!handle.exists())
+			handle = Gdx.files.internal("Data/highscore.json");
+		setScores(Arrays.asList(Score.createFromJson(handle)));
 		
 		menu.setFillParent(true);
 		stage.addActor(menu);
