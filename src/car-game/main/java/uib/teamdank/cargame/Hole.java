@@ -1,5 +1,7 @@
 package uib.teamdank.cargame;
 
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+
 import uib.teamdank.common.Item;
 
 /**
@@ -8,8 +10,10 @@ import uib.teamdank.common.Item;
  */
 public class Hole extends Item {
 
-    public Hole(String n, String d) {
-        super(n, d);
+    public Hole(TextureRegion texture) {
+        super("Hole", "A man hole that suspiciously is uncovered.");
+        setTexture(texture);
+        setScale(.5f);
     }
 
 }

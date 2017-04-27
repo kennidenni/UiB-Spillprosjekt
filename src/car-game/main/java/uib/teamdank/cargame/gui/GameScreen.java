@@ -8,6 +8,8 @@ import com.badlogic.gdx.math.Vector2;
 
 import uib.teamdank.cargame.CarGame;
 import uib.teamdank.cargame.Player;
+import uib.teamdank.cargame.util.RoadEntityGenerator;
+import uib.teamdank.cargame.util.ScrollingSpawner;
 import uib.teamdank.common.Game;
 import uib.teamdank.common.gui.Layer;
 import uib.teamdank.common.util.AssetManager;
@@ -31,23 +33,25 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 	private final OrthographicCamera screenCamera;
 
 	private final BackgroundLayer backgroundLayer;
+	private final Layer roadEntityLayer;
 	private final Layer carLayer;
 	private final CarHud hud;
 
 	private final Sound carSound;
 	private float carVolume = 0.5f;
-
+	
 	private final Player player;
 	private float timeSinceScore = 0;
 	private float timeSinceFuelLoss = 0;
+	
+	private final ScrollingSpawner roadEntitySpawner;
 
 	public GameScreen(Game game) {
 		super(game);
 
 		this.assets = new AssetManager();
 		TextureAtlas carTextures = assets.getAtlas("Images/car_sheet.json");
-		// TextureAtlas gameObjectTextures =
-		// assets.getAtlas("Images/game_object_sheet.json");
+		TextureAtlas roadEntityTextures = assets.getAtlas("Images/road_entity_sheet.json");
 
 		// Cameras
 		this.playerCamera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
@@ -60,11 +64,22 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 
 		// Layers
 		backgroundLayer = new BackgroundLayer(assets, playerCamera, screenCamera, player);
+		roadEntityLayer = new Layer(true);
 		carLayer = new Layer(true);
 		addLayer(backgroundLayer);
+		addLayer(roadEntityLayer);
 		addLayer(carLayer);
 		carLayer.addGameObject(player);
 
+		// Road entity spawner initialization
+		this.roadEntitySpawner = new ScrollingSpawner(roadEntityLayer,
+														playerCamera,
+														new RoadEntityGenerator(roadEntityTextures));
+		roadEntitySpawner.setHorizontalPositionRange(backgroundLayer.getRoadLeftX(),
+														backgroundLayer.getRoadRightX());
+		roadEntitySpawner.setChanceOfSpawn(.01f);
+		roadEntitySpawner.setExtraVerticalSpaceBetweenSpawns(50);
+		
 		this.hud = new CarHud();
 
 		// Sounds
@@ -153,6 +168,9 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 			player.turnRight();
 		}
 
+		// Spawn new road entities
+		roadEntitySpawner.spawnNewGameObjects(delta);
+		
 		// Check for game over
 		if (player.isOutOfFuel() && player.getVelocity().y == 0) {
 			getGame().setScreen(new EndingScreen((CarGame) getGame()));

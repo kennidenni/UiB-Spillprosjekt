@@ -16,12 +16,12 @@ public class PuddleTest {
 
 	@Before
 	public void setUp() throws Exception {
-		pudd = new Puddle("name", "desc");
+		pudd = new Puddle(null);
 		
 	}
 
 	@Test
 	public void getFuelPenalty() throws Exception {
-		assertThat(pudd.getFuelPenalty(), is(equalTo(100.0)));
+		assertThat(pudd.getFuelPenalty(), is(equalTo(100)));
 	}
 }
