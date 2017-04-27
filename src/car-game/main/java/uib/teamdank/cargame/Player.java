@@ -10,6 +10,7 @@ import uib.teamdank.common.Inventory;
 import uib.teamdank.common.Score;
 import uib.teamdank.common.Upgrade;
 import uib.teamdank.common.Upgradeable;
+import uib.teamdank.common.util.AssetManager;
 
 /**
  * The player/the car.
@@ -27,12 +28,15 @@ public class Player extends Actor implements Upgradeable {
 
 	private final Inventory inventory = new Inventory();
 	private final Set<String> unlockedSkins = new HashSet<>();
-	
+
 	private final Score score;
-	
+
+	private uib.teamdank.common.util.TextureAtlas carTextures;
+	private AssetManager assets;
+
 	public Player() {
 		super(100, "Per");
-		score = new Score(getName());		
+		score = new Score(getName());
 	}
 
 	public void accelerate() {
@@ -68,7 +72,7 @@ public class Player extends Actor implements Upgradeable {
 	public void applyUpgrade(Upgrade upgrade) {
 		// TODO Auto-generated method stub
 	}
-	
+
 	public Inventory getInventory() {
 		return inventory;
 	}
@@ -76,7 +80,7 @@ public class Player extends Actor implements Upgradeable {
 	public Score getScore() {
 		return score;
 	}
-	
+
 	public boolean hasUnlockedSkin(String name) {
 		return unlockedSkins.contains(name);
 	}
@@ -85,10 +89,6 @@ public class Player extends Actor implements Upgradeable {
 		return getHealth() == 0;
 	}
 
-	public void unlockSkin(String name) {
-		this.unlockedSkins.add(name);
-	}
-	
 	public void restrictHorizontally(int minX, int maxX) {
 		if (getPosisiton().x < minX) {
 			getPosisiton().x = minX;
@@ -97,6 +97,12 @@ public class Player extends Actor implements Upgradeable {
 			getPosisiton().x = (float) (maxX - getWidth());
 			getVelocity().x *= -1;
 		}
+	}
+
+	public void setImage(String car) {
+		this.assets = new AssetManager();
+		carTextures = assets.getAtlas("Images/car_sheet.json");
+		setTexture(carTextures.getRegion(car));
 	}
 
 	private void turn(int direction) {
@@ -113,4 +119,7 @@ public class Player extends Actor implements Upgradeable {
 		turn(1);
 	}
 
+	public void unlockSkin(String name) {
+		this.unlockedSkins.add(name);
+	}
 }
