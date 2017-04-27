@@ -1,6 +1,16 @@
 package uib.teamdank.common;
 import static org.junit.Assert.*;
+import static org.mockito.Matchers.anyBoolean;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
+import java.io.StringReader;
+
 import org.junit.Test;
+import org.mockito.ArgumentCaptor;
+
+import com.badlogic.gdx.files.FileHandle;
 
 public class ScoreTest {
 	@Test
@@ -59,6 +69,36 @@ public class ScoreTest {
 		
 		s1.setName("test2");
 		assertEquals("test2", s1.getName());
+	}
+	
+	@Test
+	public void testWritesExpectedJsonToFile() {
+		FileHandle mockhandle = mock(FileHandle.class);
+		String expectedJson = "[{\"score\":0,\"name\":\"Anonymous\"}]";
+		
+		ArgumentCaptor<String> jsonCapture = ArgumentCaptor.forClass(String.class);
+		
+		Score.writeToJson(mockhandle, new Score[]{new Score()});
+		
+		verify(mockhandle).writeString(jsonCapture.capture(), anyBoolean());
+		
+		assertEquals(expectedJson, jsonCapture.getValue());
+	}
+	
+	@Test
+	public void testCreatesCorrectHighScoresFromFile(){
+		FileHandle mockhandle = mock(FileHandle.class);
+		String json = "[{\"score\":2,\"name\":\"Anonymous\"},{\"score\":1,\"name\":\"test\"}]";
+		
+		when(mockhandle.reader()).thenReturn(new StringReader(json));
+		
+		Score[] scores =  Score.createFromJson(mockhandle);
+		
+		assertEquals(2, scores.length);
+		assertEquals("Anonymous", scores[0].getName());
+		assertEquals("test", scores[1].getName());
+		assertEquals(2, scores[0].getScore());
+		assertEquals(1, scores[1].getScore());
 	}
 	
 }

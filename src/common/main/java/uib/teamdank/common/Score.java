@@ -1,5 +1,11 @@
 package uib.teamdank.common;
 
+import java.util.Objects;
+
+import com.badlogic.gdx.files.FileHandle;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
 /**
  *
  * Represent an accumulated amount of points.
@@ -8,7 +14,7 @@ public class Score implements Comparable<Score> {
 	
 	private long score;
 	private String name;
-
+	
 	public Score(long score, String name){
 		this.score = score;
 		this.name = name;
@@ -24,6 +30,26 @@ public class Score implements Comparable<Score> {
 	
 	public Score(){
 		this(0, "Anonymous");
+	}
+	
+	/**
+	 * 
+	 * @param handle FileHandle for the file the scores are saved in
+	 * @return The scores in an array
+	 */
+	public static Score[] createFromJson(FileHandle handle) {
+		Objects.requireNonNull(handle, "file handle cannot be null");
+		return new Gson().fromJson(handle.reader(), Score[].class);
+	}
+	
+	/**
+	 * 
+	 * @param handle FileHandle for the file we want to save the scores
+	 * @param scores The scores to be saved
+	 */
+	public static void writeToJson(FileHandle handle, Score[] scores) {
+		Gson gson = new GsonBuilder().create();
+		handle.writeString(gson.toJson(scores), false);
 	}
 	
 	public void addToScore(long score) {
@@ -89,5 +115,4 @@ public class Score implements Comparable<Score> {
 	public void setName(String name){
 		this.name = name;
 	}
-	
 }
