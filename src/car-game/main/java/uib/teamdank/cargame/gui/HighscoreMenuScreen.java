@@ -34,7 +34,7 @@ public class HighscoreMenuScreen implements uib.teamdank.common.gui.HighscoreMen
 	private BitmapFont font;
 	private SpriteBatch batch;
 	private String names;
-	private String scores;
+	private String scorePoints;
 
 	public HighscoreMenuScreen(CarGame game) {
 		this.game = game;
@@ -113,7 +113,7 @@ public class HighscoreMenuScreen implements uib.teamdank.common.gui.HighscoreMen
 		float width = (float) Gdx.graphics.getWidth()/4;
 		float height = (float) Gdx.graphics.getHeight()*3/4;
 		font.draw(batch, names, width, height);
-		font.draw(batch, scores, width*3, height);
+		font.draw(batch, scorePoints, width*3, height);
 		batch.end();
 	}
 
@@ -146,7 +146,7 @@ public class HighscoreMenuScreen implements uib.teamdank.common.gui.HighscoreMen
 		}
 		
 		names = nameBuilder.toString();
-		this.scores = scoreBuilder.toString();
+		this.scorePoints = scoreBuilder.toString();
 	}
 
 	@Override
