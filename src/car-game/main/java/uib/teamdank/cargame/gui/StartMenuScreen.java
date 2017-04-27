@@ -1,7 +1,6 @@
 package uib.teamdank.cargame.gui;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -26,7 +25,7 @@ public class StartMenuScreen implements uib.teamdank.common.gui.StartMenuScreen 
 	private static final String SHOP = "Images/Buttons/start.png";
 	private static final String EXIT = "Images/Buttons/bs_quit.png";
 
-	private Stage stage;
+	private Stage stages;
 	private Texture myTexture;
 	private Table menu;
 	private ImageButton logoButton;
@@ -43,7 +42,7 @@ public class StartMenuScreen implements uib.teamdank.common.gui.StartMenuScreen 
 
 	public StartMenuScreen(CarGame game) {
 		this.game = game;
-		stage = new Stage(new FitViewport(1920, 1080));
+		stages = new Stage(new FitViewport(1920, 1080));
 		highscoreMenuScreen = new HighscoreMenuScreen(game);
 		creditScreen = new CreditScreen(game);
 		shopScreen = new ShopScreen(game);
@@ -61,8 +60,8 @@ public class StartMenuScreen implements uib.teamdank.common.gui.StartMenuScreen 
 		addToTables();
 		
 		menu.setFillParent(true);
-		stage.addActor(menu);
-		Gdx.input.setInputProcessor(stage);
+		stages.addActor(menu);
+		Gdx.input.setInputProcessor(stages);
 	}
 
 	private void addToTables() {
@@ -102,18 +101,18 @@ public class StartMenuScreen implements uib.teamdank.common.gui.StartMenuScreen 
 	@Override
 	public void render(float delta) {
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-		stage.act(delta);
-		stage.draw();
+		stages.act(delta);
+		stages.draw();
 	}
 
 	@Override
 	public void resize(int width, int height) {
-		stage.getViewport().update(width, height, true);
+		stages.getViewport().update(width, height, true);
 	}
 
 	@Override
 	public void show() {
-		Gdx.input.setInputProcessor(stage);
+		Gdx.input.setInputProcessor(stages);
 	}
 
 	@Override

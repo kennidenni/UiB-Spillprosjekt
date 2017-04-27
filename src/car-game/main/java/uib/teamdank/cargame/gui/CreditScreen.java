@@ -1,8 +1,5 @@
 package uib.teamdank.cargame.gui;
 
-import org.omg.CORBA.Bounds;
-
-import com.badlogic.gdx.Files;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
@@ -15,7 +12,6 @@ import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
@@ -106,8 +102,7 @@ public class CreditScreen implements uib.teamdank.common.gui.CreditScreen {
 		stage.act(delta);
 		stage.draw();
 		
-		final int width = (int) Gdx.graphics.getWidth();
-		final int height = (int) Gdx.graphics.getHeight();
+		final int width = Gdx.graphics.getWidth();
 		batch.begin(); 
 		font.draw(batch, credit, 0, creditsY, width, Align.center, true);
 		batch.end();
