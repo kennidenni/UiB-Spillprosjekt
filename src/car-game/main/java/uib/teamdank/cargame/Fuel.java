@@ -17,13 +17,9 @@ public class Fuel extends Item implements RoadEntity {
         setScale(.25f);
     }
 
-    public int getFuelIncrease() {
-        return DEFAULT_FUEL_AMOUNT;
-    }
-
 	@Override
 	public void drivenOverBy(Player player) {
-		player.increaseHealth(getFuelIncrease());
+		player.increaseHealth(DEFAULT_FUEL_AMOUNT);
 		this.markForRemoval();
 	}
 }
