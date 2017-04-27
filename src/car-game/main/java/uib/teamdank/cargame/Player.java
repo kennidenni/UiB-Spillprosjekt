@@ -1,11 +1,13 @@
 package uib.teamdank.cargame;
 
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Vector2;
 
 import uib.teamdank.common.Actor;
 import uib.teamdank.common.Score;
 import uib.teamdank.common.Upgrade;
 import uib.teamdank.common.Upgradeable;
+import uib.teamdank.common.util.AssetManager;
 
 /**
  * The player/the car.
@@ -22,10 +24,14 @@ public class Player extends Actor implements Upgradeable {
 	private static final float VERTICAL_TOP_SPEED = 512f;
 
 	private final Score score;
+
+	private uib.teamdank.common.util.TextureAtlas carTextures;
+	private AssetManager assets;
 	
 	public Player() {
 		super(100, "Per");
 		score = new Score(getName());
+		setImage("car_forward_blue");
 	}
 
 	public void accelerate() {
@@ -93,5 +99,10 @@ public class Player extends Actor implements Upgradeable {
 	public void turnRight() {
 		turn(1);
 	}
-
+	
+	public void setImage(String car) {
+		this.assets = new AssetManager();
+		carTextures = assets.getAtlas("Images/car_sheet.json");
+		setTexture(carTextures.getRegion(car));
+	}
 }

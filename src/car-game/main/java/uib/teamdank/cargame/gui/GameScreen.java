@@ -55,7 +55,7 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 
 		// Player initialization
 		player = new Player();
-		player.setTexture(carTextures.getRegion("car_forward_flag"));
+		player.getTexture();
 		player.setScale(.5f);
 
 		// Layers
