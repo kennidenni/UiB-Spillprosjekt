@@ -23,9 +23,12 @@ import uib.teamdank.common.Score;
 
 public class HighscoreMenuScreen implements uib.teamdank.common.gui.HighscoreMenuScreen {
 	private static final String BACK = "Images/Buttons/bs_back.png";
+	private static final String HIGHSCORE = "Images/Buttons/cg_highscore.png";
+	private static final String SCORES = "Data/highscore.json";
 	
 	private Stage stage;
 	private ImageButton backButton;
+	private ImageButton highscoreButton;
 	private Table menu;
 	private CarGame game;
 	private BitmapFont font;
@@ -37,16 +40,18 @@ public class HighscoreMenuScreen implements uib.teamdank.common.gui.HighscoreMen
 		this.game = game;
 		stage = new Stage(new FitViewport(1920, 1080));
 		backButton = setupButton(BACK);
+		highscoreButton = setupButton(HIGHSCORE);
 		menu = new Table();
-		menu.add(backButton).width((float) (backButton.getWidth() / 4)).height((float) (backButton.getHeight() / 4)).pad(900, 0, 0, 0);
+		menu.add(highscoreButton).width((float) (highscoreButton.getWidth() / 4)).height((float) (highscoreButton.getHeight() / 4)).pad(0, 0, 0, 0);
+		menu.row();
+		menu.add(backButton).width((float) (backButton.getWidth() / 4)).height((float) (backButton.getHeight() / 4)).pad(700, 0, 0, 0);
 		
-		FileHandle handle = Gdx.files.internal("Data/highscore.json");
+		FileHandle handle = Gdx.files.internal(SCORES);
 		batch = new SpriteBatch();
 		font = new BitmapFont();
 		font.getData().setScale(2);
 		if(handle.exists())
 			setScores(Arrays.asList(Score.createFromJson(handle)));
-		
 		
 		menu.setFillParent(true);
 		stage.addActor(menu);
