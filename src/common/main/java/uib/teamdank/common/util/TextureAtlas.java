@@ -3,6 +3,7 @@ package uib.teamdank.common.util;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import java.util.function.BiConsumer;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
@@ -56,6 +57,11 @@ public class TextureAtlas implements Disposable {
 		tileset.dispose();
 	}
 
+	public void forEachRegion(BiConsumer<String, TextureRegion> action) {
+		Objects.requireNonNull(action, "action cannot be null");
+		textureCache.forEach(action);
+	}
+	
 	/**
 	 * @return a copy of all regions in this texture atlas
 	 */
