@@ -45,7 +45,7 @@ public class CreditScreen implements uib.teamdank.common.gui.CreditScreen {
 
 		menu = new Table();
 		menu.row();
-		menu.add(backButton).width((float) (backButton.getWidth() / 4)).height((float) (backButton.getHeight() / 4)).pad(900, 0, 0, 1600);
+		menu.add(backButton).width((float) (backButton.getWidth() / 4)).height((float) (backButton.getHeight() / 4)).pad(950, 0, 0, 1630);
 
 		menu.setFillParent(true);
 		stage.addActor(menu);
