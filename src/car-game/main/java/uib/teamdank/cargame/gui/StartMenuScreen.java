@@ -38,14 +38,14 @@ public class StartMenuScreen implements uib.teamdank.common.gui.StartMenuScreen 
 	private HighscoreMenuScreen highscoreMenuScreen;
 	private CreditScreen creditScreen;
 	private Game game;
-	private ShopScreen shopScreen;
+	private UpgradeMenuScreen shopScreen;
 
 	public StartMenuScreen(CarGame game) {
 		this.game = game;
 		stages = new Stage(new FitViewport(1920, 1080));
 		highscoreMenuScreen = new HighscoreMenuScreen(game);
 		creditScreen = new CreditScreen(game);
-		shopScreen = new ShopScreen(game);
+		shopScreen = new UpgradeMenuScreen(game);
 		buttons = new Array<Button>();
 		menu = new Table();
 		
