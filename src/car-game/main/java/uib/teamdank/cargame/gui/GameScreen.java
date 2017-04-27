@@ -19,19 +19,11 @@ import uib.teamdank.common.util.TextureAtlas;
 public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 	private static final int AMOUNT_PER_SCORE = 1;
 	private static final float TIME_BETWEEN_SCORE = 1f;
-	
+
+	private static final int AMOUNT_PER_FUEL_LOSS = 1;
+	private static final float TIME_BETWEEN_FUEL_LOSS = .1f;
+
 	private static final int CAR_VERTICAL_POSITION = 25;
-
-	private static final float CAR_HORIZONTAL_ZERO_SPEED_TOLERANCE = 4f;
-	private static final float CAR_HORIZONTAL_ACCELERATION = 50f;
-	private static final float CAR_HORIZONTAL_FRICTION = .9f;
-	
-	private static final float CAR_VERTICAL_ZERO_SPEED_TOLERANCE = 48f;
-	private static final float CAR_VERTICAL_ACCELERATION = 10f;
-	private static final float CAR_VERTICAL_MAX_SPEED = 512f;
-	private static final float CAR_VERTICAL_FRICTION = .985f;
-
-	private Game game;
 
 	private final AssetManager assets;
 
@@ -43,20 +35,19 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 	private final CarHud hud;
 
 	private final Sound carSound;
+	private float carVolume = 0.5f;
 
 	private final Player player;
-	private float timeSinceScore;
-	
-	private final EndingScreen endScreen;
+	private float timeSinceScore = 0;
+	private float timeSinceFuelLoss = 0;
 
 	public GameScreen(Game game) {
 		super(game);
 
-		this.game = game;
-
 		this.assets = new AssetManager();
 		TextureAtlas carTextures = assets.getAtlas("Images/car_sheet.json");
-		// TextureAtlas gameObjectTextures = assets.getAtlas("Images/game_object_sheet.json");
+		// TextureAtlas gameObjectTextures =
+		// assets.getAtlas("Images/game_object_sheet.json");
 
 		// Cameras
 		this.playerCamera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
@@ -66,7 +57,6 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 		player = new Player();
 		player.setTexture(carTextures.getRegion("car_forward_flag"));
 		player.setScale(.5f);
-		player.getVelocity().y = CAR_VERTICAL_MAX_SPEED;
 
 		// Layers
 		backgroundLayer = new BackgroundLayer(assets, playerCamera, screenCamera, player);
@@ -79,18 +69,29 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 
 		// Sounds
 		carSound = Gdx.audio.newSound(Gdx.files.internal("Sounds/car_sound.wav"));
-		carSound.play(0.5f); // 0.5f er volumet
-
-		endScreen = new EndingScreen((CarGame) game);
+		carSound.play(carVolume);
+		carSound.loop();
 
 	}
 
+	private boolean checkForPauseRequest() {
+		final boolean pause = Gdx.input.isKeyJustPressed(Keys.ESCAPE);
+		if (pause) {
+			getGame().setScreen(getGame().getPauseMenuScreen());
+		}
+		return pause;
+	}
+
 	@Override
-	public void resize(int width, int height) {
-		playerCamera.viewportWidth = screenCamera.viewportWidth = width;
-		playerCamera.viewportHeight = screenCamera.viewportHeight = height;
-		playerCamera.update();
-		screenCamera.update();
+	public void dispose() {
+		super.dispose();
+		assets.dispose();
+		carSound.dispose();
+	}
+
+	@Override
+	public void hide() {
+		carSound.stop();
 	}
 
 	@Override
@@ -113,78 +114,70 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 	}
 
 	@Override
+	public void resize(int width, int height) {
+		playerCamera.viewportWidth = screenCamera.viewportWidth = width;
+		playerCamera.viewportHeight = screenCamera.viewportHeight = height;
+		playerCamera.update();
+		screenCamera.update();
+	}
+
+	@Override
+	public void show() {
+		carSound.resume();
+	}
+
+	@Override
 	public void update(float delta) {
-		
+
+		// Update HUD
+		updateScore(delta);
+		updateHUD();
+
+		// Updates game objects
+		super.update(delta);
+
+		// Update player
+		player.accelerate();
+		player.applyFriction();
+		player.restrictHorizontally(backgroundLayer.getRoadLeftX(), backgroundLayer.getRoadRightX());
+		updateFuel(delta);
+
+		// Player input
 		checkForPauseRequest();
-		
-		// Update score
+		boolean inputTurnLeft = Gdx.input.isKeyPressed(Keys.A) || Gdx.input.isKeyPressed(Keys.LEFT);
+		boolean inputTurnRight = Gdx.input.isKeyPressed(Keys.D) || Gdx.input.isKeyPressed(Keys.RIGHT);
+		if (inputTurnLeft) {
+			player.turnLeft();
+		}
+		if (inputTurnRight) {
+			player.turnRight();
+		}
+
+		// Check for game over
+		if (player.isOutOfFuel() && player.getVelocity().y == 0) {
+			getGame().setScreen(new EndingScreen((CarGame) getGame()));
+		}
+
+	}
+	
+	private void updateFuel(float delta) {
+		timeSinceFuelLoss += delta;
+		if (timeSinceFuelLoss >= TIME_BETWEEN_FUEL_LOSS) {
+			player.decreaseHealth(AMOUNT_PER_FUEL_LOSS);
+			timeSinceFuelLoss -= TIME_BETWEEN_FUEL_LOSS;
+		}
+	}
+	
+	private void updateHUD() {
+		hud.setCurrentFuel(player.getHealth(), player.getMaxHealth());
+		hud.setScore(player.getScore().getScore());
+	}
+	
+	private void updateScore(float delta) {
 		timeSinceScore += delta;
 		if (timeSinceScore >= TIME_BETWEEN_SCORE) {
 			player.getScore().addToScore(AMOUNT_PER_SCORE);
 			timeSinceScore -= TIME_BETWEEN_SCORE;
 		}
-
-		// Update HUD
-		hud.setCurrentFuel(player.getHealth(), player.getMaxHealth());
-		hud.setScore(player.getScore().getScore());
-
-		// Update game objects
-		super.update(delta);
-		
-		final Vector2 playerVelocity = player.getVelocity();
-		
-		// Player vertical movement
-		if (player.getVelocity().y == 0) {
-			getGame().setScreen(endScreen);
-		} else if (player.getHealth() == 0) {
-			player.getVelocity().y *= CAR_VERTICAL_FRICTION;
-		} else {
-			player.decreaseHealth(1);
-			
-			if (playerVelocity.y != CAR_VERTICAL_MAX_SPEED) {
-				playerVelocity.y += CAR_VERTICAL_ACCELERATION;
-				if (playerVelocity.y > CAR_VERTICAL_MAX_SPEED) {
-					playerVelocity.y = CAR_VERTICAL_MAX_SPEED;
-				}
-			}
-		}
-		if (playerVelocity.epsilonEquals(playerVelocity.x, 0, CAR_VERTICAL_ZERO_SPEED_TOLERANCE)) {
-			playerVelocity.y = 0;
-		}
-		
-		// Player horizontal movement
-		boolean left = Gdx.input.isKeyPressed(Keys.A);
-		boolean right = Gdx.input.isKeyPressed(Keys.D);
-		float playerHorizontalAcceleration = (playerVelocity.y / CAR_VERTICAL_MAX_SPEED)
-												* CAR_HORIZONTAL_ACCELERATION;
-		if (left)
-			player.getVelocity().x -= playerHorizontalAcceleration;
-		if (right)
-			player.getVelocity().x += playerHorizontalAcceleration;
-		if (player.getPosisiton().x < backgroundLayer.getRoadLeftX()) {
-			player.getPosisiton().x = backgroundLayer.getRoadLeftX();
-			player.getVelocity().x *= -1;
-		} else if (player.getPosisiton().x > backgroundLayer.getRoadRightX() - player.getWidth()) {
-			player.getPosisiton().x = backgroundLayer.getRoadRightX() - player.getWidth();
-			player.getVelocity().x *= -1;
-		}
-		playerVelocity.x *= CAR_HORIZONTAL_FRICTION;
-		if (playerVelocity.epsilonEquals(0, playerVelocity.y, CAR_HORIZONTAL_ZERO_SPEED_TOLERANCE)) {
-			playerVelocity.x = 0;
-		}
-		
-	}
-	
-	private boolean checkForPauseRequest() {
-		final boolean pause = Gdx.input.isKeyJustPressed(Keys.ESCAPE);
-		if (pause) game.setScreen(game.getPauseMenuScreen());
-		return pause;
-	}
-
-	@Override
-	public void dispose() {
-		super.dispose();
-		assets.dispose();
-		carSound.dispose();
 	}
 }
