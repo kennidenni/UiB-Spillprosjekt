@@ -8,6 +8,7 @@ import com.badlogic.gdx.math.Vector2;
 
 import uib.teamdank.cargame.CarGame;
 import uib.teamdank.cargame.Player;
+import uib.teamdank.cargame.RoadEntity;
 import uib.teamdank.cargame.util.RoadEntityGenerator;
 import uib.teamdank.cargame.util.ScrollingSpawner;
 import uib.teamdank.common.Game;
@@ -150,7 +151,14 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 		updateHUD();
 
 		// Updates game objects
-		super.update(delta);
+		super.update(delta); // Movement and deletion
+		roadEntityLayer.forEachGameObject(gameObject -> {
+			if (gameObject instanceof RoadEntity) {
+				if (player.contains(gameObject.getPosisiton().x, gameObject.getPosisiton().y)) {
+					((RoadEntity) gameObject).drivenOverBy(player);
+				}
+			}
+		});
 
 		// Update player
 		player.accelerate();
