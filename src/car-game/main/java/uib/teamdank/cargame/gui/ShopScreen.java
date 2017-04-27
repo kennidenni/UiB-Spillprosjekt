@@ -99,7 +99,6 @@ public class ShopScreen extends ScreenAdapter {
 			carButton.addListener(new CarListener(carButton));
 			carButtons.add(carButton);
 		});
-		carButtons.get(0).setUnlocked(true);
 		
 		setupScreen();
 		backListener();

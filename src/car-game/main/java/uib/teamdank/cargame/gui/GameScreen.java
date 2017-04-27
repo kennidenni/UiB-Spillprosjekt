@@ -59,9 +59,10 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 
 		// Player initialization
 		player = ((CarGame) game).getPlayer();
-		player.unlockSkin("car_forward_flag");
-		player.setTexture(carTextures.getRegion("car_forward_flag"));
-
+		if (player.getTexture() == null) {
+			player.unlockSkin("car_forward");
+			player.setTexture(carTextures.getRegion("car_forward"));
+		}
 		player.setScale(.5f);
 		addTimedEvent(new TimedEvent(TIME_BETWEEN_FUEL_LOSS, true, () -> {
 			player.decreaseHealth(AMOUNT_PER_FUEL_LOSS);
