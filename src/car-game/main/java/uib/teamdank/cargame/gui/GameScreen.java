@@ -153,10 +153,9 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 		// Updates game objects
 		super.update(delta); // Movement and deletion
 		roadEntityLayer.forEachGameObject(gameObject -> {
-			if (gameObject instanceof RoadEntity) {
-				if (player.contains(gameObject.getPosisiton().x, gameObject.getPosisiton().y)) {
-					((RoadEntity) gameObject).drivenOverBy(player);
-				}
+			if (gameObject instanceof RoadEntity
+					&& player.contains(gameObject.getPosisiton().x, gameObject.getPosisiton().y)) {
+				((RoadEntity) gameObject).drivenOverBy(player);
 			}
 		});
 
