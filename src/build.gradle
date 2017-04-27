@@ -12,7 +12,6 @@ subprojects {
 	repositories {
 	    mavenCentral()
 	}
-    
     sourceCompatibility = 1.8
     targetCompatibility = 1.8
 
@@ -20,8 +19,17 @@ subprojects {
 	sourceSets.main.resources.srcDirs = ['main/resources']
 	sourceSets.test.java.srcDirs = [ 'test/java']
 	sourceSets.test.resources.srcDirs = [ 'test/resources']
-  
-  test { finalizedBy jacocoTestReport }
+
+  jacocoTestReport {
+        additionalSourceDirs = files(sourceSets.main.allSource.srcDirs)
+        sourceDirectories = files(sourceSets.main.allSource.srcDirs)
+        classDirectories =  files(sourceSets.main.output)
+        reports {
+            html.enabled = true
+            xml.enabled = true
+            csv.enabled = false
+        }
+    }
 }
 
 project(':teamdank-common') {
@@ -76,15 +84,16 @@ task alljavadoc(type: Javadoc) {
     classpath = files(exportedProjects.collect { project(it).sourceSets.main.compileClasspath })
     destinationDir = file("docs/javadoc")
 }
-/*
-jacocoTestReport {
+
+task jacocoRootReport(type: org.gradle.testing.jacoco.tasks.JacocoReport) {
+    dependsOn = subprojects.test
+    additionalSourceDirs = files(subprojects.sourceSets.main.allSource.srcDirs)
+    sourceDirectories = files(subprojects.sourceSets.main.allSource.srcDirs)
+    classDirectories =  files(subprojects.sourceSets.main.output)
+    executionData = files(subprojects.jacocoTestReport.executionData)
     reports {
-        xml.enabled false
-        csv.enabled false
-        html.destination "${buildDir}/jacocoHtml"
+        html.enabled = true
+        xml.enabled = true
+        csv.enabled = false
     }
 }
-
-
-
-*/

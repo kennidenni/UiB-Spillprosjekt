@@ -42,6 +42,7 @@ build branch:
   script:
   - git merge origin/master --no-commit --no-ff
   - ./gradlew build
+  - ./gradlew test
   allow_failure: false
   except:
     - master
