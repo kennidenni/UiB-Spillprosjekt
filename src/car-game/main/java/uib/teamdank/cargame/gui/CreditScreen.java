@@ -1,9 +1,13 @@
 package uib.teamdank.cargame.gui;
 
+import org.omg.CORBA.Bounds;
+
+import com.badlogic.gdx.Files;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -14,6 +18,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 
 import uib.teamdank.cargame.CarGame;
@@ -25,41 +30,26 @@ public class CreditScreen implements uib.teamdank.common.gui.CreditScreen {
 	private ImageButton backButton;
 	private Table menu;
 	private CarGame game;
-	private BitmapFont font;
 	private TextButtonStyle textButtonStyle;
-
-	private TextButton credits;
-	private TextButton created;
-	private TextButton creators;
-
+	private BitmapFont font;
+	private SpriteBatch batch;
+	private String credit; 
 	
+	private float creditsY = 0;
+
 	public CreditScreen(CarGame game) {
 		this.game = game;
 		stage = new Stage(new FitViewport(1920, 1080));
 		
 		backButton = setupButton(BACK);
-		
-		font = new BitmapFont();
+			
 		textButtonStyle = new TextButtonStyle();
 		textButtonStyle.font = font;
 		
-		credits = new TextButton("Credits", textButtonStyle);
-		credits.getLabel().setFontScale(10, 10);
-		
-		created = new TextButton("Created by", textButtonStyle);
-		created.getLabel().setFontScale(5,5);
-		
-		creators = new TextButton("TeamDank", textButtonStyle);
-		creators.getLabel().setFontScale(3,3);
-		
+
 		menu = new Table();
-		menu.add(credits);
 		menu.row();
-		menu.add(created);
-		menu.row();
-		menu.add(creators);
-		menu.row();
-		menu.add(backButton).width((float) (backButton.getWidth() / 4)).height((float) (backButton.getHeight() / 4)).pad(100, 0, 0, 0);
+		menu.add(backButton).width((float) (backButton.getWidth() / 4)).height((float) (backButton.getHeight() / 4)).pad(900, 0, 0, 1600);
 
 		menu.setFillParent(true);
 		stage.addActor(menu);
@@ -81,7 +71,6 @@ public class CreditScreen implements uib.teamdank.common.gui.CreditScreen {
 				}
 			}
 		});
-		
 	}
 	
 	public ImageButton setupButton(String imageString) {
@@ -95,13 +84,34 @@ public class CreditScreen implements uib.teamdank.common.gui.CreditScreen {
 	public void show() {
 		Gdx.input.setInputProcessor(stage);
 		
-	}
+		String[] lines = Gdx.files.internal("Data/credit_crasher.txt").readString().split("\\r?\\n");
+		
+		batch = new SpriteBatch();
+		font = new BitmapFont();
+		font.getData().setScale(3);
+		
+		StringBuilder strb = new StringBuilder();
+		
+		credit = "";		
+		for (String text : lines) {
+			strb.append(text + "\n");
+		}
+		
+		credit = strb.toString();
+	}	
 
 	@Override
 	public void render(float delta) {
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		stage.act(delta);
 		stage.draw();
+		
+		final int width = (int) Gdx.graphics.getWidth();
+		final int height = (int) Gdx.graphics.getHeight();
+		batch.begin(); 
+		font.draw(batch, credit, 0, creditsY, width, Align.center, true);
+		batch.end();
+		creditsY += delta * 50;
 	}
 
 	@Override
@@ -124,12 +134,13 @@ public class CreditScreen implements uib.teamdank.common.gui.CreditScreen {
 	@Override
 	public void hide() {
 		Gdx.input.setInputProcessor(null);
+		creditsY = 0;
+		
 	}
 
 	@Override
 	public void dispose() {
 		// TODO Auto-generated method stub
-		
 	}
 
 	@Override

@@ -59,7 +59,6 @@ public class StartMenuScreen implements uib.teamdank.common.gui.StartMenuScreen 
 
 		addButtonListener();
 		addToTables();
-		menu.debug();
 		
 		menu.setFillParent(true);
 		stage.addActor(menu);
@@ -144,7 +143,7 @@ public class StartMenuScreen implements uib.teamdank.common.gui.StartMenuScreen 
 	@Override
 	public void resume() { }
 	
-	// Her kommer alle lytterene for input
+	// 
 	private void addButtonListener() {
 		playButton.addListener(new InputListener() {
 			@Override
