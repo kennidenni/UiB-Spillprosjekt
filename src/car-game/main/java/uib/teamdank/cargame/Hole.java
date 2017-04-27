@@ -13,7 +13,7 @@ public class Hole extends Item {
     public Hole(TextureRegion texture) {
         super("Hole", "A man hole that suspiciously is uncovered.");
         setTexture(texture);
-        setScale(.5f);
+        setScale(.4f);
     }
 
 }

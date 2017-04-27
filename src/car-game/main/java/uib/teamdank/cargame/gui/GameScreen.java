@@ -77,7 +77,7 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 														new RoadEntityGenerator(roadEntityTextures));
 		roadEntitySpawner.setHorizontalPositionRange(backgroundLayer.getRoadLeftX(),
 														backgroundLayer.getRoadRightX());
-		roadEntitySpawner.setChanceOfSpawn(1f);
+		roadEntitySpawner.setChanceOfSpawn(.01f);
 		roadEntitySpawner.setExtraVerticalSpaceBetweenSpawns(50);
 		
 		// HUD

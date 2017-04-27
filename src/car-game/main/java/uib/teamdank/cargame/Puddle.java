@@ -13,7 +13,7 @@ public class Puddle extends Item {
     public Puddle(TextureRegion texture) {
         super("Puddle", "A minitaure pond in the middle of the road.");
         setTexture(texture);
-        setScale(.5f);
+        setScale(.4f);
     }
     
     public int getFuelPenalty() {

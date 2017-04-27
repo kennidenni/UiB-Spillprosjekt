@@ -14,7 +14,7 @@ public class Fuel extends Item {
     public Fuel(TextureRegion texture) {
         super("Fuel", "A jerry can full of delicious fuel.");
         setTexture(texture);
-        setScale(.5f);
+        setScale(.25f);
     }
 
     public int getFuelIncrease() {
