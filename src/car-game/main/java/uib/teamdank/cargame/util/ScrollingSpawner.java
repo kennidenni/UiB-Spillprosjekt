@@ -11,35 +11,35 @@ import uib.teamdank.common.gui.Layer;
 import uib.teamdank.common.util.Generator;
 
 public class ScrollingSpawner implements Generator<GameObject> {
-	
+
 	private static final Random random = new Random();
-	
+
 	private final Layer layer;
 	private final OrthographicCamera camera;
 	private final Generator<GameObject> generator;
-	
+
 	private boolean flipTexture;
 	private int extraVerticalSpaceBetweenSpawns;
 	private int minHorizontalPosition;
 	private int maxHorizontalPosition;
-	
+
 	private float timeBetweenSpawns;
 	private float chanceOfSpawn;
-	
+
 	private final Array<GameObject> spawns = new Array<>();
 	private float timeSinceSpawn = 0;
-	
+
 	public ScrollingSpawner(Layer layer, OrthographicCamera camera, Generator<GameObject> generator) {
 		this.layer = Objects.requireNonNull(layer, "layer cannot be null");
 		this.camera = Objects.requireNonNull(camera, "camera cannot be null");
 		this.generator = Objects.requireNonNull(generator, "generator cannot be null");
-		
+
 		setFlipTexture(false);
 		setExtraVerticalSpaceBetweenSpawns(0);
 		setTimeBetweenSpawns(0f);
 		setChanceOfSpawn(1f);
 	}
-	
+
 	private GameObject createNewSpawn() {
 		GameObject spawn = generator.generate(random);
 		spawn.getPosisiton().y = camera.position.y + camera.viewportHeight / 2 + extraVerticalSpaceBetweenSpawns;
@@ -49,7 +49,7 @@ public class ScrollingSpawner implements Generator<GameObject> {
 		layer.addGameObject(spawn);
 		return spawn;
 	}
-	
+
 	private void deleteOldStructures() {
 		GameObject firstSpawn = spawns.get(0);
 		if (firstSpawn.isMarkedForRemoval()) {
@@ -64,29 +64,29 @@ public class ScrollingSpawner implements Generator<GameObject> {
 			}
 		}
 	}
-	
+
 	@Override
 	public GameObject generate(Random random) {
 		return generator.generate(random);
 	}
-	
+
 	private int getNewHorizontalPosition(int width) {
 		final int min = minHorizontalPosition;
 		final int max = maxHorizontalPosition;
-		
+
 		int position;
 		if (min == max) {
 			position = min - width;
 		} else {
 			position = random.nextInt(Math.abs((max - width) - min)) + min;
 		}
-		
+
 		if (flipTexture) {
 			position += width;
 		}
 		return position;
 	}
-	
+
 	private boolean previousSpawnHasBeenVisible() {
 		if (spawns.size == 0) {
 			return false;
@@ -96,33 +96,52 @@ public class ScrollingSpawner implements Generator<GameObject> {
 		final float prevHeight = prevSpawn.getHeight();
 		return prevY + prevHeight < camera.position.y + camera.viewportHeight / 2;
 	}
-	
+
+	/**
+	 * Sets the chance of spawning a game object. A random float is generated
+	 * from {@code 0} to {@code 1} when deciding whether to spawn a new game
+	 * object, if the result is less than the value given, a new object is
+	 * spawned.
+	 */
 	public void setChanceOfSpawn(float chanceOfSpawn) {
 		this.chanceOfSpawn = chanceOfSpawn;
 	}
-	
+
+	/**
+	 * Sets the extra amount of space between spawned game objects vertically.
+	 * The distance between each spawned game object will be at least the value
+	 * given.
+	 */
 	public void setExtraVerticalSpaceBetweenSpawns(int extraVerticalSpaceBetweenSpawns) {
 		this.extraVerticalSpaceBetweenSpawns = extraVerticalSpaceBetweenSpawns;
 	}
-	
+
+	/**
+	 * Whether or not to flip the texture of spawned game objects.
+	 */
 	public void setFlipTexture(boolean flipTexture) {
 		this.flipTexture = flipTexture;
 	}
-	
+
+	/**
+	 * Sets the range from which a horizontal position will be picked.
+	 */
 	public void setHorizontalPositionRange(int min, int max) {
 		this.minHorizontalPosition = min;
 		this.maxHorizontalPosition = max;
 	}
 
+	/**
+	 * Sets the time before any new spawns can be attempted.
+	 */
 	public void setTimeBetweenSpawns(float timeBetweenSpawns) {
 		this.timeBetweenSpawns = timeBetweenSpawns;
 	}
-	
+
 	public void update(float delta) {
 		timeSinceSpawn += delta;
-		if (timeSinceSpawn >= timeBetweenSpawns
-							&& (spawns.size == 0 || previousSpawnHasBeenVisible())
-							&& random.nextFloat() < chanceOfSpawn) {
+		if (timeSinceSpawn >= timeBetweenSpawns && (spawns.size == 0 || previousSpawnHasBeenVisible())
+				&& random.nextFloat() < chanceOfSpawn) {
 			layer.addGameObject(createNewSpawn());
 			timeSinceSpawn -= timeBetweenSpawns;
 			deleteOldStructures();

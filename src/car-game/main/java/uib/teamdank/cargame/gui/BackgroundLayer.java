@@ -45,23 +45,6 @@ public class BackgroundLayer extends Layer {
 		};
 	}
 	
-	private ScrollingSpawner setupStructureSpawner(TextureRegion[] textures, boolean leftSide) {
-		Objects.requireNonNull(textures, "texture scannot be null");
-		if (textures.length == 0) {
-			throw new IllegalArgumentException("there must be at least one structure texture");
-		}
-		ScrollingSpawner spawner = new ScrollingSpawner(this, playerCamera, rand -> {
-			GameObject structure = new GameObject();
-			structure.setTexture(textures[new Random().nextInt(textures.length)]);
-			return structure;
-		});
-		spawner.setExtraVerticalSpaceBetweenSpawns(40);
-		spawner.setTimeBetweenSpawns(0);
-		spawner.setChanceOfSpawn(1);
-		spawner.setFlipTexture(leftSide);
-		return spawner;
-	}
-	
 	public int getRoadLeftX() {
 		return (int) (-(scrollingRoad.getWidth() - player.getWidth()) / 2);
 	}
@@ -85,6 +68,23 @@ public class BackgroundLayer extends Layer {
 		for (ScrollingSpawner spawner : structureSpawners) {
 			spawner.update(delta);
 		}
+	}
+	
+	private ScrollingSpawner setupStructureSpawner(TextureRegion[] textures, boolean leftSide) {
+		Objects.requireNonNull(textures, "texture scannot be null");
+		if (textures.length == 0) {
+			throw new IllegalArgumentException("there must be at least one structure texture");
+		}
+		ScrollingSpawner spawner = new ScrollingSpawner(this, playerCamera, rand -> {
+			GameObject structure = new GameObject();
+			structure.setTexture(textures[new Random().nextInt(textures.length)]);
+			return structure;
+		});
+		spawner.setExtraVerticalSpaceBetweenSpawns(40);
+		spawner.setTimeBetweenSpawns(0);
+		spawner.setChanceOfSpawn(1);
+		spawner.setFlipTexture(leftSide);
+		return spawner;
 	}
 	
 }
