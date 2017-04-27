@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import uib.teamdank.cargame.Coin;
 import uib.teamdank.cargame.Fuel;
 import uib.teamdank.cargame.Hole;
 import uib.teamdank.cargame.Puddle;
@@ -22,6 +23,7 @@ public class RoadEntityGenerator implements Generator<GameObject> {
 		this.entityGenerators.add(rnd -> new Fuel(roadEntityAtlas.getRegion("gastank")));
 		this.entityGenerators.add(rnd -> new Hole(roadEntityAtlas.getRegion("hole")));
 		this.entityGenerators.add(rnd -> new Puddle(roadEntityAtlas.getRegion("puddle")));
+		this.entityGenerators.add(rnd -> new Coin(roadEntityAtlas.getRegion("coin")));
 	}
 
 	@Override
