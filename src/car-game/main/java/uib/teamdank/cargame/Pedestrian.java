@@ -1,6 +1,5 @@
 package uib.teamdank.cargame;
 
-import uib.teamdank.cargame.gui.GameScreen;
 import uib.teamdank.common.Actor;
 
 /**
