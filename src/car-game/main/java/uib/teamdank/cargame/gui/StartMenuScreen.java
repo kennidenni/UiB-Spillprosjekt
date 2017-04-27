@@ -135,13 +135,19 @@ public class StartMenuScreen implements uib.teamdank.common.gui.StartMenuScreen 
 	}
 	
 	@Override
-	public void dispose() { }
+	public void dispose() { 
+		//TODO 
+	}
 	
 	@Override
-	public void pause() { }
+	public void pause() { 
+		//TODO
+	}
 	
 	@Override
-	public void resume() { }
+	public void resume() { 
+		//TODO
+	}
 	
 	// 
 	private void addButtonListener() {
