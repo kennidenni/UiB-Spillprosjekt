@@ -12,21 +12,11 @@ import com.google.gson.GsonBuilder;
  */
 public class Score implements Comparable<Score> {
 	
-	private long score;
+	private long scorePoints;
 	private String name;
-
-	public static Score[] createFromJson(FileHandle handle) {
-		Objects.requireNonNull(handle, "file handle cannot be null");
-		return new Gson().fromJson(handle.reader(), Score[].class);
-	}
-
-	public static void writeToJson(FileHandle handle, Score[] scores) {
-		Gson gson = new GsonBuilder().create();
-		handle.writeString(gson.toJson(scores), false);
-	}
 	
 	public Score(long score, String name){
-		this.score = score;
+		this.scorePoints = score;
 		this.name = name;
 	}
 	
@@ -42,10 +32,30 @@ public class Score implements Comparable<Score> {
 		this(0, "Anonymous");
 	}
 	
+	/**
+	 * 
+	 * @param handle FileHandle for the file the scores are saved in
+	 * @return The scores in an array
+	 */
+	public static Score[] createFromJson(FileHandle handle) {
+		Objects.requireNonNull(handle, "file handle cannot be null");
+		return new Gson().fromJson(handle.reader(), Score[].class);
+	}
+	
+	/**
+	 * 
+	 * @param handle FileHandle for the file we want to save the scores
+	 * @param scores The scores to be saved
+	 */
+	public static void writeToJson(FileHandle handle, Score[] scores) {
+		Gson gson = new GsonBuilder().create();
+		handle.writeString(gson.toJson(scores), false);
+	}
+	
 	public void addToScore(long score) {
 		if(score < 0)
 			throw new IllegalArgumentException("Score can not be negative: " + score);
-		this.score += score;
+		this.scorePoints += score;
 	}
 
 	/**
@@ -54,7 +64,7 @@ public class Score implements Comparable<Score> {
 	 */
 	@Override
 	public int compareTo(Score o) {
-		return (int) Math.signum((score - o.getScore()));
+		return (int) Math.signum((scorePoints - o.getScore()));
 	}
 	
 	@Override
@@ -71,13 +81,13 @@ public class Score implements Comparable<Score> {
 				return false;
 		} else if (!name.equals(other.name))
 			return false;
-		if (score != other.score)
+		if (scorePoints != other.scorePoints)
 			return false;
 		return true;
 	}
 
 	public long getScore(){
-		return this.score;
+		return this.scorePoints;
 	}
 	
 	public String getName(){
@@ -89,7 +99,7 @@ public class Score implements Comparable<Score> {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
-		result = prime * result + (int) (score ^ (score >>> 32));
+		result = prime * result + (int) (scorePoints ^ (scorePoints >>> 32));
 		return result;
 	}
 	
@@ -99,7 +109,7 @@ public class Score implements Comparable<Score> {
 	public void setScore(long score){
 		if(score < 0)
 			throw new IllegalArgumentException("Score can not be negative: " + score);
-		this.score = score;
+		this.scorePoints = score;
 	}
 	
 	public void setName(String name){
