@@ -51,8 +51,15 @@ public class Score implements Comparable<Score> {
 	 */
 	public static void writeToJson(FileHandle handle, Score[] scores) {
 		Arrays.sort(scores);
+		
+		Score[] highscore;
+		if(scores.length > 10)
+			highscore = Arrays.copyOfRange(scores, 0, 10);
+		else
+			highscore = scores;
+		
 		Gson gson = new GsonBuilder().create();
-		handle.writeString(gson.toJson(Arrays.copyOfRange(scores, 0, 10)), false);
+		handle.writeString(gson.toJson(highscore), false);
 	}
 	
 	public void addToScore(long score) {
