@@ -89,16 +89,11 @@ public class Player extends Actor implements Upgradeable {
 		return getHealth() == 0;
 	}
 
-	public void resetPosAndHealth() {
-		Vector2 pos = getPosisiton();
-		pos.x = 0;
-		pos.y = 0;
-
-		Vector2 vel = getVelocity();
-		vel.x = 0;
-		vel.y = 0;
-
+	public void reset() {
+		getPosisiton().set(0, 0);
+		getVelocity().set(0, 0);
 		setHealth(getMaxHealth());
+		getScore().setScore(0);
 	}
 
 	public void restrictHorizontally(int minX, int maxX) {
