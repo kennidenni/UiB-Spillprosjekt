@@ -59,6 +59,7 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 
 		// Player initialization
 		player = ((CarGame) game).getPlayer();
+		player.resetPosAndHealth();
 		if (player.getTexture() == null) {
 			player.unlockSkin("car_forward");
 			player.setTexture(carTextures.getRegion("car_forward"));
