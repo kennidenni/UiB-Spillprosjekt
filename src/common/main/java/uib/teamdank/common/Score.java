@@ -1,5 +1,6 @@
 package uib.teamdank.common;
 
+import java.util.Arrays;
 import java.util.Objects;
 
 import com.badlogic.gdx.files.FileHandle;
@@ -45,11 +46,13 @@ public class Score implements Comparable<Score> {
 	/**
 	 * 
 	 * @param handle FileHandle for the file we want to save the scores
-	 * @param scores The scores to be saved
+	 * @param scores The scores to be saved, this array will be sorted and we will only 
+	 * write the 10 highest values to the file.
 	 */
 	public static void writeToJson(FileHandle handle, Score[] scores) {
+		Arrays.sort(scores);
 		Gson gson = new GsonBuilder().create();
-		handle.writeString(gson.toJson(scores), false);
+		handle.writeString(gson.toJson(Arrays.copyOfRange(scores, 0, 10)), false);
 	}
 	
 	public void addToScore(long score) {
