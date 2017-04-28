@@ -6,6 +6,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.io.StringReader;
+import java.util.Random;
 
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
@@ -82,8 +83,6 @@ public class ScoreTest {
 		
 		verify(mockhandle).writeString(jsonCapture.capture(), anyBoolean());
 		
-		System.out.println(jsonCapture.getValue());
-		
 		assertEquals(expectedJson, jsonCapture.getValue());
 	}
 	
@@ -101,6 +100,31 @@ public class ScoreTest {
 		assertEquals("test", scores[1].getName());
 		assertEquals(2, scores[0].getScore());
 		assertEquals(1, scores[1].getScore());
+	}
+	
+	@Test
+	public void testWriteOnlyThe10HighestScoresToFile(){
+		FileHandle mockhandle = mock(FileHandle.class);
+		Score[] scores = new Score[20];
+		
+		Random r = new Random();
+		for(int i = 0; i < scores.length-1; i++){
+			scores[i] = new Score(r.nextInt(100));
+		}
+		scores[scores.length-1] = new Score(1000, "mrks");
+		
+		ArgumentCaptor<String> jsonCapture = ArgumentCaptor.forClass(String.class);
+		Score.writeToJson(mockhandle, scores);
+		
+		verify(mockhandle).writeString(jsonCapture.capture(), anyBoolean());
+		when(mockhandle.reader()).thenReturn(new StringReader(jsonCapture.getValue()));
+		
+		Score[] scoresInFile = Score.createFromJson(mockhandle); 
+		
+		System.out.println(scoresInFile[0].getScore());
+		
+		assertEquals(10, scoresInFile.length);
+		assertEquals("mrks", scoresInFile[0].getName());
 	}
 	
 }
