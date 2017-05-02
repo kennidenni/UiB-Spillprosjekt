@@ -14,10 +14,10 @@ import uib.teamdank.common.util.TextureAtlas;
  * Generates {@link GameObject}s of the correct pedestrian type. This class
  * does not interact with the game directly; its purely functional. 
  */
-public class pedestrianGenerator implements Generator<GameObject> {
+public class PedestrianGenerator implements Generator<GameObject> {
 	private final List<Generator<GameObject>> entityGenerators = new ArrayList<>();
 
-	public pedestrianGenerator(TextureAtlas pedestrianAtlas1) {
+	public PedestrianGenerator(TextureAtlas pedestrianAtlas1) {
 		Random r=new Random();
 		this.entityGenerators.add(rnd -> new Pedestrian(100,0,5,r.nextBoolean(),pedestrianAtlas1.getRegion("cyclist")));
 		this.entityGenerators.add(rnd -> new Pedestrian(0,100,10,r.nextBoolean(),pedestrianAtlas1.getRegion("skateboard")));

@@ -17,9 +17,9 @@ public class Pedestrian extends Actor implements RoadEntity {
 	private final float HORIZONTAL_TOP_SPEED;
 	private final float HORIZONTAL_ACCELERATION;
 
-	public Pedestrian(long sp, long sc) {
+	public Pedestrian() {
 		super();
-		this.score = sc;
+		this.score = 1;
 		this.VERTICAL_ACCELERATION = 40f;
 		this.VERTICAL_TOP_SPEED = 400f;
 		this.HORIZONTAL_ACCELERATION = 20f;
@@ -58,6 +58,10 @@ public class Pedestrian extends Actor implements RoadEntity {
 	}
 
 	public void accelerate() {
+		accelerateVertical();
+		accelerateHorizontal();
+	}
+	private void accelerateVertical(){
 		if (getVelocity().y != VERTICAL_TOP_SPEED) {
 			if (getVelocity().y > VERTICAL_TOP_SPEED) {
 				getVelocity().y = VERTICAL_TOP_SPEED;
@@ -65,6 +69,8 @@ public class Pedestrian extends Actor implements RoadEntity {
 				getVelocity().y += VERTICAL_ACCELERATION;
 			}
 		}
+	}
+	private void accelerateHorizontal(){
 		if (HORIZONTAL_TOP_SPEED > 0) {
 			if (getVelocity().x != HORIZONTAL_TOP_SPEED) {
 				if (getVelocity().x > HORIZONTAL_TOP_SPEED) {

@@ -7,6 +7,7 @@ import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.Logger;
 
 import uib.teamdank.cargame.CarGame;
 import uib.teamdank.cargame.Pedestrian;
@@ -14,7 +15,7 @@ import uib.teamdank.cargame.Player;
 import uib.teamdank.cargame.RoadEntity;
 import uib.teamdank.cargame.util.RoadEntityGenerator;
 import uib.teamdank.cargame.util.ScrollingSpawner;
-import uib.teamdank.cargame.util.pedestrianGenerator;
+import uib.teamdank.cargame.util.PedestrianGenerator;
 import uib.teamdank.common.Game;
 import uib.teamdank.common.gui.Layer;
 import uib.teamdank.common.util.AssetManager;
@@ -99,7 +100,7 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 
 		// pedestrian spawner initialization
 		this.pedestrianSpawner = new ScrollingSpawner(pedestrianLayer, playerCamera,
-				new pedestrianGenerator(pedestrianTextures));
+				new PedestrianGenerator(pedestrianTextures));
 		pedestrianSpawner.setHorizontalPositionRange(backgroundLayer.getRoadLeftX(), backgroundLayer.getRoadRightX());
 		pedestrianSpawner.setChanceOfSpawn(.01f);
 		pedestrianSpawner.setExtraVerticalSpaceBetweenSpawns(50);
@@ -215,12 +216,8 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 
 		// Update pedestrians
 		for (int i = 0; i < pedestrianLayer.getSize(); i++) {
-			try {
 				Pedestrian p = (Pedestrian) pedestrianLayer.getAllObjects().get(i);
-				p.accelerate();
-			} catch (ClassCastException e) {
-
-			}
+				p.accelerate();			
 		}
 
 		// Check for game over
