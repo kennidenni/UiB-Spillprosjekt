@@ -50,6 +50,7 @@ public class ScrollingSpawner implements Generator<GameObject> {
 		return spawn;
 	}
 
+
 	private void deleteOldStructures() {
 		GameObject firstSpawn = spawns.get(0);
 		if (firstSpawn.isMarkedForRemoval()) {
