@@ -6,7 +6,7 @@ import java.util.List;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -14,12 +14,15 @@ import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 
 import uib.teamdank.cargame.CarGame;
 import uib.teamdank.cargame.Player;
 import uib.teamdank.common.util.AssetManager;
+import uib.teamdank.common.util.TextureAtlas;
 
 public class ShopScreen extends ScreenAdapter {
 
@@ -67,7 +70,6 @@ public class ShopScreen extends ScreenAdapter {
 		}
 	}
 
-	private static final String BACK = "Images/Buttons/bs_back.png";
 	private Stage stage;
 	private CarGame game;
 	
@@ -79,6 +81,13 @@ public class ShopScreen extends ScreenAdapter {
 	
 	private Table menu;
 	private Table cars;
+	private TextureAtlas roadEntityTextures;
+	private TextureAtlas buttonTexture;
+	private ImageButton coinImage;
+	private Table coinsTable;
+	private BitmapFont font;
+	private TextButtonStyle textButtonStyle;
+	private TextButton coinsCount;
 	
 	public ShopScreen(CarGame game) {
 		this.game = game;
@@ -86,14 +95,27 @@ public class ShopScreen extends ScreenAdapter {
 
 		menu = new Table();
 		cars = new Table();
+		coinsTable = new Table();
 
 		this.assets = new AssetManager();
+		
+		buttonTexture = assets.getAtlas("Images/Buttons/cg_buttons.json");
+		backButton = setupImage(buttonTexture.getRegion("cg_back"));
+		
+		roadEntityTextures = assets.getAtlas("Images/road_entity_sheet.json");
+		coinImage = setupImage(roadEntityTextures.getRegion("coin"));
 
-		Texture backStart = new Texture(Gdx.files.internal(BACK));
-		TextureRegion myTextureRegion = new TextureRegion(backStart);
-		TextureRegionDrawable myTexRegionDrawable = new TextureRegionDrawable(myTextureRegion);
-		backButton = new ImageButton(myTexRegionDrawable);
-
+		font = new BitmapFont();
+		textButtonStyle = new TextButtonStyle();
+		textButtonStyle.font = font;
+		
+		coinsCount = new TextButton("0", textButtonStyle);
+		coinsCount.getLabel().setFontScale(10, 10);
+		
+		coinsTable = new Table();
+		coinsTable.add(coinImage).pad(0, 1600, 900, 0);
+		coinsTable.add(coinsCount).pad(0, 20, 900, 0);
+		
 		assets.getAtlas("Images/car_sheet.json").forEachRegion((name, texture) -> {
 			CarButton carButton = new CarButton(name, texture);
 			carButton.addListener(new CarListener(carButton));
@@ -104,7 +126,9 @@ public class ShopScreen extends ScreenAdapter {
 		backListener();
 
 		menu.setFillParent(true);
+		coinsTable.setFillParent(true);
 		stage.addActor(menu);
+		stage.addActor(coinsTable);
 		Gdx.input.setInputProcessor(stage);
 	}
 	
@@ -125,6 +149,12 @@ public class ShopScreen extends ScreenAdapter {
 				}
 			}
 		});
+	}
+	
+	private ImageButton setupImage(TextureRegion textureRegion) {
+		TextureRegionDrawable myTexRegionDrawable = new TextureRegionDrawable(textureRegion);
+	
+		return new ImageButton(myTexRegionDrawable);
 	}
 
 	@Override
@@ -172,6 +202,10 @@ public class ShopScreen extends ScreenAdapter {
 		for (CarButton button : carButtons) {
 			button.unlocked = player.hasUnlockedSkin(button.getName());
 		}
+	}
+	
+	public void setCoins(int i) {
+		coinsCount.setText(String.valueOf(i));
 	}
 
 }
