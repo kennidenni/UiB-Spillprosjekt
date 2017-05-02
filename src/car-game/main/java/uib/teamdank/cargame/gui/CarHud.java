@@ -32,21 +32,52 @@ public class CarHud {
 	private TextButtonStyle textButtonStyle;
 	private TextButton highscore;
 	private TextButton coinsCount;
-	
-	private Table menu;
-	private Table first;
-	private Table second;
+
+	private Table scoreTable;
+	private Table fuelTable;
 	private Table coinsTable;
+	private TextureAtlas roadEntityTextures;
 	
 
 	public CarHud() {
 		stage = new Stage(new FitViewport(1920, 1080));
 		
 		this.assets = new AssetManager();
-		TextureAtlas roadEntityTextures = assets.getAtlas("Images/road_entity_sheet.json");
+		roadEntityTextures = assets.getAtlas("Images/road_entity_sheet.json");
 
-		fuelImage = setupImage(roadEntityTextures.getRegion("gastank"));
 		coinImage = setupImage(roadEntityTextures.getRegion("coin"));
+		
+		setUpFuel();
+		
+		font = new BitmapFont();
+		textButtonStyle = new TextButtonStyle();
+		textButtonStyle.font = font;
+		
+		highscore = new TextButton("0", textButtonStyle);
+		highscore.getLabel().setFontScale(10, 10);
+		
+		coinsCount = new TextButton("0", textButtonStyle);
+		coinsCount.getLabel().setFontScale(10, 10);
+		
+		scoreTable = new Table();
+		scoreTable.add(highscore).width(300).pad(900, 0, 0, 1600);
+		
+		coinsTable = new Table();
+		coinsTable.add(coinImage).pad(0, 1600, 900, 0);
+		coinsTable.add(coinsCount).pad(0, 20, 900, 0);
+		
+		scoreTable.setFillParent(true);
+		
+		coinsTable.setFillParent(true);
+		
+		stage.addActor(scoreTable);
+		stage.addActor(fuelTable);
+		stage.addActor(coinsTable);
+		Gdx.input.setInputProcessor(stage);
+	}
+
+	private void setUpFuel() {
+		fuelImage = setupImage(roadEntityTextures.getRegion("gastank"));
 		
 		Skin skin = new Skin();
 		Pixmap pixmap = new Pixmap(40, 110, Format.RGBA8888);
@@ -65,36 +96,11 @@ public class CarHud {
 
 		bar = new ProgressBar(0, 100, 1, false, style);
 		
-		font = new BitmapFont();
-		textButtonStyle = new TextButtonStyle();
-		textButtonStyle.font = font;
+		fuelTable = new Table();
+		fuelTable.add(fuelImage).width((float) (fuelImage.getWidth() / 2)).height((float) (fuelImage.getHeight() / 2)).pad(900, 1400, 0, 0);
+		fuelTable.add(bar).width(bar.getWidth()*3).pad(900, 10, 0, 0);
 		
-		highscore = new TextButton("0", textButtonStyle);
-		highscore.getLabel().setFontScale(10, 10);
-		
-		coinsCount = new TextButton("0", textButtonStyle);
-		coinsCount.getLabel().setFontScale(10, 10);
-		
-		menu = new Table();
-		first = new Table();
-		first.add(highscore).width(300).pad(900, 20, 0, 0);
-		
-		second = new Table();
-		second.add(fuelImage).width((float) (fuelImage.getWidth() / 2)).height((float) (fuelImage.getHeight() / 2)).pad(900, 1000, 0, 0);
-		second.add(bar).width(bar.getWidth()*3).pad(900, 10, 0, 0);
-		
-		coinsTable = new Table();
-		coinsTable.add(coinImage).pad(0, 900, 900, 0);
-		coinsTable.add(coinsCount);
-		
-		menu.add(coinsTable);
-		menu.add(first);
-		menu.add(second);
-		
-		
-		menu.setFillParent(true);
-		stage.addActor(menu);
-		Gdx.input.setInputProcessor(stage);
+		fuelTable.setFillParent(true);
 	}
 
 	private ImageButton setupImage(TextureRegion textureRegion) {
