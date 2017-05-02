@@ -8,6 +8,8 @@ public class Coin extends Item implements RoadEntity {
 	
 	private static final int GOLD_AMOUNT = 1;
 	
+	private boolean gaveGoldToPlayer = false;
+	
 	public Coin(TextureRegion texture) {
 		super("Coin", "A precious gold coin. So shiny it hurts.");
 		setTexture(texture);
@@ -16,8 +18,11 @@ public class Coin extends Item implements RoadEntity {
 
 	@Override
 	public void drivenOverBy(Player player) {
-		player.getInventory().addGold(GOLD_AMOUNT);
-		this.markForRemoval();
+		if (!gaveGoldToPlayer) {
+			player.getInventory().addGold(GOLD_AMOUNT);
+			gaveGoldToPlayer = true;
+			this.markForRemoval();
+		}
 	}
 	
 }

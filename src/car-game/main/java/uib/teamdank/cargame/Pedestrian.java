@@ -14,6 +14,8 @@ public class Pedestrian extends Actor implements RoadEntity {
 	private final float VERTICAL_ACCELERATION;
 	private final float HORIZONTAL_TOP_SPEED;
 	private final float HORIZONTAL_ACCELERATION;
+	
+	private boolean gaveGoldToPlayer = false;
 
 	public Pedestrian() {
 		super();
@@ -50,8 +52,11 @@ public class Pedestrian extends Actor implements RoadEntity {
 
 	@Override
 	public void drivenOverBy(Player player) {
-		player.getScore().addToScore(this.score);
-		this.markForRemoval();
+		if (!gaveGoldToPlayer) {
+			player.getScore().addToScore(this.score);
+			gaveGoldToPlayer = true;
+			this.markForRemoval();
+		}
 
 	}
 

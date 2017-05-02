@@ -10,6 +10,8 @@ import uib.teamdank.common.Item;
  */
 public class Fuel extends Item implements RoadEntity {
     private static final int DEFAULT_FUEL_AMOUNT = 15;
+    
+    private boolean gaveFuelToPlayer = false;
 
     public Fuel(TextureRegion texture) {
         super("Fuel", "A jerry can full of delicious fuel.");
@@ -19,7 +21,10 @@ public class Fuel extends Item implements RoadEntity {
 
 	@Override
 	public void drivenOverBy(Player player) {
-		player.increaseHealth(DEFAULT_FUEL_AMOUNT);
-		this.markForRemoval();
+		if (!gaveFuelToPlayer) {
+			player.increaseHealth(DEFAULT_FUEL_AMOUNT);
+			gaveFuelToPlayer = true;
+			this.markForRemoval();
+		}
 	}
 }
