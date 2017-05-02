@@ -18,6 +18,8 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 
 import uib.teamdank.cargame.CarGame;
+import uib.teamdank.cargame.Player;
+import uib.teamdank.common.Game;
 import uib.teamdank.common.Score;
 
 public class EndingScreen implements uib.teamdank.common.gui.HighscoreMenuScreen {
@@ -43,7 +45,8 @@ public class EndingScreen implements uib.teamdank.common.gui.HighscoreMenuScreen
 		font = new BitmapFont();
 		textButtonStyle = new TextButtonStyle();
 		textButtonStyle.font = font;
-		highscore = new TextButton("Din score her", textButtonStyle);
+		highscore = new TextButton("Your score:\n" + String.valueOf(game.getPlayer().getScore().getScore()), textButtonStyle);
+		highscore.getLabel().setFontScale(10, 10);
 		
 		menu = new Table();
 		menu.add(gameOverButton).width(gameOverButton.getWidth() / 2).height((float) (gameOverButton.getHeight() / 2)).pad(0, 0, 100, 0);
@@ -81,7 +84,6 @@ public class EndingScreen implements uib.teamdank.common.gui.HighscoreMenuScreen
 		TextureRegionDrawable myTexRegionDrawable = new TextureRegionDrawable(myTextureRegion);
 		return new ImageButton(myTexRegionDrawable);
 	}
-
 
 	@Override
 	public void dispose() {
