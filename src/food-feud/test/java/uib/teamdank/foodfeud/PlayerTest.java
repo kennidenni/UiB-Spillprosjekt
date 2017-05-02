@@ -8,12 +8,12 @@ import org.junit.Before;
 import org.junit.Test;
 
 public class PlayerTest {
-	
 	private Player player;
 	
 	@Before
 	public void setUp() {
-		player = new Player(100, "sturle");	
+		int h = 100;
+		player = new Player(h, "sturle");	
 	}
 
 	@Test
