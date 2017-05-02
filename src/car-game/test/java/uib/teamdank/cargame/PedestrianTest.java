@@ -21,7 +21,7 @@ public class PedestrianTest {
 
 	@Test
 	public void getScore() throws Exception {
-		assertThat(pede.getScore(), is(equalTo(1)));
+		assertThat(pede.getScore(), is(equalTo(1l)));
 	}
 
 }
