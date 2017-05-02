@@ -1,64 +1,64 @@
 {
-	"tileset": "Images/car_sheet.png",
+	"tileset": "Images/locked_car_sheet.png",
 	"regions": [
 		{
-			"name": "car_forward",
-			"x": "0",
-			"y": "0",
-			"w": "290",
-			"h": "430"
-		},
-		{
-			"name": "car_forward_blue",
-			"x": "291",
-			"y": "0",
-			"w": "290",
-			"h": "430"
-		},
-		{
-			"name": "car_forward_flag",
-			"x": "582",
-			"y": "0",
-			"w": "290",
-			"h": "430"
-		},
-		{
-			"name": "car_forward_grey",
-			"x": "0",
-			"y": "431",
-			"w": "290",
-			"h": "430"
-		},
-		{
-			"name": "car_forward_hot",
+			"name": "car_forward_locked",
 			"x": "291",
 			"y": "431",
 			"w": "290",
 			"h": "430"
 		},
 		{
-			"name": "car_forward_orange",
+			"name": "car_forward_blue_locked",
+			"x": "0",
+			"y": "0",
+			"w": "290",
+			"h": "430"
+		},
+		{
+			"name": "car_forward_flag_locked",
+			"x": "291",
+			"y": "0",
+			"w": "290",
+			"h": "430"
+		},
+		{
+			"name": "car_forward_grey_locked",
+			"x": "582",
+			"y": "0",
+			"w": "290",
+			"h": "430"
+		},
+		{
+			"name": "car_forward_hot_locked",
+			"x": "0",
+			"y": "431",
+			"w": "290",
+			"h": "430"
+		},
+		{
+			"name": "car_forward_orange_locked",
 			"x": "582",
 			"y": "431",
 			"w": "290",
 			"h": "430"
 		},
 		{
-			"name": "car_forward_pink",
+			"name": "car_forward_pink_locked",
 			"x": "873",
 			"y": "0",
 			"w": "290",
 			"h": "430"
 		},
 		{
-			"name": "car_forward_red",
+			"name": "car_forward_red_locked",
 			"x": "1164",
 			"y": "0",
 			"w": "290",
 			"h": "430"
 		},
 		{
-			"name": "car_forward_splat",
+			"name": "car_forward_splat_locked",
 			"x": "873",
 			"y": "431",
 			"w": "290",
