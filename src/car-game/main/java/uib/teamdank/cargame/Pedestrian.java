@@ -1,8 +1,6 @@
 package uib.teamdank.cargame;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.math.Vector2;
-
 import uib.teamdank.common.Actor;
 
 

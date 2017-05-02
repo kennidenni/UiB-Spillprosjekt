@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Random;
 
 import uib.teamdank.cargame.Pedestrian;
-import uib.teamdank.cargame.Puddle;
 import uib.teamdank.common.GameObject;
 import uib.teamdank.common.util.Generator;
 import uib.teamdank.common.util.TextureAtlas;
@@ -31,6 +30,6 @@ public class PedestrianGenerator implements Generator<GameObject> {
 	@Override
 	public GameObject generate(Random random) {
 		final int index = random.nextInt(entityGenerators.size());
-		return (GameObject) entityGenerators.get(index).generate(random);
+		return entityGenerators.get(index).generate(random);
 	}
 }

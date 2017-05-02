@@ -1,14 +1,10 @@
 package uib.teamdank.cargame.gui;
 
-import java.util.Random;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.utils.Logger;
-
 import uib.teamdank.cargame.CarGame;
 import uib.teamdank.cargame.Pedestrian;
 import uib.teamdank.cargame.Player;
