@@ -3,6 +3,8 @@ package uib.teamdank.common;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 
+import uib.teamdank.common.util.Animation;
+
 /**
  * Represent an object in a game.
  */
@@ -11,7 +13,7 @@ public class GameObject {
 	private boolean marked;
 	private final Vector2 pos = new Vector2();
     private final Vector2 velocity = new Vector2();
-	private TextureRegion tRegion;
+	private Animation animation;
 	private float scale;
 	private boolean flipHorizontally;
 	private boolean flipVertically;
@@ -84,7 +86,10 @@ public class GameObject {
 	 * @return The width of this GameObject.
 	 */
 	public int getWidth() {
-		return (int) (tRegion.getRegionWidth()*scale);
+		if (getTexture() == null) {
+			return 0;
+		}
+		return (int) (getTexture().getRegionWidth()*scale);
 	}
 
 	/**
@@ -92,7 +97,10 @@ public class GameObject {
 	 * @return The height of this GameObject.
 	 */
 	public int getHeight() {
-		return (int) (tRegion.getRegionHeight()*scale);
+		if (getTexture() == null) {
+			return 0;
+		}
+		return (int) (getTexture().getRegionHeight()*scale);
 	}
 
 	/**
@@ -110,6 +118,10 @@ public class GameObject {
 		return marked;
 	}
 
+	public Animation getAnimation() {
+		return animation;
+	}
+	
 	/**
 	 * 
 	 * @return The current position of this GameObject.
@@ -126,14 +138,17 @@ public class GameObject {
 	}
 
 	/**
-	 * 
 	 * @return The rectangular area eventually containing a texture that is the
 	 *         image representation of this GameObject.
 	 */
 	public TextureRegion getTexture() {
-		return tRegion;
+		return animation == null ? null : animation.getTexture();
 	}
 
+	public void setAnimation(Animation animation) {
+		this.animation = animation;
+	}
+	
 	/**
 	 * Sets this game object's texture to be flipped along the vertical
 	 * axis when rendered.
@@ -163,7 +178,11 @@ public class GameObject {
      * @param texture
      */
 	public void setTexture(TextureRegion texture){
-	    this.tRegion = texture;
+		if (texture == null) {
+			this.animation = null;
+		} else {
+			this.animation = Animation.createSingleFramed(texture);
+		}
     }
 
 	/**

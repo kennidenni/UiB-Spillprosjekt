@@ -127,6 +127,11 @@ public class GameScreen implements Screen {
 				pos.y += (vel.y * delta);
 			}
 			
+			// Update animations
+			if (gameObject.getAnimation() != null) {
+				gameObject.getAnimation().update(delta);
+			}
+			
 		});
 		
 		// Update timed events

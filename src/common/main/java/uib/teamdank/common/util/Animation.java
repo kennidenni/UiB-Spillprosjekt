@@ -40,6 +40,20 @@ public class Animation {
 		
 		return animation;
 	}
+	
+	/**
+	 * Creates a single-framed animation from the specified region on
+	 * the given texture atlas.
+	 */
+	public static Animation createSingleFramed(TextureRegion texture) {
+		Objects.requireNonNull(texture, "texture cannot be null");
+		Animation anim = new Animation();
+		anim.textureAtlasFile = null;
+		anim.speed = 0;
+		anim.atlasRegionFrames = new String[] { };
+		anim.currentTexture = texture;
+		return anim;
+	}
 
 	@SerializedName("atlas")
 	private String textureAtlasFile;
@@ -49,6 +63,7 @@ public class Animation {
 	private String[] atlasRegionFrames;
 
 	private transient TextureAtlas atlas;
+	private transient TextureRegion currentTexture;
 	private transient float time;
 
 	private Animation() {
@@ -63,17 +78,26 @@ public class Animation {
 		}
 	}
 
+	/**
+	 * @return the texture atlas, or {@code null} if this
+	 * animation does not use one
+	 */
 	public TextureAtlas getTextureAtlas() {
 		return atlas;
 	}
 	
 	public TextureRegion getTexture() {
 		final int currentIndex = (int) (time % atlasRegionFrames.length);
-		return atlas.getRegion(atlasRegionFrames[currentIndex]);
+		if (atlas != null) {
+			currentTexture = atlas.getRegion(atlasRegionFrames[currentIndex]);
+		}
+		return currentTexture; 
 	}
 
 	public void update(float delta) {
-		time += delta * speed;
+		if (speed <= 0) {
+			time += delta * speed;
+		}
 	}
 
 }
