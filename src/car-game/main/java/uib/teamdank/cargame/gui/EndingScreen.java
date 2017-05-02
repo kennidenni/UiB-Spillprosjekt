@@ -1,7 +1,10 @@
 package uib.teamdank.cargame.gui;
 
+import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.List;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -18,13 +21,12 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 
 import uib.teamdank.cargame.CarGame;
-import uib.teamdank.cargame.Player;
-import uib.teamdank.common.Game;
 import uib.teamdank.common.Score;
 
 public class EndingScreen implements uib.teamdank.common.gui.HighscoreMenuScreen {
 	private static final String BACK = "Images/Buttons/bs_back.png";
 	private static final String GAMEOVER = "Images/gameOver.png";
+	private static final String SCORES = "TeamDank/Carl the Crasher/highscore.json";
 	
 	private Stage stage;
 	private ImageButton backButton;
@@ -38,6 +40,8 @@ public class EndingScreen implements uib.teamdank.common.gui.HighscoreMenuScreen
 	public EndingScreen(CarGame game) {
 		this.game = game;
 		stage = new Stage(new FitViewport(1920, 1080));
+		
+		setNewHighscore();
 		
 		backButton = setupButton(BACK);
 		gameOverButton = setupButton(GAMEOVER);
@@ -132,4 +136,17 @@ public class EndingScreen implements uib.teamdank.common.gui.HighscoreMenuScreen
 		Gdx.input.setInputProcessor(stage);
 	}
 
+	private void setNewHighscore() {
+		FileHandle handle = Gdx.files.external(SCORES);
+		if(!handle.exists())
+			handle = Gdx.files.internal("Data/highscore.json");
+		List<Score> score = new LinkedList<>(Arrays.asList(Score.createFromJson(handle)));
+		
+		if(this.game.getPlayer().getScore().getScore() > score.get(score.size()-1).getScore())
+			score.add(this.game.getPlayer().getScore());
+		
+		handle = Gdx.files.external(SCORES);
+		Score.writeToJson(handle, score.toArray(new Score[0]));
+	}
+	
 }
