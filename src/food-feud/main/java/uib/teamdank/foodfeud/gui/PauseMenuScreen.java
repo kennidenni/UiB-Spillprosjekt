@@ -23,10 +23,8 @@ public class PauseMenuScreen implements uib.teamdank.common.gui.PauseMenuScreen 
 
 	private Stage stage;
 	private Table menu;
-	private ImageButton logoButton;
 	private ImageButton pauseButton;
 	private ImageButton backButton;
-	private ImageButton exitButton;
 	private Array<Button> buttons;
 	private Game game;
 
@@ -38,7 +36,7 @@ public class PauseMenuScreen implements uib.teamdank.common.gui.PauseMenuScreen 
 		backButton = setupButton(BACK);
 
 		menu = new Table();
-		buttons = new Array<Button>();
+		buttons = new Array<>();
 
 		buttons.add(backButton);
 
@@ -63,10 +61,10 @@ public class PauseMenuScreen implements uib.teamdank.common.gui.PauseMenuScreen 
 
 			@Override
 			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-				Stage stage = event.getTarget().getStage();
-				Vector2 mouse = stage.screenToStageCoordinates(new Vector2(Gdx.input.getX(), Gdx.input.getY()));
+				Stage eventStage = event.getTarget().getStage();
+				Vector2 mouse = eventStage.screenToStageCoordinates(new Vector2(Gdx.input.getX(), Gdx.input.getY()));
 
-				if (stage.hit(mouse.x, mouse.y, true) == event.getTarget()) {
+				if (eventStage.hit(mouse.x, mouse.y, true) == event.getTarget()) {
 					resume();
 				}
 			}
@@ -78,8 +76,7 @@ public class PauseMenuScreen implements uib.teamdank.common.gui.PauseMenuScreen 
 		Texture myTexture = new Texture(Gdx.files.internal(imageString));
 		TextureRegion myTextureRegion = new TextureRegion(myTexture);
 		TextureRegionDrawable myTexRegionDrawable = new TextureRegionDrawable(myTextureRegion);
-		ImageButton logo = new ImageButton(myTexRegionDrawable);
-		return logo;
+		return new ImageButton(myTexRegionDrawable);
 	}
 
 	@Override
