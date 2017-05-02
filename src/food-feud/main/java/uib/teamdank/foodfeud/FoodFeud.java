@@ -18,6 +18,8 @@ public class FoodFeud extends Game {
 	private PauseMenuScreen pauseMenuScreen;
 	private SpriteBatch batch;
 
+	private Player player;
+
     public static void main(String[] args){
         LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
         config.title = TITLE;
@@ -28,9 +30,13 @@ public class FoodFeud extends Game {
 
 	@Override
 	public void create() {
-		startMenuScreen = new StartMenuScreen();
-		gameScreen = new GameScreen(this);
-		pauseMenuScreen = new PauseMenuScreen();
+        player = new Player();
+
+		startMenuScreen = new StartMenuScreen(this);
+		//pauseMenuScreen = new PauseMenuScreen(this);
+
+		batch = new SpriteBatch();
+
 		setScreen(startMenuScreen);
 	}
 
