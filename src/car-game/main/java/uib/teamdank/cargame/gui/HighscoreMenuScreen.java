@@ -46,13 +46,10 @@ public class HighscoreMenuScreen implements uib.teamdank.common.gui.HighscoreMen
 		menu.row();
 		menu.add(backButton).width((float) (backButton.getWidth() / 4)).height((float) (backButton.getHeight() / 4)).pad(700, 0, 0, 0);
 		
-		FileHandle handle = Gdx.files.external(SCORES);
 		batch = new SpriteBatch();
 		font = new BitmapFont();
 		font.getData().setScale(2);
-		if(!handle.exists())
-			handle = Gdx.files.internal("Data/highscore.json");
-		setScores(Arrays.asList(Score.createFromJson(handle)));
+		getAndSetScoresFromFile();
 		
 		menu.setFillParent(true);
 		stage.addActor(menu);
@@ -74,6 +71,13 @@ public class HighscoreMenuScreen implements uib.teamdank.common.gui.HighscoreMen
 				}
 			}
 		});
+	}
+
+	private void getAndSetScoresFromFile() {
+		FileHandle handle = Gdx.files.external(SCORES);
+		if(!handle.exists())
+			handle = Gdx.files.internal("Data/highscore.json");
+		setScores(Arrays.asList(Score.createFromJson(handle)));
 	}
 	
 	public ImageButton setupButton(String imageString) {
@@ -152,6 +156,7 @@ public class HighscoreMenuScreen implements uib.teamdank.common.gui.HighscoreMen
 
 	@Override
 	public void show() {
+		getAndSetScoresFromFile();
 		Gdx.input.setInputProcessor(stage);
 	}
 

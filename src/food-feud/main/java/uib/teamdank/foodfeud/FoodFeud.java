@@ -30,7 +30,7 @@ public class FoodFeud extends Game {
 	public void create() {
 		startMenuScreen = new StartMenuScreen();
 		gameScreen = new GameScreen(this);
-		pauseMenuScreen = new PauseMenuScreen();
+		pauseMenuScreen = new PauseMenuScreen(this);
 		setScreen(startMenuScreen);
 	}
 
