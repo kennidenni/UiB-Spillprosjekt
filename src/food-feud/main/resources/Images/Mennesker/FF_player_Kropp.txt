@@ -1,0 +1,4 @@
+FF_player_Elvis_utenBein = 0 0 3000 500
+FF_player_KimK_utenBein = 0 501 3000 500
+FF_player_ManWithHat_utenBein = 0 1002 3000 500
+FF_player_punk_utenBein = 0 1503 3000 500
