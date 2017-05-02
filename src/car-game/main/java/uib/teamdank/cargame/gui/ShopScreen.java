@@ -103,6 +103,7 @@ public class ShopScreen extends ScreenAdapter {
 		backButton = setupImage(buttonTexture.getRegion("cg_back"));
 		
 		roadEntityTextures = assets.getAtlas("Images/road_entity_sheet.json");
+		
 		coinImage = setupImage(roadEntityTextures.getRegion("coin"));
 
 		font = new BitmapFont();
