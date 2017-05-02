@@ -32,14 +32,12 @@ public class Pedestrian extends Actor implements RoadEntity {
 		setScale(.9f);
 		this.score = sc;
 		this.isMovable();
+		this.VERTICAL_ACCELERATION = 50f;
+		this.VERTICAL_TOP_SPEED = vertSpd;
 		if (goLeft) {
-			this.VERTICAL_ACCELERATION = -50f;
-			this.VERTICAL_TOP_SPEED = -vertSpd;
 			this.HORIZONTAL_ACCELERATION = -20f;
 			this.HORIZONTAL_TOP_SPEED = -horiSpd;
 		} else {
-			this.VERTICAL_ACCELERATION = 50f;
-			this.VERTICAL_TOP_SPEED = vertSpd;
 			this.HORIZONTAL_ACCELERATION = 20f;
 			this.HORIZONTAL_TOP_SPEED = horiSpd;
 		}
