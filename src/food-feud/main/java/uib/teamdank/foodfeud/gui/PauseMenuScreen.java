@@ -18,10 +18,8 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import uib.teamdank.common.Game;
 
 public class PauseMenuScreen implements uib.teamdank.common.gui.PauseMenuScreen {
-	private static final String LOGO = "Images/CarGameLogo.png";
 	private static final String PAUSE = "Images/Buttons/ff_pause.png";
-	private static final String BACK = "Images/Buttons/bs_back.png";
-	private static final String EXIT = "Images/Buttons/bs_quit.png";
+	private static final String BACK = "Images/Buttons/ff_back.png";
 
 	private Stage stage;
 	private Table menu;
@@ -32,19 +30,17 @@ public class PauseMenuScreen implements uib.teamdank.common.gui.PauseMenuScreen 
 	private Array<Button> buttons;
 	private Game game;
 
-	public PauseMenuScreen() {
+	public PauseMenuScreen(Game game) {
+		this.game = game;
 		stage = new Stage(new FitViewport(1920, 1080));
 
-		//logoButton = setupButton(LOGO);
 		pauseButton = setupButton(PAUSE);
-		//backButton = setupButton(BACK);
-		//exitButton = setupButton(EXIT);
+		backButton = setupButton(BACK);
 
 		menu = new Table();
 		buttons = new Array<Button>();
 
-		//buttons.add(backButton);
-		//buttons.add(exitButton);
+		buttons.add(backButton);
 
 		menu.add(pauseButton).pad(0, 0, 20, 0);
 		menu.row();
@@ -59,7 +55,7 @@ public class PauseMenuScreen implements uib.teamdank.common.gui.PauseMenuScreen 
 		Gdx.input.setInputProcessor(stage);
 
 		// Her kommer alle lytterene for input
-		/*backButton.addListener(new InputListener() {
+		backButton.addListener(new InputListener() {
 			@Override
 			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
 				return true;
@@ -74,7 +70,7 @@ public class PauseMenuScreen implements uib.teamdank.common.gui.PauseMenuScreen 
 					resume();
 				}
 			}
-		});*/
+		});
 	}
 
 	// Setting the buttons up
