@@ -1,0 +1,7 @@
+{
+	"name": "Field",
+	"background": "Images/background.png",
+	"foreground": "Images/foreground.png",
+	"gravity": "-9.81",
+	"ground": [ 0, 0, 0, 360, 1040, 360, 1920, 360, 0, 0, 1040, 0 ]
+}

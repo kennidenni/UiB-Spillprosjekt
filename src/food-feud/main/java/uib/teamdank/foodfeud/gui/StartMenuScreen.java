@@ -24,7 +24,6 @@ public class StartMenuScreen implements uib.teamdank.common.gui.StartMenuScreen 
 
     private static final String LOGO = "Images/FoodFeudLogo.png";
     private static final String PLAY = "Images/Buttons/ff_start.png";
-    private static final String HIGHSCORE = "Images/Buttons/ff_highscore.png";
     private static final String CREDIT = "Images/Buttons/ff_go.png";
     private static final String EXIT = "Images/Buttons/ff_quit.png";
 
@@ -33,11 +32,9 @@ public class StartMenuScreen implements uib.teamdank.common.gui.StartMenuScreen 
     private Table menu;
     private ImageButton logoButton;
     private ImageButton playButton;
-    private ImageButton highscoreButton;
     private ImageButton creditButton;
     private ImageButton exitButton;
     private Array<Button> buttons;
-    private HighscoreMenuScreen highscoreMenuScreen;
     private CreditScreen creditScreen;
     private Game game;
     private Player player;
@@ -45,14 +42,12 @@ public class StartMenuScreen implements uib.teamdank.common.gui.StartMenuScreen 
     public StartMenuScreen(FoodFeud game){
         this.game = game;
         stages = new Stage(new FitViewport(1920, 1080));
-        highscoreMenuScreen = new HighscoreMenuScreen(game);
         //creditScreen = new CreditScreen(game);
         buttons = new Array<Button>();
         menu = new Table();
 
         logoButton = setupButton(LOGO);
         playButton = setupButton(PLAY);
-        highscoreButton = setupButton(HIGHSCORE);
         creditButton = setupButton(CREDIT);
         exitButton = setupButton(EXIT);
 
@@ -82,7 +77,6 @@ public class StartMenuScreen implements uib.teamdank.common.gui.StartMenuScreen 
 
     private void addToTables() {
         buttons.add(playButton);
-        buttons.add(highscoreButton);
         buttons.add(creditButton);
         buttons.add(exitButton);
 
@@ -142,7 +136,7 @@ public class StartMenuScreen implements uib.teamdank.common.gui.StartMenuScreen 
 
 	@Override
 	public void viewHighscores() {
-        game.setScreen(highscoreMenuScreen);
+        throw new UnsupportedOperationException("no highscores in this game");
 	}
 
     public void viewCredit() {
@@ -163,23 +157,6 @@ public class StartMenuScreen implements uib.teamdank.common.gui.StartMenuScreen 
 
                 if (stage.hit(mouse.x, mouse.y, true) == event.getTarget()) {
                     game.setScreen(game.newGame());
-                }
-            }
-        });
-
-        highscoreButton.addListener(new InputListener() {
-            @Override
-            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                return true;
-            }
-
-            @Override
-            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-                Stage stage = event.getTarget().getStage();
-                Vector2 mouse = stage.screenToStageCoordinates(new Vector2(Gdx.input.getX(), Gdx.input.getY()));
-
-                if (stage.hit(mouse.x, mouse.y, true) == event.getTarget()) {
-                    viewHighscores();
                 }
             }
         });

@@ -31,6 +31,7 @@ public class FoodFeud extends Game {
 		startMenuScreen = new StartMenuScreen(this);
 		gameScreen = new GameScreen(this);
 		pauseMenuScreen = new PauseMenuScreen(this);
+		batch = new SpriteBatch();
 		setScreen(startMenuScreen);
 	}
 
