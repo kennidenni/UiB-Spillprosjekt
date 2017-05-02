@@ -27,7 +27,7 @@ import uib.teamdank.common.util.TextureAtlas;
 public class ShopScreen extends ScreenAdapter {
 
 	private static class CarButton extends ImageButton {
-		private final TextureRegion texture;
+		private TextureRegion texture;
 		private boolean unlocked;
 
 		public CarButton(String name, TextureRegion texture) {
@@ -39,6 +39,10 @@ public class ShopScreen extends ScreenAdapter {
 
 		public void setUnlocked(boolean unlocked) {
 			this.unlocked = unlocked;
+		}
+
+		public void setTexture(TextureRegion texture) {
+			this.texture = texture;
 		}
 	}
 
@@ -60,6 +64,7 @@ public class ShopScreen extends ScreenAdapter {
 			Vector2 mouse = myStage.screenToStageCoordinates(new Vector2(Gdx.input.getX(), Gdx.input.getY()));
 
 			if (myStage.hit(mouse.x, mouse.y, true) == event.getTarget()) {
+				System.out.println(source.unlocked);
 				if (source.unlocked) {
 					game.getPlayer().setTexture(source.texture);
 					// TODO Marker som knapp som valgt
@@ -72,13 +77,14 @@ public class ShopScreen extends ScreenAdapter {
 
 	private Stage stage;
 	private CarGame game;
-	
+
 	private AssetManager assets;
 
 	private ImageButton backButton;
 
 	private final List<CarButton> carButtons = new ArrayList<>();
-	
+	private final List<CarButton> checkButtons = new ArrayList<>();
+
 	private Table menu;
 	private Table cars;
 	private TextureAtlas roadEntityTextures;
@@ -88,7 +94,8 @@ public class ShopScreen extends ScreenAdapter {
 	private BitmapFont font;
 	private TextButtonStyle textButtonStyle;
 	private TextButton coinsCount;
-	
+	private TextureAtlas lockedCarTextures;
+
 	public ShopScreen(CarGame game) {
 		this.game = game;
 		stage = new Stage(new FitViewport(1920, 1080));
@@ -98,31 +105,27 @@ public class ShopScreen extends ScreenAdapter {
 		coinsTable = new Table();
 
 		this.assets = new AssetManager();
-		
+
 		buttonTexture = assets.getAtlas("Images/Buttons/cg_buttons.json");
 		backButton = setupImage(buttonTexture.getRegion("cg_back"));
-		
+
 		roadEntityTextures = assets.getAtlas("Images/road_entity_sheet.json");
-		
+		lockedCarTextures = assets.getAtlas("Images/locked_car_sheet.json");
+
 		coinImage = setupImage(roadEntityTextures.getRegion("coin"));
 
 		font = new BitmapFont();
 		textButtonStyle = new TextButtonStyle();
 		textButtonStyle.font = font;
-		
+
 		coinsCount = new TextButton("0", textButtonStyle);
 		coinsCount.getLabel().setFontScale(10, 10);
-		
+
 		coinsTable = new Table();
 		coinsTable.add(coinImage).pad(0, 1600, 900, 0);
 		coinsTable.add(coinsCount).pad(0, 20, 900, 0);
-		
-		assets.getAtlas("Images/car_sheet.json").forEachRegion((name, texture) -> {
-			CarButton carButton = new CarButton(name, texture);
-			carButton.addListener(new CarListener(carButton));
-			carButtons.add(carButton);
-		});
-		
+
+		setupCars();
 		setupScreen();
 		backListener();
 
@@ -132,7 +135,7 @@ public class ShopScreen extends ScreenAdapter {
 		stage.addActor(coinsTable);
 		Gdx.input.setInputProcessor(stage);
 	}
-	
+
 	private void backListener() {
 		backButton.addListener(new InputListener() {
 			@Override
@@ -151,10 +154,9 @@ public class ShopScreen extends ScreenAdapter {
 			}
 		});
 	}
-	
+
 	private ImageButton setupImage(TextureRegion textureRegion) {
 		TextureRegionDrawable myTexRegionDrawable = new TextureRegionDrawable(textureRegion);
-	
 		return new ImageButton(myTexRegionDrawable);
 	}
 
@@ -184,28 +186,42 @@ public class ShopScreen extends ScreenAdapter {
 		stage.getViewport().update(width, height, true);
 	}
 
-	private void setupScreen() {
-		for (int i = 0; i < carButtons.size(); i++) {
-			if (i % 3 == 0) cars.row();
-			cars.add(carButtons.get(i)).height((float) (carButtons.get(i).getHeight() / 1.5)).width((float) (carButtons.get(i).getWidth() / 1.5)).pad(15);
-		}
-		menu.add(cars);
-		menu.row();
-		menu.add(backButton).width((float) (backButton.getWidth() / 4)).height((float) (backButton.getHeight() / 4)).pad(0, 0, 0, 0);
-		menu.debug();
-	}
-
 	@Override
 	public void show() {
 		Gdx.input.setInputProcessor(stage);
-		
+
 		final Player player = game.getPlayer();
 		coinsCount.setText(String.valueOf(player.getInventory().getGold()));
 		for (CarButton button : carButtons) {
 			button.unlocked = player.hasUnlockedSkin(button.getName());
+			if (!button.unlocked) {
+				button.setTexture(lockedCarTextures.getRegion(button.getName()));
+			}
 		}
 	}
-	
+
+	private void setupCars() {
+		assets.getAtlas("Images/car_sheet.json").forEachRegion((name, texture) -> {
+			CarButton carButton = new CarButton(name, texture);
+			carButton.addListener(new CarListener(carButton));
+			carButtons.add(carButton);
+		});
+	}
+
+	private void setupScreen() {
+		for (int i = 0; i < carButtons.size(); i++) {
+			if (i % 3 == 0)
+				cars.row();
+			cars.add(carButtons.get(i)).height((float) (carButtons.get(i).getHeight() / 1.5))
+					.width((float) (carButtons.get(i).getWidth() / 1.5)).pad(15);
+		}
+		menu.add(cars);
+		menu.row();
+		menu.add(backButton).width((float) (backButton.getWidth() / 4)).height((float) (backButton.getHeight() / 4))
+				.pad(0, 0, 0, 0);
+		menu.debug();
+	}
+
 	public void setCoins(int i) {
 		coinsCount.setText(String.valueOf(i));
 	}
