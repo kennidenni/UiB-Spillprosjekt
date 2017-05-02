@@ -28,7 +28,7 @@ public class FoodFeud extends Game {
 
 	@Override
 	public void create() {
-		startMenuScreen = new StartMenuScreen();
+		startMenuScreen = new StartMenuScreen(this);
 		gameScreen = new GameScreen(this);
 		pauseMenuScreen = new PauseMenuScreen(this);
 		setScreen(startMenuScreen);
