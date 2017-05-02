@@ -40,10 +40,6 @@ public class ShopScreen extends ScreenAdapter {
 		public void setUnlocked(boolean unlocked) {
 			this.unlocked = unlocked;
 		}
-
-		public void setTexture(TextureRegion texture) {
-			this.texture = texture;
-		}
 	}
 
 	private class CarListener extends InputListener {
@@ -67,7 +63,7 @@ public class ShopScreen extends ScreenAdapter {
 				System.out.println(source.unlocked);
 				if (source.unlocked) {
 					game.getPlayer().setTexture(source.texture);
-					// TODO Marker som knapp som valgt
+					
 				} else {
 					// TODO Si at den ikke er kjøpt
 				}
@@ -83,7 +79,6 @@ public class ShopScreen extends ScreenAdapter {
 	private ImageButton backButton;
 
 	private final List<CarButton> carButtons = new ArrayList<>();
-	private final List<CarButton> checkButtons = new ArrayList<>();
 
 	private Table menu;
 	private Table cars;
@@ -195,9 +190,10 @@ public class ShopScreen extends ScreenAdapter {
 		for (CarButton button : carButtons) {
 			button.unlocked = player.hasUnlockedSkin(button.getName());
 			if (!button.unlocked) {
-				button.setTexture(lockedCarTextures.getRegion(button.getName()));
+				button.getImage().setDrawable(new TextureRegionDrawable(lockedCarTextures.getRegion(button.getName())));
 			}
 		}
+		
 	}
 
 	private void setupCars() {
