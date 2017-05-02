@@ -200,6 +200,7 @@ public class ShopScreen extends ScreenAdapter {
 		Gdx.input.setInputProcessor(stage);
 		
 		final Player player = game.getPlayer();
+		coinsCount.setText(String.valueOf(player.getInventory().getGold()));
 		for (CarButton button : carButtons) {
 			button.unlocked = player.hasUnlockedSkin(button.getName());
 		}

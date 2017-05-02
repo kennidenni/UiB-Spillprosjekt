@@ -1,5 +1,5 @@
 ﻿{
-	"tileset": "Images/cg_buttons.png",
+	"tileset": "Images/Buttons/cg_buttons.png",
 	"regions": [
 		{
 			"name": "cg_back",
