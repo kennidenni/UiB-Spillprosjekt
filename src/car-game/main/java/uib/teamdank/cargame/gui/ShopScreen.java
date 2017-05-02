@@ -16,6 +16,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
+import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 
@@ -27,18 +28,30 @@ import uib.teamdank.common.util.TextureAtlas;
 public class ShopScreen extends ScreenAdapter {
 
 	private static class CarButton extends ImageButton {
-		private TextureRegion texture;
+		private Drawable unlockedImage;
+		private Drawable lockedImage;
 		private boolean unlocked;
 
-		public CarButton(String name, TextureRegion texture) {
-			super(new TextureRegionDrawable(texture));
-			this.texture = texture;
+		public CarButton(String name, Drawable unlockedImage, Drawable lockedImage) {
+			//super(lockedImage);
+			super(lockedImage, lockedImage, unlockedImage);
+			this.unlockedImage = unlockedImage;
+			this.lockedImage = lockedImage;
 			setName(name);
 			setUnlocked(false);
+			if (unlocked) {
+				getImage().setDrawable(unlockedImage);
+			}
 		}
 
 		public void setUnlocked(boolean unlocked) {
 			this.unlocked = unlocked;
+		}
+		
+		public void setNewTexture () {
+			if (unlocked) {
+				getImage().setDrawable(unlockedImage);
+			}
 		}
 	}
 
@@ -62,10 +75,10 @@ public class ShopScreen extends ScreenAdapter {
 			if (myStage.hit(mouse.x, mouse.y, true) == event.getTarget()) {
 				System.out.println(source.unlocked);
 				if (source.unlocked) {
-					game.getPlayer().setTexture(source.texture);
+					//game.getPlayer().setTexture(source.texture);
 					
 				} else {
-					// TODO Si at den ikke er kjøpt
+					source.setNewTexture();
 				}
 			}
 		}
@@ -189,16 +202,15 @@ public class ShopScreen extends ScreenAdapter {
 		coinsCount.setText(String.valueOf(player.getInventory().getGold()));
 		for (CarButton button : carButtons) {
 			button.unlocked = player.hasUnlockedSkin(button.getName());
-			if (!button.unlocked) {
-				button.getImage().setDrawable(new TextureRegionDrawable(lockedCarTextures.getRegion(button.getName())));
-			}
+				button.setNewTexture();
+
 		}
 		
 	}
 
 	private void setupCars() {
 		assets.getAtlas("Images/car_sheet.json").forEachRegion((name, texture) -> {
-			CarButton carButton = new CarButton(name, texture);
+			CarButton carButton = new CarButton(name, new TextureRegionDrawable(texture), new TextureRegionDrawable(lockedCarTextures.getRegion(name)));
 			carButton.addListener(new CarListener(carButton));
 			carButtons.add(carButton);
 		});
