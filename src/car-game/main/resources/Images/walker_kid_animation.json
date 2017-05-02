@@ -1,5 +1,5 @@
 {
-	"atlas": "Images/walkers.json",
+	"atlas": "Images/pedestrian_sheet.json",
 	"speed": "5",
 	"frames": [
 		"kid1",

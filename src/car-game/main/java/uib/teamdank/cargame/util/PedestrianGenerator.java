@@ -19,12 +19,12 @@ public class PedestrianGenerator implements Generator<GameObject> {
 
 	public PedestrianGenerator(AssetManager assets) {
 		TextureAtlas pedestrianAtlas1 = assets.getAtlas("Images/walkers.json");
-		this.entityGenerators.add(rnd -> new Pedestrian(100,0,5,rnd.nextBoolean(),pedestrianAtlas1.getRegion("cyclist")));
-		this.entityGenerators.add(rnd -> new Pedestrian(0,100,10,rnd.nextBoolean(),pedestrianAtlas1.getRegion("skateboard")));
-		this.entityGenerators.add(rnd -> new Pedestrian(0,50,2,rnd.nextBoolean(),pedestrianAtlas1.getRegion("umbrella_blue")));
-		this.entityGenerators.add(rnd -> new Pedestrian(0,50,2,rnd.nextBoolean(),pedestrianAtlas1.getRegion("umbrella_red")));
-		this.entityGenerators.add(rnd -> new Pedestrian(0,50,2,rnd.nextBoolean(),pedestrianAtlas1.getRegion("umbrella_yellow")));
-		this.entityGenerators.add(rnd -> new Pedestrian(0,50,2,rnd.nextBoolean(),pedestrianAtlas1.getRegion("umbrella_green")));
+//		this.entityGenerators.add(rnd -> new Pedestrian(100,0,5,rnd.nextBoolean(),pedestrianAtlas1.getRegion("cyclist")));
+//		this.entityGenerators.add(rnd -> new Pedestrian(0,100,10,rnd.nextBoolean(),pedestrianAtlas1.getRegion("skateboard")));
+//		this.entityGenerators.add(rnd -> new Pedestrian(0,50,2,rnd.nextBoolean(),pedestrianAtlas1.getRegion("umbrella_blue")));
+//		this.entityGenerators.add(rnd -> new Pedestrian(0,50,2,rnd.nextBoolean(),pedestrianAtlas1.getRegion("umbrella_red")));
+//		this.entityGenerators.add(rnd -> new Pedestrian(0,50,2,rnd.nextBoolean(),pedestrianAtlas1.getRegion("umbrella_yellow")));
+//		this.entityGenerators.add(rnd -> new Pedestrian(0,50,2,rnd.nextBoolean(),pedestrianAtlas1.getRegion("umbrella_green")));
 		this.entityGenerators.add(rnd -> new Pedestrian(0,50,2,rnd.nextBoolean(),assets.getAnimation("Images/walker_kid_animation.json")));
 
 	}
