@@ -1,5 +1,5 @@
 {
-	"tileset": "Images/walkers.png",
+	"tileset": "Images/Game/walkers.png",
 	"regions": [
 		{
 			"name": "cyclist",
