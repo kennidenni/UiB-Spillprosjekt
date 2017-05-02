@@ -19,10 +19,10 @@ import uib.teamdank.cargame.CarGame;
 import uib.teamdank.common.Game;
 
 public class PauseMenuScreen implements uib.teamdank.common.gui.PauseMenuScreen {
-	private static final String LOGO = "images/CarGameLogo.png";
-	private static final String PAUSE = "images/Buttons/bs_pause.png";
-	private static final String BACK = "images/Buttons/bs_back.png";
-	private static final String EXIT = "images/Buttons/bs_quit.png";
+	private static final String LOGO = "Images/CarGameLogo.png";
+	private static final String PAUSE = "Images/Buttons/bs_pause.png";
+	private static final String BACK = "Images/Buttons/bs_back.png";
+	private static final String EXIT = "Images/Buttons/bs_quit.png";
 
 	private Stage stage;
 	private Table menu;

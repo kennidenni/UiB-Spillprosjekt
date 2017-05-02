@@ -226,5 +226,6 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 	private void updateHUD() {
 		hud.setCurrentFuel(player.getHealth(), player.getMaxHealth());
 		hud.setScore(player.getScore().getScore());
+		hud.setCoins(player.getInventory().getGold());
 	}
 }
