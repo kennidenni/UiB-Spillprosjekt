@@ -1,7 +1,9 @@
 package uib.teamdank.cargame;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+
 import uib.teamdank.common.Actor;
+import uib.teamdank.common.util.Animation;
 
 
 /**
@@ -17,21 +19,19 @@ public class Pedestrian extends Actor implements RoadEntity {
 	
 	private boolean gaveGoldToPlayer = false;
 
-	public Pedestrian() {
-		super();
-		this.score = 1;
-		this.VERTICAL_ACCELERATION = 40f;
-		this.VERTICAL_TOP_SPEED = 400f;
-		this.HORIZONTAL_ACCELERATION = 20f;
-		this.HORIZONTAL_TOP_SPEED = 100f;
+	public Pedestrian(float vertSpd, float horiSpd, long sc, boolean goLeft, Animation anim) {
+		this(vertSpd, horiSpd, sc, goLeft);
+		setAnimation(anim);
 	}
 
 	public Pedestrian(float vertSpd, float horiSpd, long sc, boolean goLeft, TextureRegion texture) {
-		super();
+		this(vertSpd, horiSpd, sc, goLeft);
 		setTexture(texture);
+	}
+	
+	public Pedestrian(float vertSpd, float horiSpd, long sc, boolean goLeft) {
 		setScale(.9f);
 		this.score = sc;
-		this.isMovable();
 		this.VERTICAL_ACCELERATION = 50f;
 		this.VERTICAL_TOP_SPEED = vertSpd;
 		if (goLeft) {

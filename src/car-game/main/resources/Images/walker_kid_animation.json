@@ -1,6 +1,6 @@
 {
 	"atlas": "Images/walkers.json",
-	"speed": "10",
+	"speed": "5",
 	"frames": [
 		"kid1",
 		"kid2",

@@ -96,7 +96,7 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 
 		// pedestrian spawner initialization
 		this.pedestrianSpawner = new ScrollingSpawner(pedestrianLayer, playerCamera,
-				new PedestrianGenerator(pedestrianTextures));
+				new PedestrianGenerator(assets));
 		pedestrianSpawner.setHorizontalPositionRange(backgroundLayer.getRoadLeftX(), backgroundLayer.getRoadRightX());
 		pedestrianSpawner.setChanceOfSpawn(.01f);
 		pedestrianSpawner.setExtraVerticalSpaceBetweenSpawns(50);
