@@ -50,6 +50,13 @@ public class Layer {
 	}
 	
 	/**
+	 * @return returns the array of game objects in the layer
+	 */
+	public Array<GameObject> getAllObjects() {
+		return gameObjects;
+	}
+	
+	/**
 	 * This method is called before the rendering of the game
 	 * objects in this layer ({@link #render(SpriteBatch, float)}.
 	 */
