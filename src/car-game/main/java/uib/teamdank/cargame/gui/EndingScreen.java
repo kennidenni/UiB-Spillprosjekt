@@ -85,7 +85,6 @@ public class EndingScreen implements uib.teamdank.common.gui.HighscoreMenuScreen
 		return new ImageButton(myTexRegionDrawable);
 	}
 
-
 	@Override
 	public void dispose() {
 		// TODO Auto-generated method stub
