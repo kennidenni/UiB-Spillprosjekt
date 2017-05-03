@@ -59,7 +59,7 @@ public class StartMenuScreen implements uib.teamdank.common.gui.StartMenuScreen 
         addButtonListener();
         addToTables();
 
-        player = new Player();
+        player = new Player(100, "default");
         player.getTexture();
         player.setScale(.5f);
 
