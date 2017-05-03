@@ -90,4 +90,13 @@ public class Pedestrian extends Actor implements RoadEntity {
 			}
 		}
 	}
+	public void restrictHorizontally(int minX, int maxX) {
+		if (getPosisiton().x < minX) {
+			his.HORIZONTAL_ACCELERATION = 20f;
+			this.HORIZONTAL_TOP_SPEED = -horiSpd;
+		} else if (getPosisiton().x > maxX - getWidth()) {
+			this.HORIZONTAL_ACCELERATION = -20f;
+			this.HORIZONTAL_TOP_SPEED = -horiSpd;
+		}
+	}
 }
