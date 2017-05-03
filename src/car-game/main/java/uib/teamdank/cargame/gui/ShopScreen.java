@@ -88,7 +88,7 @@ public class ShopScreen extends ScreenAdapter {
 	}
 	
 	private final List<CarButton> carButtons = new ArrayList<>();
-	private final int CAR_COST = 1;
+	private static final int CAR_COST = 10;
 	
 	private Stage stage;
 	private CarGame game;
