@@ -149,6 +149,12 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 			assets.getAudio().unmute();
 		}
 	}
+	
+	public boolean isMuted() {
+		if(hud.isMuted())
+			return true;
+		return false;
+	}
 
 	@Override
 	public void dispose() {

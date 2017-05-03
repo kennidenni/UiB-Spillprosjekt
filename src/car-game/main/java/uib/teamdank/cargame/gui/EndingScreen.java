@@ -170,7 +170,8 @@ public class EndingScreen implements uib.teamdank.common.gui.HighscoreMenuScreen
 	@Override
 	public void show() {
 		Gdx.input.setInputProcessor(stage);
-		assets.getAudio().playSound(CRASH_SOUND);
+		if (!game.getGameScreen().isMuted())
+			assets.getAudio().playSound(CRASH_SOUND);
 	}
 	
 }
