@@ -15,7 +15,7 @@ public class BackgroundLayer extends Layer {
 	}
 
 	@Override
-	protected void preRender(SpriteBatch batch, float delta) {
+	public void preRender(SpriteBatch batch, float delta) {
 		batch.draw(level.getBackground(), 0, 0);
 		batch.draw(level.getForeground(), 0, 0);
 	}

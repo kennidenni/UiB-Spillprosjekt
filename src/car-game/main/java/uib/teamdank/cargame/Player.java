@@ -80,7 +80,7 @@ public class Player extends Actor implements Upgradeable {
 	public Score getScore() {
 		return score;
 	}
-
+	
 	public boolean hasUnlockedSkin(String name) {
 		return unlockedSkins.contains(name);
 	}
@@ -128,5 +128,14 @@ public class Player extends Actor implements Upgradeable {
 
 	public void unlockSkin(String name) {
 		this.unlockedSkins.add(name);
+	}
+
+	@Override
+	public void update(float delta) {
+		super.update(delta);
+		
+		accelerate();
+		applyFriction();
+		
 	}
 }

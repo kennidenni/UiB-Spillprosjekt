@@ -43,31 +43,11 @@ public class Pedestrian extends Actor implements RoadEntity {
 		}
 	}
 
-	public long getScore() {
-		return score;
-
-	}
-
-	@Override
-	public void drivenOverBy(Player player) {
-		player.getScore().addToScore(this.score);
-		this.markForRemoval();
-
-	}
-
 	public void accelerate() {
 		accelerateVertical();
 		accelerateHorizontal();
 	}
-	private void accelerateVertical(){
-		if (getVelocity().y != VERTICAL_TOP_SPEED) {
-			if (getVelocity().y > VERTICAL_TOP_SPEED) {
-				getVelocity().y = VERTICAL_TOP_SPEED;
-			} else {
-				getVelocity().y += VERTICAL_ACCELERATION;
-			}
-		}
-	}
+
 	private void accelerateHorizontal(){
 		if (HORIZONTAL_TOP_SPEED > 0) {
 			if (getVelocity().x != HORIZONTAL_TOP_SPEED) {
@@ -86,5 +66,31 @@ public class Pedestrian extends Actor implements RoadEntity {
 				}
 			}
 		}
+	}
+
+	private void accelerateVertical(){
+		if (getVelocity().y != VERTICAL_TOP_SPEED) {
+			if (getVelocity().y > VERTICAL_TOP_SPEED) {
+				getVelocity().y = VERTICAL_TOP_SPEED;
+			} else {
+				getVelocity().y += VERTICAL_ACCELERATION;
+			}
+		}
+	}
+	@Override
+	public void drivenOverBy(Player player) {
+		player.getScore().addToScore(this.score);
+		this.markForRemoval();
+
+	}
+	public long getScore() {
+		return score;
+
+	}
+	
+	@Override
+	public void update(float delta) {
+		super.update(delta);
+		accelerate();
 	}
 }

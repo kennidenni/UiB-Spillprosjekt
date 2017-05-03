@@ -6,26 +6,23 @@ import java.util.List;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
-import com.badlogic.gdx.audio.Music;
-import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector2;
+
 import uib.teamdank.cargame.CarGame;
 import uib.teamdank.cargame.Coin;
 import uib.teamdank.cargame.Fuel;
-import uib.teamdank.cargame.Hole;
 import uib.teamdank.cargame.Pedestrian;
 import uib.teamdank.cargame.Player;
-import uib.teamdank.cargame.Puddle;
 import uib.teamdank.cargame.RoadEntity;
-import uib.teamdank.cargame.util.RoadEntityGenerator;
-import uib.teamdank.cargame.util.ScrollingSpawner;
 import uib.teamdank.cargame.util.GameSounds;
 import uib.teamdank.cargame.util.PedestrianGenerator;
+import uib.teamdank.cargame.util.RoadEntityGenerator;
+import uib.teamdank.cargame.util.ScrollingSpawner;
 import uib.teamdank.common.Game;
-import uib.teamdank.common.Score;
 import uib.teamdank.common.GameObject;
+import uib.teamdank.common.Score;
 import uib.teamdank.common.gui.Layer;
 import uib.teamdank.common.util.AssetManager;
 import uib.teamdank.common.util.TextureAtlas;
@@ -198,6 +195,31 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 		fuel.pauseSound();
 	}
 
+	private void itemDrivenOver(GameObject gameObject) {
+		if (gameObject instanceof Coin) {
+			coin_sound.playSound();
+		}
+		if (gameObject instanceof Fuel) {
+			fuel.playSound();
+		}
+		if (gameObject instanceof Pedestrian) {
+			dead_ped.playSound();
+		}
+	}
+
+	@Override
+	protected void onUpdateGameObject(float delta, Layer layer, GameObject gameObject) {
+	
+		if (layer == roadEntityLayer || layer == pedestrianLayer) {
+			if (gameObject instanceof RoadEntity
+					&& player.contains(gameObject)) {
+				((RoadEntity) gameObject).drivenOverBy(player);
+				itemDrivenOver(gameObject);
+			}
+		}
+		
+	}
+
 	@Override
 	public void render(float delta) {
 
@@ -231,7 +253,7 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 		car_drive.playMusic();
 		
 	}
-
+	
 	@Override
 	public void update(float delta) {
 
@@ -239,30 +261,9 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 		updateHUD();
 
 		// Updates game objects
-		super.update(delta); // Movement and deletion
-		// update road entity layer
-		roadEntityLayer.forEachGameObject(gameObject -> {
-			if (gameObject instanceof RoadEntity
-					&& player.contains(gameObject.getPosisiton().x, gameObject.getPosisiton().y)) {
-				((RoadEntity) gameObject).drivenOverBy(player);
-				itemDrivenOver(gameObject);
-			}
-		});
-		
-		// update pedestrian layer
-		pedestrianLayer.forEachGameObject(gameObject -> {
-			if (gameObject instanceof RoadEntity
-					&& player.contains(gameObject.getPosisiton().x, gameObject.getPosisiton().y)) {
-				((RoadEntity) gameObject).drivenOverBy(player);
-				dead_ped.playSound();
-			}
-		});
-
-		// Update player
-		player.accelerate();
-		player.applyFriction();
+		super.update(delta);
 		player.restrictHorizontally(backgroundLayer.getRoadLeftX(), backgroundLayer.getRoadRightX());
-
+		
 		// Player input
 		checkForPauseRequest();
 		boolean inputTurnLeft = Gdx.input.isKeyPressed(Keys.A) || Gdx.input.isKeyPressed(Keys.LEFT);
@@ -282,12 +283,6 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 		pedestrianSpawner.update(delta);
 		pedestrianSpawner.setHorizontalPositionRange(backgroundLayer.getRoadLeftX(), backgroundLayer.getRoadRightX());
 
-		// Update pedestrians
-		for (int i = 0; i < pedestrianLayer.getSize(); i++) {
-				Pedestrian p = (Pedestrian) pedestrianLayer.getAllObjects().get(i);
-				p.accelerate();			
-		}
-
 		// Check for game over
 		if (player.isOutOfFuel() && player.getVelocity().y == 0) {
 			getGame().setScreen(new EndingScreen((CarGame) getGame()));
@@ -295,7 +290,7 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 		}
 
 	}
-
+	
 	private void updateHUD() {
 		hud.setCurrentFuel(player.getHealth(), player.getMaxHealth());
 		hud.setScore(player.getScore().getScore());
@@ -317,15 +312,6 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 				hud.setVisibleNewHighscore(false);
 			else if(!hud.isVisibleNewHighscore() && diff >= 15) 
 				hud.setVisibleNewHighscore(true);
-		}
-	}
-	
-	private void itemDrivenOver(GameObject gameObject) {
-		if (gameObject instanceof Coin) {
-			coin_sound.playSound();
-		}
-		if (gameObject instanceof Fuel) {
-			fuel.playSound();
 		}
 	}
 	
