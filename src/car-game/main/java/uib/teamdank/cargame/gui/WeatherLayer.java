@@ -39,7 +39,7 @@ public class WeatherLayer extends Layer {
 		else if (wType == WeatherType.RAIN)
 			wTexture = new Texture(Gdx.files.internal(RAIN));
 		else if (wType == WeatherType.SUN)
-			wTexture = new Texture(Gdx.files.internal(EMPTY));
+			wTexture = new Texture(Gdx.files.internal(CLOUDS));
 		else
 			wTexture = new Texture(Gdx.files.internal(SNOW));
 
@@ -48,7 +48,7 @@ public class WeatherLayer extends Layer {
 	}
 
 	@Override
-	protected void preRender(SpriteBatch batch, float delta) {
+	public void preRender(SpriteBatch batch, float delta) {
 
 		batch.setProjectionMatrix(screenCamera.combined);
 		batch.setProjectionMatrix(playerCamera.combined);
