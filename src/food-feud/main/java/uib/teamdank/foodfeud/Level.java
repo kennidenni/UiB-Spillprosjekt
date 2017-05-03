@@ -57,7 +57,7 @@ public class Level implements Disposable {
 			
 			final Player player = players.get(i);
 			PolygonShape shape = new PolygonShape();
-			shape.setAsBox(player.getWidth() / 2, player.getHeight() / 2);
+			shape.setAsBox(player.getWidth() / 2f, player.getHeight() / 2f);
 			Body body = world.createBody(bodyDef);
 			players.get(i).setBody(body);
 			

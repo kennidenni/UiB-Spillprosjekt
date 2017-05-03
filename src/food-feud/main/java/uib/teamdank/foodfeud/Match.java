@@ -24,11 +24,11 @@ public class Match {
 			throw new IllegalArgumentException("there must be 2-" + MAX_PLAYER_COUNT + " players");
 		}
 		
-		List<Player> players = new ArrayList<>(playerNames.length);
+		List<Player> playerList = new ArrayList<>(playerNames.length);
 		for (String playerName : playerNames) {
-			players.add(new Player(playerName));
+			playerList.add(new Player(playerName));
 		}
-		this.players = Collections.unmodifiableList(players);
+		this.players = Collections.unmodifiableList(playerList);
 	}
 
 	public Player getActivePlayer() {
