@@ -15,6 +15,7 @@ public class GameObject {
     private final Vector2 velocity = new Vector2();
 	private Animation animation;
 	private float scale;
+	private float angle;
 	private boolean flipHorizontally;
 	private boolean flipVertically;
 
@@ -171,6 +172,14 @@ public class GameObject {
 	
 	public boolean getFlipVertically() {
 		return flipVertically;
+	}
+	
+	public void setAngle(float angle) {
+		this.angle = angle;
+	}
+	
+	public float getAngle() {
+		return angle;
 	}
 	
     /**

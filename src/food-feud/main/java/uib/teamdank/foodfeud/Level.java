@@ -1,12 +1,20 @@
 package uib.teamdank.foodfeud;
 
+import java.util.List;
 import java.util.Objects;
 
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.utils.Disposable;
 
 public class Level implements Disposable {
+	
+	private static final int PLAYER_POSITION_MARGIN = 25;
 	
 	private final String name;
 	private final World world;
@@ -32,6 +40,30 @@ public class Level implements Disposable {
 		background.dispose();
 		foreground.dispose();
 		world.dispose();
+	}
+	
+	public void distributePlayers(List<Player> players) {
+		BodyDef bodyDef = new BodyDef();
+		bodyDef.type = BodyType.DynamicBody;
+//		bodyDef.fixedRotation = true;
+		
+		float stepX = (getWidth() - PLAYER_POSITION_MARGIN * 2f) / players.size();
+		for (int i = 0; i < players.size(); i++) 
+		{
+			final Player player = players.get(i);
+			
+			final Vector2 pos = bodyDef.position;
+			pos.y = getHeight();
+			pos.x = PLAYER_POSITION_MARGIN + (stepX * i);
+			bodyDef.position.set(pos);
+			
+			PolygonShape shape = new PolygonShape();
+			shape.setAsBox(player.getWidth() / 2, player.getHeight() /2, new Vector2(player.getWidth() / 2, player.getHeight() / 2), 0);
+			Body body = world.createBody(bodyDef);
+			players.get(i).setBody(body);
+			
+			body.createFixture(shape, 1);
+		}
 	}
 	
 	public Texture getBackground() {

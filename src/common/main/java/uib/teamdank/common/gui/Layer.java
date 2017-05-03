@@ -95,7 +95,7 @@ public class Layer {
 				final float height = gameObject.getHeight();
 				final float flipX = gameObject.getFlipHorizontally() ? -1 : 1;
 				final float flipY = gameObject.getFlipVertically() ? -1 : 1;
-				batch.draw(gameObject.getTexture(), pos.x, pos.y, width / 2, height / 2, width, height, flipX, flipY, 0);
+				batch.draw(gameObject.getTexture(), pos.x, pos.y, width / 2, height / 2, width, height, flipX, flipY, gameObject.getAngle());
 			}
 		});
 	}
