@@ -37,7 +37,7 @@ public class TextureAtlas implements Disposable {
 	 */
 	public static TextureAtlas createFromJson(FileHandle handle){
 		Objects.requireNonNull(handle, "file handle cannot be null");
-		TextureAtlas atlas = new Gson().fromJson(handle.reader(), TextureAtlas.class);
+		TextureAtlas atlas = new Gson().fromJson(handle.reader("UTF-8"), TextureAtlas.class);
 		atlas.load();
 		return atlas;
 	}
