@@ -36,11 +36,13 @@ public class CarHud {
 	private TextButtonStyle textButtonStyle;
 	private TextButton highscore;
 	private TextButton coinsCount;
+	private TextButton newHighscoreMessage;
 
 	private Table scoreTable;
 	private Table fuelTable;
 	private Table coinsTable;
 	private Table muteTable;
+	private Table newHighscoreTable;
 	private TextureAtlas roadEntityTextures;
 
 	private boolean muted = false;
@@ -76,6 +78,8 @@ public class CarHud {
 		scoreTable.setFillParent(true);
 		
 		coinsTable.setFillParent(true);
+		
+		newHighscoreInit();
 		
 		stage.addActor(scoreTable);
 		stage.addActor(fuelTable);
@@ -167,6 +171,7 @@ public class CarHud {
 		bar.act(delta);
 		highscore.act(delta);
 		coinsCount.act(delta);
+		newHighscoreMessage.act(delta);
 		stage.act(delta);
 		stage.draw();
 	}
@@ -182,6 +187,26 @@ public class CarHud {
 	
 	public void setCoins(int i) {
 		coinsCount.setText(String.valueOf(i));
+	}
+	
+	public void newHighscoreInit() {
+		newHighscoreMessage = new TextButton("NEW HIGHSCORE!", textButtonStyle);
+		newHighscoreMessage.getLabel().setFontScale(5, 5);
+		
+		newHighscoreTable = new Table();
+		newHighscoreTable.add(newHighscoreMessage).width(300).pad(0, 0, 800, 0);
+		newHighscoreTable.setFillParent(true);
+		newHighscoreTable.setVisible(false);
+		
+		stage.addActor(newHighscoreTable);
+	}
+	
+	public void setVisibleNewHighscore(boolean visible) {
+		newHighscoreTable.setVisible(visible);
+	}
+	
+	public boolean isVisibleNewHighscore(){
+		return newHighscoreTable.isVisible();
 	}
 	
 	public void resize(int width, int height) {

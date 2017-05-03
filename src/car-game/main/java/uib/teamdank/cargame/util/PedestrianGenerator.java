@@ -6,25 +6,24 @@ import java.util.Random;
 
 import uib.teamdank.cargame.Pedestrian;
 import uib.teamdank.common.GameObject;
+import uib.teamdank.common.util.AudioManager;
 import uib.teamdank.common.util.Generator;
 import uib.teamdank.common.util.TextureAtlas;
 
 /**
- * Generates {@link GameObject}s of the correct pedestrian type. This class
- * does not interact with the game directly; its purely functional. 
+ * Generates {@link GameObject}s of the correct pedestrian type. This class does
+ * not interact with the game directly; its purely functional.
  */
 public class PedestrianGenerator implements Generator<GameObject> {
 	private final List<Generator<GameObject>> entityGenerators = new ArrayList<>();
 
-	public PedestrianGenerator(TextureAtlas pedestrianAtlas1) {
-		Random r=new Random();
-		this.entityGenerators.add(rnd -> new Pedestrian(100,0,5,r.nextBoolean(),pedestrianAtlas1.getRegion("cyclist")));
-		this.entityGenerators.add(rnd -> new Pedestrian(0,100,10,r.nextBoolean(),pedestrianAtlas1.getRegion("skateboard")));
-		this.entityGenerators.add(rnd -> new Pedestrian(0,50,2,r.nextBoolean(),pedestrianAtlas1.getRegion("umbrella_blue")));
-		this.entityGenerators.add(rnd -> new Pedestrian(0,50,2,r.nextBoolean(),pedestrianAtlas1.getRegion("umbrella_red")));
-		this.entityGenerators.add(rnd -> new Pedestrian(0,50,2,r.nextBoolean(),pedestrianAtlas1.getRegion("umbrella_yellow")));
-		this.entityGenerators.add(rnd -> new Pedestrian(0,50,2,r.nextBoolean(),pedestrianAtlas1.getRegion("umbrella_green")));
-
+	public PedestrianGenerator(AudioManager audio, TextureAtlas atlas) {
+		this.entityGenerators.add(rnd -> new Pedestrian(audio, 5, 0, 100, rnd.nextBoolean(), atlas.getRegion("cyclist")));
+		this.entityGenerators.add(rnd -> new Pedestrian(audio, 10, 100, 0, rnd.nextBoolean(), atlas.getRegion("skateboard")));
+		this.entityGenerators.add(rnd -> new Pedestrian(audio, 2, 50, 0, rnd.nextBoolean(), atlas.getRegion("umbrella_blue")));
+		this.entityGenerators.add(rnd -> new Pedestrian(audio, 2, 50, 0, rnd.nextBoolean(), atlas.getRegion("umbrella_red")));
+		this.entityGenerators.add(rnd -> new Pedestrian(audio, 2, 50, 0, rnd.nextBoolean(), atlas.getRegion("umbrella_yellow")));
+		this.entityGenerators.add(rnd -> new Pedestrian(audio, 2, 50, 0, rnd.nextBoolean(), atlas.getRegion("umbrella_green")));
 	}
 
 	@Override

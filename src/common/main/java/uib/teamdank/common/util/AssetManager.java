@@ -8,7 +8,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.Disposable;
 
 public class AssetManager implements Disposable {
-	
+
+	private final AudioManager audioManager = new AudioManager();
 	private final Map<String, TextureAtlas> atlases = new HashMap<>();
 	private final Map<String, Animation> animations = new HashMap<>();
 
@@ -36,6 +37,10 @@ public class AssetManager implements Disposable {
 		return atlases.get(fileName);
 	}
 	
+	public AudioManager getAudio() {
+		return audioManager;
+	}
+	
 	public int getLoadedAnimationCount() {
 		return animations.size();
 	}
@@ -46,6 +51,7 @@ public class AssetManager implements Disposable {
 	
 	@Override
 	public void dispose() {
+		audioManager.dispose();
 		atlases.forEach((file, atlas) -> atlas.dispose());
 	}
 }

@@ -5,7 +5,6 @@ import java.util.Objects;
 import java.util.function.Consumer;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 
 import uib.teamdank.common.GameObject;
@@ -36,12 +35,19 @@ public class Layer {
 	}
 
 	/**
+	 * @return returns the array of game objects in the layer
+	 */
+	public Array<GameObject> getAllObjects() {
+		return gameObjects;
+	}
+
+	/**
 	 * @return amount of game objects in this layer
 	 */
 	public int getSize() {
 		return gameObjects.size;
 	}
-
+	
 	/**
 	 * @return whether this layer is checked for collision
 	 */
@@ -50,17 +56,10 @@ public class Layer {
 	}
 	
 	/**
-	 * @return returns the array of game objects in the layer
-	 */
-	public Array<GameObject> getAllObjects() {
-		return gameObjects;
-	}
-	
-	/**
 	 * This method is called before the rendering of the game
 	 * objects in this layer ({@link #render(SpriteBatch, float)}.
 	 */
-	protected void preRender(SpriteBatch batch, float delta) {
+	public void preRender(SpriteBatch batch, float delta) {
 		// Can be overridden
 	}
 
@@ -78,26 +77,7 @@ public class Layer {
 				it.remove();
 			}
 		}
-	}
-	
-	public void render(SpriteBatch batch, float delta) {
-		preRender(batch, delta);
-		forEachGameObject(gameObject -> {
-			if (gameObject.getTexture() != null) {
-				
-				// Game objects should have an origin in the lower left
-				// corner, but to correctly flip textures the origin
-				// will be in the center and the game object will be
-				// offset to be positioned correctly in the lower left.
-				
-				Vector2 pos = gameObject.getPosisiton();
-				final float width = gameObject.getWidth();
-				final float height = gameObject.getHeight();
-				final float flipX = gameObject.getFlipHorizontally() ? -1 : 1;
-				final float flipY = gameObject.getFlipVertically() ? -1 : 1;
-				batch.draw(gameObject.getTexture(), pos.x, pos.y, width / 2, height / 2, width, height, flipX, flipY, 0);
-			}
-		});
+		
 	}
 
 	public void setSolid(boolean solid) {
