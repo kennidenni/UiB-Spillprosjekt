@@ -26,6 +26,7 @@ public class Weapon extends Item {
 	 */
     public Weapon(String name, String descr, weaponProjectile p) {
         super(name, descr);
+        proj = p;
     }
 	
 	public weaponProjectile getProjectileType(){
