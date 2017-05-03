@@ -210,5 +210,23 @@ public class GameObject {
 	public boolean isSolid() {
 		return false;
 	}
+	
+	public float getX(){
+		return pos.x;
+	}
+	
+	public float getY(){
+		return pos.y;
+	}
+	
+	public void setX(float x){
+		pos.x = x;
+	}
+	public void setY(float y){
+		pos.y = y;
+	}
+	public boolean contains(GameObject obj) {
+		return contains(obj.getX(), obj.getY());
+	}
 
 }

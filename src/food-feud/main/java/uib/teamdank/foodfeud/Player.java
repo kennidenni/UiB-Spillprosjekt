@@ -52,4 +52,5 @@ public class Player extends Actor implements ItemHolder {
 		}
 		return super.getPosisiton();
 	}
+	
 }

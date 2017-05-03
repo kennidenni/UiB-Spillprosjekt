@@ -8,7 +8,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 public class PlayerTest {
-	
 	private Player player;
 	
 	@Before
@@ -26,6 +25,15 @@ public class PlayerTest {
 		Weapon w = new Weapon("TestWeapon", "TestDescription");
 		player.getInventory().addItem(w);
 		assertThat(player.getInventory().getItem(0), is(equalTo(w)));
+	}
+	
+	@Test
+	public void getHealth(){
+		assertThat(player.getHealth(), is(equalTo(100)));
+	}
+	@Test
+	public void getName(){
+		assertThat(player.getName(), is(equalTo("sturle")));
 	}
 
 }

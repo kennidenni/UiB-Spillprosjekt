@@ -14,10 +14,10 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.FitViewport;
+
 import uib.teamdank.common.Game;
 import uib.teamdank.common.gui.CreditScreen;
 import uib.teamdank.foodfeud.FoodFeud;
-import uib.teamdank.foodfeud.Player;
 
 public class StartMenuScreen implements uib.teamdank.common.gui.StartMenuScreen {
 
@@ -37,7 +37,6 @@ public class StartMenuScreen implements uib.teamdank.common.gui.StartMenuScreen 
     private Array<Button> buttons;
     private CreditScreen creditScreen;
     private Game game;
-    private Player player;
 
     public StartMenuScreen(FoodFeud game){
         this.game = game;
