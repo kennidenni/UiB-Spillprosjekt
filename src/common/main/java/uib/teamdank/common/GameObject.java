@@ -17,8 +17,6 @@ public class GameObject {
 	private float scale;
 	private boolean flipHorizontally;
 	private boolean flipVertically;
-	private float xPos;
-	private float yPos;
 
 	/**
 	 * Creates a GameObject that spans no area, in the origin (0, 0).
@@ -205,21 +203,21 @@ public class GameObject {
 	}
 	
 	public float getX(){
-		return xPos;
+		return pos.x;
 	}
 	
 	public float getY(){
-		return yPos;
+		return pos.y;
 	}
 	
 	public void setX(float x){
-		xPos = x;
+		pos.x = x;
 	}
 	public void setY(float y){
-		yPos = y;
+		pos.y = y;
 	}
-	public boolean posContains(float x, float y) {
-		return x >= xPos && x <= (xPos + getWidth()) && y >= yPos && y <= (yPos + getHeight());
+	public boolean Contains(GameObject x) {
+		return x.getX() >= getX() && x.getX() <= (getX() + getWidth()) && x.getY() >= getY() && x.getY() <= (getY() + getHeight());
 	}
 
 }
