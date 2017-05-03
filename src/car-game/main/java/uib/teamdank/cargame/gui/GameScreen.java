@@ -25,6 +25,7 @@ import uib.teamdank.cargame.util.GameSounds;
 import uib.teamdank.cargame.util.PedestrianGenerator;
 import uib.teamdank.common.Game;
 import uib.teamdank.common.Score;
+import uib.teamdank.common.GameObject;
 import uib.teamdank.common.gui.Layer;
 import uib.teamdank.common.util.AssetManager;
 import uib.teamdank.common.util.TextureAtlas;
@@ -231,12 +232,7 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 			if (gameObject instanceof RoadEntity
 					&& player.contains(gameObject.getPosisiton().x, gameObject.getPosisiton().y)) {
 				((RoadEntity) gameObject).drivenOverBy(player);
-				if (gameObject instanceof Coin) {
-					coin_sound.playSound();
-				}
-				if (gameObject instanceof Fuel) {
-					fuel.playSound();
-				}
+				itemDrivenOver(gameObject);
 			}
 		});
 		
@@ -310,4 +306,14 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 				hud.setVisibleNewHighscore(true);
 		}
 	}
+	
+	private void itemDrivenOver(GameObject gameObject) {
+		if (gameObject instanceof Coin) {
+			coin_sound.playSound();
+		}
+		if (gameObject instanceof Fuel) {
+			fuel.playSound();
+		}
+	}
+	
 }
