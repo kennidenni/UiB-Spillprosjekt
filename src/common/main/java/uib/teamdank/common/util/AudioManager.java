@@ -57,24 +57,21 @@ public class AudioManager implements Disposable {
 		getTrack(name).play();
 	}
 
-	public void preloadSounds(String root, String... names) {
+	public void preloadSounds(String... names) {
 		Objects.requireNonNull(names, "list of names cannot be null");
 		if (names.length == 0) {
 			throw new IllegalArgumentException("at least one name must be provided");
 		}
 		Arrays.asList(names).forEach(n -> Objects.requireNonNull(n, "a name cannot be null"));
 
-		if (root == null) {
-			root = "";
-		}
 		for (String name : names) {
-			getSound(root + name);
+			getSound(name);
 		}
 	}
 
 	public void resumeAll() {
 		tracks.forEach((name, track) -> track.play());
-		sounds.forEach((name, sound) -> sound.play());
+		sounds.forEach((name, sound) -> sound.resume());
 	}
 
 	public void stopTrack(String name) {
