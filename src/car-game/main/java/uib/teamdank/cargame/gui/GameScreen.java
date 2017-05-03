@@ -33,6 +33,7 @@ import uib.teamdank.common.util.TimedEvent;
  */
 public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 	private static final String SCORES = "TeamDank/Carl the Crasher/highscore.json";
+	private static final int AMOUNT_NEW_HIGHSCORE_MESSAGES = 4;
 	
 	private static final int AMOUNT_PER_SCORE = 1;
 	private static final float TIME_BETWEEN_SCORE = 1f;
@@ -66,9 +67,8 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 	private final ScrollingSpawner pedestrianSpawner;
 	private final ScrollingSpawner roadEntitySpawner;
 	private List<Score> score;
-	private boolean newHighscoreHasBeenInit = false;
-	private boolean newHighscoreIsOver10secpassed = false;
-	private long millis;
+	private int numTimesNewHighscoreMessage;
+	private TimedEvent onOffNewHighscoreMessage;
 
 	public GameScreen(Game game) {
 		super(game);
@@ -128,6 +128,19 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 		if(!handle.exists())
 			handle = Gdx.files.internal("Data/highscore.json");
 		score = new LinkedList<>(Arrays.asList(Score.createFromJson(handle)));
+		numTimesNewHighscoreMessage = 0;
+		onOffNewHighscoreMessage = new TimedEvent(0.5f, true, () -> {
+			if(player.getScore().getScore() > score.get(0).getScore()-290) {
+				hud.setVisibleNewHighscore(!hud.isVisibleNewHighscore());
+				numTimesNewHighscoreMessage++;
+				if(numTimesNewHighscoreMessage >= AMOUNT_NEW_HIGHSCORE_MESSAGES*2) {
+					onOffNewHighscoreMessage.setLoop(false);
+					hud.setVisibleNewHighscore(false);
+				}
+			}
+		});
+		addTimedEvent(onOffNewHighscoreMessage);
+		
 
 		// Music/long audio files
 		bgMusic = new GameSounds();
@@ -246,7 +259,7 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 	public void update(float delta) {
 
 		// Update HUD
-		updateHUD();
+		updateHUD(delta);
 
 		// Updates game objects
 		super.update(delta);
@@ -279,28 +292,10 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 
 	}
 	
-	private void updateHUD() {
+	private void updateHUD(float delta) {
 		hud.setCurrentFuel(player.getHealth(), player.getMaxHealth());
 		hud.setScore(player.getScore().getScore());
 		hud.setCoins(player.getInventory().getGold());
-		
-		if(!newHighscoreHasBeenInit && player.getScore().getScore() > score.get(0).getScore()){
-			hud.setVisibleNewHighscore(true);
-			newHighscoreHasBeenInit = true;
-			millis = System.currentTimeMillis();
-		}
-		
-		// Show message in 1 sec, hide in 0.5 sec, then show again in 1 sec
-		if(!newHighscoreIsOver10secpassed && newHighscoreHasBeenInit){
-			long diff = (System.currentTimeMillis() - millis)/100;
-			if(diff >= 25){
-				newHighscoreIsOver10secpassed = true;
-				hud.setVisibleNewHighscore(false);
-			} else if (hud.isVisibleNewHighscore() && diff >= 10 && diff < 15)
-				hud.setVisibleNewHighscore(false);
-			else if(!hud.isVisibleNewHighscore() && diff >= 15) 
-				hud.setVisibleNewHighscore(true);
-		}
 	}
 	
 }
