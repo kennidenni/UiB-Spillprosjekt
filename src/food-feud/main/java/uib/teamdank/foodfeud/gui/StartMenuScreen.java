@@ -54,11 +54,6 @@ public class StartMenuScreen implements uib.teamdank.common.gui.StartMenuScreen 
         addButtonListener();
         addToTables();
 
-        player = new Player();
-        player.getTexture();
-        player.setScale(.5f);
-
-
         menu.setFillParent(true);
         stages.addActor(menu);
         Gdx.input.setInputProcessor(stages);

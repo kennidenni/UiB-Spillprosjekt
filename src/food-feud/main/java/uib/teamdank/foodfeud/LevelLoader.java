@@ -3,14 +3,12 @@ package uib.teamdank.foodfeud;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.math.EarClippingTriangulator;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
-import com.badlogic.gdx.utils.ShortArray;
 import com.google.gson.Gson;
 
 public class LevelLoader {
@@ -20,7 +18,7 @@ public class LevelLoader {
 		String background;
 		String foreground;
 		float gravity;
-		float[] ground;
+		float[][] ground;
 	}
 	
 	private LevelLoader() {
@@ -43,27 +41,31 @@ public class LevelLoader {
 		BodyDef groundDef = new BodyDef();
 		groundDef.type = BodyType.StaticBody;
 		Body ground = world.createBody(groundDef);
-		
-		// TODO Dele opp alle punktene i level.ground til trekanter
-		/*
-		EarClippingTriangulator earClipper = new EarClippingTriangulator();
-		ShortArray vertixIndices = earClipper.computeTriangles(level.ground);
-		
-		for (int i = 0; i < vertixIndices.size; i += 6) {
-			float[] vertices = {
-				level.ground[vertixIndices.get(i + 0)],
-				level.ground[vertixIndices.get(i + 1)],
-				level.ground[vertixIndices.get(i + 2)],
-				level.ground[vertixIndices.get(i + 3)],
-				level.ground[vertixIndices.get(i + 4)],
-				level.ground[vertixIndices.get(i + 5)],
-			};
-			
-			PolygonShape shape = new PolygonShape();
-			shape.set(vertices);
-			ground.createFixture(shape, 1);
+
+		float[] groundHighs = new float[level.ground.length];
+		float[] groundLows = new float[level.ground.length];
+		for (int i = 0; i < level.ground.length; i++) {
+			groundLows[i] = level.ground[i][1];
+			for (int j = 1; j < level.ground[i].length; j += 2) {
+				groundHighs[i] = Math.max(level.ground[i][j], groundHighs[i]);
+				groundLows[i] = Math.min(level.ground[i][j], groundLows[i]);
+			}
 		}
-		*/
+		
+		for (int i = 0; i < level.ground.length; i++) {
+			for (int j = 0; j < level.ground[i].length; j++) {
+				if (j % 2 == 1) {
+					level.ground[i][j] = Gdx.graphics.getHeight()
+											- level.ground[i][j]
+											+ (groundHighs[i] - groundLows[i]);
+				}
+			}
+
+			PolygonShape shape = new PolygonShape();
+			shape.set(level.ground[i]);
+			ground.createFixture(shape, 1);
+			shape.dispose();
+		}
 		
 	}
 	

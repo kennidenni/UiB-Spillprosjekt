@@ -8,6 +8,7 @@ import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import uib.teamdank.common.Game;
 import uib.teamdank.foodfeud.Level;
 import uib.teamdank.foodfeud.LevelLoader;
+import uib.teamdank.foodfeud.Match;
 
 /**
  * The main gameplay screen.
@@ -19,13 +20,17 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 	
 	private final OrthographicCamera camera;
 	private final Level level;
+	private final Match match;
 	
 	public GameScreen(Game game) {
 		super(game);
 		
 		this.camera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		this.level = LevelLoader.createFromJson(Gdx.files.internal("Data/field_level.json"));
+		this.match = new Match(level.getWorld(), "Geir", "Bodil", "Arne", "Bertrude");	
+		
 		camera.position.add(camera.viewportWidth / 2, camera.viewportHeight / 2, 0);
+		camera.zoom = 2f;
 		
 		this.backgroundLayer = new BackgroundLayer(level);
 		addLayer(backgroundLayer);
