@@ -205,11 +205,12 @@ public class GameObject {
 	
 	protected void renderTexture(SpriteBatch batch, float delta, TextureRegion texture, float xOffset, float yOffset) {
 		if (texture != null) {
+			final Vector2 pos = getPosisiton();
 			final float width = getWidth();
 			final float height = getHeight();
 			final float flipX = getFlipHorizontally() ? -1 : 1;
 			final float flipY = getFlipVertically() ? -1 : 1;
-			batch.draw(texture, pos.x + xOffset, pos.y + yOffset, width / 2, height / 2, width, height, flipX, flipY, angle);
+			batch.draw(texture, pos.x + xOffset, pos.y + yOffset, width / 2, height / 2, width, height, flipX, flipY, getAngle());
 		}
 	}
 	
