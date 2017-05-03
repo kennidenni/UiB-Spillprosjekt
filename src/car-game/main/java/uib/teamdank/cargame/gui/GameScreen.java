@@ -36,6 +36,7 @@ import uib.teamdank.common.util.TimedEvent;
  */
 public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 	private static final String SCORES = "TeamDank/Carl the Crasher/highscore.json";
+	
 	private static final int AMOUNT_PER_SCORE = 1;
 	private static final float TIME_BETWEEN_SCORE = 1f;
 
@@ -43,7 +44,12 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 	private static final float TIME_BETWEEN_FUEL_LOSS = .2f;
 
 	private static final int CAR_VERTICAL_POSITION = 25;
-
+	
+	private static final String CRASH_SOUND = "car_crash.mp3";
+	private static final String PEDESTRIAN_SOUND = "dead_pedestrian.mp3";
+	private static final String COIN_SOUND = "coin_sound.wav";
+	private static final String FUEL = "fuel.wav";
+	
 	private final AssetManager assets;
 
 	private final OrthographicCamera playerCamera;
@@ -79,6 +85,11 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 		TextureAtlas carTextures = assets.getAtlas("Images/car_sheet.json");
 		TextureAtlas roadEntityTextures = assets.getAtlas("Images/road_entity_sheet.json");
 		TextureAtlas pedestrianTextures = assets.getAtlas("Images/Game/walkers.json");
+		
+		assets.getAudio().preloadSounds("Sounds/", CRASH_SOUND,
+												   PEDESTRIAN_SOUND,
+												   COIN_SOUND,
+												   FUEL);
 
 		// Cameras
 		this.playerCamera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
@@ -176,6 +187,8 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 
 	@Override
 	public void hide() {
+		assets.getAudio().pauseAll();
+		
 		bgMusic.pauseMusic();
 		car_drive.pauseMusic();
 		
