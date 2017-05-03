@@ -259,7 +259,7 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 	public void update(float delta) {
 
 		// Update HUD
-		updateHUD(delta);
+		updateHUD();
 
 		// Updates game objects
 		super.update(delta);
@@ -292,7 +292,7 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 
 	}
 	
-	private void updateHUD(float delta) {
+	private void updateHUD() {
 		hud.setCurrentFuel(player.getHealth(), player.getMaxHealth());
 		hud.setScore(player.getScore().getScore());
 		hud.setCoins(player.getInventory().getGold());
