@@ -49,6 +49,7 @@ public class Player extends Actor implements ItemHolder {
 	public Vector2 getPosisiton() {
 		if (body != null) {
 			super.getPosisiton().set(body.getPosition());
+			super.getPosisiton().sub(getWidth() / 2, getHeight() / 2);
 		}
 		return super.getPosisiton();
 	}
