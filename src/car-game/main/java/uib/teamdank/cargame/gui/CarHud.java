@@ -134,9 +134,8 @@ public class CarHud {
 				new TextureRegionDrawable(muteTextures.getRegion("unmuted")),
 				new TextureRegionDrawable(muteTextures.getRegion("muted"))
 		);
-
 		muteTable = new Table();
-		muteTable.add(muteButton).pad(0, 300, 1900, 0);
+		muteTable.add(muteButton).width((float) (muteButton.getWidth() / 2.5)).height((float) (muteButton.getHeight() / 2.5)).pad(0, 200, 2000, 0);
 
 		muteButton.addListener(new InputListener() {
 			@Override
