@@ -54,7 +54,7 @@ public class BackgroundLayer extends Layer {
 	}
 	
 	@Override
-	protected void preRender(SpriteBatch batch, float delta) {
+	public void preRender(SpriteBatch batch, float delta) {
 		final int screenWidth = Gdx.graphics.getWidth();
 		final int screenHeight = Gdx.graphics.getHeight();
 		
