@@ -43,6 +43,7 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 	private final OrthographicCamera screenCamera;
 
 	private final BackgroundLayer backgroundLayer;
+	private final WeatherLayer weatherLayer;
 	private final Layer roadEntityLayer;
 	private final Layer pedestrianLayer;
 	private final Layer carLayer;
@@ -89,6 +90,7 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 
 		// Layers
 		backgroundLayer = new BackgroundLayer(assets, playerCamera, screenCamera, player);
+		weatherLayer = new WeatherLayer(playerCamera, screenCamera);
 		roadEntityLayer = new Layer(true);
 		pedestrianLayer = new Layer(true);
 		carLayer = new Layer(true);
@@ -96,6 +98,7 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 		addLayer(roadEntityLayer);
 		addLayer(pedestrianLayer);
 		addLayer(carLayer);
+		addLayer(weatherLayer);
 		carLayer.addGameObject(player);
 
 		// Road entity spawner initialization
