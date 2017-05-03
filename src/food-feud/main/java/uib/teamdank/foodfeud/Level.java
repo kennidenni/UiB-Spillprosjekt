@@ -45,18 +45,17 @@ public class Level implements Disposable {
 	public void distributePlayers(List<Player> players) {
 		BodyDef bodyDef = new BodyDef();
 		bodyDef.type = BodyType.DynamicBody;
-//		bodyDef.fixedRotation = true;
+		bodyDef.fixedRotation = true;
 		
-		float stepX = (getWidth() - PLAYER_POSITION_MARGIN * 2f) / players.size();
+		float stepX = (getWidth() - PLAYER_POSITION_MARGIN * 2f) / (players.size());
 		for (int i = 0; i < players.size(); i++) 
 		{
-			final Player player = players.get(i);
-			
 			final Vector2 pos = bodyDef.position;
 			pos.y = getHeight();
-			pos.x = PLAYER_POSITION_MARGIN + (stepX * i);
+			pos.x = PLAYER_POSITION_MARGIN + (stepX * (i + .5f));
 			bodyDef.position.set(pos);
 			
+			final Player player = players.get(i);
 			PolygonShape shape = new PolygonShape();
 			shape.setAsBox(player.getWidth() / 2, player.getHeight() / 2);
 			Body body = world.createBody(bodyDef);
