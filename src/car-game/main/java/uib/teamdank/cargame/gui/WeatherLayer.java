@@ -39,7 +39,7 @@ public class WeatherLayer extends Layer {
 		else if (wType == WeatherType.RAIN)
 			wTexture = new Texture(Gdx.files.internal(RAIN));
 		else if (wType == WeatherType.SUN)
-			wTexture = new Texture(Gdx.files.internal(CLOUDS));
+			wTexture = new Texture(Gdx.files.internal(EMPTY));
 		else
 			wTexture = new Texture(Gdx.files.internal(SNOW));
 
