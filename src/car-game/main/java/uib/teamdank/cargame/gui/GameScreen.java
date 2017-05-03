@@ -225,6 +225,7 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 				}
 			}
 		});
+		
 		// update pedestrian layer
 		pedestrianLayer.forEachGameObject(gameObject -> {
 			if (gameObject instanceof RoadEntity
