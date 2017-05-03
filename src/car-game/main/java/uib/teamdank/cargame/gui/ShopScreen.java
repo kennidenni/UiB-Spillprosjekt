@@ -28,29 +28,24 @@ import uib.teamdank.common.util.TextureAtlas;
 public class ShopScreen extends ScreenAdapter {
 
 	private static class CarButton extends ImageButton {
-		private Drawable unlockedImage;
-		private Drawable lockedImage;
 		private boolean unlocked;
 
 		public CarButton(String name, Drawable unlockedImage, Drawable lockedImage) {
-			//super(lockedImage);
 			super(lockedImage, lockedImage, unlockedImage);
-			this.unlockedImage = unlockedImage;
-			this.lockedImage = lockedImage;
+			setDisabled(true);
 			setName(name);
 			setUnlocked(false);
-			if (unlocked) {
-				getImage().setDrawable(unlockedImage);
-			}
 		}
 
 		public void setUnlocked(boolean unlocked) {
 			this.unlocked = unlocked;
 		}
-		
-		public void setNewTexture () {
-			if (unlocked) {
-				getImage().setDrawable(unlockedImage);
+
+		public void updateTexture() {
+			if (unlocked && isChecked()) {
+				setDisabled(true);
+			} else if (unlocked) {
+				setDisabled(false);
 			}
 		}
 	}
@@ -73,36 +68,48 @@ public class ShopScreen extends ScreenAdapter {
 			Vector2 mouse = myStage.screenToStageCoordinates(new Vector2(Gdx.input.getX(), Gdx.input.getY()));
 
 			if (myStage.hit(mouse.x, mouse.y, true) == event.getTarget()) {
-				System.out.println(source.unlocked);
-				if (source.unlocked) {
-					//game.getPlayer().setTexture(source.texture);
-					
+				if (source.unlocked && source.isDisabled()) {
+					game.getPlayer().setTexture(unlockedCarTextures.getRegion(source.getName()));
+					source.updateTexture();
+				} else if (!source.unlocked && game.getPlayer().getInventory().getGold() >= CAR_COST) {
+					game.getPlayer().setTexture(unlockedCarTextures.getRegion(source.getName()));
+					game.getPlayer().getInventory().removeGold(CAR_COST);
+					game.getPlayer().unlockSkin(source.getName());
+					setNewCoinCount(game.getPlayer().getInventory().getGold());
+
+					source.setUnlocked(true);
+					source.setChecked(true);
+					source.updateTexture();
 				} else {
-					source.setNewTexture();
+					source.updateTexture();
 				}
 			}
 		}
 	}
-
+	
+	private final List<CarButton> carButtons = new ArrayList<>();
+	private final int CAR_COST = 1;
+	
 	private Stage stage;
 	private CarGame game;
-
-	private AssetManager assets;
-
-	private ImageButton backButton;
-
-	private final List<CarButton> carButtons = new ArrayList<>();
-
+	
 	private Table menu;
 	private Table cars;
+	private Table coinsTable;
+	
+	private AssetManager assets;
 	private TextureAtlas roadEntityTextures;
 	private TextureAtlas buttonTexture;
-	private ImageButton coinImage;
-	private Table coinsTable;
+	private TextureAtlas lockedCarTextures;
+	private TextureAtlas unlockedCarTextures;
+	
 	private BitmapFont font;
+	private ImageButton coinImage;
+	private ImageButton backButton;
 	private TextButtonStyle textButtonStyle;
 	private TextButton coinsCount;
-	private TextureAtlas lockedCarTextures;
+	private TextButton helpText;
+	
 
 	public ShopScreen(CarGame game) {
 		this.game = game;
@@ -119,6 +126,7 @@ public class ShopScreen extends ScreenAdapter {
 
 		roadEntityTextures = assets.getAtlas("Images/road_entity_sheet.json");
 		lockedCarTextures = assets.getAtlas("Images/locked_car_sheet.json");
+		unlockedCarTextures = assets.getAtlas("Images/car_sheet.json");
 
 		coinImage = setupImage(roadEntityTextures.getRegion("coin"));
 
@@ -133,12 +141,19 @@ public class ShopScreen extends ScreenAdapter {
 		coinsTable.add(coinImage).pad(0, 1600, 900, 0);
 		coinsTable.add(coinsCount).pad(0, 20, 900, 0);
 
+		String help = "You need to click on the car \n to unlock it and select it.\n \n You need " + CAR_COST + " gold \n to unlock a new car";
+		helpText = new TextButton(help, textButtonStyle);
+		helpText.getLabel().setFontScale(3, 3);
+		helpText.pad(0, 1300, 0, 0);
+		
 		setupCars();
 		setupScreen();
 		backListener();
 
 		menu.setFillParent(true);
 		coinsTable.setFillParent(true);
+		helpText.setFillParent(true);
+		stage.addActor(helpText);
 		stage.addActor(menu);
 		stage.addActor(coinsTable);
 		Gdx.input.setInputProcessor(stage);
@@ -185,6 +200,7 @@ public class ShopScreen extends ScreenAdapter {
 	@Override
 	public void render(float delta) {
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+		coinsCount.act(delta);
 		stage.act(delta);
 		stage.draw();
 	}
@@ -199,18 +215,19 @@ public class ShopScreen extends ScreenAdapter {
 		Gdx.input.setInputProcessor(stage);
 
 		final Player player = game.getPlayer();
+		player.unlockSkin("car_forward");
 		coinsCount.setText(String.valueOf(player.getInventory().getGold()));
 		for (CarButton button : carButtons) {
 			button.unlocked = player.hasUnlockedSkin(button.getName());
-				button.setNewTexture();
-
+			button.setChecked(button.unlocked);
+			button.updateTexture();
 		}
-		
 	}
 
 	private void setupCars() {
-		assets.getAtlas("Images/car_sheet.json").forEachRegion((name, texture) -> {
-			CarButton carButton = new CarButton(name, new TextureRegionDrawable(texture), new TextureRegionDrawable(lockedCarTextures.getRegion(name)));
+		unlockedCarTextures.forEachRegion((name, texture) -> {
+			CarButton carButton = new CarButton(name, new TextureRegionDrawable(texture),
+					new TextureRegionDrawable(lockedCarTextures.getRegion(name)));
 			carButton.addListener(new CarListener(carButton));
 			carButtons.add(carButton);
 		});
@@ -227,10 +244,10 @@ public class ShopScreen extends ScreenAdapter {
 		menu.row();
 		menu.add(backButton).width((float) (backButton.getWidth() / 4)).height((float) (backButton.getHeight() / 4))
 				.pad(0, 0, 0, 0);
-		menu.debug();
 	}
 
-	public void setCoins(int i) {
+	public void setNewCoinCount(int i) {
+
 		coinsCount.setText(String.valueOf(i));
 	}
 
