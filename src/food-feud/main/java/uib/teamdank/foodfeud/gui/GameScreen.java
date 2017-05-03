@@ -10,6 +10,7 @@ import uib.teamdank.common.gui.Layer;
 import uib.teamdank.foodfeud.Level;
 import uib.teamdank.foodfeud.LevelLoader;
 import uib.teamdank.foodfeud.Match;
+import uib.teamdank.foodfeud.PhysicsSimulated;
 import uib.teamdank.foodfeud.Player;
 
 /**
@@ -71,6 +72,13 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 
 		checkPauseRequest();
 		camera.update();
+		
+		// Dispose of physics bodies on deleted objects
+		forEachGameObject(gameObject -> {
+			if (gameObject.isMarkedForRemoval() && gameObject instanceof PhysicsSimulated) {
+				level.getWorld().destroyBody(((PhysicsSimulated) gameObject).getBody());
+			}
+		});
 
 		// Update game objects
 		super.update(delta);

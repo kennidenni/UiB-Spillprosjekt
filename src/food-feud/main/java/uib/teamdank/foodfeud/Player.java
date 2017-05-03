@@ -12,7 +12,7 @@ import uib.teamdank.common.ItemHolder;
 /**
  * Represents a player in the game.
  */
-public class Player extends Actor implements ItemHolder {
+public class Player extends Actor implements ItemHolder, PhysicsSimulated {
 	
 	private Body body;
 	
@@ -21,7 +21,7 @@ public class Player extends Actor implements ItemHolder {
 	public Player(String name) {
 		super(100, name);
 		weapons = new Inventory();
-		setTexture(new TextureRegion(new Texture("Images/Matvarer.png"), 53, 48, 57, 57));
+		setTexture(new TextureRegion(new Texture("Images/food_sheet.png"), 53, 48, 57, 57)); // Temporary
 	}
 	
 	public void setBody(Body body) {

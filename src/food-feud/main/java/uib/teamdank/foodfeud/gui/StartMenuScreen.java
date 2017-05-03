@@ -22,7 +22,7 @@ import uib.teamdank.foodfeud.FoodFeud;
 public class StartMenuScreen implements uib.teamdank.common.gui.StartMenuScreen {
 
 
-    private static final String LOGO = "Images/FoodFeudLogo.png";
+    private static final String LOGO = "Images/logo.png";
     private static final String PLAY = "Images/Buttons/ff_start.png";
     private static final String CREDIT = "Images/Buttons/ff_go.png";
     private static final String EXIT = "Images/Buttons/ff_quit.png";
