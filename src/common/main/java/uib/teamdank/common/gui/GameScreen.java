@@ -119,7 +119,8 @@ public class GameScreen implements Screen {
 		// Update game objects
 		for (Layer layer : layers) {
 			layer.forEachGameObject(gameObject -> {
-				updateGameObject(delta, gameObject);
+				gameObject.update(delta);
+				onUpdateGameObject(delta, layer, gameObject);
 			});
 			layer.removeMarkedGameObjects();
 		}
@@ -137,8 +138,8 @@ public class GameScreen implements Screen {
 				
 	}
 
-	protected void updateGameObject(float delta, GameObject gameObject) {
-		gameObject.update(delta);
+	protected void onUpdateGameObject(float delta, Layer layer, GameObject gameObject) {
+		// Can be overridden to perform operations before an update
 	}
 
 }
