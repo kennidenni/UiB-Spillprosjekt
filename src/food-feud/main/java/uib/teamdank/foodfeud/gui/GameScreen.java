@@ -3,6 +3,8 @@ package uib.teamdank.foodfeud.gui;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 
 import uib.teamdank.common.Game;
@@ -32,7 +34,6 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 		this.camera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		this.level = LevelLoader.createFromJson(Gdx.files.internal("Data/field_level.json"));
 		this.match = new Match("Geir", "Bodil", "Arne", "Bertrude");
-		level.distributePlayers(match.getPlayers());
 
 		camera.position.set(level.getWidth() / 2f, level.getHeight() / 2f, 0);
 		camera.zoom = 1.75f;
@@ -41,10 +42,13 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 		addLayer(backgroundLayer);
 		this.playerLayer = new Layer(true);
 		addLayer(playerLayer);
-		
+
+		TextureRegion playerTexture = new TextureRegion(new Texture("Images/food_sheet.png"), 53, 48, 57, 57); // Temporary
 		for (Player player : match.getPlayers()) {
+			player.setTexture(playerTexture);
 			playerLayer.addGameObject(player);
 		}
+		level.distributePlayers(match.getPlayers());
 	}
 
 	private void checkPauseRequest() {

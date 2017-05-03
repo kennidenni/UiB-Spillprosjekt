@@ -1,7 +1,5 @@
 package uib.teamdank.foodfeud;
 
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 
@@ -21,7 +19,6 @@ public class Player extends Actor implements ItemHolder, PhysicsSimulated {
 	public Player(String name) {
 		super(100, name);
 		weapons = new Inventory();
-		setTexture(new TextureRegion(new Texture("Images/food_sheet.png"), 53, 48, 57, 57)); // Temporary
 	}
 	
 	public void setBody(Body body) {
