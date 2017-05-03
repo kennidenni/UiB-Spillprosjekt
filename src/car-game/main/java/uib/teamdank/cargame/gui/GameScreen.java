@@ -212,7 +212,8 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 		// Update pedestrians
 		for (int i = 0; i < pedestrianLayer.getSize(); i++) {
 				Pedestrian p = (Pedestrian) pedestrianLayer.getAllObjects().get(i);
-				p.accelerate();			
+				p.accelerate();	
+				p.restrictHorizontally(backgroundLayer.getRoadLeftX(), backgroundLayer.getRoadRightX());
 		}
 
 		// Check for game over
