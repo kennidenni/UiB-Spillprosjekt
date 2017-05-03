@@ -2,7 +2,6 @@ package uib.teamdank.foodfeud.gui;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 
@@ -26,6 +25,7 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 		
 		this.camera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		this.level = LevelLoader.createFromJson(Gdx.files.internal("Data/field_level.json"));
+		camera.position.add(camera.viewportWidth / 2, camera.viewportHeight / 2, 0);
 		
 		this.backgroundLayer = new BackgroundLayer(level);
 		addLayer(backgroundLayer);
@@ -59,6 +59,7 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 		
 		// Update game objects
 		super.update(delta);
+		level.updateWorld();
 		
 	}
 
