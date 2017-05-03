@@ -7,43 +7,29 @@ import uib.teamdank.common.Item;
  * weight and thrower) and inflicts damage on impact.
  */
 public class Weapon extends Item {
-
-	private double dmg, weight;
 	
-	/**
-	 * 
-	 * @param name
-	 * @param descr weapon description
-	 * @param dmg damage
-	 * @param weight
-	 */
-	public Weapon(String name, String descr, double dmg, double weight) {
-		this(name, descr);
-		this.dmg = dmg;
-		this.weight = weight;
+	public enum weaponProjectile{
+		Reg_Ballistic,
+		Burst_Ballistic,
+		//rpg etc..
+		Heavy_Ballistic,
+		Spray_Ballistic;
+		
 	}
+	
+	private weaponProjectile proj;
 	
 	/**
 	 * Creates a weapon that does no damage and weighs nothing.
 	 * @param name
 	 * @param descr weapon description
 	 */
-    public Weapon(String name, String descr) {
+    public Weapon(String name, String descr, weaponProjectile p) {
         super(name, descr);
     }
-
-    /**
-	 * @return amount of damage this weapon inflicts
-	 */
-	public double getDamage() {
-		return dmg;
-	}
-
-	/**
-	 * @return the weight of this weapon
-	 */
-	public double getWeight() {
-		return weight;
+	
+	public weaponProjectile getProjectileType(){
+		return proj;
 	}
 	
 }
