@@ -216,7 +216,7 @@ public class GameObject {
 	public void setY(float y){
 		pos.y = y;
 	}
-	public boolean Contains(GameObject x) {
+	public boolean contains(GameObject x) {
 		return x.getX() >= getX() && x.getX() <= (getX() + getWidth()) && x.getY() >= getY() && x.getY() <= (getY() + getHeight());
 	}
 
