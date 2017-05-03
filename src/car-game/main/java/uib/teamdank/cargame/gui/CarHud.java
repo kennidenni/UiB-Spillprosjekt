@@ -40,8 +40,6 @@ public class CarHud {
 	private Table newHighscoreTable;
 	private TextureAtlas roadEntityTextures;
 	
-	private boolean newHighscoreHasBeenInit = false;
-	
 
 	public CarHud() {
 		stage = new Stage(new FitViewport(1920, 1080));
@@ -73,6 +71,8 @@ public class CarHud {
 		scoreTable.setFillParent(true);
 		
 		coinsTable.setFillParent(true);
+		
+		newHighscoreInit();
 		
 		stage.addActor(scoreTable);
 		stage.addActor(fuelTable);
@@ -116,8 +116,7 @@ public class CarHud {
 		bar.act(delta);
 		highscore.act(delta);
 		coinsCount.act(delta);
-		if(newHighscoreHasBeenInit)
-			newHighscoreMessage.act(delta);
+		newHighscoreMessage.act(delta);
 		stage.act(delta);
 		stage.draw();
 	}
@@ -135,16 +134,16 @@ public class CarHud {
 		coinsCount.setText(String.valueOf(i));
 	}
 	
-	public void newHighscore() {
+	public void newHighscoreInit() {
 		newHighscoreMessage = new TextButton("NEW HIGHSCORE!", textButtonStyle);
 		newHighscoreMessage.getLabel().setFontScale(5, 5);
+		
 		newHighscoreTable = new Table();
 		newHighscoreTable.add(newHighscoreMessage).width(300).pad(0, 0, 800, 0);
 		newHighscoreTable.setFillParent(true);
+		newHighscoreTable.setVisible(false);
 		
 		stage.addActor(newHighscoreTable);
-		
-		newHighscoreHasBeenInit = true;
 	}
 	
 	public void setVisibleNewHighscore(boolean visible) {

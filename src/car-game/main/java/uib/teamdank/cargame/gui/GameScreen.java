@@ -244,12 +244,12 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 		hud.setCoins(player.getInventory().getGold());
 		
 		if(!newHighscoreHasBeenInit && player.getScore().getScore() > score.get(0).getScore()){
-			hud.newHighscore();
+			hud.setVisibleNewHighscore(true);
 			newHighscoreHasBeenInit = true;
 			millis = System.currentTimeMillis();
 		}
 		
-		// Show text 1 sec, hide in 0.5 sec, then show again in 1 sec
+		// Show message in 1 sec, hide in 0.5 sec, then show again in 1 sec
 		if(!newHighscoreIsOver10secpassed && newHighscoreHasBeenInit){
 			long diff = (System.currentTimeMillis() - millis)/100;
 			if(diff >= 25){
