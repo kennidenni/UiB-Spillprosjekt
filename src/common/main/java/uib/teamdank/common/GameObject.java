@@ -17,6 +17,8 @@ public class GameObject {
 	private float scale;
 	private boolean flipHorizontally;
 	private boolean flipVertically;
+	private float xPos;
+	private float yPos;
 
 	/**
 	 * Creates a GameObject that spans no area, in the origin (0, 0).
@@ -200,6 +202,24 @@ public class GameObject {
 	// TODO: Subclasses must remember to override
 	public boolean isSolid() {
 		return false;
+	}
+	
+	public float getX(){
+		return xPos;
+	}
+	
+	public float getY(){
+		return yPos;
+	}
+	
+	public void setX(float x){
+		xPos = x;
+	}
+	public void setY(float y){
+		yPos = y;
+	}
+	public boolean posContains(float x, float y) {
+		return x >= xPos && x <= (xPos + getWidth()) && y >= yPos && y <= (yPos + getHeight());
 	}
 
 }
