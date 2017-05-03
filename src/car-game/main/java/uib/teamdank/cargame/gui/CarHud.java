@@ -7,6 +7,9 @@ import com.badlogic.gdx.graphics.Pixmap.Format;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.ProgressBar;
@@ -27,6 +30,7 @@ public class CarHud {
 	private ImageButton fuelImage;
 	private ImageButton coinImage;
 	private ProgressBar bar;
+	private ImageButton muteButton;
 	
 	private BitmapFont font;
 	private TextButtonStyle textButtonStyle;
@@ -37,9 +41,11 @@ public class CarHud {
 	private Table scoreTable;
 	private Table fuelTable;
 	private Table coinsTable;
+	private Table muteTable;
 	private Table newHighscoreTable;
 	private TextureAtlas roadEntityTextures;
-	
+
+	private boolean muted = false;
 
 	public CarHud() {
 		stage = new Stage(new FitViewport(1920, 1080));
@@ -50,7 +56,8 @@ public class CarHud {
 		coinImage = setupImage(roadEntityTextures.getRegion("coin"));
 		
 		setUpFuel();
-		
+		setUpMute();
+
 		font = new BitmapFont();
 		textButtonStyle = new TextButtonStyle();
 		textButtonStyle.font = font;
@@ -77,6 +84,14 @@ public class CarHud {
 		stage.addActor(scoreTable);
 		stage.addActor(fuelTable);
 		stage.addActor(coinsTable);
+		stage.addActor(muteTable);
+	}
+
+	public boolean isMuted() {
+		return muted;
+	}
+
+	public void setAsInputProcessor() {
 		Gdx.input.setInputProcessor(stage);
 	}
 
@@ -110,6 +125,46 @@ public class CarHud {
 	private ImageButton setupImage(TextureRegion textureRegion) {
 		TextureRegionDrawable myTexRegionDrawable = new TextureRegionDrawable(textureRegion);
 		return new ImageButton(myTexRegionDrawable);
+	}
+
+	private void setUpMute() {
+		TextureAtlas muteTextures = assets.getAtlas("Images/mute.json");
+		muteButton = new ImageButton(
+				new TextureRegionDrawable(muteTextures.getRegion("unmuted")),
+				new TextureRegionDrawable(muteTextures.getRegion("unmuted")),
+				new TextureRegionDrawable(muteTextures.getRegion("muted"))
+		);
+
+		muteTable = new Table();
+		muteTable.add(muteButton).pad(0, 300, 1900, 0);
+
+		muteButton.addListener(new InputListener() {
+			@Override
+			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+				return true;
+			}
+
+			@Override
+			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+				Stage stage = event.getTarget().getStage();
+				Vector2 mouse = stage.screenToStageCoordinates(new Vector2(Gdx.input.getX(), Gdx.input.getY()));
+
+				if (stage.hit(mouse.x, mouse.y, true) == event.getTarget()) {
+					toggleMute();
+				}
+			}
+		});
+	}
+
+	private void toggleMute() {
+		if(muted) {
+			muted = false;
+			muteButton.setChecked(false);
+		}
+		else {
+			muted = true;
+			muteButton.setChecked(true);
+		}
 	}
 
 	public void render(float delta) {

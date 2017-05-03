@@ -15,6 +15,8 @@ public class AudioManager implements Disposable {
 	private final Map<String, Music> tracks = new HashMap<>();
 	private final Map<String, Sound> sounds = new HashMap<>();
 
+	private boolean muted = false;
+
 	@Override
 	public void dispose() {
 		tracks.forEach((name, track) -> track.dispose());
@@ -43,13 +45,20 @@ public class AudioManager implements Disposable {
 		getTrack(name).play();
 	}
 
+	public void mute() {
+		boolean muted = true;
+		tracks.forEach((name, track) -> track.setVolume(0));
+		sounds.forEach((name, sound) -> sound.stop());
+	}
+
 	public void pauseAll() {
 		tracks.forEach((name, track) -> track.pause());
 		sounds.forEach((name, sound) -> sound.pause());
 	}
 
 	public void playSound(String name) {
-		getSound(name).play();
+		if(!muted)
+			getSound(name).play();
 	}
 
 	public void playTrack(String name) {
@@ -79,4 +88,8 @@ public class AudioManager implements Disposable {
 		getTrack(name).setLooping(false);
 	}
 
+	public void unmute() {
+		boolean muted = false;
+		tracks.forEach((name, track) -> track.setVolume(1));
+	}
 }
