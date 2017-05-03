@@ -130,7 +130,7 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 		score = new LinkedList<>(Arrays.asList(Score.createFromJson(handle)));
 		numTimesNewHighscoreMessage = 0;
 		onOffNewHighscoreMessage = new TimedEvent(0.5f, true, () -> {
-			if(player.getScore().getScore() > score.get(0).getScore()-290) {
+			if(player.getScore().getScore() > score.get(0).getScore()) {
 				hud.setVisibleNewHighscore(!hud.isVisibleNewHighscore());
 				numTimesNewHighscoreMessage++;
 				if(numTimesNewHighscoreMessage >= AMOUNT_NEW_HIGHSCORE_MESSAGES*2) {
