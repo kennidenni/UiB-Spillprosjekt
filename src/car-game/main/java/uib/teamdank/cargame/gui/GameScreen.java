@@ -30,6 +30,8 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 
 	private static final int CAR_VERTICAL_POSITION = 25;
 
+	private static final float DEFAULT_VOLUME = 0.5f;
+
 	private final AssetManager assets;
 
 	private final OrthographicCamera playerCamera;
@@ -42,7 +44,8 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 	private final CarHud hud;
 
 	private final Sound carSound;
-	private float carVolume = 0.5f;
+	private final long carSoundId;
+	private float carVolume = DEFAULT_VOLUME;
 
 	private final Player player;
 
@@ -106,8 +109,7 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 
 		// Sounds
 		carSound = Gdx.audio.newSound(Gdx.files.internal("Sounds/car_sound.wav"));
-		carSound.play(carVolume);
-		carSound.loop();
+		carSoundId = carSound.loop(carVolume);
 
 	}
 
@@ -117,6 +119,14 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 			getGame().setScreen(getGame().getPauseMenuScreen());
 		}
 		return pause;
+	}
+
+	private void checkForMute() {
+		if(hud.isMuted())
+			carVolume = 0.0f;
+		else
+			carVolume = DEFAULT_VOLUME;
+		carSound.setVolume(carSoundId, carVolume);
 	}
 
 	@Override
@@ -160,6 +170,7 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 
 	@Override
 	public void show() {
+		hud.setAsInputProcessor();
 		carSound.resume();
 	}
 
@@ -193,6 +204,7 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 
 		// Player input
 		checkForPauseRequest();
+		checkForMute();
 		boolean inputTurnLeft = Gdx.input.isKeyPressed(Keys.A) || Gdx.input.isKeyPressed(Keys.LEFT);
 		boolean inputTurnRight = Gdx.input.isKeyPressed(Keys.D) || Gdx.input.isKeyPressed(Keys.RIGHT);
 		if (inputTurnLeft) {
@@ -220,6 +232,7 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 		if (player.isOutOfFuel() && player.getVelocity().y == 0) {
 			getGame().setScreen(new EndingScreen((CarGame) getGame()));
 		}
+
 
 	}
 
