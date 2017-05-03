@@ -37,7 +37,7 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 		this.match = new Match("Geir", "Bodil", "Arne", "Bertrude");
 
 		camera.position.set(level.getWidth() / 2f, level.getHeight() / 2f, 0);
-		camera.zoom = 1.75f;
+		camera.zoom = 1f;
 
 		this.backgroundLayer = new BackgroundLayer(level);
 		addLayer(backgroundLayer);
