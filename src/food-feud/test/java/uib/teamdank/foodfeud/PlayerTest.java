@@ -12,8 +12,7 @@ public class PlayerTest {
 	
 	@Before
 	public void setUp() {
-		int h = 100;
-		player = new Player(h, "sturle");	
+		player = new Player("sturle");
 	}
 
 	@Test
@@ -32,6 +31,7 @@ public class PlayerTest {
 	public void getHealth(){
 		assertThat(player.getHealth(), is(equalTo(100)));
 	}
+	
 	@Test
 	public void getName(){
 		assertThat(player.getName(), is(equalTo("sturle")));

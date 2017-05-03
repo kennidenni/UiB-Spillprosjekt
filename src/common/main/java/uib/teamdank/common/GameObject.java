@@ -1,5 +1,6 @@
 package uib.teamdank.common;
 
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 
@@ -15,6 +16,7 @@ public class GameObject {
     private final Vector2 velocity = new Vector2();
 	private Animation animation;
 	private float scale;
+	private float angle;
 	private boolean flipHorizontally;
 	private boolean flipVertically;
 
@@ -173,6 +175,14 @@ public class GameObject {
 		return flipVertically;
 	}
 	
+	public void setAngle(float angle) {
+		this.angle = angle;
+	}
+	
+	public float getAngle() {
+		return angle;
+	}
+	
     /**
      * Sets the texture of this object
      * @param texture
@@ -184,6 +194,47 @@ public class GameObject {
 			this.animation = Animation.createSingleFramed(texture);
 		}
     }
+	
+	/**
+	 * Renders this game object. Renders the texture returned
+	 * by {@link #getTexture()} by default.
+	 */
+	public void render(SpriteBatch batch, float delta) {
+		renderTexture(batch, delta, getTexture(), 0, 0);
+	}
+	
+	protected void renderTexture(SpriteBatch batch, float delta, TextureRegion texture, float xOffset, float yOffset) {
+		if (texture != null) {
+			final Vector2 pos = getPosisiton();
+			final float width = getWidth();
+			final float height = getHeight();
+			final float flipX = getFlipHorizontally() ? -1 : 1;
+			final float flipY = getFlipVertically() ? -1 : 1;
+			batch.draw(texture, pos.x + xOffset, pos.y + yOffset, width / 2, height / 2, width, height, flipX, flipY, getAngle());
+		}
+	}
+	
+	/**
+	 * Updates this game object. Updates movement
+	 * and animation by default.
+	 */
+	public void update(float delta) {
+		updateMovement(delta);
+		updateAnimation(delta);
+	}
+	
+	protected void updateMovement(float delta) {
+		if (isMovable()) {
+			pos.x += (velocity.x * delta);
+			pos.y += (velocity.y * delta);
+		}
+	}
+	
+	protected void updateAnimation(float delta) {
+		if (getAnimation() != null) {
+			getAnimation().update(delta);
+		}
+	}
 
 	/**
 	 * 

@@ -9,6 +9,7 @@ import uib.teamdank.cargame.Fuel;
 import uib.teamdank.cargame.Hole;
 import uib.teamdank.cargame.Puddle;
 import uib.teamdank.common.GameObject;
+import uib.teamdank.common.util.AudioManager;
 import uib.teamdank.common.util.Generator;
 import uib.teamdank.common.util.TextureAtlas;
 
@@ -19,11 +20,11 @@ import uib.teamdank.common.util.TextureAtlas;
 public class RoadEntityGenerator implements Generator<GameObject> {
 	private final List<Generator<GameObject>> entityGenerators = new ArrayList<>();
 
-	public RoadEntityGenerator(TextureAtlas roadEntityAtlas) {
-		this.entityGenerators.add(rnd -> new Fuel(roadEntityAtlas.getRegion("gastank")));
-		this.entityGenerators.add(rnd -> new Hole(roadEntityAtlas.getRegion("hole")));
-		this.entityGenerators.add(rnd -> new Puddle(roadEntityAtlas.getRegion("puddle")));
-		this.entityGenerators.add(rnd -> new Coin(roadEntityAtlas.getRegion("coin")));
+	public RoadEntityGenerator(AudioManager audio, TextureAtlas roadEntityAtlas) {
+		this.entityGenerators.add(rnd -> new Fuel(audio, roadEntityAtlas));
+		this.entityGenerators.add(rnd -> new Hole(roadEntityAtlas));
+		this.entityGenerators.add(rnd -> new Puddle(audio, roadEntityAtlas));
+		this.entityGenerators.add(rnd -> new Coin(audio, roadEntityAtlas));
 	}
 
 	@Override
