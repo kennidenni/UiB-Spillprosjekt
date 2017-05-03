@@ -39,12 +39,12 @@ public class LoopingBackground {
 	}
 	
 	public int getWidth() {
-		return (int) (texture.getHeight() * scale);
+		return (int) (texture.getWidth() * scale);
 	}
 	
 	private int getHeight() {
 		// Method is private because the background loops
 		// vertically, which makes the height obsolete
-		return (int) (texture.getWidth() * scale);
+		return (int) (texture.getHeight() * scale);
 	}
 }
