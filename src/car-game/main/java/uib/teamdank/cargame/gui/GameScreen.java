@@ -1,8 +1,13 @@
 package uib.teamdank.cargame.gui;
 
+import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.List;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector2;
 import uib.teamdank.cargame.CarGame;
@@ -13,6 +18,7 @@ import uib.teamdank.cargame.util.RoadEntityGenerator;
 import uib.teamdank.cargame.util.ScrollingSpawner;
 import uib.teamdank.cargame.util.PedestrianGenerator;
 import uib.teamdank.common.Game;
+import uib.teamdank.common.Score;
 import uib.teamdank.common.gui.Layer;
 import uib.teamdank.common.util.AssetManager;
 import uib.teamdank.common.util.TextureAtlas;
@@ -22,6 +28,7 @@ import uib.teamdank.common.util.TimedEvent;
  * The main gameplay screen.
  */
 public class GameScreen extends uib.teamdank.common.gui.GameScreen {
+	private static final String SCORES = "TeamDank/Carl the Crasher/highscore.json";
 	private static final int AMOUNT_PER_SCORE = 1;
 	private static final float TIME_BETWEEN_SCORE = 1f;
 
@@ -48,6 +55,10 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 
 	private final ScrollingSpawner pedestrianSpawner;
 	private final ScrollingSpawner roadEntitySpawner;
+	private List<Score> score;
+	private boolean newHighscoreHasBeenInit = false;
+	private boolean newHighscoreIsOver10secpassed = false;
+	private long millis;
 
 	public GameScreen(Game game) {
 		super(game);
@@ -103,6 +114,10 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 
 		// HUD
 		this.hud = new CarHud();
+		FileHandle handle = Gdx.files.external(SCORES);
+		if(!handle.exists())
+			handle = Gdx.files.internal("Data/highscore.json");
+		score = new LinkedList<>(Arrays.asList(Score.createFromJson(handle)));
 
 		// Sounds
 		carSound = Gdx.audio.newSound(Gdx.files.internal("Sounds/car_sound.wav"));
@@ -227,5 +242,23 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 		hud.setCurrentFuel(player.getHealth(), player.getMaxHealth());
 		hud.setScore(player.getScore().getScore());
 		hud.setCoins(player.getInventory().getGold());
+		
+		if(!newHighscoreHasBeenInit && player.getScore().getScore() > score.get(0).getScore()){
+			hud.setVisibleNewHighscore(true);
+			newHighscoreHasBeenInit = true;
+			millis = System.currentTimeMillis();
+		}
+		
+		// Show message in 1 sec, hide in 0.5 sec, then show again in 1 sec
+		if(!newHighscoreIsOver10secpassed && newHighscoreHasBeenInit){
+			long diff = (System.currentTimeMillis() - millis)/100;
+			if(diff >= 25){
+				newHighscoreIsOver10secpassed = true;
+				hud.setVisibleNewHighscore(false);
+			} else if (hud.isVisibleNewHighscore() && diff >= 10 && diff < 15)
+				hud.setVisibleNewHighscore(false);
+			else if(!hud.isVisibleNewHighscore() && diff >= 15) 
+				hud.setVisibleNewHighscore(true);
+		}
 	}
 }
