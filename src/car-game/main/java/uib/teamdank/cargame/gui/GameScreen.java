@@ -11,9 +11,6 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector2;
 
 import uib.teamdank.cargame.CarGame;
-import uib.teamdank.cargame.Coin;
-import uib.teamdank.cargame.Fuel;
-import uib.teamdank.cargame.Pedestrian;
 import uib.teamdank.cargame.Player;
 import uib.teamdank.cargame.RoadEntity;
 import uib.teamdank.cargame.util.PedestrianGenerator;
@@ -44,11 +41,6 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 	private static final String MUSIC_TRACK = "Tracks/happy_bgmusic.wav";
 	private static final String ENGINE_TRACK = "Tracks/car_drive.wav";
 	
-	private static final String CRASH_SOUND = "Sounds/car_crash.mp3";
-	private static final String PEDESTRIAN_SOUND = "Sounds/dead_pedestrian.mp3";
-	private static final String COIN_SOUND = "Sounds/coin_sound.wav";
-	private static final String FUEL = "Sounds/fuel.wav";
-	
 	private final AssetManager assets;
 
 	private final OrthographicCamera playerCamera;
@@ -77,11 +69,6 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 		TextureAtlas roadEntityTextures = assets.getAtlas("Images/road_entity_sheet.json");
 		TextureAtlas pedestrianTextures = assets.getAtlas("Images/Game/walkers.json");
 		
-		assets.getAudio().preloadSounds(CRASH_SOUND,
-										PEDESTRIAN_SOUND,
-										COIN_SOUND,
-										FUEL);
-
 		// Cameras
 		this.playerCamera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		this.screenCamera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
@@ -114,14 +101,14 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 
 		// Road entity spawner initialization
 		this.roadEntitySpawner = new ScrollingSpawner(roadEntityLayer, playerCamera,
-				new RoadEntityGenerator(roadEntityTextures));
+				new RoadEntityGenerator(assets.getAudio(), roadEntityTextures));
 		roadEntitySpawner.setHorizontalPositionRange(backgroundLayer.getRoadLeftX(), backgroundLayer.getRoadRightX());
 		roadEntitySpawner.setChanceOfSpawn(.01f);
 		roadEntitySpawner.setExtraVerticalSpaceBetweenSpawns(50);
 
 		// pedestrian spawner initialization
 		this.pedestrianSpawner = new ScrollingSpawner(pedestrianLayer, playerCamera,
-				new PedestrianGenerator(pedestrianTextures));
+				new PedestrianGenerator(assets.getAudio(), pedestrianTextures));
 		pedestrianSpawner.setHorizontalPositionRange(backgroundLayer.getRoadLeftX(), backgroundLayer.getRoadRightX());
 		pedestrianSpawner.setChanceOfSpawn(.01f);
 		pedestrianSpawner.setExtraVerticalSpaceBetweenSpawns(50);
@@ -154,26 +141,12 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 		assets.getAudio().pauseAll();
 	}
 
-	private void itemDrivenOver(GameObject gameObject) {
-		if (gameObject instanceof Coin) {
-			assets.getAudio().playSound(COIN_SOUND);
-		}
-		if (gameObject instanceof Fuel) {
-			assets.getAudio().playSound(FUEL);
-		}
-		if (gameObject instanceof Pedestrian) {
-			assets.getAudio().playSound(PEDESTRIAN_SOUND);
-		}
-	}
-
 	@Override
 	protected void onUpdateGameObject(float delta, Layer layer, GameObject gameObject) {
 	
 		if (layer == roadEntityLayer || layer == pedestrianLayer) {
-			if (gameObject instanceof RoadEntity
-					&& player.contains(gameObject)) {
+			if (gameObject instanceof RoadEntity && player.contains(gameObject)) {
 				((RoadEntity) gameObject).drivenOverBy(player);
-				itemDrivenOver(gameObject);
 			}
 		}
 		
