@@ -1,96 +1,47 @@
 package uib.teamdank.cargame;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import uib.teamdank.common.Actor;
 
+import uib.teamdank.common.Actor;
+import uib.teamdank.common.util.AudioManager;
 
 /**
  * A pedestrian in the road. Has positive effects if driven over by the
  * {@link Player}.
  */
 public class Pedestrian extends Actor implements RoadEntity {
-	private final long score;
-	private final float VERTICAL_TOP_SPEED;
-	private final float VERTICAL_ACCELERATION;
-	private final float HORIZONTAL_TOP_SPEED;
-	private final float HORIZONTAL_ACCELERATION;
 
-	public Pedestrian() {
-		super();
-		this.score = 1;
-		this.VERTICAL_ACCELERATION = 40f;
-		this.VERTICAL_TOP_SPEED = 400f;
-		this.HORIZONTAL_ACCELERATION = 20f;
-		this.HORIZONTAL_TOP_SPEED = 100f;
-	}
+	private static final String SOUND = "Sounds/dead_pedestrian.mp3";
 
-	public Pedestrian(float vertSpd, float horiSpd, long sc, boolean goLeft, TextureRegion texture) {
-		super();
+	private final AudioManager audioManager;
+	private boolean wasDrivenOver = false;
+
+	private final long scoreBonus;
+
+	public Pedestrian(AudioManager audioManager, long scoreBonus, float vx, float vy, boolean randomHorizontalDirection, TextureRegion texture) {
+		this.audioManager = audioManager;
 		setTexture(texture);
 		setScale(.9f);
-		this.score = sc;
-		this.isMovable();
-		if (goLeft) {
-			this.VERTICAL_ACCELERATION = -50f;
-			this.VERTICAL_TOP_SPEED = -vertSpd;
-			this.HORIZONTAL_ACCELERATION = -20f;
-			this.HORIZONTAL_TOP_SPEED = -horiSpd;
-		} else {
-			this.VERTICAL_ACCELERATION = 50f;
-			this.VERTICAL_TOP_SPEED = vertSpd;
-			this.HORIZONTAL_ACCELERATION = 20f;
-			this.HORIZONTAL_TOP_SPEED = horiSpd;
+
+		getVelocity().set(vx, vy);
+		if (randomHorizontalDirection) {
+			getVelocity().x *= -1;
+			setFlipHorizontally(true);
 		}
+		this.scoreBonus = scoreBonus;
+
+		audioManager.preloadSounds(SOUND);
 	}
 
-	public void accelerate() {
-		accelerateVertical();
-		accelerateHorizontal();
-	}
-
-	private void accelerateHorizontal(){
-		if (HORIZONTAL_TOP_SPEED > 0) {
-			if (getVelocity().x != HORIZONTAL_TOP_SPEED) {
-				if (getVelocity().x > HORIZONTAL_TOP_SPEED) {
-					getVelocity().x = HORIZONTAL_TOP_SPEED;
-				} else {
-					getVelocity().x += HORIZONTAL_ACCELERATION;
-				}
-			}
-		} else {
-			if (getVelocity().x != HORIZONTAL_TOP_SPEED) {
-				if (getVelocity().x > HORIZONTAL_TOP_SPEED) {
-					getVelocity().x = HORIZONTAL_TOP_SPEED;
-				} else {
-					getVelocity().x -= HORIZONTAL_ACCELERATION;
-				}
-			}
-		}
-	}
-
-	private void accelerateVertical(){
-		if (getVelocity().y != VERTICAL_TOP_SPEED) {
-			if (getVelocity().y > VERTICAL_TOP_SPEED) {
-				getVelocity().y = VERTICAL_TOP_SPEED;
-			} else {
-				getVelocity().y += VERTICAL_ACCELERATION;
-			}
-		}
-	}
 	@Override
 	public void drivenOverBy(Player player) {
-		player.getScore().addToScore(this.score);
+		if (!wasDrivenOver) {
+			player.getScore().addToScore(this.scoreBonus);
+			audioManager.playSound(SOUND);
+			wasDrivenOver = true;
+		}
 		this.markForRemoval();
 
 	}
-	public long getScore() {
-		return score;
-
-	}
 	
-	@Override
-	public void update(float delta) {
-		super.update(delta);
-		accelerate();
-	}
 }

@@ -11,12 +11,8 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector2;
 
 import uib.teamdank.cargame.CarGame;
-import uib.teamdank.cargame.Coin;
-import uib.teamdank.cargame.Fuel;
-import uib.teamdank.cargame.Pedestrian;
 import uib.teamdank.cargame.Player;
 import uib.teamdank.cargame.RoadEntity;
-import uib.teamdank.cargame.util.GameSounds;
 import uib.teamdank.cargame.util.PedestrianGenerator;
 import uib.teamdank.cargame.util.RoadEntityGenerator;
 import uib.teamdank.cargame.util.ScrollingSpawner;
@@ -33,6 +29,7 @@ import uib.teamdank.common.util.TimedEvent;
  */
 public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 	private static final String SCORES = "TeamDank/Carl the Crasher/highscore.json";
+	private static final int AMOUNT_NEW_HIGHSCORE_MESSAGES = 4;
 	
 	private static final int AMOUNT_PER_SCORE = 1;
 	private static final float TIME_BETWEEN_SCORE = 1f;
@@ -41,7 +38,10 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 	private static final float TIME_BETWEEN_FUEL_LOSS = .2f;
 
 	private static final int CAR_VERTICAL_POSITION = 25;
-
+	
+	private static final String MUSIC_TRACK = "Tracks/happy_bgmusic.wav";
+	private static final String ENGINE_TRACK = "Tracks/car_drive.wav";
+	
 	private final AssetManager assets;
 
 	private final OrthographicCamera playerCamera;
@@ -52,23 +52,14 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 	private final Layer pedestrianLayer;
 	private final Layer carLayer;
 	private final CarHud hud;
-
-	private final GameSounds bgMusic;
-	private final GameSounds car_drive;
-	
-	private final GameSounds car_crash;
-	private final GameSounds coin_sound;
-	private final GameSounds dead_ped;
-	private final GameSounds fuel;
 	
 	private final Player player;
 
 	private final ScrollingSpawner pedestrianSpawner;
 	private final ScrollingSpawner roadEntitySpawner;
 	private List<Score> score;
-	private boolean newHighscoreHasBeenInit = false;
-	private boolean newHighscoreIsOver10secpassed = false;
-	private long millis;
+	private int numTimesNewHighscoreMessage;
+	private TimedEvent onOffNewHighscoreMessage;
 
 	public GameScreen(Game game) {
 		super(game);
@@ -77,7 +68,7 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 		TextureAtlas carTextures = assets.getAtlas("Images/car_sheet.json");
 		TextureAtlas roadEntityTextures = assets.getAtlas("Images/road_entity_sheet.json");
 		TextureAtlas pedestrianTextures = assets.getAtlas("Images/Game/walkers.json");
-
+		
 		// Cameras
 		this.playerCamera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		this.screenCamera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
@@ -110,14 +101,14 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 
 		// Road entity spawner initialization
 		this.roadEntitySpawner = new ScrollingSpawner(roadEntityLayer, playerCamera,
-				new RoadEntityGenerator(roadEntityTextures));
+				new RoadEntityGenerator(assets.getAudio(), roadEntityTextures));
 		roadEntitySpawner.setHorizontalPositionRange(backgroundLayer.getRoadLeftX(), backgroundLayer.getRoadRightX());
 		roadEntitySpawner.setChanceOfSpawn(.01f);
 		roadEntitySpawner.setExtraVerticalSpaceBetweenSpawns(50);
 
 		// pedestrian spawner initialization
 		this.pedestrianSpawner = new ScrollingSpawner(pedestrianLayer, playerCamera,
-				new PedestrianGenerator(pedestrianTextures));
+				new PedestrianGenerator(assets.getAudio(), pedestrianTextures));
 		pedestrianSpawner.setHorizontalPositionRange(backgroundLayer.getRoadLeftX(), backgroundLayer.getRoadRightX());
 		pedestrianSpawner.setChanceOfSpawn(.01f);
 		pedestrianSpawner.setExtraVerticalSpaceBetweenSpawns(50);
@@ -128,26 +119,20 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 		if(!handle.exists())
 			handle = Gdx.files.internal("Data/highscore.json");
 		score = new LinkedList<>(Arrays.asList(Score.createFromJson(handle)));
+		numTimesNewHighscoreMessage = 0;
+		onOffNewHighscoreMessage = new TimedEvent(0.5f, true, () -> {
+			if(player.getScore().getScore() > score.get(0).getScore()) {
+				hud.setVisibleNewHighscore(!hud.isVisibleNewHighscore());
+				numTimesNewHighscoreMessage++;
+				if(numTimesNewHighscoreMessage >= AMOUNT_NEW_HIGHSCORE_MESSAGES*2) {
+					onOffNewHighscoreMessage.setLoop(false);
+					hud.setVisibleNewHighscore(false);
+				}
+			}
+		});
+		addTimedEvent(onOffNewHighscoreMessage);
+		
 
-		// Music/long audio files
-		bgMusic = new GameSounds();
-		car_drive = new GameSounds();
-		
-		bgMusic.addMusic("happy_bgmusic.wav");
-		car_drive.addMusic("car_drive.wav");
-		
-		// Sounds
-		car_crash = new GameSounds();
-		car_crash.addSound("car_crash.mp3");
-		
-		dead_ped = new GameSounds();
-		dead_ped.addSound("dead_pedestrian.mp3");
-		
-		coin_sound = new GameSounds();
-		coin_sound.addSound("coin_sound.wav");
-		
-		fuel = new GameSounds();
-		fuel.addSound("fuel.wav");
 	}
 
 	private boolean checkForPauseRequest() {
@@ -162,47 +147,19 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 	public void dispose() {
 		super.dispose();
 		assets.dispose();
-
-		bgMusic.disposeMusic();
-		car_drive.disposeMusic();
-		
-		car_crash.disposeSound();
-		dead_ped.disposeSound();
-		coin_sound.disposeSound();
-		fuel.disposeSound();
 	}
 
 	@Override
 	public void hide() {
-		bgMusic.pauseMusic();
-		car_drive.pauseMusic();
-		
-		car_crash.pauseSound();
-		dead_ped.pauseSound();
-		coin_sound.pauseSound();
-		fuel.pauseSound();
-	}
-
-	private void itemDrivenOver(GameObject gameObject) {
-		if (gameObject instanceof Coin) {
-			coin_sound.playSound();
-		}
-		if (gameObject instanceof Fuel) {
-			fuel.playSound();
-		}
-		if (gameObject instanceof Pedestrian) {
-			dead_ped.playSound();
-		}
+		assets.getAudio().pauseAll();
 	}
 
 	@Override
 	protected void onUpdateGameObject(float delta, Layer layer, GameObject gameObject) {
 	
 		if (layer == roadEntityLayer || layer == pedestrianLayer) {
-			if (gameObject instanceof RoadEntity
-					&& player.contains(gameObject)) {
+			if (gameObject instanceof RoadEntity && player.contains(gameObject)) {
 				((RoadEntity) gameObject).drivenOverBy(player);
-				itemDrivenOver(gameObject);
 			}
 		}
 		
@@ -237,8 +194,8 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 
 	@Override
 	public void show() {
-		bgMusic.playMusic();
-		car_drive.playMusic();
+		assets.getAudio().playTrack(MUSIC_TRACK);
+		assets.getAudio().playTrack(ENGINE_TRACK);
 		
 	}
 	
@@ -274,7 +231,6 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 		// Check for game over
 		if (player.isOutOfFuel() && player.getVelocity().y == 0) {
 			getGame().setScreen(new EndingScreen((CarGame) getGame()));
-			car_crash.playSound();
 		}
 
 	}
@@ -283,24 +239,6 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 		hud.setCurrentFuel(player.getHealth(), player.getMaxHealth());
 		hud.setScore(player.getScore().getScore());
 		hud.setCoins(player.getInventory().getGold());
-		
-		if(!newHighscoreHasBeenInit && player.getScore().getScore() > score.get(0).getScore()){
-			hud.setVisibleNewHighscore(true);
-			newHighscoreHasBeenInit = true;
-			millis = System.currentTimeMillis();
-		}
-		
-		// Show message in 1 sec, hide in 0.5 sec, then show again in 1 sec
-		if(!newHighscoreIsOver10secpassed && newHighscoreHasBeenInit){
-			long diff = (System.currentTimeMillis() - millis)/100;
-			if(diff >= 25){
-				newHighscoreIsOver10secpassed = true;
-				hud.setVisibleNewHighscore(false);
-			} else if (hud.isVisibleNewHighscore() && diff >= 10 && diff < 15)
-				hud.setVisibleNewHighscore(false);
-			else if(!hud.isVisibleNewHighscore() && diff >= 15) 
-				hud.setVisibleNewHighscore(true);
-		}
 	}
 	
 }

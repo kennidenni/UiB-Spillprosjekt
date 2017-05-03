@@ -24,11 +24,16 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 
 import uib.teamdank.cargame.CarGame;
 import uib.teamdank.common.Score;
+import uib.teamdank.common.util.AssetManager;
 
 public class EndingScreen implements uib.teamdank.common.gui.HighscoreMenuScreen {
 	private static final String BACK = "Images/Buttons/bs_back.png";
 	private static final String GAMEOVER = "Images/gameOver.png";
 	private static final String SCORES = "TeamDank/Carl the Crasher/highscore.json";
+	
+	private static final String CRASH_SOUND = "Sounds/car_crash.mp3";
+	
+	private final AssetManager assets;
 	
 	private Stage stage;
 	private ImageButton backButton;
@@ -42,8 +47,11 @@ public class EndingScreen implements uib.teamdank.common.gui.HighscoreMenuScreen
 
 	public EndingScreen(CarGame game) {
 		this.game = game;
-		stage = new Stage(new FitViewport(1920, 1080));
 		
+		this.assets = new AssetManager();
+		assets.getAudio().preloadSounds(CRASH_SOUND);
+		
+		stage = new Stage(new FitViewport(1920, 1080));
 		
 		backButton = setupButton(BACK);
 		gameOverButton = setupButton(GAMEOVER);
@@ -119,7 +127,7 @@ public class EndingScreen implements uib.teamdank.common.gui.HighscoreMenuScreen
 
 	@Override
 	public void dispose() {
-		// TODO Auto-generated method stub
+		assets.dispose();
 	}
 
 	@Override
@@ -134,7 +142,7 @@ public class EndingScreen implements uib.teamdank.common.gui.HighscoreMenuScreen
 
 	@Override
 	public void pause() {
-		// TODO Auto-generated method stub
+		// Don't pause crash sound
 	}
 
 	@Override
@@ -151,7 +159,7 @@ public class EndingScreen implements uib.teamdank.common.gui.HighscoreMenuScreen
 
 	@Override
 	public void resume() {
-		// TODO Auto-generated method stub
+		// Nothing to do
 	}
 
 	@Override
@@ -162,6 +170,7 @@ public class EndingScreen implements uib.teamdank.common.gui.HighscoreMenuScreen
 	@Override
 	public void show() {
 		Gdx.input.setInputProcessor(stage);
+		assets.getAudio().playSound(CRASH_SOUND);
 	}
 	
 }
