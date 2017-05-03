@@ -2,15 +2,21 @@ package uib.teamdank.cargame.gui;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector2;
 import uib.teamdank.cargame.CarGame;
+import uib.teamdank.cargame.Coin;
+import uib.teamdank.cargame.Fuel;
+import uib.teamdank.cargame.Hole;
 import uib.teamdank.cargame.Pedestrian;
 import uib.teamdank.cargame.Player;
+import uib.teamdank.cargame.Puddle;
 import uib.teamdank.cargame.RoadEntity;
 import uib.teamdank.cargame.util.RoadEntityGenerator;
 import uib.teamdank.cargame.util.ScrollingSpawner;
+import uib.teamdank.cargame.util.GameSounds;
 import uib.teamdank.cargame.util.PedestrianGenerator;
 import uib.teamdank.common.Game;
 import uib.teamdank.common.gui.Layer;
@@ -41,13 +47,19 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 	private final Layer carLayer;
 	private final CarHud hud;
 
-	private final Sound carSound;
-	private float carVolume = 0.5f;
-
+	private final GameSounds bgMusic;
+	private final GameSounds car_drive;
+	
+	private final GameSounds car_crash;
+	private final GameSounds coin_sound;
+	private final GameSounds dead_ped;
+	private final GameSounds fuel;
+	
 	private final Player player;
 
 	private final ScrollingSpawner pedestrianSpawner;
 	private final ScrollingSpawner roadEntitySpawner;
+	
 
 	public GameScreen(Game game) {
 		super(game);
@@ -104,11 +116,25 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 		// HUD
 		this.hud = new CarHud();
 
+		// Music/long audio files
+		bgMusic = new GameSounds();
+		car_drive = new GameSounds();
+		
+		bgMusic.addMusic("happy_bgmusic.wav");
+		car_drive.addMusic("car_drive.wav");
+		
 		// Sounds
-		carSound = Gdx.audio.newSound(Gdx.files.internal("Sounds/car_sound.wav"));
-		carSound.play(carVolume);
-		carSound.loop();
-
+		car_crash = new GameSounds();
+		car_crash.addSound("car_crash.mp3");
+		
+		dead_ped = new GameSounds();
+		dead_ped.addSound("dead_pedestrian.mp3");
+		
+		coin_sound = new GameSounds();
+		coin_sound.addSound("coin_sound.wav");
+		
+		fuel = new GameSounds();
+		fuel.addSound("fuel.wav");
 	}
 
 	private boolean checkForPauseRequest() {
@@ -123,12 +149,25 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 	public void dispose() {
 		super.dispose();
 		assets.dispose();
-		carSound.dispose();
+
+		bgMusic.disposeMusic();
+		car_drive.disposeMusic();
+		
+		car_crash.disposeSound();
+		dead_ped.disposeSound();
+		coin_sound.disposeSound();
+		fuel.disposeSound();
 	}
 
 	@Override
 	public void hide() {
-		carSound.pause();
+		bgMusic.pauseMusic();
+		car_drive.pauseMusic();
+		
+		car_crash.pauseSound();
+		dead_ped.pauseSound();
+		coin_sound.pauseSound();
+		fuel.pauseSound();
 	}
 
 	@Override
@@ -160,7 +199,9 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 
 	@Override
 	public void show() {
-		carSound.resume();
+		bgMusic.playMusic();
+		car_drive.playMusic();
+		
 	}
 
 	@Override
@@ -176,6 +217,12 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 			if (gameObject instanceof RoadEntity
 					&& player.contains(gameObject.getPosisiton().x, gameObject.getPosisiton().y)) {
 				((RoadEntity) gameObject).drivenOverBy(player);
+				if (gameObject instanceof Coin) {
+					coin_sound.playSound();
+				}
+				if (gameObject instanceof Fuel) {
+					fuel.playSound();
+				}
 			}
 		});
 		// update pedestrian layer
@@ -183,6 +230,7 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 			if (gameObject instanceof RoadEntity
 					&& player.contains(gameObject.getPosisiton().x, gameObject.getPosisiton().y)) {
 				((RoadEntity) gameObject).drivenOverBy(player);
+				dead_ped.playSound();
 			}
 		});
 
@@ -219,6 +267,7 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 		// Check for game over
 		if (player.isOutOfFuel() && player.getVelocity().y == 0) {
 			getGame().setScreen(new EndingScreen((CarGame) getGame()));
+			car_crash.playSound();
 		}
 
 	}
