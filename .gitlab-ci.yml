@@ -131,7 +131,7 @@ publisercarlthecrasher:
   stage: deploy
   script:
     - cd jar/
-    - cp Car-Game.jar /srv/nginx/pages/gitlabapi/public/apps/
+    - cp carlthecrasher.jar /srv/nginx/pages/gitlabapi/public/apps/
   environment:
     name: nettside/carlthecrasher
     url: http://158.39.74.42:80/apps/carlthecrasher.jar
