@@ -107,9 +107,9 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 		// Prevent players exiting world
 		for (Player player : match.getPlayers()) {
 			if (player.getX() < 0) {
-				player.moveRight(); player.moveRight(); player.moveRight();
+				player.moveRight(3);
 			} else if (player.getX() > level.getWidth() - player.getWidth()) {
-				player.moveLeft(); player.moveLeft(); player.moveLeft();
+				player.moveLeft(3);
 			}
 		}
 		
