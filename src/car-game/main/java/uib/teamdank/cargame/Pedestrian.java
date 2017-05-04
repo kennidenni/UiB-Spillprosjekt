@@ -14,8 +14,8 @@ public class Pedestrian extends Actor implements RoadEntity {
 	private final long score;
 	private final float VERTICAL_TOP_SPEED;
 	private final float VERTICAL_ACCELERATION;
-	private final float HORIZONTAL_TOP_SPEED;
-	private final float HORIZONTAL_ACCELERATION;
+	private float HORIZONTAL_TOP_SPEED;
+	private float HORIZONTAL_ACCELERATION;
 	
 	private boolean gaveGoldToPlayer = false;
 
@@ -91,12 +91,14 @@ public class Pedestrian extends Actor implements RoadEntity {
 		}
 	}
 	public void restrictHorizontally(int minX, int maxX) {
-		if (getPosisiton().x < minX) {
+		if (getPosisiton().x <= minX) {
 			this.HORIZONTAL_ACCELERATION = 20f;
-			this.HORIZONTAL_TOP_SPEED = -horiSpd;
-		} else if (getPosisiton().x > maxX - getWidth()) {
+			if(this.HORIZONTAL_TOP_SPEED<=0)
+				this.HORIZONTAL_TOP_SPEED *=-1;
+		} else if (getPosisiton().x >= maxX-this.getWidth()) {
 			this.HORIZONTAL_ACCELERATION = -20f;
-			this.HORIZONTAL_TOP_SPEED = -horiSpd;
+			if(this.HORIZONTAL_TOP_SPEED>=0)
+				this.HORIZONTAL_TOP_SPEED *=-1;
 		}
 	}
 }
