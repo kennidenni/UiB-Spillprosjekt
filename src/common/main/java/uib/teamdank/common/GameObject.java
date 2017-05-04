@@ -82,6 +82,22 @@ public class GameObject {
 	public boolean contains(double x, double y) {
 		return x >= pos.x && x <= (pos.x + getWidth()) && y >= pos.y && y <= (pos.y + getHeight());
 	}
+	
+	public boolean contains(GameObject obj) {
+		if (contains(obj.getX(), obj.getY())) {
+			return true;
+		}
+		if (contains(obj.getX() + obj.getWidth(), obj.getY())) {
+			return true;
+		}
+		if (contains(obj.getX(), obj.getY() + obj.getHeight())) {
+			return true;
+		}
+		if (contains(obj.getX() + obj.getWidth(), obj.getY() + obj.getHeight())) {
+			return true;
+		}
+		return false;
+	}
 
 	/**
 	 * 
@@ -266,9 +282,6 @@ public class GameObject {
 	}
 	public void setY(float y){
 		pos.y = y;
-	}
-	public boolean contains(GameObject obj) {
-		return contains(obj.getX(), obj.getY());
 	}
 
 }

@@ -41,7 +41,7 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 	
 	private static final String MUSIC_TRACK = "Tracks/happy_bgmusic.wav";
 	private static final String ENGINE_TRACK = "Tracks/car_drive.wav";
-	
+
 	private final AssetManager assets;
 
 	private final OrthographicCamera playerCamera;
@@ -53,7 +53,7 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 	private final Layer pedestrianLayer;
 	private final Layer carLayer;
 	private final CarHud hud;
-	
+
 	private final Player player;
 
 	private final ScrollingSpawner pedestrianSpawner;
@@ -118,6 +118,7 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 
 		// HUD
 		this.hud = new CarHud();
+
 		FileHandle handle = Gdx.files.external(SCORES);
 		if(!handle.exists())
 			handle = Gdx.files.internal("Data/highscore.json");
@@ -134,8 +135,6 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 			}
 		});
 		addTimedEvent(onOffNewHighscoreMessage);
-		
-
 	}
 
 	private boolean checkForPauseRequest() {
@@ -144,6 +143,20 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 			getGame().setScreen(getGame().getPauseMenuScreen());
 		}
 		return pause;
+	}
+
+	private void checkForMute() {
+		if(hud.isMuted()) {
+			assets.getAudio().mute();
+		} else {
+			assets.getAudio().unmute();
+		}
+	}
+	
+	public boolean isMuted() {
+		if(hud.isMuted())
+			return true;
+		return false;
 	}
 
 	@Override
@@ -197,9 +210,10 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 
 	@Override
 	public void show() {
+		hud.setAsInputProcessor();
+
 		assets.getAudio().playTrack(MUSIC_TRACK);
 		assets.getAudio().playTrack(ENGINE_TRACK);
-		
 	}
 	
 	@Override
@@ -214,6 +228,7 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 		
 		// Player input
 		checkForPauseRequest();
+		checkForMute();
 		boolean inputTurnLeft = Gdx.input.isKeyPressed(Keys.A) || Gdx.input.isKeyPressed(Keys.LEFT);
 		boolean inputTurnRight = Gdx.input.isKeyPressed(Keys.D) || Gdx.input.isKeyPressed(Keys.RIGHT);
 		if (inputTurnLeft) {
@@ -235,6 +250,7 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 		if (player.isOutOfFuel() && player.getVelocity().y == 0) {
 			getGame().setScreen(new EndingScreen((CarGame) getGame()));
 		}
+
 
 	}
 	
