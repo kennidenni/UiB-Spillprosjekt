@@ -103,7 +103,6 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 		
 		// User input
 		checkPauseRequest();
-
 		if (activePlayer.isOnGround() && 
 				(Gdx.input.isKeyJustPressed(Keys.W) ||
 				 Gdx.input.isKeyJustPressed(Keys.UP))) {
@@ -114,6 +113,15 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 		}
 		if (Gdx.input.isKeyPressed(Keys.D) || Gdx.input.isKeyPressed(Keys.RIGHT)) {
 			activePlayer.moveRight();
+		}
+		
+		// Prevent players exiting world
+		for (Player player : match.getPlayers()) {
+			if (player.getX() < 0) {
+				player.moveRight(3);
+			} else if (player.getX() > level.getWidth() - player.getWidth()) {
+				player.moveLeft(3);
+			}
 		}
 		
 		// Temporary
