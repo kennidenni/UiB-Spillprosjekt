@@ -65,8 +65,16 @@ public class Player extends Actor implements ItemHolder, PhysicsSimulated {
 		body.applyLinearImpulse(-HORIZONTAL_MOVEMENT_IMPULSE, 0, getWidth() / 2, getHeight() / 2, true);
 	}
 	
+	public void moveLeft(int times) {
+		body.applyLinearImpulse(-(HORIZONTAL_MOVEMENT_IMPULSE * times), 0, getWidth() / 2, getHeight() / 2, true);
+	}
+	
 	public void moveRight() {
 		body.applyLinearImpulse(HORIZONTAL_MOVEMENT_IMPULSE, 0, getWidth() / 2, getHeight() / 2, true);
+	}
+	
+	public void moveRight(int times) {
+		body.applyLinearImpulse(HORIZONTAL_MOVEMENT_IMPULSE * times, 0, getWidth() / 2, getHeight() / 2, true);
 	}
 	
 	public void setBody(Body body) {
