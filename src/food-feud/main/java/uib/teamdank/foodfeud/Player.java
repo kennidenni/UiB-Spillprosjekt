@@ -1,5 +1,8 @@
 package uib.teamdank.foodfeud;
 
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.Body;
+
 import uib.teamdank.common.Actor;
 import uib.teamdank.common.Inventory;
 import uib.teamdank.common.ItemHolder;
@@ -7,16 +10,45 @@ import uib.teamdank.common.ItemHolder;
 /**
  * Represents a player in the game.
  */
-public class Player extends Actor implements ItemHolder {
+public class Player extends Actor implements ItemHolder, PhysicsSimulated {
+	
+	private Body body;
 	
 	private Inventory weapons;
 	
-	public Player() {
+	public Player(String name) {
+		super(100, name);
 		weapons = new Inventory();
+	}
+	
+	public void setBody(Body body) {
+		this.body = body;
+	}
+	
+	public Body getBody() {
+		return body;
 	}
 	
 	@Override
 	public Inventory getInventory() {
 		return weapons;
 	}
+	
+	@Override
+	public float getAngle() {
+		if (body != null) {
+			setAngle((float) Math.toDegrees(body.getAngle()));
+		}
+		return super.getAngle();
+	}
+	
+	@Override
+	public Vector2 getPosisiton() {
+		if (body != null) {
+			super.getPosisiton().set(body.getPosition());
+			super.getPosisiton().sub(getWidth() / 2f, getHeight() / 2f);
+		}
+		return super.getPosisiton();
+	}
+	
 }

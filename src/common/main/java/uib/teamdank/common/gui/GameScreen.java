@@ -10,7 +10,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.Vector2;
 
 import uib.teamdank.common.Game;
 import uib.teamdank.common.GameObject;
@@ -34,10 +33,6 @@ public class GameScreen implements Screen {
 		this.game = game;
 	}
 
-	public Game getGame(){
-		return game;
-	}
-	
 	public void addGameObject(Layer layer, GameObject gameObject) {
 		layer.addGameObject(gameObject);
 	}
@@ -57,7 +52,7 @@ public class GameScreen implements Screen {
 			gameObject.getTexture().getTexture().dispose();
 		});
 	}
-
+	
 	/**
 	 * Loops through every game object on every layer starting with the first
 	 * layer and passes the game objects to the given action.
@@ -66,6 +61,10 @@ public class GameScreen implements Screen {
 		for (Layer layer : layers) {
 			layer.forEachGameObject(action);
 		}
+	}
+
+	public Game getGame(){
+		return game;
 	}
 
 	@Override
@@ -83,18 +82,23 @@ public class GameScreen implements Screen {
 	@Override
 	public void render(float delta) {
 		
-		Gdx.gl.glClearColor( 0, 1, 0, 1 );
+		Gdx.gl.glClearColor( 0, 0, 0, 1 );
 		Gdx.gl.glClear( GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT );
 		
 		update(delta);
 		
 		SpriteBatch batch = game.getSpriteBatch();
 		batch.begin();
-		layers.forEach(layer -> layer.render(batch, delta));
+		layers.forEach(layer -> {
+			layer.preRender(batch, delta);
+			layer.forEachGameObject(gameObject -> {
+				gameObject.render(batch, delta);
+			});
+		});
 		batch.end();
 		 
 	}
-
+	
 	@Override
 	public void resize(int width, int height) {
 		// Not necessary as of yet
@@ -112,27 +116,14 @@ public class GameScreen implements Screen {
 
 	public void update(float delta) {
 		
-		// Remove marked objects
+		// Update game objects
 		for (Layer layer : layers) {
+			layer.forEachGameObject(gameObject -> {
+				gameObject.update(delta);
+				onUpdateGameObject(delta, layer, gameObject);
+			});
 			layer.removeMarkedGameObjects();
 		}
-		
-		forEachGameObject(gameObject -> {
-			
-			// Calculate movement
-			if (gameObject.isMovable()) {
-				Vector2 pos = gameObject.getPosisiton();
-				Vector2 vel = gameObject.getVelocity();
-				pos.x += (vel.x * delta);
-				pos.y += (vel.y * delta);
-			}
-			
-			// Update animations
-			if (gameObject.getAnimation() != null) {
-				gameObject.getAnimation().update(delta);
-			}
-			
-		});
 		
 		// Update timed events
 		Iterator<TimedEvent> eventIterator = timedEvents.iterator();
@@ -144,7 +135,11 @@ public class GameScreen implements Screen {
 				event.update(delta);
 			}
 		}
-		
+				
+	}
+
+	protected void onUpdateGameObject(float delta, Layer layer, GameObject gameObject) {
+		// Can be overridden to perform operations before an update
 	}
 
 }

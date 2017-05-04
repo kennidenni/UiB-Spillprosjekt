@@ -1,28 +1,36 @@
 package uib.teamdank.cargame;
 
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
-
 import uib.teamdank.common.Item;
+import uib.teamdank.common.util.AudioManager;
+import uib.teamdank.common.util.TextureAtlas;
 
 public class Coin extends Item implements RoadEntity {
 	
+	private static final String SOUND = "Sounds/coin_sound.wav";
+	private static final String TEXTURE_REGION = "coin";
+	
 	private static final int GOLD_AMOUNT = 1;
 	
-	private boolean gaveGoldToPlayer = false;
+	private final AudioManager audioManager;
+	private boolean wasDrivenOver = false;
 	
-	public Coin(TextureRegion texture) {
+	public Coin(AudioManager audioManager, TextureAtlas atlas) {
 		super("Coin", "A precious gold coin. So shiny it hurts.");
-		setTexture(texture);
+		this.audioManager = audioManager;
+        setTexture(atlas.getRegion(TEXTURE_REGION));
 		setScale(.5f);
+		
+		audioManager.preloadSounds(SOUND);
 	}
 
 	@Override
 	public void drivenOverBy(Player player) {
-		if (!gaveGoldToPlayer) {
+		if (!wasDrivenOver) {
 			player.getInventory().addGold(GOLD_AMOUNT);
-			gaveGoldToPlayer = true;
-			this.markForRemoval();
+			audioManager.playSound(SOUND);
+			wasDrivenOver = true;
 		}
+		this.markForRemoval();
 	}
 	
 }

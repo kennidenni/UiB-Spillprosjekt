@@ -1,5 +1,5 @@
 {
-	"tileset": "Images/cg_buttons.png",
+	"tileset": "Images/mute.png",
 	"regions": [
 		{
 			"name": "muted",

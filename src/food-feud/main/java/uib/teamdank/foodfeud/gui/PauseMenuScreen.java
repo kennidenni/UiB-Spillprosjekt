@@ -1,7 +1,7 @@
 package uib.teamdank.foodfeud.gui;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
+import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -20,11 +20,13 @@ import uib.teamdank.common.Game;
 public class PauseMenuScreen implements uib.teamdank.common.gui.PauseMenuScreen {
 	private static final String PAUSE = "Images/Buttons/ff_pause.png";
 	private static final String BACK = "Images/Buttons/ff_back.png";
+	private static final String EXIT = "Images/Buttons/ff_quit.png";
 
 	private Stage stage;
 	private Table menu;
 	private ImageButton pauseButton;
 	private ImageButton backButton;
+	private ImageButton	exitButton;
 	private Array<Button> buttons;
 	private Game game;
 
@@ -34,11 +36,14 @@ public class PauseMenuScreen implements uib.teamdank.common.gui.PauseMenuScreen 
 
 		pauseButton = setupButton(PAUSE);
 		backButton = setupButton(BACK);
+		exitButton = setupButton(EXIT);
+		
 
 		menu = new Table();
 		buttons = new Array<>();
 
 		buttons.add(backButton);
+		buttons.add(exitButton);
 
 		menu.add(pauseButton).pad(0, 0, 20, 0);
 		menu.row();
@@ -66,6 +71,23 @@ public class PauseMenuScreen implements uib.teamdank.common.gui.PauseMenuScreen 
 
 				if (eventStage.hit(mouse.x, mouse.y, true) == event.getTarget()) {
 					resume();
+				}
+			}
+		});
+		
+		exitButton.addListener(new InputListener() {
+			@Override
+			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+				return true;
+			}
+
+			@Override
+			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+				Stage eventStage = event.getTarget().getStage();
+				Vector2 mouse = eventStage.screenToStageCoordinates(new Vector2(Gdx.input.getX(), Gdx.input.getY()));
+
+				if (stage.hit(mouse.x, mouse.y, true) == event.getTarget()) {
+					exitToStartMenu();
 				}
 			}
 		});
@@ -101,7 +123,7 @@ public class PauseMenuScreen implements uib.teamdank.common.gui.PauseMenuScreen 
 
 	@Override
 	public void render(float delta) {
-		if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
+		if (Gdx.input.isKeyJustPressed(Keys.ESCAPE)) {
 			resume();
 			return;
 		}

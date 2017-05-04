@@ -63,69 +63,6 @@
 			"y": "431",
 			"w": "290",
 			"h": "430"
-		},
-		{
-			"name": "car_forward_locked",
-			"x": "0",
-			"y": "862",
-			"w": "290",
-			"h": "430"
-		},
-		{
-			"name": "car_forward_blue_locked",
-			"x": "1455",
-			"y": "0",
-			"w": "290",
-			"h": "430"
-		},
-		{
-			"name": "car_forward_flag_locked",
-			"x": "1164",
-			"y": "431",
-			"w": "290",
-			"h": "430"
-		},
-		{
-			"name": "car_forward_grey_locked",
-			"x": "1455",
-			"y": "431",
-			"w": "290",
-			"h": "430"
-		},
-		{
-			"name": "car_forward_hot_locked",
-			"x": "0",
-			"y": "862",
-			"w": "290",
-			"h": "430"
-		},
-		{
-			"name": "car_forward_orange_locked",
-			"x": "582",
-			"y": "862",
-			"w": "290",
-			"h": "430"
-		},
-		{
-			"name": "car_forward_pink_locked",
-			"x": "873",
-			"y": "862",
-			"w": "290",
-			"h": "430"
-		},
-		{
-			"name": "car_forward_red_locked",
-			"x": "1164",
-			"y": "862",
-			"w": "290",
-			"h": "430"
-		},
-		{
-			"name": "car_forward_splat_locked",
-			"x": "1455",
-			"y": "862",
-			"w": "290",
-			"h": "430"
 		}
 	]
 }

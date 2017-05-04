@@ -4,101 +4,62 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 import uib.teamdank.common.Actor;
 import uib.teamdank.common.util.Animation;
-
+import uib.teamdank.common.util.AudioManager;
 
 /**
  * A pedestrian in the road. Has positive effects if driven over by the
  * {@link Player}.
  */
 public class Pedestrian extends Actor implements RoadEntity {
-	private final long score;
-	private final float VERTICAL_TOP_SPEED;
-	private final float VERTICAL_ACCELERATION;
-	private float HORIZONTAL_TOP_SPEED;
-	private float HORIZONTAL_ACCELERATION;
-	
-	private boolean gaveGoldToPlayer = false;
 
-	public Pedestrian(float vertSpd, float horiSpd, long sc, boolean goLeft, Animation anim) {
-		this(vertSpd, horiSpd, sc, goLeft);
+	private static final String SOUND = "Sounds/dead_pedestrian.mp3";
+
+	private final AudioManager audioManager;
+	private boolean wasDrivenOver = false;
+
+	private final long scoreBonus;
+
+	public Pedestrian(AudioManager audioManager, long scoreBonus, float vx, float vy, boolean goLeft, TextureRegion texture) {
+		this(audioManager, scoreBonus, vx, vy, goLeft, Animation.createSingleFramed(texture));
+	}
+	
+	public Pedestrian(AudioManager audioManager, long scoreBonus, float vx, float vy, boolean goLeft, Animation anim) {
+		this.audioManager = audioManager;
 		setAnimation(anim);
-	}
-
-	public Pedestrian(float vertSpd, float horiSpd, long sc, boolean goLeft, TextureRegion texture) {
-		this(vertSpd, horiSpd, sc, goLeft);
-		setTexture(texture);
+		setScale(.9f);
+		
+		getVelocity().set(vx, vy);
+		if (goLeft) {
+			getVelocity().x *= -1;
+			setFlipHorizontally(true);
+		}
+		this.scoreBonus = scoreBonus;
+		
+		audioManager.preloadSounds(SOUND);
 	}
 	
-	public Pedestrian(float vertSpd, float horiSpd, long sc, boolean goLeft) {
-		setScale(.9f);
-		this.score = sc;
-		this.VERTICAL_ACCELERATION = 50f;
-		this.VERTICAL_TOP_SPEED = vertSpd;
-		if (goLeft) {
-			this.HORIZONTAL_ACCELERATION = -20f;
-			this.HORIZONTAL_TOP_SPEED = -horiSpd;
-		} else {
-			this.HORIZONTAL_ACCELERATION = 20f;
-			this.HORIZONTAL_TOP_SPEED = horiSpd;
-		}
-	}
-
-	public long getScore() {
-		return score;
-
-	}
 
 	@Override
 	public void drivenOverBy(Player player) {
-		if (!gaveGoldToPlayer) {
-			player.getScore().addToScore(this.score);
-			gaveGoldToPlayer = true;
-			this.markForRemoval();
+		if (!wasDrivenOver) {
+			player.getScore().addToScore(this.scoreBonus);
+			audioManager.playSound(SOUND);
+			wasDrivenOver = true;
 		}
+		this.markForRemoval();
 
 	}
-
-	public void accelerate() {
-		accelerateVertical();
-		accelerateHorizontal();
-	}
-	private void accelerateVertical(){
-		if (getVelocity().y != VERTICAL_TOP_SPEED) {
-			if (getVelocity().y > VERTICAL_TOP_SPEED) {
-				getVelocity().y = VERTICAL_TOP_SPEED;
-			} else {
-				getVelocity().y += VERTICAL_ACCELERATION;
-			}
-		}
-	}
-	private void accelerateHorizontal(){
-		if (HORIZONTAL_TOP_SPEED > 0) {
-			if (getVelocity().x != HORIZONTAL_TOP_SPEED) {
-				if (getVelocity().x > HORIZONTAL_TOP_SPEED) {
-					getVelocity().x = HORIZONTAL_TOP_SPEED;
-				} else {
-					getVelocity().x += HORIZONTAL_ACCELERATION;
-				}
-			}
-		} else {
-			if (getVelocity().x != HORIZONTAL_TOP_SPEED) {
-				if (getVelocity().x > HORIZONTAL_TOP_SPEED) {
-					getVelocity().x = HORIZONTAL_TOP_SPEED;
-				} else {
-					getVelocity().x -= HORIZONTAL_ACCELERATION;
-				}
-			}
-		}
-	}
+	
 	public void restrictHorizontally(int minX, int maxX) {
-		if (getPosisiton().x <= minX) {
-			this.HORIZONTAL_ACCELERATION = 20f;
-			if(this.HORIZONTAL_TOP_SPEED<=0)
-				this.HORIZONTAL_TOP_SPEED *=-1;
-		} else if (getPosisiton().x >= maxX-this.getWidth()) {
-			this.HORIZONTAL_ACCELERATION = -20f;
-			if(this.HORIZONTAL_TOP_SPEED>=0)
-				this.HORIZONTAL_TOP_SPEED *=-1;
+		if (getPosisiton().x < minX) {
+			getPosisiton().x = minX;
+			getVelocity().x *= -1;
+			setFlipHorizontally(false);
+		} else if (getPosisiton().x > maxX-this.getWidth()) {
+			getPosisiton().x = maxX-this.getWidth();
+			getVelocity().x *= -1;
+			setFlipHorizontally(true);
 		}
 	}
+	
 }
