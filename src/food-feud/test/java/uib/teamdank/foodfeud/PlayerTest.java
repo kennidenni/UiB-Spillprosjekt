@@ -7,12 +7,15 @@ import static org.junit.Assert.assertThat;
 import org.junit.Before;
 import org.junit.Test;
 
-public class PlayerTest {
+import uib.teamdank.common.LibGdxDependentTest;
+import uib.teamdank.common.util.AssetManager;
+
+public class PlayerTest extends LibGdxDependentTest {
 	private Player player;
 	
 	@Before
 	public void setUp() {
-		player = new Player(null, Team.ALPHA, "sturle");
+		player = new Player(new AssetManager(), Team.ALPHA, "sturle");
 	}
 
 	@Test
