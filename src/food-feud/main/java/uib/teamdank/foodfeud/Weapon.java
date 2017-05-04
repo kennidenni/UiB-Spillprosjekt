@@ -1,5 +1,7 @@
 package uib.teamdank.foodfeud;
 
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+
 import uib.teamdank.common.Item;
 
 /**
@@ -8,42 +10,56 @@ import uib.teamdank.common.Item;
  */
 public class Weapon extends Item {
 
-	private double dmg, weight;
-	
-	/**
-	 * 
-	 * @param name
-	 * @param descr weapon description
-	 * @param dmg damage
-	 * @param weight
-	 */
-	public Weapon(String name, String descr, double dmg, double weight) {
-		this(name, descr);
-		this.dmg = dmg;
-		this.weight = weight;
+	private final int dmg, weight;
+	private final WeaponProjectile proj;
+
+	private boolean damagedPlayer = false;
+
+	public enum WeaponProjectile {
+		// light bullets like guns
+		LIGHT_BALLISTIC,
+		// like uzi, HK416.. etc
+		BURST_BALLISTIC,
+		// arching ballistics like rpg and grenades..(only exploding one)
+		HEAVY_BALLISTIC,
+		// shotgun etc
+		SPRAY_BALLISTIC;
+
 	}
-	
+
 	/**
 	 * Creates a weapon that does no damage and weighs nothing.
+	 * 
 	 * @param name
-	 * @param descr weapon description
+	 * @param descr
+	 *            weapon description
 	 */
-    public Weapon(String name, String descr) {
-        super(name, descr);
-    }
+	public Weapon(String name, String descr, int d, int w, TextureRegion texture, WeaponProjectile p) {
+		super(name, descr);
+		this.dmg = d;
+		this.weight = w;
+		setTexture(texture);
+		proj = p;
+	}
 
-    /**
-	 * @return amount of damage this weapon inflicts
-	 */
-	public double getDamage() {
+	public int getDamage() {
 		return dmg;
 	}
 
-	/**
-	 * @return the weight of this weapon
-	 */
 	public double getWeight() {
 		return weight;
 	}
-	
-}
+
+	public WeaponProjectile getProjectileType() {
+		return proj;
+	}
+
+	public void hitPlayer(Player player) {
+		if (!damagedPlayer) {
+			player.decreaseHealth(getDamage());
+			this.markForRemoval();
+			damagedPlayer = true;
+		}
+	}
+
+}

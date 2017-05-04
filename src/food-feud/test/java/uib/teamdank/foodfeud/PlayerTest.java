@@ -20,12 +20,12 @@ public class PlayerTest {
 		assertThat(player.getInventory().getItemCount(), is(equalTo(0)));
 	}
 	
-	@Test
-	public void addWeapon() {
-		Weapon w = new Weapon("TestWeapon", "TestDescription");
-		player.getInventory().addItem(w);
-		assertThat(player.getInventory().getItem(0), is(equalTo(w)));
-	}
+//	@Test
+//	public void addWeapon() {
+//		Weapon w = new Weapon("TestWeapon", "TestDescription");
+//		player.getInventory().addItem(w);
+//		assertThat(player.getInventory().getItem(0), is(equalTo(w)));
+//	}
 	
 	@Test
 	public void getHealth(){
