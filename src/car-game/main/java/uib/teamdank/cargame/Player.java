@@ -19,13 +19,20 @@ public class Player extends Actor implements Upgradeable {
 
 	private static final float ZERO_SPEED_TOLERANCE = 8f;
 
-	private static final float HORIZONTAL_ACCELERATION = 40f;
+	private static final float INITIAL_HORIZONTAL_ACCELERATION = 40f;
 	private static final float HORIZONTAL_FRICTION = .9f;
+	private static final float ADD_TO_HORIZONTAL_SPEED = .002f;
 
 	private static final float VERTICAL_ACCELERATION = 10f;
 	private static final float VERTICAL_FRICTION = .98f;
-	private static final float VERTICAL_TOP_SPEED = 512f;
-
+	
+	private static final float INITIAL_TOP_SPEED = 512f;
+	private static final float MAX_TOP_SPEED = 1024f;
+	private static final float ADD_TO_TOP_SPEED = 0.1f;
+	
+	private float topSpeed = INITIAL_TOP_SPEED;
+	private float horisontalSpeed = INITIAL_HORIZONTAL_ACCELERATION;
+	
 	private final Inventory inventory = new Inventory();
 	private final Set<String> unlockedSkins = new HashSet<>();
 
@@ -40,9 +47,9 @@ public class Player extends Actor implements Upgradeable {
 	}
 
 	public void accelerate() {
-		if (!isOutOfFuel() && getVelocity().y != VERTICAL_TOP_SPEED) {
-			if (getVelocity().y > VERTICAL_TOP_SPEED) {
-				getVelocity().y = VERTICAL_TOP_SPEED;
+		if (!isOutOfFuel() && getVelocity().y != topSpeed) {
+			if (getVelocity().y > topSpeed) {
+				getVelocity().y = topSpeed;
 			} else {
 				getVelocity().y += VERTICAL_ACCELERATION;
 			}
@@ -65,7 +72,6 @@ public class Player extends Actor implements Upgradeable {
 				velocity.y = 0;
 			}
 		}
-
 	}
 
 	@Override
@@ -94,6 +100,8 @@ public class Player extends Actor implements Upgradeable {
 		getVelocity().set(0, 0);
 		setHealth(getMaxHealth());
 		getScore().setScore(0);
+		topSpeed = INITIAL_TOP_SPEED;
+		horisontalSpeed = INITIAL_HORIZONTAL_ACCELERATION;
 	}
 
 	public void restrictHorizontally(int minX, int maxX) {
@@ -114,7 +122,7 @@ public class Player extends Actor implements Upgradeable {
 
 	private void turn(int direction) {
 		final Vector2 velocity = getVelocity();
-		float horizontalAcceleration = (velocity.y / VERTICAL_TOP_SPEED) * HORIZONTAL_ACCELERATION;
+		float horizontalAcceleration = (velocity.y / topSpeed) * horisontalSpeed;
 		velocity.x += (Math.signum(direction) * horizontalAcceleration);
 	}
 
@@ -136,6 +144,9 @@ public class Player extends Actor implements Upgradeable {
 		
 		accelerate();
 		applyFriction();
-		
+		if (topSpeed <= MAX_TOP_SPEED) {
+			topSpeed += ADD_TO_TOP_SPEED;
+			horisontalSpeed += ADD_TO_HORIZONTAL_SPEED;
+		}
 	}
 }
