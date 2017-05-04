@@ -5,7 +5,6 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -18,6 +17,7 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import uib.teamdank.cargame.CarGame;
 import uib.teamdank.cargame.Player;
 import uib.teamdank.common.Game;
+import uib.teamdank.common.gui.CreditScreen;
 
 public class StartMenuScreen implements uib.teamdank.common.gui.StartMenuScreen {
 	private static final String LOGO = "Images/CarGameLogo.png";
@@ -47,7 +47,7 @@ public class StartMenuScreen implements uib.teamdank.common.gui.StartMenuScreen 
 		this.game = game;
 		stages = new Stage(new FitViewport(1920, 1080));
 		highscoreMenuScreen = new HighscoreMenuScreen(game);
-		creditScreen = new CreditScreen(game);
+		creditScreen = new CreditScreen(game, "Images/Buttons/bs_back.png", "Data/credit_crasher.txt");
 		shopScreen = new ShopScreen(game);
 		buttons = new Array<Button>();
 		menu = new Table();

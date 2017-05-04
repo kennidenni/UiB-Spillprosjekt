@@ -1,0 +1,14 @@
+Credits
+
+Developer: 
+TeamDank 
+
+Programming: 
+TeamDank Programming Team 
+
+Art: 
+TeamDank Art Department
+
+Sound: 
+This game uses theses sounds from freesound: 
+car_sound.wav (In Car Driving.aif) by RutgerMuller (https://www.freesound.org/people/RutgerMuller/) (Downloaded 26.04.2017)
