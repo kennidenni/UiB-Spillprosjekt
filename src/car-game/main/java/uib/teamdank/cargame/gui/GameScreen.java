@@ -16,6 +16,7 @@ import uib.teamdank.cargame.RoadEntity;
 import uib.teamdank.cargame.util.PedestrianGenerator;
 import uib.teamdank.cargame.util.RoadEntityGenerator;
 import uib.teamdank.cargame.util.ScrollingSpawner;
+import uib.teamdank.cargame.util.WeatherGenerator;
 import uib.teamdank.common.Game;
 import uib.teamdank.common.GameObject;
 import uib.teamdank.common.Score;
@@ -64,6 +65,7 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 	private TimedEvent onOffNewHighscoreMessage;
 	
 	private WeatherType wType;
+	private ScrollingSpawner weatherSpawner;
 
 	public GameScreen(Game game) {
 		super(game);
@@ -121,6 +123,15 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 		pedestrianSpawner.setHorizontalPositionRange(backgroundLayer.getRoadLeftX(), backgroundLayer.getRoadRightX());
 		pedestrianSpawner.setChanceOfSpawn(.01f);
 		pedestrianSpawner.setExtraVerticalSpaceBetweenSpawns(50);
+		
+		// Weather spawner initialization
+		this.weatherSpawner = new ScrollingSpawner(weatherLayer, playerCamera, new WeatherGenerator(wType));
+		//TODO
+		if(wType == WeatherType.SNOW || wType == WeatherType.RAIN)
+			weatherSpawner.setHorizontalPositionRange(-900, 1280);
+		else
+			weatherSpawner.setHorizontalPositionRange(-1280, 1280);
+		weatherSpawner.setChanceOfSpawn(2f);
 
 		// HUD
 		this.hud = new CarHud();
@@ -251,6 +262,9 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 		// Spawn new pedestrians
 		pedestrianSpawner.update(delta);
 		pedestrianSpawner.setHorizontalPositionRange(backgroundLayer.getRoadLeftX(), backgroundLayer.getRoadRightX());
+		
+		// Spawn new weather
+		weatherSpawner.update(delta);
 
 		// Check for game over
 		if (player.isOutOfFuel() && player.getVelocity().y == 0) {

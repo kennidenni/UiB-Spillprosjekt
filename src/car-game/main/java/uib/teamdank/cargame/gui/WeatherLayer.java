@@ -38,7 +38,7 @@ public class WeatherLayer extends Layer {
 
 	private Texture setWeatherTexture() {
 		if (wType == WeatherType.CLOUD)
-			return new Texture(Gdx.files.internal(CLOUDS));
+			return new Texture(Gdx.files.internal(EMPTY));
 		else if (wType == WeatherType.RAIN)
 			return new Texture(Gdx.files.internal(RAIN));
 		else if (wType == WeatherType.SUN)
