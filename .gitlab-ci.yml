@@ -117,7 +117,7 @@ publiserweb:
     - cp index.html /srv/nginx/pages/gitlabapi/public/
   environment:
     name: nettside/index
-    url: http://158.39.74.42:80/
+    url: http://158.39.74.42:80/index.html
   only:
     - /.*deploy-web.*$/
   tags:
