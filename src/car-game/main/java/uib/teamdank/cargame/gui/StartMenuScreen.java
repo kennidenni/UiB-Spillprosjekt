@@ -69,7 +69,7 @@ public class StartMenuScreen implements uib.teamdank.common.gui.StartMenuScreen 
 		addToTables();
 		
 		// Player initialization
-		player = new Player();
+		player = new Player(getWeather());
 		player.getTexture();
 		player.setScale(.5f);
 				
@@ -77,9 +77,6 @@ public class StartMenuScreen implements uib.teamdank.common.gui.StartMenuScreen 
 		menu.setFillParent(true);
 		stages.addActor(menu);
 		Gdx.input.setInputProcessor(stages);
-		
-		// So the loading of weather data from web happens before the user press start button:
-		getWeather();
 	}
 
 	private void addToTables() {

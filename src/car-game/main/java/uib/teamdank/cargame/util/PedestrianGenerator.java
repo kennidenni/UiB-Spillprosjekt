@@ -28,10 +28,11 @@ public class PedestrianGenerator implements Generator<GameObject> {
 		this.entityGenerators.add(rnd -> new Pedestrian(audio, 2, 50, 0, rnd.nextBoolean(), atlas.getRegion("umbrella_green")));
 		this.entityGenerators.add(rnd -> new Pedestrian(audio, 5, 60, 0, rnd.nextBoolean(), assets.getAnimation("Images/walker_kid_animation.json")));
 		
-		if (wType == WeatherType.SNOW) {
-			this.entityGenerators.add(rnd -> new Pedestrian(audio, 15, 0, 0, rnd.nextBoolean(), atlas.getRegion("snowman")));
-			this.entityGenerators.add(rnd -> new Pedestrian(audio, 20, 0, 100, rnd.nextBoolean(), atlas.getRegion("skier")));
-		}
+		// TODO uncomment when snowman and skier is back
+//		if (wType == WeatherType.SNOW) {
+//			this.entityGenerators.add(rnd -> new Pedestrian(audio, 15, 0, 0, rnd.nextBoolean(), atlas.getRegion("snowman")));
+//			this.entityGenerators.add(rnd -> new Pedestrian(audio, 20, 0, 100, rnd.nextBoolean(), atlas.getRegion("skier")));
+//		}
 	}
 
 	@Override

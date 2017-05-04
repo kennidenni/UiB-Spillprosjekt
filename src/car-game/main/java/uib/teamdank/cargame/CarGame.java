@@ -8,6 +8,7 @@ import uib.teamdank.cargame.gui.GameScreen;
 import uib.teamdank.cargame.gui.PauseMenuScreen;
 import uib.teamdank.cargame.gui.StartMenuScreen;
 import uib.teamdank.common.Game;
+import uib.teamdank.common.util.WeatherData.WeatherType;
 
 
 /**
@@ -32,7 +33,7 @@ public class CarGame extends Game {
 	
 	@Override
 	public void create() {
-		player = new Player();
+		player = new Player(WeatherType.SUN);
 		
 		startMenuScreen = new StartMenuScreen(this);
 		pauseMenuScreen = new PauseMenuScreen(this);
