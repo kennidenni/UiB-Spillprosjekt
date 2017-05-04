@@ -19,6 +19,7 @@ import uib.teamdank.cargame.Player;
 import uib.teamdank.common.Game;
 import uib.teamdank.common.util.WeatherData;
 import uib.teamdank.common.util.WeatherData.WeatherType;
+import uib.teamdank.common.gui.CreditScreen;
 
 public class StartMenuScreen implements uib.teamdank.common.gui.StartMenuScreen {
 	private static final String LOGO = "Images/CarGameLogo.png";
@@ -49,7 +50,7 @@ public class StartMenuScreen implements uib.teamdank.common.gui.StartMenuScreen 
 		this.game = game;
 		stages = new Stage(new FitViewport(1920, 1080));
 		highscoreMenuScreen = new HighscoreMenuScreen(game);
-		creditScreen = new CreditScreen(game);
+		creditScreen = new CreditScreen(game, "Images/Buttons/bs_back.png", "Data/credit_crasher.txt");
 		shopScreen = new ShopScreen(game);
 		buttons = new Array<Button>();
 		menu = new Table();

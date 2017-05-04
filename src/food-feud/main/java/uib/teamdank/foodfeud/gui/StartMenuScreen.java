@@ -24,7 +24,7 @@ public class StartMenuScreen implements uib.teamdank.common.gui.StartMenuScreen 
 
     private static final String LOGO = "Images/logo.png";
     private static final String PLAY = "Images/Buttons/ff_start.png";
-    private static final String CREDIT = "Images/Buttons/ff_go.png";
+    private static final String CREDIT = "Images/Buttons/ff_credit.png";
     private static final String EXIT = "Images/Buttons/ff_quit.png";
 
 	private Stage stages;
@@ -41,7 +41,7 @@ public class StartMenuScreen implements uib.teamdank.common.gui.StartMenuScreen 
     public StartMenuScreen(FoodFeud game){
         this.game = game;
         stages = new Stage(new FitViewport(1920, 1080));
-        //creditScreen = new CreditScreen(game);
+        creditScreen = new CreditScreen(game, "Images/Buttons/ff_back.png", "Data/credit_foodfeud.txt");
         buttons = new Array<Button>();
         menu = new Table();
 

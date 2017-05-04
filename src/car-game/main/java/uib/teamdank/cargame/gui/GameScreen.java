@@ -11,6 +11,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector2;
 
 import uib.teamdank.cargame.CarGame;
+import uib.teamdank.cargame.Pedestrian;
 import uib.teamdank.cargame.Player;
 import uib.teamdank.cargame.RoadEntity;
 import uib.teamdank.cargame.util.PedestrianGenerator;
@@ -73,7 +74,7 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 		this.assets = new AssetManager();
 		TextureAtlas carTextures = assets.getAtlas("Images/car_sheet.json");
 		TextureAtlas roadEntityTextures = assets.getAtlas("Images/road_entity_sheet.json");
-		TextureAtlas pedestrianTextures = assets.getAtlas("Images/Game/walkers.json");
+		TextureAtlas pedestrianTextures = assets.getAtlas("Images/walkers.json");
 		
 		// Cameras
 		this.playerCamera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
@@ -119,7 +120,7 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 
 		// pedestrian spawner initialization
 		this.pedestrianSpawner = new ScrollingSpawner(pedestrianLayer, playerCamera,
-				new PedestrianGenerator(assets.getAudio(), pedestrianTextures, wType));
+					new PedestrianGenerator(assets, pedestrianTextures, wType));
 		pedestrianSpawner.setHorizontalPositionRange(backgroundLayer.getRoadLeftX(), backgroundLayer.getRoadRightX());
 		pedestrianSpawner.setChanceOfSpawn(.01f);
 		pedestrianSpawner.setExtraVerticalSpaceBetweenSpawns(50);
@@ -262,7 +263,10 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 		// Spawn new pedestrians
 		pedestrianSpawner.update(delta);
 		pedestrianSpawner.setHorizontalPositionRange(backgroundLayer.getRoadLeftX(), backgroundLayer.getRoadRightX());
-		
+		pedestrianLayer.forEachGameObject(obj ->
+			((Pedestrian) obj).restrictHorizontally(backgroundLayer.getRoadLeftX(), backgroundLayer.getRoadRightX())
+		);
+
 		// Spawn new weather objects
 		weatherSpawner.update(delta);
 
