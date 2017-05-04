@@ -42,8 +42,8 @@ public class ScrollingSpawner implements Generator<GameObject> {
 
 	private GameObject createNewSpawn() {
 		GameObject spawn = generator.generate(random);
-		spawn.getPosisiton().y = camera.position.y + camera.viewportHeight / 2 + extraVerticalSpaceBetweenSpawns;
-		spawn.getPosisiton().x = getNewHorizontalPosition(spawn.getWidth());
+		spawn.getPosition().y = camera.position.y + camera.viewportHeight / 2 + extraVerticalSpaceBetweenSpawns;
+		spawn.getPosition().x = getNewHorizontalPosition(spawn.getWidth());
 		spawn.setFlipHorizontally(flipTexture);
 		spawns.add(spawn);
 		layer.addGameObject(spawn);
@@ -57,7 +57,7 @@ public class ScrollingSpawner implements Generator<GameObject> {
 			// Object has already been removed elsewhere
 			spawns.removeIndex(0);
 		} else {
-			float firstY = firstSpawn.getPosisiton().y;
+			float firstY = firstSpawn.getPosition().y;
 			float firstHeight = firstSpawn.getHeight();
 			if (firstY + firstHeight < camera.position.y - camera.viewportHeight / 2) {
 				spawns.removeIndex(0);
@@ -93,7 +93,7 @@ public class ScrollingSpawner implements Generator<GameObject> {
 			return false;
 		}
 		final GameObject prevSpawn = spawns.get(spawns.size - 1);
-		final float prevY = prevSpawn.getPosisiton().y;
+		final float prevY = prevSpawn.getPosition().y;
 		final float prevHeight = prevSpawn.getHeight();
 		return prevY + prevHeight < camera.position.y + camera.viewportHeight / 2;
 	}

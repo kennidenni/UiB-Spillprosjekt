@@ -41,8 +41,8 @@ public class GameObjTests {
 	public void containsCoordinate() {
 		int x = r.nextInt(HIGHER + 50);
 		int y = r.nextInt(HIGHER + 50);
-		boolean bx = x < obj.getPosisiton().x || x > (obj.getPosisiton().x + obj.getWidth());
-		boolean by = y < obj.getPosisiton().y || y > (obj.getPosisiton().y + obj.getHeight());
+		boolean bx = x < obj.getPosition().x || x > (obj.getPosition().x + obj.getWidth());
+		boolean by = y < obj.getPosition().y || y > (obj.getPosition().y + obj.getHeight());
 		if(bx || by) {
 			assertThat(false, is(equalTo(obj.contains(x, y))));
 		} else {
@@ -62,8 +62,8 @@ public class GameObjTests {
 		int x = r.nextInt(HIGHER);
 		int y = r.nextInt(HIGHER);
 		Vector2 p = new Vector2(x, y);
-		obj.getPosisiton().set(p);
-		assertThat(p, is(equalTo(obj.getPosisiton())));
+		obj.getPosition().set(p);
+		assertThat(p, is(equalTo(obj.getPosition())));
 	}
 	
 	@Test
