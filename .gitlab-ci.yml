@@ -110,15 +110,13 @@ publiserapi:
   - bash
 
 publiserweb:
-  stage: staging
+  stage: deploy
   script:
     - cd ../continousdeployment/web/
+    - ls -la
     - cp index.html /srv/nginx/pages/gitlabapi/public/
-    - cp -R apps/ /srv/nginx/pages/gitlabapi/public/
-    - cp -R img/ /srv/nginx/pages/gitlabapi/public/
-    - cp -R staging/ /srv/nginx/pages/gitlabapi/public/
   environment:
-    name: nettside
+    name: nettside/index
     url: http://158.39.74.42:80/
   only:
     - /.*deploy-web.*$/
