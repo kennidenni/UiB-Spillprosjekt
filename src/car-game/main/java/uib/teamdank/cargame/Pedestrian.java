@@ -51,12 +51,12 @@ public class Pedestrian extends Actor implements RoadEntity {
 	}
 	
 	public void restrictHorizontally(int minX, int maxX) {
-		if (getPosisiton().x < minX) {
-			getPosisiton().x = minX;
+		if (getPosition().x < minX) {
+			getPosition().x = minX;
 			getVelocity().x *= -1;
 			setFlipHorizontally(false);
-		} else if (getPosisiton().x > maxX-this.getWidth()) {
-			getPosisiton().x = maxX-this.getWidth();
+		} else if (getPosition().x > maxX-this.getWidth()) {
+			getPosition().x = maxX-this.getWidth();
 			getVelocity().x *= -1;
 			setFlipHorizontally(true);
 		}
