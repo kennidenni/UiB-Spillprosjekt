@@ -119,7 +119,7 @@ public class GameScreenTest {
 	@Test
 	public void testUpdateInGameScreen() {
 		GameObject obj = new GameObject();
-		obj.getPosisiton().set(1, 1);
+		obj.getPosition().set(1, 1);
 		obj.getVelocity().set(1, 2);
 		
 		Layer l = new Layer(false);
@@ -128,7 +128,7 @@ public class GameScreenTest {
 		gs.addLayer(l);
 		gs.update(1);
 		
-		assertEquals(new Vector2(2, 3), obj.getPosisiton());
+		assertEquals(new Vector2(2, 3), obj.getPosition());
 	}
 	
 }

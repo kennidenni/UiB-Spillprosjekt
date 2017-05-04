@@ -90,18 +90,18 @@ public class Player extends Actor implements Upgradeable {
 	}
 
 	public void reset() {
-		getPosisiton().set(0, 0);
+		getPosition().set(0, 0);
 		getVelocity().set(0, 0);
 		setHealth(getMaxHealth());
 		getScore().setScore(0);
 	}
 
 	public void restrictHorizontally(int minX, int maxX) {
-		if (getPosisiton().x < minX) {
-			getPosisiton().x = minX;
+		if (getPosition().x < minX) {
+			getPosition().x = minX;
 			getVelocity().x *= -1;
-		} else if (getPosisiton().x > maxX - getWidth()) {
-			getPosisiton().x = (float) (maxX - getWidth());
+		} else if (getPosition().x > maxX - getWidth()) {
+			getPosition().x = (float) (maxX - getWidth());
 			getVelocity().x *= -1;
 		}
 	}

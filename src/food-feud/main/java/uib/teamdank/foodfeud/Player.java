@@ -12,7 +12,11 @@ import uib.teamdank.common.ItemHolder;
  */
 public class Player extends Actor implements ItemHolder, PhysicsSimulated {
 	
+	private static final float HORIZONTAL_MOVEMENT_IMPULSE = 5000f;
+	private static final float JUMP_FORCE = 100000000f;
+	
 	private Body body;
+	private boolean onGround; 
 	
 	private Inventory weapons;
 	
@@ -21,8 +25,12 @@ public class Player extends Actor implements ItemHolder, PhysicsSimulated {
 		weapons = new Inventory();
 	}
 	
-	public void setBody(Body body) {
-		this.body = body;
+	@Override
+	public float getAngle() {
+		if (body != null) {
+			setAngle((float) Math.toDegrees(body.getAngle()));
+		}
+		return super.getAngle();
 	}
 	
 	public Body getBody() {
@@ -35,20 +43,38 @@ public class Player extends Actor implements ItemHolder, PhysicsSimulated {
 	}
 	
 	@Override
-	public float getAngle() {
+	public Vector2 getPosition() {
 		if (body != null) {
-			setAngle((float) Math.toDegrees(body.getAngle()));
+			super.getPosition().set(body.getPosition());
+			super.getPosition().sub(getWidth() / 2f, getHeight() / 2f);
 		}
-		return super.getAngle();
+		return super.getPosition();
 	}
 	
-	@Override
-	public Vector2 getPosisiton() {
-		if (body != null) {
-			super.getPosisiton().set(body.getPosition());
-			super.getPosisiton().sub(getWidth() / 2f, getHeight() / 2f);
+	public boolean isOnGround() {
+		return onGround;
+	}
+	
+	public void jump() {
+		if (isOnGround()) {
+			body.applyForceToCenter(0, JUMP_FORCE, true);
 		}
-		return super.getPosisiton();
+	}
+	
+	public void moveLeft() {
+		body.applyLinearImpulse(-HORIZONTAL_MOVEMENT_IMPULSE, 0, getWidth() / 2, getHeight() / 2, true);
+	}
+	
+	public void moveRight() {
+		body.applyLinearImpulse(HORIZONTAL_MOVEMENT_IMPULSE, 0, getWidth() / 2, getHeight() / 2, true);
+	}
+	
+	public void setBody(Body body) {
+		this.body = body;
+	}
+	
+	public void setOnGround(boolean onGround) {
+		this.onGround = onGround;
 	}
 	
 }

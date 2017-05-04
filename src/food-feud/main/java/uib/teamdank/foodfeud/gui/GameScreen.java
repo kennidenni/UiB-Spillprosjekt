@@ -13,8 +13,10 @@ import uib.teamdank.common.gui.Layer;
 import uib.teamdank.foodfeud.Level;
 import uib.teamdank.foodfeud.LevelLoader;
 import uib.teamdank.foodfeud.Match;
+import uib.teamdank.foodfeud.PhysicsContactListener;
 import uib.teamdank.foodfeud.PhysicsSimulated;
 import uib.teamdank.foodfeud.Player;
+import uib.teamdank.foodfeud.PlayerBodyCreator;
 
 /**
  * The main gameplay screen.
@@ -35,6 +37,7 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 		this.camera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		this.level = LevelLoader.createFromJson(Gdx.files.internal("Data/field_level.json"));
 		this.match = new Match("Geir", "Bodil", "Arne", "Bertrude");
+		level.getWorld().setContactListener(new PhysicsContactListener(match));
 
 		camera.position.set(level.getWidth() / 2f, level.getHeight() / 2f, 0);
 		camera.zoom = 1f;
@@ -44,9 +47,11 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 		this.playerLayer = new Layer(true);
 		addLayer(playerLayer);
 
+		PlayerBodyCreator playerBodyCreator = new PlayerBodyCreator(level.getWorld());
 		TextureRegion playerTexture = new TextureRegion(new Texture("Images/food_sheet.png"), 53, 48, 57, 57); // Temporary
 		for (Player player : match.getPlayers()) {
 			player.setTexture(playerTexture);
+			playerBodyCreator.initializeBody(player);
 			playerLayer.addGameObject(player);
 		}
 		level.distributePlayers(match.getPlayers());
@@ -75,12 +80,35 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 	@Override
 	public void update(float delta) {
 
-		checkPauseRequest();
+		final Player activePlayer = match.getActivePlayer();
+
+		camera.position.set(activePlayer.getX(), activePlayer.getY(), 0f);
+		camera.position.add(activePlayer.getWidth() / 2f, activePlayer.getHeight() / 2f, 0f);
 		camera.update();
 		
 		// Update game objects
 		super.update(delta);
 		level.updateWorld();
+		
+		// User input
+		checkPauseRequest();
+
+		if (activePlayer.isOnGround() && 
+				(Gdx.input.isKeyJustPressed(Keys.W) ||
+				 Gdx.input.isKeyJustPressed(Keys.UP))) {
+			activePlayer.jump();
+		}
+		if (Gdx.input.isKeyPressed(Keys.A) || Gdx.input.isKeyPressed(Keys.LEFT)) {
+			activePlayer.moveLeft();
+		}
+		if (Gdx.input.isKeyPressed(Keys.D) || Gdx.input.isKeyPressed(Keys.RIGHT)) {
+			activePlayer.moveRight();
+		}
+		
+		// Temporary
+		if (Gdx.input.isKeyJustPressed(Keys.SPACE)) {
+			match.nextTurn();
+		}
 
 	}
 	

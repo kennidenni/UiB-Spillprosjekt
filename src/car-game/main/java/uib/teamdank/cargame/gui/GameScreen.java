@@ -183,7 +183,7 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 	public void render(float delta) {
 
 		// Update player camera
-		Vector2 playerPos = player.getPosisiton();
+		Vector2 playerPos = player.getPosition();
 		float cameraX = playerPos.x + player.getWidth() / 2;
 		float cameraY = playerPos.y + Gdx.graphics.getHeight() / 2 - CAR_VERTICAL_POSITION;
 		playerCamera.position.set(cameraX, cameraY, 0);
