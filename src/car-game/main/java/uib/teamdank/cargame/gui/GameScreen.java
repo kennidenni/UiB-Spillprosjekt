@@ -23,7 +23,6 @@ import uib.teamdank.common.gui.Layer;
 import uib.teamdank.common.util.AssetManager;
 import uib.teamdank.common.util.TextureAtlas;
 import uib.teamdank.common.util.TimedEvent;
-import uib.teamdank.common.util.WeatherData;
 import uib.teamdank.common.util.WeatherData.WeatherType;
 
 /**
