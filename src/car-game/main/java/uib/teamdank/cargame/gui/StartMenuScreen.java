@@ -5,7 +5,6 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -18,6 +17,8 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import uib.teamdank.cargame.CarGame;
 import uib.teamdank.cargame.Player;
 import uib.teamdank.common.Game;
+import uib.teamdank.common.util.WeatherData;
+import uib.teamdank.common.util.WeatherData.WeatherType;
 
 public class StartMenuScreen implements uib.teamdank.common.gui.StartMenuScreen {
 	private static final String LOGO = "Images/CarGameLogo.png";
@@ -42,6 +43,7 @@ public class StartMenuScreen implements uib.teamdank.common.gui.StartMenuScreen 
 	private Game game;
 	private ShopScreen shopScreen;
 	private Player player;
+	private WeatherData wData;
 
 	public StartMenuScreen(CarGame game) {
 		this.game = game;
@@ -51,6 +53,9 @@ public class StartMenuScreen implements uib.teamdank.common.gui.StartMenuScreen 
 		shopScreen = new ShopScreen(game);
 		buttons = new Array<Button>();
 		menu = new Table();
+		
+		// Weather Data
+		wData = new WeatherData();
 		
 		logoButton = setupButton(LOGO);
 		playButton = setupButton(PLAY);
@@ -71,6 +76,9 @@ public class StartMenuScreen implements uib.teamdank.common.gui.StartMenuScreen 
 		menu.setFillParent(true);
 		stages.addActor(menu);
 		Gdx.input.setInputProcessor(stages);
+		
+		// So the loading of weather data from web happens before the user press start button:
+		getWeather();
 	}
 
 	private void addToTables() {
@@ -247,5 +255,9 @@ public class StartMenuScreen implements uib.teamdank.common.gui.StartMenuScreen 
 				}
 			}
 		});
+	}
+	
+	public WeatherType getWeather() {
+		return wData.pullWeather("Norway", "Hordaland", "Bergen", "Bergen");
 	}
 }

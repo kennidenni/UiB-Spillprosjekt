@@ -7,7 +7,6 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 import uib.teamdank.cargame.util.LoopingBackground;
 import uib.teamdank.common.gui.Layer;
-import uib.teamdank.common.util.WeatherData;
 import uib.teamdank.common.util.WeatherData.WeatherType;
 
 public class WeatherLayer extends Layer {
@@ -19,32 +18,33 @@ public class WeatherLayer extends Layer {
 	private final OrthographicCamera playerCamera;
 	private final OrthographicCamera screenCamera;
 
-	private final WeatherData wData;
 	private final WeatherType wType;
 
 	private final Texture wTexture;
 	private final LoopingBackground scrollingWeather;
 
-	public WeatherLayer(OrthographicCamera playerCamera, OrthographicCamera screenCamera) {
+	public WeatherLayer(OrthographicCamera playerCamera, OrthographicCamera screenCamera, WeatherType wType) {
 		super(false);
 
 		this.playerCamera = playerCamera;
 		this.screenCamera = screenCamera;
 
-		wData = new WeatherData();
-		wType = wData.pullWeather("Norway", "Hordaland", "Bergen", "Bergen");
-
-		if (wType == WeatherType.CLOUD)
-			wTexture = new Texture(Gdx.files.internal(CLOUDS));
-		else if (wType == WeatherType.RAIN)
-			wTexture = new Texture(Gdx.files.internal(RAIN));
-		else if (wType == WeatherType.SUN)
-			wTexture = new Texture(Gdx.files.internal(EMPTY));
-		else
-			wTexture = new Texture(Gdx.files.internal(SNOW));
+		this.wType = wType;
+		this.wTexture = setWeatherTexture();
 
 		scrollingWeather = new LoopingBackground(playerCamera, wTexture, 1);
-		scrollingWeather.updateHorizontalPosition(-wTexture.getWidth()/2);
+		scrollingWeather.updateHorizontalPosition(-wTexture.getWidth() / 2);
+	}
+
+	private Texture setWeatherTexture() {
+		if (wType == WeatherType.CLOUD)
+			return new Texture(Gdx.files.internal(CLOUDS));
+		else if (wType == WeatherType.RAIN)
+			return new Texture(Gdx.files.internal(RAIN));
+		else if (wType == WeatherType.SUN)
+			return new Texture(Gdx.files.internal(EMPTY));
+		else
+			return new Texture(Gdx.files.internal(SNOW));
 	}
 
 	@Override

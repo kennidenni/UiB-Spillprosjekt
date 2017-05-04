@@ -23,6 +23,8 @@ import uib.teamdank.common.gui.Layer;
 import uib.teamdank.common.util.AssetManager;
 import uib.teamdank.common.util.TextureAtlas;
 import uib.teamdank.common.util.TimedEvent;
+import uib.teamdank.common.util.WeatherData;
+import uib.teamdank.common.util.WeatherData.WeatherType;
 
 /**
  * The main gameplay screen.
@@ -61,6 +63,8 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 	private List<Score> score;
 	private int numTimesNewHighscoreMessage;
 	private TimedEvent onOffNewHighscoreMessage;
+	
+	private WeatherType wType;
 
 	public GameScreen(Game game) {
 		super(game);
@@ -89,9 +93,12 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 			player.getScore().addToScore(AMOUNT_PER_SCORE);
 		}));
 
+		// Weather
+		wType = ((CarGame) game).getStartMenuScreen().getWeather();
+		
 		// Layers
-		backgroundLayer = new BackgroundLayer(assets, playerCamera, screenCamera, player);
-		weatherLayer = new WeatherLayer(playerCamera, screenCamera);
+		backgroundLayer = new BackgroundLayer(assets, playerCamera, screenCamera, player, wType);
+		weatherLayer = new WeatherLayer(playerCamera, screenCamera, wType);
 		roadEntityLayer = new Layer(true);
 		pedestrianLayer = new Layer(true);
 		carLayer = new Layer(true);
