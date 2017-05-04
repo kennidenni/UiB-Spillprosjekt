@@ -16,29 +16,11 @@ import uib.teamdank.common.util.WeatherData.WeatherType;
 public class WeatherGenerator implements Generator<GameObject> {
 	private final List<Generator<GameObject>> entityGenerators = new ArrayList<>();
 	
-	private WeatherType wType;
 	public WeatherGenerator(WeatherType wType) {
-		this.wType = wType;
-
-//		wType = WeatherType.SNOW;
-		if(wType == WeatherType.CLOUD) {
-			TextureAtlas atlas = TextureAtlas.createFromJson(Gdx.files.internal("Images/cloud_sheet.json"));
-			this.entityGenerators.add(rnd -> {
-				GameObject wObj = new GameObject(atlas.getRegion("cloud_1"));
-				wObj.getVelocity().set(-10, -20);
-				return wObj;
-			});
-			this.entityGenerators.add(rnd -> {
-				GameObject wObj = new GameObject(atlas.getRegion("cloud_2"));
-				wObj.getVelocity().set(-10, -20);
-				return wObj;
-			});
-			this.entityGenerators.add(rnd -> {
-				GameObject wObj = new GameObject(atlas.getRegion("cloud_3"));
-				wObj.getVelocity().set(-10, -20);
-				return wObj;
-			});
-		}else if (wType == WeatherType.SNOW)
+		
+		if(wType == WeatherType.CLOUD) 
+			addClouds();
+		else if (wType == WeatherType.SNOW)
 			this.entityGenerators.add(rnd -> {
 				GameObject wObj = new GameObject(new TextureRegion(new Texture(Gdx.files.internal("Images/snow.png"))));
 				wObj.getVelocity().set(-10, -20);
@@ -52,6 +34,25 @@ public class WeatherGenerator implements Generator<GameObject> {
 			});
 		else
 			this.entityGenerators.add(rnd -> new GameObject(new TextureRegion(new Texture(Gdx.files.internal("Images/empty.png")))));
+	}
+
+	private void addClouds() {
+		TextureAtlas atlas = TextureAtlas.createFromJson(Gdx.files.internal("Images/cloud_sheet.json"));
+		this.entityGenerators.add(rnd -> {
+			GameObject wObj = new GameObject(atlas.getRegion("cloud_1"));
+			wObj.getVelocity().set(-10, -20);
+			return wObj;
+		});
+		this.entityGenerators.add(rnd -> {
+			GameObject wObj = new GameObject(atlas.getRegion("cloud_2"));
+			wObj.getVelocity().set(-10, -20);
+			return wObj;
+		});
+		this.entityGenerators.add(rnd -> {
+			GameObject wObj = new GameObject(atlas.getRegion("cloud_3"));
+			wObj.getVelocity().set(-10, -20);
+			return wObj;
+		});
 	}
 	
 	@Override
