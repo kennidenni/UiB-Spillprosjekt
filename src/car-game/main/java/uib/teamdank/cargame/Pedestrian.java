@@ -3,6 +3,7 @@ package uib.teamdank.cargame;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 import uib.teamdank.common.Actor;
+import uib.teamdank.common.util.Animation;
 import uib.teamdank.common.util.AudioManager;
 
 /**
@@ -18,20 +19,25 @@ public class Pedestrian extends Actor implements RoadEntity {
 
 	private final long scoreBonus;
 
-	public Pedestrian(AudioManager audioManager, long scoreBonus, float vx, float vy, boolean randomHorizontalDirection, TextureRegion texture) {
+	public Pedestrian(AudioManager audioManager, long scoreBonus, float vx, float vy, boolean goLeft, TextureRegion texture) {
+		this(audioManager, scoreBonus, vx, vy, goLeft, Animation.createSingleFramed(texture));
+	}
+	
+	public Pedestrian(AudioManager audioManager, long scoreBonus, float vx, float vy, boolean goLeft, Animation anim) {
 		this.audioManager = audioManager;
-		setTexture(texture);
+		setAnimation(anim);
 		setScale(.9f);
-
+		
 		getVelocity().set(vx, vy);
-		if (randomHorizontalDirection) {
+		if (goLeft) {
 			getVelocity().x *= -1;
 			setFlipHorizontally(true);
 		}
 		this.scoreBonus = scoreBonus;
-
+		
 		audioManager.preloadSounds(SOUND);
 	}
+	
 
 	@Override
 	public void drivenOverBy(Player player) {
@@ -42,6 +48,18 @@ public class Pedestrian extends Actor implements RoadEntity {
 		}
 		this.markForRemoval();
 
+	}
+	
+	public void restrictHorizontally(int minX, int maxX) {
+		if (getPosition().x < minX) {
+			getPosition().x = minX;
+			getVelocity().x *= -1;
+			setFlipHorizontally(false);
+		} else if (getPosition().x > maxX-this.getWidth()) {
+			getPosition().x = maxX-this.getWidth();
+			getVelocity().x *= -1;
+			setFlipHorizontally(true);
+		}
 	}
 	
 }

@@ -95,7 +95,7 @@ public class Animation {
 	}
 
 	public void update(float delta) {
-		if (speed <= 0) {
+		if (speed >= 0) {
 			time += delta * speed;
 		}
 	}
