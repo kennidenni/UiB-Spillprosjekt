@@ -22,6 +22,7 @@ public class RoadEntityGenerator implements Generator<GameObject> {
 
 	public RoadEntityGenerator(AudioManager audio, TextureAtlas roadEntityAtlas) {
 		this.entityGenerators.add(rnd -> new Fuel(audio, roadEntityAtlas));
+		this.entityGenerators.add(rnd -> new Fuel(audio, roadEntityAtlas));
 		this.entityGenerators.add(rnd -> new Hole(roadEntityAtlas));
 		this.entityGenerators.add(rnd -> new Puddle(audio, roadEntityAtlas));
 		this.entityGenerators.add(rnd -> new Coin(audio, roadEntityAtlas));
