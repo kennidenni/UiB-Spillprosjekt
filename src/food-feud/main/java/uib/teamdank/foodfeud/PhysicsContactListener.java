@@ -10,11 +10,9 @@ import com.badlogic.gdx.physics.box2d.Manifold;
 
 public class PhysicsContactListener implements ContactListener {
 
-	private final Level level;
 	private final Match match;
 
-	public PhysicsContactListener(Level level, Match match) {
-		this.level = Objects.requireNonNull(level, "level cannot be null");
+	public PhysicsContactListener(Match match) {
 		this.match = Objects.requireNonNull(match, "match canont be null");
 	}
 

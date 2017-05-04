@@ -37,7 +37,7 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 		this.camera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		this.level = LevelLoader.createFromJson(Gdx.files.internal("Data/field_level.json"));
 		this.match = new Match("Geir", "Bodil", "Arne", "Bertrude");
-		level.getWorld().setContactListener(new PhysicsContactListener(level, match));
+		level.getWorld().setContactListener(new PhysicsContactListener(match));
 
 		camera.position.set(level.getWidth() / 2f, level.getHeight() / 2f, 0);
 		camera.zoom = 1f;
@@ -82,8 +82,8 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 
 		final Player activePlayer = match.getActivePlayer();
 
-		camera.position.set(activePlayer.getX(), activePlayer.getY(), 0);
-		camera.position.add(activePlayer.getWidth() / 2, activePlayer.getHeight() / 2, 0);
+		camera.position.set(activePlayer.getX(), activePlayer.getY(), 0f);
+		camera.position.add(activePlayer.getWidth() / 2f, activePlayer.getHeight() / 2f, 0f);
 		camera.update();
 		
 		// Update game objects

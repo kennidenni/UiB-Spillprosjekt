@@ -49,7 +49,7 @@ public class Level implements Disposable {
 			}
 			
 			final Vector2 pos = body.getPosition();
-			pos.y = getHeight() / 2;
+			pos.y = getHeight() / 2f;
 			pos.x = PLAYER_POSITION_MARGIN + (stepX * (i + .5f));
 			body.setTransform(pos, 0);
 		}

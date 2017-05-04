@@ -21,7 +21,7 @@ public class PlayerBodyCreator {
 
 	private void addGroundCollider(Player player, Body body) {
 		CircleShape shape = new CircleShape();
-		shape.setRadius(player.getWidth() / 2);
+		shape.setRadius(player.getWidth() / 2f);
 		body.createFixture(shape, 1);
 	}
 	
