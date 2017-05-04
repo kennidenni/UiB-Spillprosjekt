@@ -10,7 +10,7 @@ stages:
   - build
   - test
   - staging
-  - production
+  - deploy
 
 # Disable the Gradle daemon for Continuous Integration servers as correctness
 # is usually a priority over speed in CI environments. Using a fresh
@@ -124,6 +124,36 @@ publiserweb:
     - /.*deploy-web.*$/
   tags:
     - bash
+  when: manual
+    
+    
+publisercarlthecrasher:
+  stage: deploy
+  script:
+    - cd jar/
+    - cp Car-Game.jar /srv/nginx/pages/gitlabapi/public/apps/
+  environment:
+    name: nettside/carlthecrasher
+    url: http://158.39.74.42:80/apps/carlthecrasher.jar
+  only:
+    - /.*carlthecrasher-release.*$/
+  tags:
+    - bash
+  when: manual
+  
+publiserfoodfeud:
+  stage: deploy
+  script:
+    - cd jar/
+    - cp foodfeud.jar /srv/nginx/pages/gitlabapi/public/apps/
+  environment:
+    name: nettside/foodfeud
+    url: http://158.39.74.42:80/apps/foodfeud.jar
+  only:
+    - /.*foodfeud-release.*$/
+  tags:
+    - bash
+  when: manual
 # Use the generated build output to run the tests.
 #test:
 #  stage: test
