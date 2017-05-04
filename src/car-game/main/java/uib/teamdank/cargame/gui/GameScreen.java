@@ -113,7 +113,7 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 
 		// Road entity spawner initialization
 		this.roadEntitySpawner = new ScrollingSpawner(roadEntityLayer, playerCamera,
-				new RoadEntityGenerator(assets.getAudio(), roadEntityTextures));
+				new RoadEntityGenerator(assets.getAudio(), roadEntityTextures, wType));
 		roadEntitySpawner.setHorizontalPositionRange(backgroundLayer.getRoadLeftX(), backgroundLayer.getRoadRightX());
 		roadEntitySpawner.setChanceOfSpawn(.01f);
 		roadEntitySpawner.setExtraVerticalSpaceBetweenSpawns(50);
@@ -122,7 +122,10 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 		this.pedestrianSpawner = new ScrollingSpawner(pedestrianLayer, playerCamera,
 					new PedestrianGenerator(assets, pedestrianTextures, wType));
 		pedestrianSpawner.setHorizontalPositionRange(backgroundLayer.getRoadLeftX(), backgroundLayer.getRoadRightX());
-		pedestrianSpawner.setChanceOfSpawn(.01f);
+		if(wType == WeatherType.RAIN)
+			pedestrianSpawner.setChanceOfSpawn(.013f);
+		else
+			pedestrianSpawner.setChanceOfSpawn(.01f);
 		pedestrianSpawner.setExtraVerticalSpaceBetweenSpawns(50);
 		
 		// Weather spawner initialization
