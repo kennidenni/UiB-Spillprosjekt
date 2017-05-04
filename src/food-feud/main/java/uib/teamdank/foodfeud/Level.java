@@ -6,10 +6,7 @@ import java.util.Objects;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.physics.box2d.BodyDef;
-import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
-import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.utils.Disposable;
 
 public class Level implements Disposable {
@@ -43,25 +40,18 @@ public class Level implements Disposable {
 	}
 	
 	public void distributePlayers(List<Player> players) {
-		BodyDef bodyDef = new BodyDef();
-		bodyDef.type = BodyType.DynamicBody;
-		bodyDef.fixedRotation = true;
-		
 		float stepX = (getWidth() - PLAYER_POSITION_MARGIN * 2f) / (players.size());
 		for (int i = 0; i < players.size(); i++) 
 		{
-			final Vector2 pos = bodyDef.position;
-			pos.y = getHeight();
+			final Body body = players.get(i).getBody();
+			if (body == null) {
+				throw new IllegalStateException("player does not have a body");
+			}
+			
+			final Vector2 pos = body.getPosition();
+			pos.y = getHeight() / 2;
 			pos.x = PLAYER_POSITION_MARGIN + (stepX * (i + .5f));
-			bodyDef.position.set(pos);
-			
-			final Player player = players.get(i);
-			PolygonShape shape = new PolygonShape();
-			shape.setAsBox(player.getWidth() / 2f, player.getHeight() / 2f);
-			Body body = world.createBody(bodyDef);
-			players.get(i).setBody(body);
-			
-			body.createFixture(shape, 1);
+			body.setTransform(pos, 0);
 		}
 	}
 	

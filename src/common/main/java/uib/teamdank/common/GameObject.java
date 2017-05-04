@@ -144,7 +144,7 @@ public class GameObject {
 	 * 
 	 * @return The current position of this GameObject.
 	 */
-	public Vector2 getPosisiton() {
+	public Vector2 getPosition() {
 		return pos;
 	}
 
@@ -221,7 +221,7 @@ public class GameObject {
 	
 	protected void renderTexture(SpriteBatch batch, float delta, TextureRegion texture, float xOffset, float yOffset) {
 		if (texture != null) {
-			final Vector2 pos = getPosisiton();
+			final Vector2 pos = getPosition();
 			final float width = getWidth();
 			final float height = getHeight();
 			final float flipX = getFlipHorizontally() ? -1 : 1;
