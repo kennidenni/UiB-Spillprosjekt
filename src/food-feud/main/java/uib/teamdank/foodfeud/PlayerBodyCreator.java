@@ -22,12 +22,13 @@ public class PlayerBodyCreator {
 	private void addGroundCollider(Player player, Body body) {
 		CircleShape shape = new CircleShape();
 		shape.setRadius(player.getWidth() / 2f);
+		shape.setPosition(new Vector2(0, -player.getHeight() / 3));
 		body.createFixture(shape, 1);
 	}
 	
 	private void addGroundDetector(Player player, Body body) {
 		PolygonShape shape = new PolygonShape();
-		shape.setAsBox(5, 5, new Vector2(0f, -player.getHeight() / 2f), 0);
+		shape.setAsBox(player.getWidth() / 3, 6, new Vector2(0f, -player.getHeight() + 3), 0);
 		FixtureDef fixtureDef = new FixtureDef();
 		fixtureDef.shape = shape;
 		fixtureDef.isSensor = true;
@@ -38,6 +39,7 @@ public class PlayerBodyCreator {
 		BodyDef bodyDef = new BodyDef();
 		bodyDef.type = BodyType.DynamicBody;
 		bodyDef.fixedRotation = true;
+		bodyDef.linearDamping = .01f;
 		Body body = world.createBody(bodyDef);
 
 		addGroundCollider(player, body);

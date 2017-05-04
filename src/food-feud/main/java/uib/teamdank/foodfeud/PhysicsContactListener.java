@@ -12,18 +12,20 @@ public class PhysicsContactListener implements ContactListener {
 
 	private final Match match;
 
+	private int activePlayerGroundContactCount = 0;
+
 	public PhysicsContactListener(Match match) {
 		this.match = Objects.requireNonNull(match, "match canont be null");
 	}
 
 	@Override
 	public void beginContact(Contact contact) {
-		updateActivePlayerGroundStatus(contact.getFixtureA(), contact.getFixtureB(), true);
+		updateActivePlayerGroundStatus(contact.getFixtureA(), contact.getFixtureB(), false);
 	}
 
 	@Override
 	public void endContact(Contact contact) {
-		updateActivePlayerGroundStatus(contact.getFixtureA(), contact.getFixtureB(), false);
+		updateActivePlayerGroundStatus(contact.getFixtureA(), contact.getFixtureB(), true);
 	}
 
 	@Override
@@ -36,11 +38,22 @@ public class PhysicsContactListener implements ContactListener {
 		// Not necessary
 	}
 
-	private void updateActivePlayerGroundStatus(Fixture fixtureA, Fixture fixtureB, boolean onGround) {
+	/**
+	 * Updates the active player's "touching the ground" status by examining the
+	 * potential contact between the player and the given fixtures. Nothing will
+	 * happen if none of the fixtures belong to the player.
+	 * <p>
+	 * Since the player's ground sensor can collide with more than fixture at
+	 * the same time, a count ({@link #activePlayerGroundContactCount}) is kept
+	 * to properly update the player.
+	 */
+	private void updateActivePlayerGroundStatus(Fixture fixtureA, Fixture fixtureB, boolean endContact) {
 		Object userDataA = fixtureA.getUserData();
 		Object userDataB = fixtureB.getUserData();
 		if (userDataA == match.getActivePlayer() || userDataB == match.getActivePlayer()) {
-			match.getActivePlayer().setOnGround(onGround);
+			activePlayerGroundContactCount += endContact ? -1 : 1;
+			assert (activePlayerGroundContactCount >= 0);
+			match.getActivePlayer().setOnGround(activePlayerGroundContactCount != 0);
 		}
 	}
 

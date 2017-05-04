@@ -1,5 +1,5 @@
 {
-	"tileset": "Images/player.png",
+	"tileset": "Images/player_sheet.png",
 	"regions": [
 		{
 			"name": "elvis1",
@@ -59,10 +59,17 @@
 		},
 		{
 			"name": "elvis_feet_step_right",
-			"x": "1568",
-			"y": "271",
-			"w": "64",
-			"h": "97"
+			"x": "1551",
+			"y": "260",
+			"w": "97",
+			"h": "119"
+		},
+		{
+			"name": "elvis_arm",
+			"x": "1716",
+			"y": "140",
+			"w": "152",
+			"h": "103"
 		}
 	]
 }
