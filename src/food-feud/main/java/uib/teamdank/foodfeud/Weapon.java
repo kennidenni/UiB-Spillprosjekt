@@ -11,11 +11,11 @@ import uib.teamdank.common.Item;
 public class Weapon extends Item {
 
 	private final int dmg, weight;
-	private final weaponProjectile proj;
+	private final WeaponProjectile proj;
 
 	private boolean damagedPlayer = false;
 
-	public enum weaponProjectile {
+	public enum WeaponProjectile {
 		// light bullets like guns
 		LIGHT_BALLISTIC,
 		// like uzi, HK416.. etc
@@ -34,7 +34,7 @@ public class Weapon extends Item {
 	 * @param descr
 	 *            weapon description
 	 */
-	public Weapon(String name, String descr, int d, int w, TextureRegion texture, weaponProjectile p) {
+	public Weapon(String name, String descr, int d, int w, TextureRegion texture, WeaponProjectile p) {
 		super(name, descr);
 		this.dmg = d;
 		this.weight = w;
@@ -50,7 +50,7 @@ public class Weapon extends Item {
 		return weight;
 	}
 
-	public weaponProjectile getProjectileType() {
+	public WeaponProjectile getProjectileType() {
 		return proj;
 	}
 
