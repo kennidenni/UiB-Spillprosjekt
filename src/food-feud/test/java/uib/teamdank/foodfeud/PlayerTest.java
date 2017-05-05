@@ -7,7 +7,7 @@ import static org.junit.Assert.assertThat;
 import org.junit.Before;
 import org.junit.Test;
 
-import uib.teamdank.common.LibGdxDependentTest;
+//import uib.teamdank.common.LibGdxDependentTest;
 import uib.teamdank.common.util.AssetManager;
 
 public class PlayerTest { // extends LibGdxDependentTest
