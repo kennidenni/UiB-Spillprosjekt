@@ -260,6 +260,10 @@ public class GameObject {
 		return true;
 	}
 
+	public float getScale() {
+		return scale;
+	}
+	
 	/**
 	 * @return Whether or not this GameObject can share space with other
 	 *         GameObject's.

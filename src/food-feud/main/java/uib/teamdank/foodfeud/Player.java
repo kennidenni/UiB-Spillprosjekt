@@ -1,5 +1,9 @@
 package uib.teamdank.foodfeud;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input.Keys;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 
@@ -8,6 +12,7 @@ import uib.teamdank.common.Inventory;
 import uib.teamdank.common.ItemHolder;
 import uib.teamdank.common.util.Animation;
 import uib.teamdank.common.util.AssetManager;
+import uib.teamdank.common.util.TextureAtlas;
 
 /**
  * Represents a player in the game.
@@ -17,26 +22,32 @@ public class Player extends Actor implements ItemHolder, PhysicsSimulated {
 	private static final float HORIZONTAL_MOVEMENT_IMPULSE = 5000f;
 	private static final float JUMP_FORCE = 100000000f;
 
-	private final Animation stillAnimation;
-	private final Animation walkingAnimation;
-	private final Animation fallingAnimation;
+	private final TextureAtlas playerAtlas;
+	private TextureRegion bodyTexture;
+	private final Animation feetStillAnimation;
+	private final Animation feetWalkingAnimation;
+	private final Animation feetFallingAnimation;
 
 	private Body body;
 	private boolean onGround;
 	private boolean walking;
 
-	private Inventory weapons;
+	private final Team team;
+	private final Inventory weapons;
 	
 	public Player(AssetManager assets, Team team, String name) {
 		super(100, name);
-		weapons = new Inventory();
+		this.team = team;
+		this.weapons = new Inventory();
 
-		this.stillAnimation = assets.getAnimation(team.getStillAnimation());
-		this.walkingAnimation = assets.getAnimation(team.getWalkingAnimation());
-		this.fallingAnimation = assets.getAnimation(team.getFallingAnimation());
+		this.playerAtlas = assets.getAtlas("Images/player_sheet.json");
+		this.bodyTexture = getBodyExpansionTexture();
+		this.feetStillAnimation = assets.getAnimation(team.getStillAnimation());
+		this.feetWalkingAnimation = assets.getAnimation(team.getWalkingAnimation());
+		this.feetFallingAnimation = assets.getAnimation(team.getFallingAnimation());
 		setScale(.5f);
 	}
-
+	
 	@Override
 	public float getAngle() {
 		if (body != null) {
@@ -49,11 +60,25 @@ public class Player extends Actor implements ItemHolder, PhysicsSimulated {
 		return body;
 	}
 
+	private TextureRegion getBodyExpansionTexture() {
+		if (getHealth() == 0) {
+			return playerAtlas.getRegion(team.getBodyDead());
+		}
+		float healthPerBody = getMaxHealth() / (float) team.getBodyExpansionCount();
+		int index = (int) (getHealth() / healthPerBody) - 1;
+		return playerAtlas.getRegion(team.getBodyExpansion(index));
+	}
+
+	@Override
+	public int getHeight() {
+		return (int) (bodyTexture.getRegionHeight() * getScale());
+	}
+
 	@Override
 	public Inventory getInventory() {
 		return weapons;
 	}
-
+	
 	@Override
 	public Vector2 getPosition() {
 		if (body != null) {
@@ -62,13 +87,19 @@ public class Player extends Actor implements ItemHolder, PhysicsSimulated {
 		}
 		return super.getPosition();
 	}
-	
+
 	@Override
 	public Vector2 getVelocity() {
 		if (body != null) {
 			super.getVelocity().set(body.getLinearVelocity());
 		}
 		return super.getVelocity();
+	}
+
+	@Override
+	public int getWidth() {
+		int max = Math.max(bodyTexture.getRegionWidth(), getAnimation().getTexture().getRegionWidth());
+		return (int) (max * getScale());
 	}
 
 	private boolean isMoving() {
@@ -78,7 +109,7 @@ public class Player extends Actor implements ItemHolder, PhysicsSimulated {
 	public boolean isOnGround() {
 		return onGround;
 	}
-
+	
 	public void jump() {
 		if (isOnGround()) {
 			body.applyForceToCenter(0, JUMP_FORCE, true);
@@ -90,10 +121,9 @@ public class Player extends Actor implements ItemHolder, PhysicsSimulated {
 	}
 	
 	public void moveLeft(int times) {
-		body.applyLinearImpulse(-(HORIZONTAL_MOVEMENT_IMPULSE * times), 0, getWidth() / 2, getHeight() / 2, true);
-		walking = true;
+		moveRight(-1);
 	}
-
+	
 	public void moveRight() {
 		moveRight(1);
 	}
@@ -103,24 +133,36 @@ public class Player extends Actor implements ItemHolder, PhysicsSimulated {
 		walking = true;
 	}
 
+	@Override
+	public void render(SpriteBatch batch, float delta) {
+		renderTexture(batch, delta, bodyTexture, 0, 0);
+		renderTexture(batch, delta, getAnimation().getTexture(), 0, getHeight());
+	}
+	
 	public void setBody(Body body) {
 		this.body = body;
+	}
+
+	@Override
+	public void setHealth(int health) {
+		super.setHealth(health);
+		this.bodyTexture = getBodyExpansionTexture();
 	}
 
 	public void setOnGround(boolean onGround) {
 		this.onGround = onGround;
 	}
-
+	
 	@Override
 	public void update(float delta) {
 		super.update(delta);
 		
 		if (isOnGround() && isMoving() && walking) {
-			setAnimation(walkingAnimation);
+			setAnimation(feetWalkingAnimation);
 		} else if (!isOnGround()) {
-			setAnimation(fallingAnimation);
+			setAnimation(feetFallingAnimation);
 		} else {
-			setAnimation(stillAnimation);
+			setAnimation(feetStillAnimation);
 		}
 		setFlipHorizontally(getVelocity().x < 0);
 		walking = false;
