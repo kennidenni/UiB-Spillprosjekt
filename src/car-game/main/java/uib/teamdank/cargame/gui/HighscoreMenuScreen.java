@@ -53,8 +53,8 @@ public class HighscoreMenuScreen implements uib.teamdank.common.gui.HighscoreMen
 		
 		highscoreButton = setupButton(HIGHSCORE);
 		menu.add(highscoreButton)
-			.width((highscoreButton.getWidth() / 4))
-			.height((highscoreButton.getHeight() / 4))
+			.width(highscoreButton.getWidth() / 4)
+			.height(highscoreButton.getHeight() / 4)
 			.expand().align(Align.top).padTop(Gdx.graphics.getHeight() / 16);
 		
 		menu.row();
@@ -75,8 +75,8 @@ public class HighscoreMenuScreen implements uib.teamdank.common.gui.HighscoreMen
 		
 		backButton = setupButton(BACK);
 		menu.add(backButton)
-			.width((backButton.getWidth() / 4))
-			.height((backButton.getHeight() / 4))
+			.width(backButton.getWidth() / 4)
+			.height(backButton.getHeight() / 4)
 			.expand().align(Align.bottom).padBottom(Gdx.graphics.getHeight() / 16);
 
 		backButton.addListener(new InputListener() {
@@ -107,7 +107,7 @@ public class HighscoreMenuScreen implements uib.teamdank.common.gui.HighscoreMen
 
 	@Override
 	public void dispose() {
-		// TODO 
+		
 	}
 
 	@Override
@@ -122,7 +122,7 @@ public class HighscoreMenuScreen implements uib.teamdank.common.gui.HighscoreMen
 
 	@Override
 	public void pause() {
-		//TODO 
+		
 	}
 
 	@Override
@@ -141,7 +141,7 @@ public class HighscoreMenuScreen implements uib.teamdank.common.gui.HighscoreMen
 
 	@Override
 	public void resume() {
-		// TODO 
+
 	}
 
 	@Override
