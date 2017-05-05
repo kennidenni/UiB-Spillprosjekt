@@ -20,19 +20,23 @@ public class PedestrianGenerator implements Generator<GameObject> {
 	private final List<Generator<GameObject>> entityGenerators = new ArrayList<>();
 	public PedestrianGenerator(AssetManager assets, TextureAtlas atlas, WeatherType wType) {
 		final AudioManager audio = assets.getAudio();
-		this.entityGenerators.add(rnd -> new Pedestrian(audio, 5, 0, 100, rnd.nextBoolean(), atlas.getRegion("cyclist")));
-		this.entityGenerators.add(rnd -> new Pedestrian(audio, 10, 100, 0, rnd.nextBoolean(), atlas.getRegion("skateboard")));
-		this.entityGenerators.add(rnd -> new Pedestrian(audio, 2, 50, 0, rnd.nextBoolean(), atlas.getRegion("umbrella_blue")));
-		this.entityGenerators.add(rnd -> new Pedestrian(audio, 2, 50, 0, rnd.nextBoolean(), atlas.getRegion("umbrella_red")));
-		this.entityGenerators.add(rnd -> new Pedestrian(audio, 2, 50, 0, rnd.nextBoolean(), atlas.getRegion("umbrella_yellow")));
-		this.entityGenerators.add(rnd -> new Pedestrian(audio, 2, 50, 0, rnd.nextBoolean(), atlas.getRegion("umbrella_green")));
 		this.entityGenerators.add(rnd -> new Pedestrian(audio, 5, 60, 0, rnd.nextBoolean(), assets.getAnimation("Images/walker_kid_animation.json")));
 		
-		// TODO uncomment when snowman and skier is back
-//		if (wType == WeatherType.SNOW) {
-//			this.entityGenerators.add(rnd -> new Pedestrian(audio, 15, 0, 0, rnd.nextBoolean(), atlas.getRegion("snowman")));
-//			this.entityGenerators.add(rnd -> new Pedestrian(audio, 20, 0, 100, rnd.nextBoolean(), atlas.getRegion("skier")));
-//		}
+		if (wType == WeatherType.CLOUD || wType == WeatherType.SUN)
+			this.entityGenerators.add(rnd -> new Pedestrian(audio, 10, 100, 0, rnd.nextBoolean(), atlas.getRegion("skateboard")));
+		
+		if (wType == WeatherType.RAIN){
+			this.entityGenerators.add(rnd -> new Pedestrian(audio, 2, 50, 0, rnd.nextBoolean(), atlas.getRegion("umbrella_blue")));
+			this.entityGenerators.add(rnd -> new Pedestrian(audio, 2, 50, 0, rnd.nextBoolean(), atlas.getRegion("umbrella_red")));
+			this.entityGenerators.add(rnd -> new Pedestrian(audio, 2, 50, 0, rnd.nextBoolean(), atlas.getRegion("umbrella_yellow")));
+			this.entityGenerators.add(rnd -> new Pedestrian(audio, 2, 50, 0, rnd.nextBoolean(), atlas.getRegion("umbrella_green")));
+		}
+		
+		if (wType == WeatherType.SNOW) {
+			this.entityGenerators.add(rnd -> new Pedestrian(audio, 15, 0, 0, rnd.nextBoolean(), atlas.getRegion("snowman")));
+			this.entityGenerators.add(rnd -> new Pedestrian(audio, 20, 0, 100, rnd.nextBoolean(), atlas.getRegion("skier")));
+		} else
+			this.entityGenerators.add(rnd -> new Pedestrian(audio, 5, 0, 100, rnd.nextBoolean(), atlas.getRegion("cyclist")));
 	}
 
 	@Override
