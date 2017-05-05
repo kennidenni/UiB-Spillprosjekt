@@ -3,7 +3,7 @@ package uib.teamdank.foodfeud;
 public enum Team {
 	ALPHA("Rock'n'Rollers", 	   "Images/elvis_still_animation.json", "Images/elvis_walking_animation.json", "Images/elvis_falling_animation.json"),
 	BETA("Useless Celebrities",    "Images/kim_still_animation.json", "Images/kim_walking_animation.json", "Images/kim_falling_animation.json"),
-	CHARLIE("Depressed Magicians", "Images/elvis_still_animation.json", "Images/elvis_walking_animation.json", "Images/elvis_falling_animation.json"),
+	CHARLIE("Depressed Magicians", "Images/guy1_still_animation.json", "Images/guy1_walking_animation.json", "Images/guy1_falling_animation.json"),
 	DELTA("Annoying Teenagers",    "Images/elvis_still_animation.json", "Images/elvis_walking_animation.json", "Images/elvis_falling_animation.json");
 	
 	private final String name;
