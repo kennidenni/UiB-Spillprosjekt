@@ -2,18 +2,20 @@ package uib.teamdank.common.gui;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Container;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
+import com.badlogic.gdx.scenes.scene2d.ui.VerticalGroup;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.FitViewport;
@@ -24,32 +26,30 @@ public class CreditScreen implements Screen {
 		
 		private Stage stage;
 		private ImageButton backButton;
-		private Table menu;
 		private Game game;
-		private TextButtonStyle textButtonStyle;
-		private BitmapFont font;
-		private SpriteBatch batch;
 		private String creditFile;
-		private String credit; 
-		
-		private float creditsY = 0;
+		private Container<ImageButton> buttonCont;
+		private VerticalGroup creditGroup;
 
 		public CreditScreen(Game game, String buttonFile, String fileWithCredit) {
 			this.game = game;
 			stage = new Stage(new FitViewport(1920, 1080));
 			this.creditFile = fileWithCredit;
+						
 			backButton = setupButton(buttonFile);
-				
-			textButtonStyle = new TextButtonStyle();
-			textButtonStyle.font = font;
+			buttonCont = new Container<>(backButton);
+			buttonCont.width(backButton.getWidth() / 4).height(backButton.getHeight() / 4)
+				.align(Align.bottomLeft)
+				.pad(0, Gdx.graphics.getWidth() / 16, Gdx.graphics.getHeight() / 16, 0);
+
+			stage.addActor(buttonCont);
+					
+			creditGroup = new VerticalGroup();
+			creditGroup.setWidth(Gdx.graphics.getWidth() - buttonCont.getMaxWidth());
+			creditGroup.align(Align.center);
+
+			stage.addActor(creditGroup);
 			
-
-			menu = new Table();
-			menu.row();
-			menu.add(backButton).width((float) (backButton.getWidth() / 4)).height((float) (backButton.getHeight() / 4)).pad(950, 0, 0, 1630);
-
-			menu.setFillParent(true);
-			stage.addActor(menu);
 			Gdx.input.setInputProcessor(stage);
 			
 			backButton.addListener(new InputListener() {
@@ -70,11 +70,9 @@ public class CreditScreen implements Screen {
 			});
 		}
 		
-		public ImageButton setupButton(String imageString) {
-			Texture myTexture = new Texture(Gdx.files.internal(imageString));
-			TextureRegion myTextureRegion = new TextureRegion(myTexture);
-			TextureRegionDrawable myTexRegionDrawable = new TextureRegionDrawable(myTextureRegion);
-			return new ImageButton(myTexRegionDrawable);
+		public ImageButton setupButton(String imgPath) {
+			return new ImageButton(
+					new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal(imgPath)))));
 		}
 		
 		@Override
@@ -83,18 +81,19 @@ public class CreditScreen implements Screen {
 			
 			String[] lines = Gdx.files.internal(creditFile).readString().split("\\r?\\n");
 			
-			batch = new SpriteBatch();
-			font = new BitmapFont();
-			font.getData().setScale(3);
+			BitmapFont font = new BitmapFont();
+			font.getData().setScale(4);
 			
-			StringBuilder strb = new StringBuilder();
-			
-			credit = "";		
-			for (String text : lines) {
-				strb.append(text + "\n");
+			for (String line : lines) {
+				Label l = new Label(line, new LabelStyle(font, Color.WHITE));
+				l.setAlignment(Align.left);
+				l.setWrap(true);
+				l.setWidth(creditGroup.getWidth());
+				
+				creditGroup.addActor(new Container<Label>(l).width(creditGroup.getWidth()));
 			}
 			
-			credit = strb.toString();
+			creditGroup.setPosition(2 * buttonCont.getMaxWidth(), -font.getCapHeight() * lines.length);
 		}	
 
 		@Override
@@ -103,11 +102,7 @@ public class CreditScreen implements Screen {
 			stage.act(delta);
 			stage.draw();
 			
-			final int width = Gdx.graphics.getWidth();
-			batch.begin(); 
-			font.draw(batch, credit, 0, creditsY, width, Align.center, true);
-			batch.end();
-			creditsY += delta * 50;
+			creditGroup.moveBy(0, delta * 50);
 		}
 
 		@Override
@@ -130,15 +125,12 @@ public class CreditScreen implements Screen {
 		@Override
 		public void hide() {
 			Gdx.input.setInputProcessor(null);
-			creditsY = 0;
-			
+			creditGroup.clear();
 		}
 
 		@Override
 		public void dispose() {
-			stage.dispose();
-			batch.dispose();
-			
+			stage.dispose();			
 		}
 
 		public void goBack() {

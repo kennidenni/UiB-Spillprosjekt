@@ -1,6 +1,5 @@
 plugins {
     id "org.sonarqube" version "2.3"
- //   id "jacoco"
 }
 
 subprojects {
@@ -49,12 +48,37 @@ project(':teamdank-cargame') {
 	dependencies {
 		compile project(':teamdank-common')
 	}
+
+  project.ext.mainClassName = 'uib.teamdank.cargame.CarGame'
+
+  task dist(type: Jar) {
+    from files(sourceSets.main.output.classesDir)
+    from files(sourceSets.main.output.resourcesDir)
+    from {configurations.compile.collect {zipTree(it)}}
+ 
+    manifest {
+        attributes 'Main-Class': 'uib.teamdank.cargame.CarGame'
+     }
+  }
+
+
 }
 
 project(':teamdank-foodfeud') {
 	dependencies {
 		compile project(':teamdank-common')
 	}
+  project.ext.mainClassName = 'uib.teamdank.foodfeud.FoodFeud'
+
+  task dist(type: Jar) {
+    from files(sourceSets.main.output.classesDir)
+    from files(sourceSets.main.output.resourcesDir)
+    from {configurations.compile.collect {zipTree(it)}}
+ 
+    manifest {
+        attributes 'Main-Class': 'uib.teamdank.foodfeud.FoodFeud'
+     }
+  }
 }
 
 project(':teamdank-nightlife') {
