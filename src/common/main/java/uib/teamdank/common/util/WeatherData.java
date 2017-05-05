@@ -19,13 +19,11 @@ import com.badlogic.gdx.files.FileHandle;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
-import uib.teamdank.common.LibGdxDependentTest;
-
 /**
  * Imports the open source data from YR to provide the current weather situation
  * for every game. The weather is real time weather forecast.
  */
-public class WeatherData extends LibGdxDependentTest{
+public class WeatherData {
 
 	private static final long WEATHER_FETCH_LIMIT_SECONDS = (60 * 12);
 	
