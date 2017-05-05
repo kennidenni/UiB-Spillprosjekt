@@ -47,6 +47,7 @@ subprojects {
 project(':teamdank-cargame') {
 	dependencies {
 		compile project(':teamdank-common')
+      testCompile project(':teamdank-common').sourceSets.test.output
 	}
 
   project.ext.mainClassName = 'uib.teamdank.cargame.CarGame'
@@ -67,6 +68,7 @@ project(':teamdank-cargame') {
 project(':teamdank-foodfeud') {
 	dependencies {
 		compile project(':teamdank-common')
+      testCompile project(':teamdank-common').sourceSets.test.output
 	}
   project.ext.mainClassName = 'uib.teamdank.foodfeud.FoodFeud'
 
