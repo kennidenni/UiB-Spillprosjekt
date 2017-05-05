@@ -33,7 +33,6 @@ public class PedestrianGenerator implements Generator<GameObject> {
 		}
 		
 		if (wType == WeatherType.SNOW) {
-			System.out.println("wut");
 			this.entityGenerators.add(rnd -> new Pedestrian(audio, 15, 0, 0, rnd.nextBoolean(), atlas.getRegion("snowman")));
 			this.entityGenerators.add(rnd -> new Pedestrian(audio, 20, 0, 100, rnd.nextBoolean(), atlas.getRegion("skier")));
 		} else

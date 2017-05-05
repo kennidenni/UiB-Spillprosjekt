@@ -125,12 +125,13 @@ public class WeatherData {
 				previousWeatherType = pickRandomType();
 			}
 			previousPullTime = System.currentTimeMillis();
+			this.saveAsJson();
 		}
 
 		return previousWeatherType;
 	}
 
-	public void saveAsJson() {
+	private void saveAsJson() {
 
 		FileHandle handle = Gdx.files.external("TeamDank/WeatherData/data.json");
 		Gson gson = new GsonBuilder().create();

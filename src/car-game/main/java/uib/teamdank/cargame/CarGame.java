@@ -79,7 +79,6 @@ public class CarGame extends Game {
 		super.dispose();
 		batch.dispose();
 		screen.dispose();
-		wData.saveAsJson();
 	}
 
 	@Override
