@@ -23,20 +23,18 @@ variables:
 # Gradle to build the project with.
 # https://docs.gradle.org/current/userguide/gradle_wrapper.html
 # It is expected that any modern gradle project has a wrapper
+# setter opp brukernavn på git slik at gitlab-runner kan bruke gitlab
 before_script:
   - cd src/
   - git config user.email "heg063@student.uib.no"
   - git config user.name "Runner"
   - chmod +x gradlew
 
-# We redirect the gradle user home using -g so that it caches the
-# wrapper and dependencies.
-# https://docs.gradle.org/current/userguide/gradle_command_line.html
-#
-# Unfortunately it also caches the build output so
-# cleaning removes reminants of any cached builds.
-# The assemble task actually builds the project.
-# If it fails here, the tests can't run.
+
+# Merger master inn i branchen som skal bygges.
+# På denne måten får vi tidlig beskjed om det er noen potesielle problemer
+# med brancher som henger for mye etter master i fremdriften
+# Bygger en jacoco rapport som kjører alle enhetstestene.
 build branch:
   stage: build
   script:
@@ -47,6 +45,10 @@ build branch:
   except:
     - master
 
+# Denne bygger master for å se om noen endringer har ødelagt noe.
+# Da unngår vi at feil sniker seg inn i master.
+# Denne lager også jacocorapport, forskjellen her er at denne rapporten blir sendt
+# til SonarQube for å beregne testdekningen.
 build master:
   stage: build 
   script:
@@ -56,6 +58,7 @@ build master:
   only:
     - master
 
+# Genererer Javadoc og lagrer denne som er artifact som senere kan lastes ned.
 apidocs:
   script:
     - ./gradlew alljavadoc
@@ -67,27 +70,31 @@ apidocs:
   only:
     - master
 
-# Sonarqube skann av commit
+# Sonarqube skann av commit, SonarQube publiserer kommentarere direkte på commiten
+# om den er misfornøyd med noe. Kommentarene er publiser under Håvar Eggereide da
+# SonarQube bruker denne kontoen til å logge seg på med.
+# SonarQube henter inn og merger med master branch for å kunne måle endringer og nye feil kontra det den har
+# lagret på server.
 sonarqube_branch_preview:
   script:
-#    - git checkout origin/master
-#    - git merge $CI_BUILD_REF --no-commit --no-ff
   - git merge origin/master --no-commit --no-ff
   - ./gradlew sonarqube -Dsonar.analysis.mode=preview -Dsonar.gitlab.project_id=$CI_PROJECT_PATH -Dsonar.gitlab.commit_sha=$CI_BUILD_REF -Dsonar.gitlab.ref_name=$CI_BUILD_REF_NAME
   stage: test
   except:
     - master
 
+# Sonarqube skann av commit, SonarQube publiserer kommentarere direkte på commiten
+# om den er misfornøyd med noe. Kommentarene er publiser under Håvar Eggereide da
+# SonarQube bruker denne kontoen til å logge seg på med.
 sonarqube_master_preview:
   script:
-#    - git checkout origin/master
-#    - git merge $CI_BUILD_REF --no-commit --no-ff
   - ./gradlew sonarqube -Dsonar.analysis.mode=preview -Dsonar.gitlab.project_id=$CI_PROJECT_PATH -Dsonar.gitlab.commit_sha=$CI_BUILD_REF -Dsonar.gitlab.ref_name=$CI_BUILD_REF_NAME
   stage: test
   allow_failure: false
   only:
     - master
 
+# SonarQube gjør statisk kodeanalyse av masterbranchen og lagrer rapporten på serveren.
 sonarqube:
   script:
     - ./gradlew sonarqube
@@ -95,6 +102,7 @@ sonarqube:
   only:
     - master
 
+# Denne jobben laster ned artifacten fra javadocjobben og publiserer den på serveren.
 publiserapi:
   stage: staging
   script:
@@ -109,6 +117,10 @@ publiserapi:
   tags:
   - bash
 
+# På brancher med deploy-web i navnet sitt blir denne jobben tilgjengelig.
+# Denne jobben henter ut index.html fra continousdeployment/web/ og publiserer den 
+# på serveren
+# Må trigges manuelt
 publiserweb:
   stage: deploy
   script:
@@ -124,11 +136,18 @@ publiserweb:
     - bash
   when: manual
     
-    
+# Denne jobben blir tilgjengelig på alle brancher som har 
+# carlthecrasher-release i navnet sitt.
+# Denne jobben bruker gradle task "dist" til å bygge car-game i en
+# jar fil og publiserer denne filen på nettsiden. 
+# Må trigges manuelt
 publisercarlthecrasher:
   stage: deploy
   script:
-    - cd jar/
+    - ./gradlew build && ./gradlew teamdank-cargame:dist
+    - cd car-game/build/libs/
+    - ls -la
+    - mv *.jar carlthecrasher.jar
     - cp carlthecrasher.jar /srv/nginx/pages/gitlabapi/public/apps/
   environment:
     name: nettside/carlthecrasher
@@ -138,11 +157,19 @@ publisercarlthecrasher:
   tags:
     - bash
   when: manual
-  
+
+# Denne jobben blir tilgjengelig på alle brancher med
+# foodfeud-release i navnet sitt.
+# Denne jobben bruker gradle task "dist" til å bygger 
+# foodfeud inn i en jar fil og publiserer denne på nettsiden.
+# Må trigges manuelt
 publiserfoodfeud:
   stage: deploy
   script:
-    - cd jar/
+    - ./gradlew build && ./gradlew teamdank-foodfeud:dist
+    - cd cd food-feud/build/libs/
+    - ls -la
+    - mv *.jar foodfeud.jar
     - cp foodfeud.jar /srv/nginx/pages/gitlabapi/public/apps/
   environment:
     name: nettside/foodfeud
@@ -152,8 +179,3 @@ publiserfoodfeud:
   tags:
     - bash
   when: manual
-# Use the generated build output to run the tests.
-#test:
-#  stage: test
-#  script:
-#    - ./gradlew -g /cache/.gradle check
