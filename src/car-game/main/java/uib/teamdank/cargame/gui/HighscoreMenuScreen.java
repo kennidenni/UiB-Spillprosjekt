@@ -34,6 +34,7 @@ public class HighscoreMenuScreen implements uib.teamdank.common.gui.HighscoreMen
 	private Stage stage;
 	private ImageButton backButton;
 	private ImageButton highscoreButton;
+	private FileHandle handle;
 	private Table menu;
 	private CarGame game;	
 	private Label nameLabel;
@@ -48,8 +49,8 @@ public class HighscoreMenuScreen implements uib.teamdank.common.gui.HighscoreMen
 		
 		highscoreButton = setupButton(HIGHSCORE);
 		menu.add(highscoreButton)
-			.width((highscoreButton.getWidth() / 4))
-			.height((highscoreButton.getHeight() / 4))
+			.width(highscoreButton.getWidth() / 4)
+			.height(highscoreButton.getHeight() / 4)
 			.expand().align(Align.top).padTop(Gdx.graphics.getHeight() / 16);
 		
 		menu.row();
@@ -59,11 +60,6 @@ public class HighscoreMenuScreen implements uib.teamdank.common.gui.HighscoreMen
 		
 		nameLabel = new Label("", new LabelStyle(font, Color.WHITE));
 		scoreLabel = new Label("", new LabelStyle(font, Color.WHITE));
-		
-		FileHandle handle = Gdx.files.external(SCORES);
-		if (!handle.exists())
-			handle = Gdx.files.internal("Data/highscore.json");
-		setScores(Arrays.asList(Score.createFromJson(handle)));
 		
 		HorizontalGroup hg = new HorizontalGroup();
 		hg.space(Gdx.graphics.getWidth() / 4);
@@ -75,8 +71,8 @@ public class HighscoreMenuScreen implements uib.teamdank.common.gui.HighscoreMen
 		
 		backButton = setupButton(BACK);
 		menu.add(backButton)
-			.width((backButton.getWidth() / 4))
-			.height((backButton.getHeight() / 4))
+			.width(backButton.getWidth() / 4)
+			.height(backButton.getHeight() / 4)
 			.expand().align(Align.bottom).padBottom(Gdx.graphics.getHeight() / 16);
 
 		backButton.addListener(new InputListener() {
@@ -107,7 +103,7 @@ public class HighscoreMenuScreen implements uib.teamdank.common.gui.HighscoreMen
 
 	@Override
 	public void dispose() {
-		// TODO 
+		//TODO
 	}
 
 	@Override
@@ -122,7 +118,7 @@ public class HighscoreMenuScreen implements uib.teamdank.common.gui.HighscoreMen
 
 	@Override
 	public void pause() {
-		//TODO 
+		//TODO
 	}
 
 	@Override
@@ -141,7 +137,7 @@ public class HighscoreMenuScreen implements uib.teamdank.common.gui.HighscoreMen
 
 	@Override
 	public void resume() {
-		// TODO 
+		//TODO
 	}
 
 	@Override
@@ -168,6 +164,11 @@ public class HighscoreMenuScreen implements uib.teamdank.common.gui.HighscoreMen
 	@Override
 	public void show() {
 		Gdx.input.setInputProcessor(stage);
+		
+		handle = Gdx.files.external(SCORES);
+		if (!handle.exists())
+			handle = Gdx.files.internal("Data/highscore.json");
+		setScores(Arrays.asList(Score.createFromJson(handle)));
 	}
 
 }
