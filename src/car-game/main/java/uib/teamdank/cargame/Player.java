@@ -65,7 +65,7 @@ public class Player extends Actor implements Upgradeable {
 
 		// Horizontal
 		if(wType == WeatherType.SNOW)
-			velocity.x *= VERTICAL_FRICTION + 0.01;
+			velocity.x *= HORIZONTAL_FRICTION + 0.02;
 		else
 			velocity.x *= HORIZONTAL_FRICTION;
 		if (velocity.epsilonEquals(0, velocity.y, ZERO_SPEED_TOLERANCE)) {

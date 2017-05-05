@@ -49,8 +49,10 @@ public class WeatherData {
 	 */
 	public enum WeatherType {
 
-		CLOUD(3, 4, 42, 7, 26, 20, 15), SNOW(44, 8, 45, 28, 21, 29, 47, 12, 48, 31, 23, 32, 49, 13, 50, 33, 14,
-				34), SUN(1, 2), RAIN(40, 5, 41, 24, 6, 25, 43, 27, 46, 9, 10, 30, 22, 11);
+		CLOUD(3, 4, 42, 7, 26, 20, 15), 
+		SNOW(44, 8, 45, 28, 21, 29, 47, 12, 48, 31, 23, 32, 49, 13, 50, 33, 14, 34), 
+		SUN(1, 2), 
+		RAIN(40, 5, 41, 24, 6, 25, 43, 27, 46, 9, 10, 30, 22, 11);
 
 		private static WeatherType getFor(int symbol) {
 			for (WeatherType type : WeatherType.values()) {
