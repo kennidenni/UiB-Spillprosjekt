@@ -1,5 +1,7 @@
 package uib.teamdank.foodfeud;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 import com.badlogic.gdx.physics.box2d.Contact;
@@ -12,18 +14,23 @@ public class PhysicsContactListener implements ContactListener {
 
 	private final Match match;
 
+	private final Map<String, Integer> activePlayerGroundContactCounts = new HashMap<>();
+
 	public PhysicsContactListener(Match match) {
 		this.match = Objects.requireNonNull(match, "match canont be null");
+		match.getPlayers().forEach(player -> {
+			activePlayerGroundContactCounts.put(player.getName(), 0);
+		});
 	}
 
 	@Override
 	public void beginContact(Contact contact) {
-		updateActivePlayerGroundStatus(contact.getFixtureA(), contact.getFixtureB(), true);
+		updatePlayerGroundStatus(contact.getFixtureA(), contact.getFixtureB(), false);
 	}
 
 	@Override
 	public void endContact(Contact contact) {
-		updateActivePlayerGroundStatus(contact.getFixtureA(), contact.getFixtureB(), false);
+		updatePlayerGroundStatus(contact.getFixtureA(), contact.getFixtureB(), true);
 	}
 
 	@Override
@@ -36,12 +43,25 @@ public class PhysicsContactListener implements ContactListener {
 		// Not necessary
 	}
 
-	private void updateActivePlayerGroundStatus(Fixture fixtureA, Fixture fixtureB, boolean onGround) {
-		Object userDataA = fixtureA.getUserData();
-		Object userDataB = fixtureB.getUserData();
-		if (userDataA == match.getActivePlayer() || userDataB == match.getActivePlayer()) {
-			match.getActivePlayer().setOnGround(onGround);
+	/**
+	 * Updates the every player's "touching the ground" status by examining the
+	 * potential contact between the player and the given fixtures. Nothing will
+	 * happen if none of the fixtures belong to the player.
+	 * <p>
+	 * Since the player's ground sensor can collide with more than fixture at
+	 * the same time, a count ({@link #activePlayerGroundContactCount}) is kept
+	 * to properly update the player.
+	 */
+	private void updatePlayerGroundStatus(Fixture fixtureA, Fixture fixtureB, boolean endContact) {
+		final Object userDataA = fixtureA.getUserData();
+		final Object userDataB = fixtureB.getUserData();
+		if (!(userDataA instanceof Player) && !(userDataB instanceof Player)) {
+			return;
 		}
+		Player player = (Player) (userDataA instanceof Player ? userDataA : userDataB);
+		final Map<String, Integer> counts = activePlayerGroundContactCounts;
+		counts.put(player.getName(), counts.get(player.getName()) + (endContact ? -1 : 1));
+		player.setOnGround(counts.get(player.getName()) != 0);
 	}
 
 }
