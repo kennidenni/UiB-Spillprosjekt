@@ -56,7 +56,7 @@ public class StartMenuScreen implements uib.teamdank.common.gui.StartMenuScreen 
 		menu = new Table();
 		
 		// Weather Data
-		wData = new WeatherData();
+		wData = game.getWeatherData();
 		
 		logoButton = setupButton(LOGO);
 		playButton = setupButton(PLAY);
@@ -149,8 +149,8 @@ public class StartMenuScreen implements uib.teamdank.common.gui.StartMenuScreen 
 	}
 	
 	@Override
-	public void dispose() { 
-		//TODO 
+	public void dispose() {
+		//TODO
 	}
 	
 	@Override

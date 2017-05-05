@@ -8,6 +8,7 @@ import uib.teamdank.cargame.gui.GameScreen;
 import uib.teamdank.cargame.gui.PauseMenuScreen;
 import uib.teamdank.cargame.gui.StartMenuScreen;
 import uib.teamdank.common.Game;
+import uib.teamdank.common.util.WeatherData;
 import uib.teamdank.common.util.WeatherData.WeatherType;
 
 
@@ -22,6 +23,7 @@ public class CarGame extends Game {
 	private SpriteBatch batch;
 	
 	private Player player;
+	private WeatherData wData;
 
     public static void main(String[] args){
     	LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
@@ -34,6 +36,7 @@ public class CarGame extends Game {
 	@Override
 	public void create() {
 		player = new Player(WeatherType.SUN);
+		wData = WeatherData.create();
 		
 		startMenuScreen = new StartMenuScreen(this);
 		pauseMenuScreen = new PauseMenuScreen(this);
@@ -76,6 +79,8 @@ public class CarGame extends Game {
 		super.dispose();
 		batch.dispose();
 		screen.dispose();
+		System.out.println("test");
+		wData.saveAsJson();
 	}
 
 	@Override
@@ -83,5 +88,9 @@ public class CarGame extends Game {
 		gameScreen = new GameScreen(this);
 		return gameScreen;
 		
+	}
+	
+	public WeatherData getWeatherData(){
+		return wData;
 	}
 }
