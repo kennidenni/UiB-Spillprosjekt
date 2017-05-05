@@ -43,10 +43,6 @@ public class HighscoreMenuScreen implements uib.teamdank.common.gui.HighscoreMen
 	public HighscoreMenuScreen(CarGame game) {
 		this.game = game;
 		stage = new Stage(new FitViewport(1920, 1080));
-		
-		handle = Gdx.files.external(SCORES);
-		if (!handle.exists())
-			handle = Gdx.files.internal("Data/highscore.json");
 				
 		menu = new Table();
 		menu.setFillParent(true); 
@@ -168,6 +164,10 @@ public class HighscoreMenuScreen implements uib.teamdank.common.gui.HighscoreMen
 	@Override
 	public void show() {
 		Gdx.input.setInputProcessor(stage);
+		
+		handle = Gdx.files.external(SCORES);
+		if (!handle.exists())
+			handle = Gdx.files.internal("Data/highscore.json");
 		setScores(Arrays.asList(Score.createFromJson(handle)));
 	}
 
