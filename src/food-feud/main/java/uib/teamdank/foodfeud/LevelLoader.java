@@ -6,6 +6,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
+import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.google.gson.Gson;
@@ -56,8 +57,12 @@ public class LevelLoader {
 
 			PolygonShape shape = new PolygonShape();
 			shape.set(level.ground[i]);
-			ground.createFixture(shape, 1);
+			ground.createFixture(shape, 0.0f);
 			shape.dispose();
+		}
+		
+		for (Fixture fix : ground.getFixtureList()){
+			fix.setFriction(8f);
 		}
 
 	}
