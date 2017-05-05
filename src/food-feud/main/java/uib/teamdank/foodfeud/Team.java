@@ -1,21 +1,33 @@
 package uib.teamdank.foodfeud;
 
+/**
+ * Represents a team in the game.
+ * <p>
+ * Each team specifies the following paths in string format (with
+ * the name of the character in the team as the only argument) to
+ * locate the appropriate resources:
+ * <ul>
+ * <li>{@code Images/%s_still_animation.json}</li>
+ * <li>{@code Images/%s_walking_animation.json}</li>
+ * <li>{@code Images/%s_falling_animation.json}</li>
+ * </ul> 
+ */
 public enum Team {
-	ALPHA("Rock'n'Rollers", 	   "Images/elvis_still_animation.json", "Images/elvis_walking_animation.json", "Images/elvis_falling_animation.json"),
-	BETA("Useless Celebrities",    "Images/kim_still_animation.json", "Images/kim_walking_animation.json", "Images/kim_falling_animation.json"),
-	CHARLIE("Depressed Magicians", "Images/guy1_still_animation.json", "Images/guy1_walking_animation.json", "Images/guy1_falling_animation.json"),
-	DELTA("Annoying Teenagers",    "Images/guy2_still_animation.json", "Images/guy2_walking_animation.json", "Images/guy2_falling_animation.json");
+	ALPHA("Rock'n'Rollers", "elvis"),
+	BETA("Useless Celebrities", "kim"),
+	CHARLIE("Depressed Magicians", "guy1"),
+	DELTA("Annoying Teenagers", "guy2");
+	
+	private static final String STILL_ANIMATION = "Images/%s_still_animation.json";
+	private static final String WALKING_ANIMATION = "Images/%s_walking_animation.json";
+	private static final String FALLING_ANIMATION = "Images/%s_falling_animation.json";
 	
 	private final String name;
-	private final String stillAnimation;
-	private final String walkingAnimation;
-	private final String fallingAnimation;
+	private final String characterName;
 
-	private Team(String name, String stillAnimation, String walkingAnimation, String fallingAnimation) {
+	private Team(String name, String characterName) {
 		this.name = name;
-		this.stillAnimation = stillAnimation;
-		this.walkingAnimation = walkingAnimation;
-		this.fallingAnimation = fallingAnimation;
+		this.characterName = characterName;
 	}
 
 	public String getName() {
@@ -23,14 +35,14 @@ public enum Team {
 	}
 
 	public String getFallingAnimation() {
-		return fallingAnimation;
+		return String.format(FALLING_ANIMATION, characterName);
 	}
 	
 	public String getStillAnimation() {
-		return stillAnimation;
+		return String.format(STILL_ANIMATION, characterName);
 	}
 
 	public String getWalkingAnimation() {
-		return walkingAnimation;
+		return String.format(WALKING_ANIMATION, characterName);
 	}
 }
