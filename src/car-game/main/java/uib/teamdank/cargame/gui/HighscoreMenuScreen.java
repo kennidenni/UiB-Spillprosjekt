@@ -107,7 +107,7 @@ public class HighscoreMenuScreen implements uib.teamdank.common.gui.HighscoreMen
 
 	@Override
 	public void dispose() {
-		
+		//TODO
 	}
 
 	@Override
@@ -122,7 +122,7 @@ public class HighscoreMenuScreen implements uib.teamdank.common.gui.HighscoreMen
 
 	@Override
 	public void pause() {
-		
+		//TODO
 	}
 
 	@Override
@@ -141,7 +141,7 @@ public class HighscoreMenuScreen implements uib.teamdank.common.gui.HighscoreMen
 
 	@Override
 	public void resume() {
-
+		//TODO
 	}
 
 	@Override

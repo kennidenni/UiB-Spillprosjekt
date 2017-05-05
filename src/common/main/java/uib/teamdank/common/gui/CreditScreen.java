@@ -112,12 +112,12 @@ public class CreditScreen implements Screen {
 
 		@Override
 		public void pause() {
-
+			//TODO
 		}
 
 		@Override
 		public void resume() {
-
+			//TODO
 		}
 
 		@Override
