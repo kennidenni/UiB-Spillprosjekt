@@ -14,11 +14,18 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.files.FileHandle;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
+import uib.teamdank.common.LibGdxDependentTest;
+
 /**
  * Imports the open source data from YR to provide the current weather situation
  * for every game. The weather is real time weather forecast.
  */
-public class WeatherData {
+public class WeatherData extends LibGdxDependentTest{
 
 	private static final long WEATHER_FETCH_LIMIT_SECONDS = (60 * 12);
 	
@@ -31,6 +38,10 @@ public class WeatherData {
 	 * @see http://om.yr.no/verdata/xml/
 	 */
 	private static final String XML_URL_FORMAT = "http://www.yr.no/place/%s/%s/%s/%s/forecast.xml";
+	
+	private WeatherData() {
+		// Hide constructor
+	}
 	
 	/**
 	 * Represents different weather conditions.
@@ -120,4 +131,20 @@ public class WeatherData {
 		return previousWeatherType;
 	}
 	
+	public void saveAsJson() {
+		
+		FileHandle handle = Gdx.files.external("TeamDank/WeatherData/data.json");
+		Gson gson = new GsonBuilder().create();
+		handle.writeString(gson.toJson(this), false);
+	}
+	
+	public static WeatherData create() {
+		
+		FileHandle handle = Gdx.files.external("TeamDank/WeatherData/data.json");
+		if (handle.exists()) {
+			Gson gson = new GsonBuilder().create();
+			return gson.fromJson(handle.readString(), WeatherData.class);
+		}
+		return new WeatherData();
+	}
 }
