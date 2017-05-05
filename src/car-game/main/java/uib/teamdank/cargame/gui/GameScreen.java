@@ -210,8 +210,8 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 	public void show() {
 		hud.setAsInputProcessor();
 
-		assets.getAudio().playTrack(MUSIC_TRACK);
-		assets.getAudio().playTrack(ENGINE_TRACK);
+		assets.getAudio().loopTrack(MUSIC_TRACK);
+		assets.getAudio().loopTrack(ENGINE_TRACK);
 	}
 	
 	@Override
