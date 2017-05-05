@@ -97,7 +97,7 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 
 		// Weather
 		wType = ((CarGame) game).getStartMenuScreen().getWeather();
-		// Vet ikke hvilken som skal brukes
+		// Don't know which one to be used:
 		player.setWeatherType(wType);
 		((CarGame) game).getStartMenuScreen().getPlayer().setWeatherType(wType);
 		
@@ -133,11 +133,10 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 		
 		// Weather spawner initialization
 		this.weatherSpawner = new ScrollingSpawner(weatherLayer, playerCamera, new WeatherGenerator(wType));
-		//TODO
 		if(wType == WeatherType.SNOW || wType == WeatherType.RAIN)
-			weatherSpawner.setHorizontalPositionRange(-900, 1280);
+			weatherSpawner.setHorizontalPositionRange(-Gdx.graphics.getWidth()+300, Gdx.graphics.getWidth());
 		else
-			weatherSpawner.setHorizontalPositionRange(-1280, 1280);
+			weatherSpawner.setHorizontalPositionRange(-Gdx.graphics.getWidth(), Gdx.graphics.getWidth());
 		weatherSpawner.setChanceOfSpawn(2f);
 
 		// HUD
