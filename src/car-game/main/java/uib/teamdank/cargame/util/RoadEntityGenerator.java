@@ -25,9 +25,9 @@ public class RoadEntityGenerator implements Generator<GameObject> {
 		this.entityGenerators.add(rnd -> new Fuel(audio, roadEntityAtlas));
 		this.entityGenerators.add(rnd -> new Fuel(audio, roadEntityAtlas));
 		this.entityGenerators.add(rnd -> new Hole(roadEntityAtlas));
-		this.entityGenerators.add(rnd -> new Puddle(audio, roadEntityAtlas, wType));
 		this.entityGenerators.add(rnd -> new Coin(audio, roadEntityAtlas));
 		
+		this.entityGenerators.add(rnd -> new Puddle(audio, roadEntityAtlas, wType));
 		if(wType == WeatherType.RAIN) {
 			this.entityGenerators.add(rnd -> new Puddle(audio, roadEntityAtlas, wType));
 			this.entityGenerators.add(rnd -> new Puddle(audio, roadEntityAtlas, wType));
