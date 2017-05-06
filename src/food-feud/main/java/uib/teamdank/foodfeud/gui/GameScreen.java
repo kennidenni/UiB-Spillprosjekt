@@ -103,28 +103,7 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 		
 		// User input
 		checkPauseRequest();
-		if (activePlayer.isOnGround() && 
-				(Gdx.input.isKeyJustPressed(Keys.W) ||
-				 Gdx.input.isKeyJustPressed(Keys.UP))) {
-			activePlayer.jump();
-			System.out.println(activePlayer.getBody().getLinearVelocity());
-		}
-		if ((Gdx.input.isKeyPressed(Keys.A) || Gdx.input.isKeyPressed(Keys.LEFT))) {
-			System.out.println(activePlayer.getBody().getLinearVelocity());
-			if ((activePlayer.getBody().getLinearVelocity().x) > (-Player.MAX_VEL_X)){
-				activePlayer.moveLeft();
-			}
-			activePlayer.walking = true;
-			System.out.println(activePlayer.getBody().getLinearVelocity());
-		}
-		if ((Gdx.input.isKeyPressed(Keys.D) || Gdx.input.isKeyPressed(Keys.RIGHT))) {
-			if ((activePlayer.getBody().getLinearVelocity().x) < Player.MAX_VEL_X){
-				activePlayer.moveRight();
-			}
-			activePlayer.walking = true;
-			System.out.println(activePlayer.getBody().getLinearVelocity()); //debugging
-		}
-		
+		movement(activePlayer);
 		// Prevent players exiting world
 		for (Player player : match.getPlayers()) {
 			if (player.getX() < 0) {
@@ -139,6 +118,26 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 			match.nextTurn();
 		}
 
+	}
+	
+	private void movement(Player active){
+		if (active.isOnGround() && 
+				(Gdx.input.isKeyJustPressed(Keys.W) ||
+				 Gdx.input.isKeyJustPressed(Keys.UP))) {
+			active.jump();
+		}
+		if ((Gdx.input.isKeyPressed(Keys.A) || Gdx.input.isKeyPressed(Keys.LEFT))) {
+			if ((active.getBody().getLinearVelocity().x) > (-Player.MAX_VEL_X)){
+				active.moveLeft();
+			}
+			active.walking = true;
+		}
+		if ((Gdx.input.isKeyPressed(Keys.D) || Gdx.input.isKeyPressed(Keys.RIGHT))) {
+			if ((active.getBody().getLinearVelocity().x) < Player.MAX_VEL_X){
+				active.moveRight();
+			}
+			active.walking = true;
+		}
 	}
 	
 	@Override
