@@ -107,12 +107,22 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 				(Gdx.input.isKeyJustPressed(Keys.W) ||
 				 Gdx.input.isKeyJustPressed(Keys.UP))) {
 			activePlayer.jump();
+			System.out.println(activePlayer.getBody().getLinearVelocity());
 		}
-		if (Gdx.input.isKeyPressed(Keys.A) || Gdx.input.isKeyPressed(Keys.LEFT)) {
-			activePlayer.moveLeft();
+		if ((Gdx.input.isKeyPressed(Keys.A) || Gdx.input.isKeyPressed(Keys.LEFT))) {
+			System.out.println(activePlayer.getBody().getLinearVelocity());
+			if ((activePlayer.getBody().getLinearVelocity().x) > (-Player.MAX_VEL_X)){
+				activePlayer.moveLeft();
+			}
+			activePlayer.walking = true;
+			System.out.println(activePlayer.getBody().getLinearVelocity());
 		}
-		if (Gdx.input.isKeyPressed(Keys.D) || Gdx.input.isKeyPressed(Keys.RIGHT)) {
-			activePlayer.moveRight();
+		if ((Gdx.input.isKeyPressed(Keys.D) || Gdx.input.isKeyPressed(Keys.RIGHT))) {
+			if ((activePlayer.getBody().getLinearVelocity().x) < Player.MAX_VEL_X){
+				activePlayer.moveRight();
+			}
+			activePlayer.walking = true;
+			System.out.println(activePlayer.getBody().getLinearVelocity()); //debugging
 		}
 		
 		// Prevent players exiting world

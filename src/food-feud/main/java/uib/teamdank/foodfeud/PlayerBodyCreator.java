@@ -24,8 +24,8 @@ public class PlayerBodyCreator {
 		shape.setRadius(player.getWidth() / 2f);
 		shape.setPosition(new Vector2(0, -player.getHeight() / 3));
 		FixtureDef fix = new FixtureDef();
-		fix.density = 70;
-		fix.friction = 0.7f;
+		fix.density = 0.9f;
+		fix.friction = 0.75f;
 		fix.shape = shape;
 		fix.restitution = 0.1f;
 		body.createFixture(fix);
