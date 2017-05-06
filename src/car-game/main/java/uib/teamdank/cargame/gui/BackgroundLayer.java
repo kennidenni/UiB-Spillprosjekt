@@ -16,6 +16,7 @@ import uib.teamdank.common.GameObject;
 import uib.teamdank.common.gui.Layer;
 import uib.teamdank.common.util.AssetManager;
 import uib.teamdank.common.util.TextureAtlas;
+import uib.teamdank.common.util.WeatherData.WeatherType;
 
 public class BackgroundLayer extends Layer {
 
@@ -27,18 +28,31 @@ public class BackgroundLayer extends Layer {
 	private final LoopingBackground scrollingRoad;
 	private final ScrollingSpawner[] structureSpawners;
 	
-	public BackgroundLayer(AssetManager assets, OrthographicCamera playerCamera, OrthographicCamera screenCamera, Player player) {
+	public BackgroundLayer(AssetManager assets, OrthographicCamera playerCamera, OrthographicCamera screenCamera, Player player, WeatherType wType) {
 		super(false);
 		
 		this.playerCamera = playerCamera;
 		this.screenCamera = screenCamera;
 		this.player = player;
-		
 		this.backgroundTexture = new Texture(Gdx.files.internal("Images/background.png"));
 		this.scrollingRoad = new LoopingBackground(playerCamera, new Texture(Gdx.files.internal("Images/road.png")), .5f);
 		
 		TextureAtlas structuresAtlas = assets.getAtlas("Images/structure_sheet.json"); 
-		TextureRegion[] structureTextures = structuresAtlas.getAllRegions();
+		TextureRegion[] structureTextures = new TextureRegion[4];
+		
+		// Set weather texture
+		if(wType != WeatherType.SNOW){
+			structureTextures[0] = structuresAtlas.getRegion("building_left_1");
+			structureTextures[1] = structuresAtlas.getRegion("building_left_2");
+			structureTextures[2] = structuresAtlas.getRegion("pond_left_1");
+			structureTextures[3] = structuresAtlas.getRegion("trees_1");
+		} else {
+			structureTextures[0] = structuresAtlas.getRegion("building_left_1_snow");
+			structureTextures[1] = structuresAtlas.getRegion("building_left_2_snow");
+			structureTextures[2] = structuresAtlas.getRegion("pond_left_1");
+			structureTextures[3] = structuresAtlas.getRegion("trees_1_snow");
+		}
+		
 		this.structureSpawners = new ScrollingSpawner[] {
 			setupStructureSpawner(structureTextures, false),
 			setupStructureSpawner(structureTextures, true)

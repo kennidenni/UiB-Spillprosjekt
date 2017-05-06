@@ -11,6 +11,7 @@ import uib.teamdank.common.Score;
 import uib.teamdank.common.Upgrade;
 import uib.teamdank.common.Upgradeable;
 import uib.teamdank.common.util.AssetManager;
+import uib.teamdank.common.util.WeatherData.WeatherType;
 
 /**
  * The player/the car.
@@ -41,9 +42,12 @@ public class Player extends Actor implements Upgradeable {
 	private uib.teamdank.common.util.TextureAtlas carTextures;
 	private AssetManager assets;
 
-	public Player() {
+	private WeatherType wType;
+
+	public Player(WeatherType wType) {
 		super(100, "Per");
 		score = new Score(getName());
+		this.wType = wType;
 	}
 
 	public void accelerate() {
@@ -60,14 +64,20 @@ public class Player extends Actor implements Upgradeable {
 		final Vector2 velocity = getVelocity();
 
 		// Horizontal
-		velocity.x *= HORIZONTAL_FRICTION;
+		if(wType == WeatherType.SNOW)
+			velocity.x *= HORIZONTAL_FRICTION + 0.02;
+		else
+			velocity.x *= HORIZONTAL_FRICTION;
 		if (velocity.epsilonEquals(0, velocity.y, ZERO_SPEED_TOLERANCE)) {
 			velocity.x = 0;
 		}
 
 		// Vertical
 		if (isOutOfFuel()) {
-			velocity.y *= VERTICAL_FRICTION;
+			if(wType == WeatherType.SNOW)
+				velocity.y *= VERTICAL_FRICTION + 0.01;
+			else
+				velocity.y *= VERTICAL_FRICTION;
 			if (velocity.epsilonEquals(velocity.x, 0, ZERO_SPEED_TOLERANCE)) {
 				velocity.y = 0;
 			}
@@ -123,6 +133,8 @@ public class Player extends Actor implements Upgradeable {
 	private void turn(int direction) {
 		final Vector2 velocity = getVelocity();
 		float horizontalAcceleration = (velocity.y / topSpeed) * horisontalSpeed;
+		if(wType == WeatherType.SNOW)
+			horizontalAcceleration *= 0.75;
 		velocity.x += (Math.signum(direction) * horizontalAcceleration);
 	}
 
@@ -148,5 +160,9 @@ public class Player extends Actor implements Upgradeable {
 			topSpeed += ADD_TO_TOP_SPEED;
 			horisontalSpeed += ADD_TO_HORIZONTAL_SPEED;
 		}
+	}
+	
+	public void setWeatherType(WeatherType wType) {
+		this.wType = wType;
 	}
 }

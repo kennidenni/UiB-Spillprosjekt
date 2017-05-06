@@ -3,6 +3,7 @@ package uib.teamdank.cargame;
 import uib.teamdank.common.Item;
 import uib.teamdank.common.util.AudioManager;
 import uib.teamdank.common.util.TextureAtlas;
+import uib.teamdank.common.util.WeatherData.WeatherType;
 /**
  * A puddle in the road. Has negative effects if driven over by the
  * {@link Player}.
@@ -18,10 +19,13 @@ public class Puddle extends Item implements RoadEntity {
 	private final AudioManager audioManager;
 	private boolean wasDrivenOver = false;
 	
-	public Puddle(AudioManager audioManager, TextureAtlas atlas) {
+	public Puddle(AudioManager audioManager, TextureAtlas atlas, WeatherType wType) {
         super("Puddle", "A minitaure pond in the middle of the road.");
         this.audioManager = audioManager;
-        setTexture(atlas.getRegion(TEXTURE_REGION));
+        if(wType == WeatherType.SNOW)
+        	setTexture(atlas.getRegion(TEXTURE_REGION + "_snow"));
+        else
+        	setTexture(atlas.getRegion(TEXTURE_REGION));
         setScale(.4f);
         
         audioManager.preloadSounds(SOUND);
