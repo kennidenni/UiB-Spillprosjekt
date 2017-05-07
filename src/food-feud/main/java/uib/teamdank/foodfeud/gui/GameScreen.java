@@ -28,6 +28,7 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 	private static final Box2DDebugRenderer WORLD_DEBUG_RENDERER = new Box2DDebugRenderer();
 
 	private final BackgroundLayer backgroundLayer;
+	private final ForegroundLayer foregroundLayer;
 	private final Layer playerLayer;
 
 	private final OrthographicCamera camera;
@@ -56,6 +57,8 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 		addLayer(backgroundLayer);
 		this.playerLayer = new Layer(true);
 		addLayer(playerLayer);
+		this.foregroundLayer = new ForegroundLayer(level);
+		addLayer(foregroundLayer);
 
 		
 		PlayerBodyCreator playerBodyCreator = new PlayerBodyCreator(level.getWorld());
