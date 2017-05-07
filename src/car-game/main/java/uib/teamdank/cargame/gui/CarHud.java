@@ -20,7 +20,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 
-import uib.teamdank.common.Game;
+import uib.teamdank.cargame.CarGame;
 import uib.teamdank.common.util.AssetManager;
 import uib.teamdank.common.util.TextureAtlas;
 
@@ -46,7 +46,7 @@ public class CarHud {
 	private Table newHighscoreTable;
 	private TextureAtlas roadEntityTextures;
 	
-	private Game game;
+	private CarGame game;
 
 	private boolean muted = false;
 
@@ -171,7 +171,7 @@ public class CarHud {
 		}
 	}
 	
-	public void setGame(Game game) {
+	public void setGame(CarGame game) {
 		this.game = game;
 	}
 	

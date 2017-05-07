@@ -91,7 +91,6 @@ public class CarGame extends Game {
 		
 	}
 	
-	@Override
 	public void setAudio(boolean b) {
 		isMuted = b;
 	}
