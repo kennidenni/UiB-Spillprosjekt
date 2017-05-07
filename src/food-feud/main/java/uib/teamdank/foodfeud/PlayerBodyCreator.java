@@ -13,6 +13,8 @@ import com.badlogic.gdx.physics.box2d.World;
 
 public class PlayerBodyCreator {
 
+	private static final float GROUND_DETECTOR_HEIGHT = 6;
+	
 	private final World world;
 
 	public PlayerBodyCreator(World world) {
@@ -21,18 +23,21 @@ public class PlayerBodyCreator {
 
 	private void addGroundCollider(Player player, Body body) {
 		CircleShape shape = new CircleShape();
-		shape.setRadius(player.getWidth() / 2f);
-		shape.setPosition(new Vector2(0, -player.getHeight() / 3));
+		final float radius = player.getWidth() / 2f;
+		shape.setRadius(radius);
+		shape.setPosition(new Vector2(0, radius + 0));
 		body.createFixture(shape, 1);
+		shape.dispose();
 	}
 	
 	private void addGroundDetector(Player player, Body body) {
 		PolygonShape shape = new PolygonShape();
-		shape.setAsBox(player.getWidth() / 3, 6, new Vector2(0f, -player.getHeight() + 3), 0);
+		shape.setAsBox(player.getWidth() / 3, GROUND_DETECTOR_HEIGHT, new Vector2(0f, 0), 0);
 		FixtureDef fixtureDef = new FixtureDef();
 		fixtureDef.shape = shape;
 		fixtureDef.isSensor = true;
 		body.createFixture(fixtureDef).setUserData(player);
+		shape.dispose();
 	}
 	
 	public void initializeBody(Player player) {

@@ -50,7 +50,7 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 		level.getWorld().setContactListener(new PhysicsContactListener(match));
 
 		camera.position.set(level.getWidth() / 2f, level.getHeight() / 2f, 0);
-		camera.zoom = 1f;
+		camera.zoom = .5f;
 
 		this.backgroundLayer = new BackgroundLayer(level);
 		addLayer(backgroundLayer);
@@ -59,9 +59,7 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 
 		
 		PlayerBodyCreator playerBodyCreator = new PlayerBodyCreator(level.getWorld());
-		TextureRegion playerTexture = new TextureRegion(new Texture("Images/food_sheet.png"), 53, 48, 57, 57); // Temporary
 		for (Player player : match.getPlayers()) {
-			player.setTexture(playerTexture);
 			playerBodyCreator.initializeBody(player);
 			playerLayer.addGameObject(player);
 		}
