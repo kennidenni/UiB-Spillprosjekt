@@ -2,11 +2,27 @@ Credits:
 Creators 
 TeamDank
 
-Images: 
+Developer:
+TeamDank Programming Team
+
+Art: 
 TeamDank Art Department 
 
-Sound: 
+WeatherData:
+http://om.yr.no/verdata/xml/ (Data from http://www.yr.no)
+
+Soundtracks: 
 This game uses theses sounds from freesound: 
-car_sound.wav (In Car Driving.aif) by 
-RutgerMuller (https://www.freesound.org/people/RutgerMuller/) 
-(Downloaded 26.04.2017)
+car_drive.wav (In Car Driving.aif) by (http://freesound.org/people/RutgerMuller/) 
+
+happy_bgmusic.wav (Happy 8bit Loop 01) by (http://freesound.org/people/Tristan_Lohengr) 
+
+car_crash.mp3 (Car Crash) by (http://freesound.org/people/squareal)
+
+coin_sound.wav (Coins 1) by (http://freesound.org/people/ProjectsU012)
+
+dead_pedestrian (me_ouch.wav) by (http://freesound.org/people/SpazTastic)
+
+fuel.wav (Drip2.wav) by (http://freesound.org/people/Neotone)
+
+splash.mp3 (Splash 1.wav) by (http://freesound.org/people/FreqMan)

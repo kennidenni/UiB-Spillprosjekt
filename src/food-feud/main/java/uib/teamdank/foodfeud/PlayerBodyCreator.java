@@ -26,7 +26,12 @@ public class PlayerBodyCreator {
 		final float radius = player.getWidth() / 2f;
 		shape.setRadius(radius);
 		shape.setPosition(new Vector2(0, radius + 0));
-		body.createFixture(shape, 1);
+		FixtureDef fix = new FixtureDef();
+		fix.density = 1f;
+		fix.friction = 0.75f;
+		fix.shape = shape;
+		fix.restitution = 0.1f;
+		body.createFixture(fix);
 		shape.dispose();
 	}
 	

@@ -12,6 +12,7 @@ import uib.teamdank.common.GameObject;
 import uib.teamdank.common.util.AudioManager;
 import uib.teamdank.common.util.Generator;
 import uib.teamdank.common.util.TextureAtlas;
+import uib.teamdank.common.util.WeatherData.WeatherType;
 
 /**
  * Generates {@link GameObject}s of the correct road entity type. This class
@@ -20,12 +21,17 @@ import uib.teamdank.common.util.TextureAtlas;
 public class RoadEntityGenerator implements Generator<GameObject> {
 	private final List<Generator<GameObject>> entityGenerators = new ArrayList<>();
 
-	public RoadEntityGenerator(AudioManager audio, TextureAtlas roadEntityAtlas) {
+	public RoadEntityGenerator(AudioManager audio, TextureAtlas roadEntityAtlas, WeatherType wType) {
 		this.entityGenerators.add(rnd -> new Fuel(audio, roadEntityAtlas));
 		this.entityGenerators.add(rnd -> new Fuel(audio, roadEntityAtlas));
 		this.entityGenerators.add(rnd -> new Hole(roadEntityAtlas));
-		this.entityGenerators.add(rnd -> new Puddle(audio, roadEntityAtlas));
 		this.entityGenerators.add(rnd -> new Coin(audio, roadEntityAtlas));
+		
+		this.entityGenerators.add(rnd -> new Puddle(audio, roadEntityAtlas, wType));
+		if(wType == WeatherType.RAIN) {
+			this.entityGenerators.add(rnd -> new Puddle(audio, roadEntityAtlas, wType));
+			this.entityGenerators.add(rnd -> new Puddle(audio, roadEntityAtlas, wType));
+		}
 	}
 
 	@Override

@@ -17,6 +17,8 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import uib.teamdank.cargame.CarGame;
 import uib.teamdank.cargame.Player;
 import uib.teamdank.common.Game;
+import uib.teamdank.common.util.WeatherData;
+import uib.teamdank.common.util.WeatherData.WeatherType;
 import uib.teamdank.common.gui.CreditScreen;
 
 public class StartMenuScreen implements uib.teamdank.common.gui.StartMenuScreen {
@@ -42,6 +44,7 @@ public class StartMenuScreen implements uib.teamdank.common.gui.StartMenuScreen 
 	private Game game;
 	private ShopScreen shopScreen;
 	private Player player;
+	private WeatherData wData;
 
 	public StartMenuScreen(CarGame game) {
 		this.game = game;
@@ -51,6 +54,9 @@ public class StartMenuScreen implements uib.teamdank.common.gui.StartMenuScreen 
 		shopScreen = new ShopScreen(game);
 		buttons = new Array<Button>();
 		menu = new Table();
+		
+		// Weather Data
+		wData = game.getWeatherData();
 		
 		logoButton = setupButton(LOGO);
 		playButton = setupButton(PLAY);
@@ -63,7 +69,7 @@ public class StartMenuScreen implements uib.teamdank.common.gui.StartMenuScreen 
 		addToTables();
 		
 		// Player initialization
-		player = new Player();
+		player = new Player(getWeather());
 		player.getTexture();
 		player.setScale(.5f);
 				
@@ -143,8 +149,8 @@ public class StartMenuScreen implements uib.teamdank.common.gui.StartMenuScreen 
 	}
 	
 	@Override
-	public void dispose() { 
-		//TODO 
+	public void dispose() {
+		//TODO
 	}
 	
 	@Override
@@ -247,5 +253,9 @@ public class StartMenuScreen implements uib.teamdank.common.gui.StartMenuScreen 
 				}
 			}
 		});
+	}
+	
+	public WeatherType getWeather() {
+		return wData.pullWeather("Norway", "Hordaland", "Bergen", "Bergen");
 	}
 }

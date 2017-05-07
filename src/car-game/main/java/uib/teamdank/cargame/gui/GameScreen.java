@@ -17,6 +17,7 @@ import uib.teamdank.cargame.RoadEntity;
 import uib.teamdank.cargame.util.PedestrianGenerator;
 import uib.teamdank.cargame.util.RoadEntityGenerator;
 import uib.teamdank.cargame.util.ScrollingSpawner;
+import uib.teamdank.cargame.util.WeatherGenerator;
 import uib.teamdank.common.Game;
 import uib.teamdank.common.GameObject;
 import uib.teamdank.common.Score;
@@ -24,6 +25,7 @@ import uib.teamdank.common.gui.Layer;
 import uib.teamdank.common.util.AssetManager;
 import uib.teamdank.common.util.TextureAtlas;
 import uib.teamdank.common.util.TimedEvent;
+import uib.teamdank.common.util.WeatherData.WeatherType;
 
 /**
  * The main gameplay screen.
@@ -49,6 +51,7 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 	private final OrthographicCamera screenCamera;
 
 	private final BackgroundLayer backgroundLayer;
+	private final Layer weatherLayer;
 	private final Layer roadEntityLayer;
 	private final Layer pedestrianLayer;
 	private final Layer carLayer;
@@ -61,6 +64,9 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 	private List<Score> score;
 	private int numTimesNewHighscoreMessage;
 	private TimedEvent onOffNewHighscoreMessage;
+	
+	private WeatherType wType;
+	private ScrollingSpawner weatherSpawner;
 
 	public GameScreen(Game game) {
 		super(game);
@@ -89,8 +95,15 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 			player.getScore().addToScore(AMOUNT_PER_SCORE);
 		}));
 
+		// Weather
+		wType = ((CarGame) game).getStartMenuScreen().getWeather();
+		// Don't know which one to be used:
+		player.setWeatherType(wType);
+		((CarGame) game).getStartMenuScreen().getPlayer().setWeatherType(wType);
+		
 		// Layers
-		backgroundLayer = new BackgroundLayer(assets, playerCamera, screenCamera, player);
+		backgroundLayer = new BackgroundLayer(assets, playerCamera, screenCamera, player, wType);
+		weatherLayer = new Layer(false);
 		roadEntityLayer = new Layer(true);
 		pedestrianLayer = new Layer(true);
 		carLayer = new Layer(true);
@@ -98,25 +111,38 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 		addLayer(roadEntityLayer);
 		addLayer(pedestrianLayer);
 		addLayer(carLayer);
+		addLayer(weatherLayer);
 		carLayer.addGameObject(player);
 
 		// Road entity spawner initialization
 		this.roadEntitySpawner = new ScrollingSpawner(roadEntityLayer, playerCamera,
-				new RoadEntityGenerator(assets.getAudio(), roadEntityTextures));
+				new RoadEntityGenerator(assets.getAudio(), roadEntityTextures, wType));
 		roadEntitySpawner.setHorizontalPositionRange(backgroundLayer.getRoadLeftX(), backgroundLayer.getRoadRightX());
 		roadEntitySpawner.setChanceOfSpawn(.01f);
 		roadEntitySpawner.setExtraVerticalSpaceBetweenSpawns(50);
 
 		// pedestrian spawner initialization
 		this.pedestrianSpawner = new ScrollingSpawner(pedestrianLayer, playerCamera,
-					new PedestrianGenerator(assets, pedestrianTextures));
+					new PedestrianGenerator(assets, pedestrianTextures, wType));
 		pedestrianSpawner.setHorizontalPositionRange(backgroundLayer.getRoadLeftX(), backgroundLayer.getRoadRightX());
-		pedestrianSpawner.setChanceOfSpawn(.01f);
+		if(wType == WeatherType.SUN)
+			pedestrianSpawner.setChanceOfSpawn(.015f);
+		else
+			pedestrianSpawner.setChanceOfSpawn(.01f);
 		pedestrianSpawner.setExtraVerticalSpaceBetweenSpawns(50);
+		
+		// Weather spawner initialization
+		this.weatherSpawner = new ScrollingSpawner(weatherLayer, playerCamera, new WeatherGenerator(wType));
+		if(wType == WeatherType.SNOW || wType == WeatherType.RAIN)
+			weatherSpawner.setHorizontalPositionRange(-Gdx.graphics.getWidth()+300, Gdx.graphics.getWidth());
+		else
+			weatherSpawner.setHorizontalPositionRange(-Gdx.graphics.getWidth(), Gdx.graphics.getWidth());
+		weatherSpawner.setChanceOfSpawn(2f);
 
 		// HUD
 		this.hud = new CarHud();
-
+		hud.setGame((CarGame) game);
+		
 		FileHandle handle = Gdx.files.external(SCORES);
 		if(!handle.exists())
 			handle = Gdx.files.internal("Data/highscore.json");
@@ -155,6 +181,10 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 		if(hud.isMuted())
 			return true;
 		return false;
+	}
+	
+	public void setStartAudio(boolean isMuted) {
+		hud.setMute(isMuted);
 	}
 
 	@Override
@@ -246,6 +276,9 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 		pedestrianLayer.forEachGameObject(obj ->
 			((Pedestrian) obj).restrictHorizontally(backgroundLayer.getRoadLeftX(), backgroundLayer.getRoadRightX())
 		);
+
+		// Spawn new weather objects
+		weatherSpawner.update(delta);
 
 		// Check for game over
 		if (player.isOutOfFuel() && player.getVelocity().y == 0) {
