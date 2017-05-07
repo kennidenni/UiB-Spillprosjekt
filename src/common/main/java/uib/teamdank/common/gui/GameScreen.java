@@ -113,6 +113,10 @@ public class GameScreen implements Screen {
 	public void show() {
 		// Not necessary as of yet
 	}
+	
+	public void setStartAudio(boolean isMuted) {
+		// Too over ride in specific GameScreen
+	}
 
 	public void update(float delta) {
 		

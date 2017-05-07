@@ -20,6 +20,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 
+import uib.teamdank.common.Game;
 import uib.teamdank.common.util.AssetManager;
 import uib.teamdank.common.util.TextureAtlas;
 
@@ -44,6 +45,8 @@ public class CarHud {
 	private Table muteTable;
 	private Table newHighscoreTable;
 	private TextureAtlas roadEntityTextures;
+	
+	private Game game;
 
 	private boolean muted = false;
 
@@ -158,12 +161,23 @@ public class CarHud {
 	private void toggleMute() {
 		if(muted) {
 			muted = false;
+			game.setAudio(muted);
 			muteButton.setChecked(false);
 		}
 		else {
 			muted = true;
+			game.setAudio(muted);
 			muteButton.setChecked(true);
 		}
+	}
+	
+	public void setGame(Game game) {
+		this.game = game;
+	}
+	
+	public void setMute(boolean isMuted) {
+		muted = isMuted;
+		muteButton.setChecked(isMuted);
 	}
 
 	public void render(float delta) {

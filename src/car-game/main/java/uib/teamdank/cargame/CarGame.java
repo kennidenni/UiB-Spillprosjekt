@@ -24,6 +24,8 @@ public class CarGame extends Game {
 	
 	private Player player;
 	private WeatherData wData;
+	
+	private boolean isMuted;
 
     public static void main(String[] args){
     	LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
@@ -84,8 +86,14 @@ public class CarGame extends Game {
 	@Override
 	public GameScreen newGame() {
 		gameScreen = new GameScreen(this);
+		gameScreen.setStartAudio(isMuted);
 		return gameScreen;
 		
+	}
+	
+	@Override
+	public void setAudio(boolean b) {
+		isMuted = b;
 	}
 	
 	public WeatherData getWeatherData(){
