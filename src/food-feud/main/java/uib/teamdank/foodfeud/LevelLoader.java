@@ -62,7 +62,7 @@ public class LevelLoader {
 		}
 		
 		for (Fixture fix : ground.getFixtureList()){
-			fix.setFriction(8f);
+			fix.setFriction(0.75f);
 		}
 
 	}

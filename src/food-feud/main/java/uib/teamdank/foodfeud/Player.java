@@ -14,8 +14,9 @@ import uib.teamdank.common.util.AssetManager;
  */
 public class Player extends Actor implements ItemHolder, PhysicsSimulated {
 
-	private static final float HORIZONTAL_MOVEMENT_IMPULSE = 5000f;
-	private static final float JUMP_FORCE = 100000000f;
+	private static final float HORIZONTAL_MOVEMENT_IMPULSE = 1000f;
+	private static final float JUMP_FORCE = 10000f;
+	public static final float MAX_VEL_X = 12f;
 
 	private final Animation stillAnimation;
 	private final Animation walkingAnimation;
@@ -23,7 +24,7 @@ public class Player extends Actor implements ItemHolder, PhysicsSimulated {
 
 	private Body body;
 	private boolean onGround;
-	private boolean walking;
+	public boolean walking;
 
 	private Inventory weapons;
 	
@@ -34,7 +35,7 @@ public class Player extends Actor implements ItemHolder, PhysicsSimulated {
 		this.stillAnimation = assets.getAnimation(team.getStillAnimation());
 		this.walkingAnimation = assets.getAnimation(team.getWalkingAnimation());
 		this.fallingAnimation = assets.getAnimation(team.getFallingAnimation());
-		setScale(.5f);
+		setScale(0.4f);
 	}
 
 	@Override
@@ -72,7 +73,7 @@ public class Player extends Actor implements ItemHolder, PhysicsSimulated {
 	}
 
 	private boolean isMoving() {
-		return !body.getLinearVelocity().equals(Vector2.Zero);
+		return Math.abs(body.getLinearVelocity().x) > 0.001;
 	}
 
 	public boolean isOnGround() {
@@ -81,7 +82,7 @@ public class Player extends Actor implements ItemHolder, PhysicsSimulated {
 
 	public void jump() {
 		if (isOnGround()) {
-			body.applyForceToCenter(0, JUMP_FORCE, true);
+			body.applyLinearImpulse(body.getLinearVelocity().x, JUMP_FORCE, getWidth() / 2f, getHeight() / 2f, true);
 		}
 	}
 
@@ -90,8 +91,7 @@ public class Player extends Actor implements ItemHolder, PhysicsSimulated {
 	}
 	
 	public void moveLeft(int times) {
-		body.applyLinearImpulse(-(HORIZONTAL_MOVEMENT_IMPULSE * times), 0, getWidth() / 2, getHeight() / 2, true);
-		walking = true;
+		moveRight(-1 * times);
 	}
 
 	public void moveRight() {
@@ -100,7 +100,6 @@ public class Player extends Actor implements ItemHolder, PhysicsSimulated {
 	
 	public void moveRight(int times) {
 		body.applyLinearImpulse(HORIZONTAL_MOVEMENT_IMPULSE * times, 0, getWidth() / 2, getHeight() / 2, true);
-		walking = true;
 	}
 
 	public void setBody(Body body) {
