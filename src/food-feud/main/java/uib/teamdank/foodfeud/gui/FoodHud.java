@@ -1,7 +1,9 @@
 package uib.teamdank.foodfeud.gui;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
@@ -13,6 +15,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 
+import uib.teamdank.common.gui.CreditScreen;
 import uib.teamdank.common.util.AssetManager;
 import uib.teamdank.common.util.TextureAtlas;
 import uib.teamdank.foodfeud.FoodFeud;
@@ -34,10 +37,20 @@ public class FoodHud {
 	private FoodFeud game;
 
 	private boolean muted = false;
-
+	
+    private static final String MENU = "Images/Buttons/ff_menu.png";
+    private Table weaponTable;
+	private Texture myTexture;
+	private ImageButton weaponMenuButton;
+	private WeaponMenu weaponMenu;
+	
 	public FoodHud() {
 		stage = new Stage(new FitViewport(1920, 1080));
 		
+        weaponTable = new Table();         
+        weaponMenu = new WeaponMenu(MENU);
+        weaponMenuButton = setupButton(MENU);
+        
 		this.assets = new AssetManager();
 		
 		setUpMute();
@@ -54,6 +67,9 @@ public class FoodHud {
 	
 		scoreTable.setFillParent(true);
 		
+		weaponTable.add(weaponMenuButton).height((float) (weaponMenuButton.getHeight() /4)).pad(200, 3600, 300, 0);
+		
+		stage.addActor(weaponTable);
 		
 		stage.addActor(scoreTable);
 	
@@ -129,5 +145,13 @@ public class FoodHud {
 	public void resize(int width, int height) {
 		stage.getViewport().update(width, height, true);
 	}
+	
+	public ImageButton setupButton(String imageString) {
+        myTexture = new Texture(Gdx.files.internal(imageString));
+        TextureRegion myTextureRegion = new TextureRegion(myTexture);
+        TextureRegionDrawable myTexRegionDrawable = new TextureRegionDrawable(myTextureRegion);
+        ImageButton logo = new ImageButton(myTexRegionDrawable);
+        return logo;
+    }
 
 }
