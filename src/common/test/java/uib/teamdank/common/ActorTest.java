@@ -1,14 +1,13 @@
 package uib.teamdank.common;
 
-import org.junit.Before;
-import org.junit.Test;
-import uib.teamdank.common.Actor;
+import static org.hamcrest.core.Is.is;
+import static org.hamcrest.core.IsEqual.equalTo;
+import static org.junit.Assert.assertThat;
 
 import java.util.Random;
 
-import static org.hamcrest.core.Is.is;
-import static org.hamcrest.core.IsEqual.equalTo;
-import static org.junit.Assert.*;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * Test class for actor

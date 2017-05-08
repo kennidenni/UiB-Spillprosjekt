@@ -19,7 +19,7 @@ public class Actor extends GameObject {
     public Actor (int mh, int ch, String n){
 	    super();
 	    this.maxHealth = mh;
-	    setHealth(maxHealth);
+	    setHealth(ch);
 	    this.name = n;
     }
 	/**
