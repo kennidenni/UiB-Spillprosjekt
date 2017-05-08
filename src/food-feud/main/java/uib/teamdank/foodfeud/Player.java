@@ -173,9 +173,11 @@ public class Player extends Actor implements ItemHolder, PhysicsSimulated {
 		final Vector2 feetOffset = currentFeetAnimation.getUserPoint();
 		final float feetWidth = feetTexture.getRegionWidth() * getScale();
 		final float feetHeight = feetTexture.getRegionHeight() * getScale();
+		final float feetOffsetX = feetWidth / 2f + -feetOffset.x * getScale();
+		final float feetOffsetY = -feetOffset.y * getScale();
 		
-		renderTexture(batch, delta, feetTexture, feetWidth, feetHeight, feetWidth / 2 + -feetOffset.x * getScale(), 0);
-//		renderTexture(batch, delta, bodyTexture, bodyWidth, bodyHeight, 0, 0);
+		renderTexture(batch, delta, bodyTexture, bodyWidth, bodyHeight, 0, feetHeight + feetOffsetY);
+		renderTexture(batch, delta, feetTexture, feetWidth, feetHeight, feetOffsetX, 0);
 		
 		if (Gdx.input.isKeyJustPressed(Keys.B) && getName().equals("Geir")) {
 			System.out.println(feetWidth / 2f);
