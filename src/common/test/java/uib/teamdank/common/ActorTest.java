@@ -24,7 +24,7 @@ public class ActorTest {
     @Before
     public void setUp() throws Exception {
         ran = new Random();
-        maxHealth = ran.nextInt(Integer.MAX_VALUE);
+        maxHealth = ran.nextInt(Integer.MAX_VALUE) / 2 - 1;
         currentHealth = ran.nextInt(maxHealth);
         name = "Per";
         actor = new Actor(maxHealth, currentHealth, name);
