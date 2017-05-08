@@ -69,7 +69,8 @@ public class StartMenuScreen implements uib.teamdank.common.gui.StartMenuScreen 
 		addToTables();
 		
 		// Player initialization
-		player = new Player(getWeather());
+		player = game.getPlayer();
+		player.setWeatherType(getWeather());
 		player.getTexture();
 		player.setScale(.5f);
 				

@@ -99,7 +99,6 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 		wType = ((CarGame) game).getStartMenuScreen().getWeather();
 		// Don't know which one to be used:
 		player.setWeatherType(wType);
-		((CarGame) game).getStartMenuScreen().getPlayer().setWeatherType(wType);
 		
 		// Layers
 		backgroundLayer = new BackgroundLayer(assets, playerCamera, screenCamera, player, wType);

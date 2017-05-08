@@ -37,7 +37,7 @@ public class CarGame extends Game {
 	
 	@Override
 	public void create() {
-		player = new Player(WeatherType.SUN);
+		player = Player.create();
 		wData = WeatherData.create();
 		
 		startMenuScreen = new StartMenuScreen(this);
@@ -81,6 +81,7 @@ public class CarGame extends Game {
 		super.dispose();
 		batch.dispose();
 		screen.dispose();
+		player.saveAsJson();
 	}
 
 	@Override
