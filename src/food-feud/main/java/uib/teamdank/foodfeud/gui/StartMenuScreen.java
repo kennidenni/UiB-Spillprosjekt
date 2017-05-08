@@ -31,7 +31,7 @@ public class StartMenuScreen extends MenuScreen implements uib.teamdank.common.g
         menu = new Table();
 
         logoButton = createButton(LOGO, null);
-        buttons.add(createButton(PLAY, this::newGame));
+        buttons.add(createButton(PLAY, this::newSetupGame));
         buttons.add(createButton(CREDIT, this::viewCredit));
         buttons.add(createButton(EXIT, this::exitGame));
 
@@ -58,6 +58,10 @@ public class StartMenuScreen extends MenuScreen implements uib.teamdank.common.g
 	@Override
 	public void newGame() {
 		game.setScreen(game.newGame());
+	}
+	
+	public void newSetupGame() {
+		game.setScreen(((FoodFeud) game).newSetupGame());
 	}
 
 	@Override
