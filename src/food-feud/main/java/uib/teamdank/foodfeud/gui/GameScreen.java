@@ -44,11 +44,12 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 	private final FoodHud hud;
 	private final AssetManager assets;
 
+	private WeaponMenu weaponMenu;
+
 	public GameScreen(Game game) {
 		super(game);
 
 		assets = new AssetManager();
-
 		time = FINAL_TIME;
 
 		this.camera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
@@ -73,7 +74,10 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 		// HUD
 		this.hud = new FoodHud();
 		hud.setGame((FoodFeud) game);
-
+		
+		this.weaponMenu = new WeaponMenu();
+		weaponMenu.setGame((FoodFeud) game);
+		
 		addTimedEvent(new TimedEvent(TIME_BETWEEN_TIME, true, () -> {
 			time -= AMOUNT_PER_TIME;
 		}));
@@ -99,8 +103,16 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 
 		// Render HUD
 		hud.render(delta);
-
+		weaponMenu.render(delta);
+		
+		
 		WORLD_DEBUG_RENDERER.render(level.getWorld(), camera.combined);
+	}
+	
+	@Override
+	public void show() {
+		hud.setAsInputProcessor();
+		weaponMenu.setAsInputProcessor();
 	}
 
 	@Override
@@ -178,7 +190,6 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 		if (gameObject.isMarkedForRemoval() && gameObject instanceof PhysicsSimulated) {
 			level.getWorld().destroyBody(((PhysicsSimulated) gameObject).getBody());
 		}
-
 	}
 
 	public void setStartAudio(boolean isMuted) {
