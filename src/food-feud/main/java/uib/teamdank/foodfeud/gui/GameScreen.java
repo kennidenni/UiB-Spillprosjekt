@@ -194,9 +194,7 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 	}
 	
 	public boolean isMuted() {
-		if(hud.isMuted())
-			return true;
-		return false;
+		return hud.isMuted();
 	}
 	/**
 	 * checks if time has run out, forces new round if true
