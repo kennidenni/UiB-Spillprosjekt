@@ -9,7 +9,6 @@ import uib.teamdank.cargame.gui.PauseMenuScreen;
 import uib.teamdank.cargame.gui.StartMenuScreen;
 import uib.teamdank.common.Game;
 import uib.teamdank.common.util.WeatherData;
-import uib.teamdank.common.util.WeatherData.WeatherType;
 
 
 /**
