@@ -13,7 +13,7 @@ public class Fuel extends Item implements RoadEntity {
 	private static final String SOUND = "Sounds/fuel.wav";
 	private static final String TEXTURE_REGION = "gastank";
 
-	private static final int DEFAULT_FUEL_AMOUNT = 15;
+	private static final int DEFAULT_FUEL_AMOUNT = 25;
 
 	private final AudioManager audioManager;
 	private boolean wasDrivenOver = false;
