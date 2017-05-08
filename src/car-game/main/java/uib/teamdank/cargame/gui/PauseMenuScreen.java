@@ -24,10 +24,7 @@ public class PauseMenuScreen extends MenuScreen implements uib.teamdank.common.g
 
 	private Stage stage;
 	private Table menu;
-	private ImageButton logoButton;
 	private ImageButton pauseButton;
-	private ImageButton backButton;
-	private ImageButton exitButton;
 	private Array<Button> buttons;
 	private Game game;
 
@@ -35,16 +32,13 @@ public class PauseMenuScreen extends MenuScreen implements uib.teamdank.common.g
 		this.game = game;
 		stage = new Stage(new FitViewport(1920, 1080));
 
-		logoButton = setupButton(LOGO);
 		pauseButton = setupButton(PAUSE);
-		backButton = setupButton(BACK);
-		exitButton = setupButton(EXIT);
 
 		menu = new Table();
 		buttons = new Array<Button>();
 
-		buttons.add(backButton);
-		buttons.add(exitButton);
+		buttons.add(createButton(BACK, () -> resume()));
+		buttons.add(createButton(EXIT, () -> exitToStartMenu()));
 
 		menu.add(pauseButton).pad(0, 0, 20, 0);
 		menu.row();
@@ -57,10 +51,6 @@ public class PauseMenuScreen extends MenuScreen implements uib.teamdank.common.g
 		menu.setFillParent(true);
 		stage.addActor(menu);
 		Gdx.input.setInputProcessor(stage);
-
-		// Her kommer alle lytterene for input
-		addButtonListener(backButton, () -> resume());
-		addButtonListener(exitButton, () -> exitToStartMenu());
 	}
 
 	// Setting the buttons up
