@@ -28,7 +28,6 @@ public class WeaponMenu implements Screen{
 	private Stage stage;
 	private Container<ImageButton> buttonCont;
 	
-	private FoodFeud game;
 	private Table weapons;
 
 	private Array<Button> buttons;
@@ -42,12 +41,12 @@ public class WeaponMenu implements Screen{
 	private ImageButton carrot;
 	private ImageButton cheese;
 	private ImageButton donut;
+	private FoodFeud game;
 	
     private static final String MENU = "Images/Buttons/ff_menu.png";
 
 
-	public WeaponMenu(FoodFeud game) {
-		this.game = game;
+	public WeaponMenu() {
 		stage = new Stage(new FitViewport(1920, 1080));
 		
         buttons = new Array<Button>();
@@ -65,7 +64,6 @@ public class WeaponMenu implements Screen{
         addToWeapons();
         
         weapons.setFillParent(true);
-        weapons.debug();
         weapons.setVisible(false);
         stage.addActor(weapons);
         
@@ -80,7 +78,8 @@ public class WeaponMenu implements Screen{
         weapons.add(carrot).width((float) (carrot.getWidth() / 1.3)).height((float) (carrot.getHeight() / 1.3)).pad(5);
         weapons.add(cheese).width((float) (cheese.getWidth() / 1.3)).height((float) (cheese.getHeight() / 1.3)).pad(5);
         weapons.add(donut).width((float) (donut.getWidth() / 1.3)).height((float) (donut.getHeight() / 1.3)).pad(5);
-
+        weapons.debug();
+        weapons.pad(900,0,5,0);
         weapons.row();
     }
 
@@ -126,7 +125,7 @@ public class WeaponMenu implements Screen{
 
 	@Override
 	public void render(float delta) {
-		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+//		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		stage.act(delta);
 		stage.draw();
 	}
@@ -163,5 +162,14 @@ public class WeaponMenu implements Screen{
 		// TODO Auto-generated method stub
 		
 	}
+
+	public void setAsInputProcessor() {
+		Gdx.input.setInputProcessor(stage);
+	}
+	
+	public void setGame(FoodFeud game) {
+		this.game = game;
+	}
+
 
 }

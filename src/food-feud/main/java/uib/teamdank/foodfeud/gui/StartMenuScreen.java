@@ -51,7 +51,7 @@ public class StartMenuScreen implements uib.teamdank.common.gui.StartMenuScreen 
         this.game = game;
         stages = new Stage(new FitViewport(1920, 1080));
         creditScreen = new CreditScreen(game, "Images/Buttons/ff_back.png", "Data/credit_foodfeud.txt");
-        weaponMenu = new WeaponMenu(game);
+        weaponMenu = new WeaponMenu();
         buttons = new Array<Button>();
         menu = new Table();
         
