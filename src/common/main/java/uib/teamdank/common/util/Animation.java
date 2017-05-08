@@ -82,11 +82,12 @@ public class Animation {
 			this.atlas = atlas;
 		}
 		
+		
 		averageWidth = 0;
 		averageHeight = 0;
 		for (String region : atlasRegionFrames) {
-			averageWidth += atlas.getRegion(region).getRegionWidth();
-			averageHeight += atlas.getRegion(region).getRegionHeight();
+			averageWidth += this.atlas.getRegion(region).getRegionWidth();
+			averageHeight += this.atlas.getRegion(region).getRegionHeight();
 		}
 		averageWidth /= atlasRegionFrames.length;
 		averageHeight /= atlasRegionFrames.length;
