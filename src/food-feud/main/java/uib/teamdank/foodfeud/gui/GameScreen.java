@@ -3,8 +3,6 @@ package uib.teamdank.foodfeud.gui;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 
 import uib.teamdank.common.Game;
@@ -30,8 +28,8 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 	private static final Box2DDebugRenderer WORLD_DEBUG_RENDERER = new Box2DDebugRenderer();
 
 	private final BackgroundLayer backgroundLayer;
-	private final ForegroundLayer foregroundLayer;
 	private final Layer playerLayer;
+	private final ForegroundLayer foregroundLayer;
 
 	private final OrthographicCamera camera;
 	private final Level level;
@@ -64,7 +62,7 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 		level.getWorld().setContactListener(new PhysicsContactListener(match));
 
 		camera.position.set(level.getWidth() / 2f, level.getHeight() / 2f, 0);
-		camera.zoom = 1f;
+		camera.zoom = .5f; // .5f
 
 		this.backgroundLayer = new BackgroundLayer(level);
 		addLayer(backgroundLayer);
@@ -82,9 +80,7 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 		}));
 		
 		PlayerBodyCreator playerBodyCreator = new PlayerBodyCreator(level.getWorld());
-		TextureRegion playerTexture = new TextureRegion(new Texture("Images/food_sheet.png"), 53, 48, 57, 57); // Temporary
 		for (Player player : match.getPlayers()) {
-			player.setTexture(playerTexture);
 			playerBodyCreator.initializeBody(player);
 			playerLayer.addGameObject(player);
 		}
@@ -132,7 +128,9 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 		checkForMute();
 		// User input
 		checkPauseRequest();
-		movement(activePlayer);
+		if (!activePlayer.isDead()) {
+			movement(activePlayer);
+		}
 		// Prevent players exiting world
 		for (Player player : match.getPlayers()) {
 			if (player.getX() < 0) {
@@ -147,7 +145,12 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 		// Temporary
 		if (Gdx.input.isKeyJustPressed(Keys.SPACE)) {
 			time = FINAL_TIME;
-			match.nextTurn();
+			getGame().setScreen(new EndingScreen((FoodFeud) getGame()));
+			
+			//match.nextTurn();
+		}
+		if (Gdx.input.isKeyJustPressed(Keys.K)) {
+			activePlayer.decreaseHealth(20);
 		}
 
 	}
