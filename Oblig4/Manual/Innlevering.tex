@@ -35,12 +35,6 @@ om det regner vil det regne på banen, og om det snør vil det være snø på ba
 \end{tabular}
 \end{center}
 
-%%\section{Brukermønster}
-%%\begin{figure}\begin{center}
-%%\includegraphics[width=0.75\textwidth]{Use-case.jpg}
-%%\caption{Use-case diagram av spillet}
-%%\end{center}\end{figure}
-
 \begin{center}
 \begin{tabular}{ | m{4cm} | m{10cm}|} 
 \hline
@@ -94,30 +88,34 @@ Use-case: Spille spillet
 	\section{Spillregler}
 		\subsection{Kontroll}
 		\begin{itemize}
-			\item{Spilleren kan styre bilen til høyre og venstre.}
+			\item{Spilleren kan styre bilen til høyre og venstre ved hjelp av piltastene eller A og D.}
 			\item{Spilleren kan ikke styre bilens hastighet direkte.}
 			\item{Bilen kan ikke styres av veien.}
+			\item{Man går til pausemenyen ved å trykke på ESC.}
 		\end{itemize}
 
 		\subsection{Objektinteraksjon}
 		\begin{itemize}
 			\item{Bilen kan treffe objekter i veien.}
 			\item{Objekter kan påføre bilen en positiv, eller negativ effekt.}
-			\item{Noen objekter kan ødelegge bilen og avslutte runden.}
+			\item{Mynter vil gi spilleren mulighet til å kjøpe nye biler.}
+			\item{Bensintanker vil gi spilleren mer drivstoff, slik at spillet varer lengre.}
+			\item{Myke trafikanter vil gi spilleren mer poeng dersom de blir påkjørt.}
+			\item{Vanndammer vil minske mengden drivstoff, og samtidig gjøre at spilleren mister litt kontrollen av bilen.}
+			\item{Kumlokk vil avslutte spillet.}
 		\end{itemize}
 
 		\subsection{Poeng}
 		\begin{itemize}
-			\item{Spilleren tjener poeng hver runde.}
-			\item{Poeng blir opptjent avhengig av hvor langt spilleren kjører og hvilke objekter spilleren kjører over.}
+			\item{Spilleren tjener poeng konstant når han kjører.}
+			\item{Poeng blir opptjent avhengig av hvor langt spilleren kjører og hvilke myke trafikanter spilleren kjører over.}
 			\item{Spilleren starter alltid med 0 poeng i starten av en runde.}
 		\end{itemize}
 
 		\subsection{Penger}
 		\begin{itemize}
-			\item{I slutten av hver runde får spilleren penger i form av spillets egen valuta.}
-			\item{Hvor mye penger spilleren får er avhengig av poengscore og objektene spilleren har plukket opp.}
-			\item{Pengene kan brukes i spillets butikk fra hovedmenyen for å oppgradere bilen.}
+			\item{I løpet av spillet får spilleren penger i form av spillets egen valuta.}
+			\item{Pengene kan brukes i spillets butikk fra hovedmenyen for å kjøpe nye biler.}
 		\end{itemize}
 
 	\section{Brukerhistorier}
@@ -132,25 +130,39 @@ Use-case: Spille spillet
 
 	\newpage
 	\begin{figure}\begin{center}
-		%%\includegraphics[width=1.00\textwidth]{Spillrunde.png}
-		\caption{Skisse av en spillrunde.}
+		\includegraphics[width=1.00\textwidth]{images/main_menu.PNG}
+		\caption{Hovedmeny.}
 	\end{center}\end{figure}
 
-%%\begin{figure}
-%%\section{Spillillustrasjon}
-%%\begin{center}
-%%\includegraphics[width=1.2\textwidth]{storylineoblig112.png}
-%%\caption{Illustrasjon av fremgangen i spillet}
-%%\end{center}\end{figure}
+	\begin{figure}\begin{center}
+		\includegraphics[width=1.00\textwidth]{images/hs_menu.PNG}
+		\caption{Highscoremeny.}
+	\end{center}\end{figure}
 
-%%\begin{figure}
-%%\begin{center}
-%%\includegraphics[width=0.50\textwidth]{skisseRegelFixed.png}
-%%\caption{Illustrasjon av fremgangen i spillet}
-%%\includegraphics[width=0.50\textwidth]{skisseRegelFixed2.png}
-%%\caption{Illustrasjon av fremgangen i spillet}
-%%\end{center}
-%%\end{figure}
+	\begin{figure}\begin{center}
+		\includegraphics[width=1.00\textwidth]{images/shop_menu.PNG}
+		\caption{Butikkmeny.}
+	\end{center}\end{figure}
+
+	\begin{figure}\begin{center}
+		\includegraphics[width=1.00\textwidth]{images/credits.PNG}
+		\caption{Kreditering.}
+	\end{center}\end{figure}
+
+	\begin{figure}\begin{center}
+		\includegraphics[width=1.00\textwidth]{images/game.PNG}
+		\caption{Gameplay.}
+	\end{center}\end{figure}
+
+	\begin{figure}\begin{center}
+		\includegraphics[width=1.00\textwidth]{images/pause.PNG}
+		\caption{Pausemeny.}
+	\end{center}\end{figure}
+
+	\begin{figure}\begin{center}
+		\includegraphics[width=1.00\textwidth]{images/gameover.PNG}
+		\caption{Game over-meny.}
+	\end{center}\end{figure}
 
 
 \end{document}
