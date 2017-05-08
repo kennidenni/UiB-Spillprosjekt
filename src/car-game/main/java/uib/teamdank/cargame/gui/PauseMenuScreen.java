@@ -2,22 +2,15 @@ package uib.teamdank.cargame.gui;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
-import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Array;
-import com.badlogic.gdx.utils.viewport.FitViewport;
 import uib.teamdank.cargame.CarGame;
 import uib.teamdank.common.Game;
 import uib.teamdank.common.gui.MenuScreen;
 
 public class PauseMenuScreen extends MenuScreen implements uib.teamdank.common.gui.PauseMenuScreen {
-	private static final String LOGO = "Images/CarGameLogo.png";
 	private static final String PAUSE = "Images/Buttons/bs_pause.png";
 	private static final String BACK = "Images/Buttons/bs_back.png";
 	private static final String EXIT = "Images/Buttons/bs_quit.png";
