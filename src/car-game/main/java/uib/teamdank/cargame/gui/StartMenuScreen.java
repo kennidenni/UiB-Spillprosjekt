@@ -33,11 +33,6 @@ public class StartMenuScreen extends MenuScreen implements uib.teamdank.common.g
 	private Stage stages;
 	private Table menu;
 	private ImageButton logoButton;
-	private ImageButton playButton;
-	private ImageButton highscoreButton;
-	private ImageButton shopButton;
-	private ImageButton creditButton;
-	private ImageButton exitButton;
 	private Array<Button> buttons;
 	private HighscoreMenuScreen highscoreMenuScreen;
 	private CreditScreen creditScreen;
@@ -59,15 +54,16 @@ public class StartMenuScreen extends MenuScreen implements uib.teamdank.common.g
 		wData = game.getWeatherData();
 		
 		logoButton = setupButton(LOGO);
-		playButton = setupButton(PLAY);
-		highscoreButton = setupButton(HIGHSCORE);
-		shopButton = setupButton(SHOP);
-		creditButton = setupButton(CREDIT);
-		exitButton = setupButton(EXIT);
+		buttons.add(createButton(PLAY, () -> newGame()));
+		buttons.add(createButton(HIGHSCORE, () -> viewHighscores()));
+		buttons.add(createButton(SHOP, () -> viewShop()));
+		buttons.add(createButton(CREDIT, () -> viewCredit()));
+		buttons.add(createButton(EXIT, () -> exitGame()));
 
-		addButtonListeners();
-		addToTables();
-		
+		menu.add(logoButton).height((float) (logoButton.getHeight() /1.3)).pad(10, 0, 0, 0);
+		menu.row();
+		addButtonsToTable(menu, buttons);
+
 		// Player initialization
 		player = game.getPlayer();
 		player.setWeatherType(getWeather());
@@ -78,21 +74,6 @@ public class StartMenuScreen extends MenuScreen implements uib.teamdank.common.g
 		menu.setFillParent(true);
 		stages.addActor(menu);
 		Gdx.input.setInputProcessor(stages);
-	}
-
-	private void addToTables() {
-		buttons.add(playButton);
-		buttons.add(highscoreButton);
-		buttons.add(shopButton);
-		buttons.add(creditButton);
-		buttons.add(exitButton);
-		
-		menu.add(logoButton).height((float) (logoButton.getHeight() /1.3)).pad(10, 0, 0, 0);
-		menu.row();
-		for (Button but : buttons) {
-			menu.add(but).width((float) (but.getWidth() / 4)).height((float) (but.getHeight() / 4)).pad(5);
-			menu.row();
-		}
 	}
 
 	@Override
@@ -144,28 +125,19 @@ public class StartMenuScreen extends MenuScreen implements uib.teamdank.common.g
 	public void dispose() {
 		//TODO
 	}
-	
+
 	@Override
-	public void pause() { 
+	public void pause() {
 		//TODO
 	}
-	
+
 	@Override
-	public void resume() { 
+	public void resume() {
 		//TODO
 	}
 	
 	public Player getPlayer(){
 		return player;
-	}
-	
-	// 
-	private void addButtonListeners() {
-		addButtonListener(playButton, () -> newGame());
-		addButtonListener(highscoreButton, () -> viewHighscores());
-		addButtonListener(exitButton, () -> exitGame());
-		addButtonListener(creditButton, () -> viewCredit());
-		addButtonListener(shopButton, () -> viewShop());
 	}
 	
 	public WeatherType getWeather() {

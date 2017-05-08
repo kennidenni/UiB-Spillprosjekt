@@ -9,17 +9,13 @@ import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.badlogic.gdx.utils.Array;
+
+import java.util.List;
 
 public abstract class MenuScreen {
-    public ImageButton setupButton(String imageString) {
-        Texture myTexture = new Texture(Gdx.files.internal(imageString));
-        TextureRegion myTextureRegion = new TextureRegion(myTexture);
-        TextureRegionDrawable myTexRegionDrawable = new TextureRegionDrawable(myTextureRegion);
-        ImageButton logo = new ImageButton(myTexRegionDrawable);
-        return logo;
-    }
-
     public void addButtonListener(Button button, Runnable lambda) {
         button.addListener(new InputListener() {
             @Override
@@ -37,5 +33,25 @@ public abstract class MenuScreen {
                 }
             }
         });
+    }
+
+    public void addButtonsToTable(Table menu, Array<Button> buttons) {
+        for (Button but : buttons) {
+            menu.add(but).width((float) (but.getWidth() / 4)).height((float) (but.getHeight() / 4)).pad(5);
+            menu.row();
+        }
+    }
+
+    public ImageButton createButton(String imageString, Runnable lambda) {
+        ImageButton button = setupButton(imageString);
+        addButtonListener(button, lambda);
+        return button;
+    }
+
+    public ImageButton setupButton(String imageString) {
+        Texture myTexture = new Texture(Gdx.files.internal(imageString));
+        TextureRegion myTextureRegion = new TextureRegion(myTexture);
+        TextureRegionDrawable myTexRegionDrawable = new TextureRegionDrawable(myTextureRegion);
+        return new ImageButton(myTexRegionDrawable);
     }
 }
