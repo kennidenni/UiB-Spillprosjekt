@@ -19,7 +19,7 @@ public class Actor extends GameObject {
     public Actor (int mh, int ch, String n){
 	    super();
 	    this.maxHealth = mh;
-	    this.currentHealth = ch;
+	    setHealth(maxHealth);
 	    this.name = n;
     }
 	/**
@@ -49,9 +49,7 @@ public class Actor extends GameObject {
 	 *            the amount of health to add
 	 */
 	public void increaseHealth(int amount) {
-		this.currentHealth = this.currentHealth + amount;
-		if (this.currentHealth > this.maxHealth)
-			this.currentHealth = this.maxHealth;
+		setHealth(Math.min(getMaxHealth(), getHealth() + amount));
 	}
 
 	/**
@@ -59,9 +57,7 @@ public class Actor extends GameObject {
 	 *            the amount of health to subtract
 	 */
 	public void decreaseHealth(int amount) {
-		this.currentHealth = this.currentHealth - amount;
-		if (this.currentHealth <= 0)
-		    this.currentHealth = 0;
+		setHealth(Math.max(0, getHealth() - amount));
 	}
 
 	/**
@@ -73,7 +69,7 @@ public class Actor extends GameObject {
 	 */
 	public void setHealth(int health) {
 		if (health < 0 || health > this.maxHealth)
-			throw new IllegalArgumentException();
+			throw new IllegalArgumentException("health is out of range: " + health);
 		this.currentHealth = health;
 	}
 }

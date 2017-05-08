@@ -3,8 +3,6 @@ package uib.teamdank.foodfeud.gui;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 
 import uib.teamdank.common.Game;
@@ -28,8 +26,8 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 	private static final Box2DDebugRenderer WORLD_DEBUG_RENDERER = new Box2DDebugRenderer();
 
 	private final BackgroundLayer backgroundLayer;
-	private final ForegroundLayer foregroundLayer;
 	private final Layer playerLayer;
+	private final ForegroundLayer foregroundLayer;
 
 	private final OrthographicCamera camera;
 	private final Level level;
@@ -39,7 +37,7 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 		super(game);
 		
 		AssetManager assets = new AssetManager();
-
+		
 		this.camera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		this.level = LevelLoader.createFromJson(Gdx.files.internal("Data/field_level.json"));
 		this.match = new MatchBuilder(assets)
@@ -51,7 +49,7 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 		level.getWorld().setContactListener(new PhysicsContactListener(match));
 
 		camera.position.set(level.getWidth() / 2f, level.getHeight() / 2f, 0);
-		camera.zoom = .2f; // .5f
+		camera.zoom = .5f; // .5f
 
 		this.backgroundLayer = new BackgroundLayer(level);
 		addLayer(backgroundLayer);
@@ -104,7 +102,9 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 		
 		// User input
 		checkPauseRequest();
-		movement(activePlayer);
+		if (!activePlayer.isDead()) {
+			movement(activePlayer);
+		}
 		// Prevent players exiting world
 		for (Player player : match.getPlayers()) {
 			if (player.getX() < 0) {
@@ -117,6 +117,9 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 		// Temporary
 		if (Gdx.input.isKeyJustPressed(Keys.SPACE)) {
 			match.nextTurn();
+		}
+		if (Gdx.input.isKeyJustPressed(Keys.K)) {
+			activePlayer.decreaseHealth(20);
 		}
 
 	}

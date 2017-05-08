@@ -23,7 +23,7 @@ public class Player extends Actor implements ItemHolder, PhysicsSimulated {
 	private static final float HORIZONTAL_MOVEMENT_IMPULSE = 1000f;
 	private static final float JUMP_FORCE = 10000f;
 	public static final float MAX_VEL_X = 12f;
-
+	
 	private final TextureAtlas playerAtlas;
 	private final Animation feetStillAnimation;
 	private final Animation feetWalkingAnimation;
@@ -77,8 +77,8 @@ public class Player extends Actor implements ItemHolder, PhysicsSimulated {
 	}
 
 	private TextureRegion getBodyExpansionTexture() {
-		if (getHealth() == 0) {
-			return playerAtlas.getRegion(team.getBodyDead());
+		if (team == null) {
+			return null;
 		}
 		float healthPerBody = getMaxHealth() / (float) team.getBodyExpansionCount();
 		int index = team.getBodyExpansionCount() - (int) (getHealth() / healthPerBody);
@@ -120,7 +120,7 @@ public class Player extends Actor implements ItemHolder, PhysicsSimulated {
 			body.applyLinearImpulse(body.getLinearVelocity().x, JUMP_FORCE, getWidth() / 2f, getHeight() / 2f, true);
 		}
 	}
-
+	
 	public void moveLeft() {
 		moveLeft(1);
 	}
@@ -140,11 +140,25 @@ public class Player extends Actor implements ItemHolder, PhysicsSimulated {
 	public void setBody(Body body) {
 		this.body = body;
 	}
+	
+	public boolean isDead() {
+		return getHealth() == 0;
+	}
 
 	@Override
 	public void setHealth(int health) {
+		boolean wasAlive = !isDead();
 		super.setHealth(health);
-		this.bodyTexture = getBodyExpansionTexture();
+		if (isDead() && !wasAlive) {
+			return;
+		}
+		
+		if (isDead()) {
+			this.bodyTexture = playerAtlas.getRegion(team.getBodyDead());
+			body.setFixedRotation(false);
+		} else {
+			this.bodyTexture = getBodyExpansionTexture();
+		}
 	}
 
 	public void setOnGround(boolean onGround) {
@@ -188,21 +202,23 @@ public class Player extends Actor implements ItemHolder, PhysicsSimulated {
 	@Override
 	public void update(float delta) {
 		updateMovement(delta);
-		
-		if (isOnGround() && isMoving() && walking) {
-			currentFeetAnimation = feetWalkingAnimation;
-		} else if (!isOnGround()) {
-			currentFeetAnimation = feetFallingAnimation;
-		} else {
-			currentFeetAnimation = feetStillAnimation;
+
+		if (!isDead()) {
+			if (isOnGround() && isMoving() && walking) {
+				currentFeetAnimation = feetWalkingAnimation;
+			} else if (!isOnGround()) {
+				currentFeetAnimation = feetFallingAnimation;
+			} else {
+				currentFeetAnimation = feetStillAnimation;
+			}
+			if (getVelocity().x < -FLIP_VELOCITY_TOLERANCE) {
+				setFlipHorizontally(true);
+			} else if (getVelocity().x > FLIP_VELOCITY_TOLERANCE){
+				setFlipHorizontally(false);
+			}
+			walking = false;
+			currentFeetAnimation.update(delta);
 		}
-		if (getVelocity().x < -FLIP_VELOCITY_TOLERANCE) {
-			setFlipHorizontally(true);
-		} else if (getVelocity().x > FLIP_VELOCITY_TOLERANCE){
-			setFlipHorizontally(false);
-		}
-		walking = false;
-		currentFeetAnimation.update(delta);
 	}
 
 }
