@@ -68,71 +68,53 @@ public class SetupGame extends MenuScreen implements Screen {
 			Vector2 mouse = myStage.screenToStageCoordinates(new Vector2(Gdx.input.getX(), Gdx.input.getY()));
 
 			if (myStage.hit(mouse.x, mouse.y, true) == event.getTarget()) {
-				if (source.isDisabled()) {
-					// something
-				} else {
-					// noe
-				}
+				source.getName();
+				System.out.println("her");
 			}
 		}
 	}
 
-	private final List<CarButton> carButtons = new ArrayList<>();
-	private static final int CAR_COST = 10;
-
 	private Game game;
 
 	private Table menu;
-	private Table cars;
-	private Table coinsTable;
+
 
 	private AssetManager assets;
-	private TextureAtlas roadEntityTextures;
-	private TextureAtlas buttonTexture;
-
 	private BitmapFont font;
-	private ImageButton coinImage;
-	private ImageButton backButton;
 	private TextButtonStyle textButtonStyle;
-	private TextButton coinsCount;
 	private TextButton helpText;
+
+	private Table playerTable;
 
 	public SetupGame(Game game) {
 		super();
 		this.game = game;
 
 		menu = new Table();
-		cars = new Table();
-		coinsTable = new Table();
-
+		playerTable = new Table();
+		new Table();
 		this.assets = new AssetManager();
 
 		font = new BitmapFont();
 		textButtonStyle = new TextButtonStyle();
 		textButtonStyle.font = font;
 
-		helpText = new TextButton("hei", textButtonStyle);
+		helpText = new TextButton("Hvor mange players skal det være?", textButtonStyle);
 		helpText.getLabel().setFontScale(3, 3);
-		helpText.pad(0, 0, 0, 0);
 		menu.add(helpText);
-		menu.row();
-		
-		for(int i = 1; i < 5; i++) {
+
+		for (int i = 1; i < 5; i++) {
 			TextButton playerNumber = new TextButton(String.valueOf(i), textButtonStyle);
-			playerNumber.getLabel().setFontScale(3, 3);
+			playerNumber.getLabel().setFontScale(5, 5);
 			playerNumber.addListener(new ButtonListener(playerNumber));
-			menu.add(playerNumber);
+			playerNumber.pad(50);
+			playerTable.add(playerNumber);
 		}
-
+		playerTable.pad(200, 0, 0, 0);
 		menu.setFillParent(true);
-		coinsTable.setFillParent(true);
 		getStage().addActor(menu);
-		getStage().addActor(coinsTable);
-	}
-
-	private ImageButton setupImage(TextureRegion textureRegion) {
-		TextureRegionDrawable myTexRegionDrawable = new TextureRegionDrawable(textureRegion);
-		return new ImageButton(myTexRegionDrawable);
+		playerTable.setFillParent(true);
+		getStage().addActor(playerTable);
 	}
 
 	@Override
@@ -146,7 +128,7 @@ public class SetupGame extends MenuScreen implements Screen {
 
 	@Override
 	public void render(float delta) {
-//		coinsCount.act(delta);
+		// coinsCount.act(delta);
 		super.render(delta);
 	}
 
