@@ -32,13 +32,11 @@ public class EndingScreen implements uib.teamdank.common.gui.HighscoreMenuScreen
 	private ImageButton backButton;
 	private Table menu;
 	private FoodFeud game;
-	private TextButton highscore;
+	private TextButton endingText;
 	private BitmapFont font;
 	private TextButtonStyle textButtonStyle;
 
 	private List<Player> playerList;
-	private List<Player> looserList;
-
 	private Player winner;
 
 	public EndingScreen(FoodFeud game) {
@@ -59,19 +57,16 @@ public class EndingScreen implements uib.teamdank.common.gui.HighscoreMenuScreen
 		for (Player p : playerList){
 			if(!p.isDead()) {
 				winner = p;
+				break;
 			}
 		}
 		
-		
-		
-		
-		
-		highscore = new TextButton("The winner is:\n" + winner.getName(), textButtonStyle);
-		highscore.getLabel().setFontScale(10, 10);
+		endingText = new TextButton("The winner is:\n" + winner.getName(), textButtonStyle);
+		endingText.getLabel().setFontScale(10, 10);
 
 		menu = new Table();
 		menu.row();
-		menu.add(highscore);
+		menu.add(endingText);
 		menu.row();
 		menu.add(backButton).width((float) (backButton.getWidth() / 4)).height((float) (backButton.getHeight() / 4))
 				.pad(100, 0, 0, 0);
@@ -122,7 +117,7 @@ public class EndingScreen implements uib.teamdank.common.gui.HighscoreMenuScreen
 
 	@Override
 	public void pause() {
-		// Don't pause crash sound
+		// Nothing to do
 	}
 
 	@Override
@@ -144,7 +139,7 @@ public class EndingScreen implements uib.teamdank.common.gui.HighscoreMenuScreen
 
 	@Override
 	public void setScores(List<Score> scores) {
-		// TODO Auto-generated method stub
+		// Nothing to do
 	}
 
 	@Override

@@ -33,6 +33,7 @@ public class Player extends Actor implements ItemHolder, PhysicsSimulated {
 	private Body body;
 	private boolean onGround;
 	public boolean walking;
+	public boolean dead = false;
 
 	private final Team team;
 	private final Inventory weapons;
@@ -113,7 +114,10 @@ public class Player extends Actor implements ItemHolder, PhysicsSimulated {
 	}
 
 	public boolean isDead() {
-		return getHealth() == 0;
+		if(getHealth() == 0){
+			dead = true;
+		}
+		return dead;
 	}
 	
 	private boolean isMoving() {
@@ -213,5 +217,4 @@ public class Player extends Actor implements ItemHolder, PhysicsSimulated {
 			currentFeetAnimation.update(delta);
 		}
 	}
-
 }
