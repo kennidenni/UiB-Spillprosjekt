@@ -208,4 +208,10 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 		}
 	}
 	
+	public void checkLastPlayer(){
+		p = match.getPlayers();
+		
+	}
+	
+	
 }
