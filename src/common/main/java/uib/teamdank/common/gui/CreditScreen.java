@@ -25,7 +25,7 @@ public class CreditScreen extends MenuScreen {
 			this.game = game;
 			this.creditFile = fileWithCredit;
 						
-			backButton = createButton(buttonFile, () -> goBack());
+			backButton = createButton(buttonFile, this::goBack);
 
 			buttonCont = new Container<>(backButton);
 			buttonCont.width(backButton.getWidth() / 4).height(backButton.getHeight() / 4)
