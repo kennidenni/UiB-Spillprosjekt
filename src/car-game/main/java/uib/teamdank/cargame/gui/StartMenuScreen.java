@@ -17,11 +17,12 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import uib.teamdank.cargame.CarGame;
 import uib.teamdank.cargame.Player;
 import uib.teamdank.common.Game;
+import uib.teamdank.common.gui.MenuScreen;
 import uib.teamdank.common.util.WeatherData;
 import uib.teamdank.common.util.WeatherData.WeatherType;
 import uib.teamdank.common.gui.CreditScreen;
 
-public class StartMenuScreen implements uib.teamdank.common.gui.StartMenuScreen {
+public class StartMenuScreen extends MenuScreen implements uib.teamdank.common.gui.StartMenuScreen {
 	private static final String LOGO = "Images/CarGameLogo.png";
 	private static final String PLAY = "Images/Buttons/start.png";
 	private static final String HIGHSCORE = "Images/Buttons/cg_highscore.png";
@@ -30,7 +31,6 @@ public class StartMenuScreen implements uib.teamdank.common.gui.StartMenuScreen 
 	private static final String EXIT = "Images/Buttons/bs_quit.png";
 
 	private Stage stages;
-	private Texture myTexture;
 	private Table menu;
 	private ImageButton logoButton;
 	private ImageButton playButton;
@@ -65,7 +65,7 @@ public class StartMenuScreen implements uib.teamdank.common.gui.StartMenuScreen 
 		creditButton = setupButton(CREDIT);
 		exitButton = setupButton(EXIT);
 
-		addButtonListener();
+		addButtonListeners();
 		addToTables();
 		
 		// Player initialization
@@ -95,15 +95,6 @@ public class StartMenuScreen implements uib.teamdank.common.gui.StartMenuScreen 
 		}
 	}
 
-	// Setting the buttons up
-	public ImageButton setupButton(String imageString) {
-		myTexture = new Texture(Gdx.files.internal(imageString));
-		TextureRegion myTextureRegion = new TextureRegion(myTexture);
-		TextureRegionDrawable myTexRegionDrawable = new TextureRegionDrawable(myTextureRegion);
-		ImageButton logo = new ImageButton(myTexRegionDrawable);
-		return logo;
-	}
-	
 	@Override
 	public void exitGame() {
 		Gdx.app.exit();
@@ -146,7 +137,7 @@ public class StartMenuScreen implements uib.teamdank.common.gui.StartMenuScreen 
 	
 	@Override
 	public void newGame() {
-		game.newGame();
+		game.setScreen(game.newGame());
 	}
 	
 	@Override
@@ -169,91 +160,12 @@ public class StartMenuScreen implements uib.teamdank.common.gui.StartMenuScreen 
 	}
 	
 	// 
-	private void addButtonListener() {
-		playButton.addListener(new InputListener() {
-			@Override
-			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-				return true;
-			}
-
-			@Override
-			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-				Stage stage = event.getTarget().getStage();
-				Vector2 mouse = stage.screenToStageCoordinates(new Vector2(Gdx.input.getX(), Gdx.input.getY()));
-
-				if (stage.hit(mouse.x, mouse.y, true) == event.getTarget()) {
-					game.setScreen(game.newGame());
-				}
-			}
-		});
-
-		highscoreButton.addListener(new InputListener() {
-			@Override
-			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-				return true;
-			}
-
-			@Override
-			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-				Stage stage = event.getTarget().getStage();
-				Vector2 mouse = stage.screenToStageCoordinates(new Vector2(Gdx.input.getX(), Gdx.input.getY()));
-
-				if (stage.hit(mouse.x, mouse.y, true) == event.getTarget()) {
-					viewHighscores();
-				}
-			}
-		});
-
-		exitButton.addListener(new InputListener() {
-			@Override
-			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-				return true;
-			}
-
-			@Override
-			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-				Stage stage = event.getTarget().getStage();
-				Vector2 mouse = stage.screenToStageCoordinates(new Vector2(Gdx.input.getX(), Gdx.input.getY()));
-
-				if (stage.hit(mouse.x, mouse.y, true) == event.getTarget()) {
-					exitGame();
-				}
-			}
-		});
-
-		creditButton.addListener(new InputListener() {
-			@Override
-			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-				return true;
-			}
-
-			@Override
-			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-				Stage stage = event.getTarget().getStage();
-				Vector2 mouse = stage.screenToStageCoordinates(new Vector2(Gdx.input.getX(), Gdx.input.getY()));
-
-				if (stage.hit(mouse.x, mouse.y, true) == event.getTarget()) {
-					viewCredit();
-				}
-			}
-		});
-		
-		shopButton.addListener(new InputListener() {
-			@Override
-			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-				return true;
-			}
-
-			@Override
-			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-				Stage stage = event.getTarget().getStage();
-				Vector2 mouse = stage.screenToStageCoordinates(new Vector2(Gdx.input.getX(), Gdx.input.getY()));
-
-				if (stage.hit(mouse.x, mouse.y, true) == event.getTarget()) {
-					viewShop();
-				}
-			}
-		});
+	private void addButtonListeners() {
+		addButtonListener(playButton, () -> newGame());
+		addButtonListener(highscoreButton, () -> viewHighscores());
+		addButtonListener(exitButton, () -> exitGame());
+		addButtonListener(creditButton, () -> viewCredit());
+		addButtonListener(shopButton, () -> viewShop());
 	}
 	
 	public WeatherType getWeather() {
