@@ -28,6 +28,7 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 	private static final Box2DDebugRenderer WORLD_DEBUG_RENDERER = new Box2DDebugRenderer();
 
 	private final BackgroundLayer backgroundLayer;
+	private final ForegroundLayer foregroundLayer;
 	private final Layer playerLayer;
 
 	private final OrthographicCamera camera;
@@ -56,6 +57,8 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 		addLayer(backgroundLayer);
 		this.playerLayer = new Layer(true);
 		addLayer(playerLayer);
+		this.foregroundLayer = new ForegroundLayer(level);
+		addLayer(foregroundLayer);
 
 		
 		PlayerBodyCreator playerBodyCreator = new PlayerBodyCreator(level.getWorld());
@@ -103,18 +106,7 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 		
 		// User input
 		checkPauseRequest();
-		if (activePlayer.isOnGround() && 
-				(Gdx.input.isKeyJustPressed(Keys.W) ||
-				 Gdx.input.isKeyJustPressed(Keys.UP))) {
-			activePlayer.jump();
-		}
-		if (Gdx.input.isKeyPressed(Keys.A) || Gdx.input.isKeyPressed(Keys.LEFT)) {
-			activePlayer.moveLeft();
-		}
-		if (Gdx.input.isKeyPressed(Keys.D) || Gdx.input.isKeyPressed(Keys.RIGHT)) {
-			activePlayer.moveRight();
-		}
-		
+		movement(activePlayer);
 		// Prevent players exiting world
 		for (Player player : match.getPlayers()) {
 			if (player.getX() < 0) {
@@ -129,6 +121,26 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 			match.nextTurn();
 		}
 
+	}
+	
+	private void movement(Player active){
+		if (active.isOnGround() && 
+				(Gdx.input.isKeyJustPressed(Keys.W) ||
+				 Gdx.input.isKeyJustPressed(Keys.UP))) {
+			active.jump();
+		}
+		if ((Gdx.input.isKeyPressed(Keys.A) || Gdx.input.isKeyPressed(Keys.LEFT))) {
+			if ((active.getBody().getLinearVelocity().x) > (-Player.MAX_VEL_X)){
+				active.moveLeft();
+			}
+			active.walking = true;
+		}
+		if ((Gdx.input.isKeyPressed(Keys.D) || Gdx.input.isKeyPressed(Keys.RIGHT))) {
+			if ((active.getBody().getLinearVelocity().x) < Player.MAX_VEL_X){
+				active.moveRight();
+			}
+			active.walking = true;
+		}
 	}
 	
 	@Override

@@ -141,7 +141,8 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 
 		// HUD
 		this.hud = new CarHud();
-
+		hud.setGame((CarGame) game);
+		
 		FileHandle handle = Gdx.files.external(SCORES);
 		if(!handle.exists())
 			handle = Gdx.files.internal("Data/highscore.json");
@@ -180,6 +181,10 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 		if(hud.isMuted())
 			return true;
 		return false;
+	}
+	
+	public void setStartAudio(boolean isMuted) {
+		hud.setMute(isMuted);
 	}
 
 	@Override

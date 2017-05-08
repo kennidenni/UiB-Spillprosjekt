@@ -23,7 +23,12 @@ public class PlayerBodyCreator {
 		CircleShape shape = new CircleShape();
 		shape.setRadius(player.getWidth() / 2f);
 		shape.setPosition(new Vector2(0, -player.getHeight() / 3));
-		body.createFixture(shape, 1);
+		FixtureDef fix = new FixtureDef();
+		fix.density = 1f;
+		fix.friction = 0.75f;
+		fix.shape = shape;
+		fix.restitution = 0.1f;
+		body.createFixture(fix);
 	}
 	
 	private void addGroundDetector(Player player, Body body) {
