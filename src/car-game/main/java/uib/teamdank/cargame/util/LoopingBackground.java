@@ -21,7 +21,7 @@ public class LoopingBackground {
 		this.texture = texture;
 		this.scale = scale;
 		
-		this.lowestY = 0;
+		this.lowestY = -30;
 	}
 	
 	public void updateHorizontalPosition(int x) {
