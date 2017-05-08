@@ -1,5 +1,7 @@
 package uib.teamdank.foodfeud.gui;
 
+import java.util.List;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -209,6 +211,10 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 			time = FINAL_TIME;
 			match.nextTurn();
 		}
+	}
+	
+	public List<Player> getPlayers() {
+		return match.getPlayers();
 	}
 	
 }

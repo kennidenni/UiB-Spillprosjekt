@@ -21,6 +21,7 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import uib.teamdank.common.Score;
 import uib.teamdank.common.util.AssetManager;
 import uib.teamdank.foodfeud.FoodFeud;
+import uib.teamdank.foodfeud.Player;
 
 public class EndingScreen implements uib.teamdank.common.gui.HighscoreMenuScreen {
 	private static final String BACK = "Images/Buttons/ff_back.png";
@@ -35,6 +36,11 @@ public class EndingScreen implements uib.teamdank.common.gui.HighscoreMenuScreen
 	private BitmapFont font;
 	private TextButtonStyle textButtonStyle;
 
+	private List<Player> playerList;
+	private List<Player> looserList;
+
+	private Player winner;
+
 	public EndingScreen(FoodFeud game) {
 		this.game = game;
 
@@ -47,7 +53,20 @@ public class EndingScreen implements uib.teamdank.common.gui.HighscoreMenuScreen
 		font = new BitmapFont();
 		textButtonStyle = new TextButtonStyle();
 		textButtonStyle.font = font;
-		highscore = new TextButton("Your score:\n", textButtonStyle);
+		
+		
+		playerList = game.getGameScreen().getPlayers();
+		for (Player p : playerList){
+			if(!p.isDead()) {
+				winner = p;
+			}
+		}
+		
+		
+		
+		
+		
+		highscore = new TextButton("The winner is:\n" + winner.getName(), textButtonStyle);
 		highscore.getLabel().setFontScale(10, 10);
 
 		menu = new Table();
