@@ -22,8 +22,7 @@ public class StartMenuScreen extends MenuScreen implements uib.teamdank.common.g
 	private static final String EXIT = "Images/Buttons/bs_quit.png";
 
 	private Table menu;
-	private ImageButton logoButton;
-	private Array<Button> buttons;
+	
 	private HighscoreMenuScreen highscoreMenuScreen;
 	private CreditScreen creditScreen;
 	private Game game;
@@ -55,9 +54,9 @@ public class StartMenuScreen extends MenuScreen implements uib.teamdank.common.g
 	}
 
 	private void createButtons() {
-		buttons = new Array<Button>();
-
-		logoButton = createButton(LOGO, null);
+		ImageButton logoButton = createButton(LOGO, null);
+		Array<Button> buttons = new Array<>();
+		
 		buttons.add(createButton(PLAY, this::newGame));
 		buttons.add(createButton(HIGHSCORE, this::viewHighscores));
 		buttons.add(createButton(SHOP, this::viewShop));
