@@ -40,7 +40,7 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 	private static final float TIME_BETWEEN_TIME = 1f;
 	private static final int AMOUNT_PER_TIME = 1;
 	
-	private static final int timeFinal = 30;
+	private static final int FINAL_TIME = 30;
 	private int time;
 
 	private final FoodHud hud;
@@ -51,7 +51,7 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 		
 		assets = new AssetManager();
 		
-		time = timeFinal;
+		time = FINAL_TIME;
 		
 		this.camera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		this.level = LevelLoader.createFromJson(Gdx.files.internal("Data/field_level.json"));
@@ -144,7 +144,7 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 		
 		// Temporary
 		if (Gdx.input.isKeyJustPressed(Keys.SPACE)) {
-			time = timeFinal;
+			time = FINAL_TIME;
 			match.nextTurn();
 		}
 
@@ -202,7 +202,7 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 	 */
 	public void checkTime(){
 		if (time == 0){
-			time = timeFinal;
+			time = FINAL_TIME;
 			match.nextTurn();
 		}
 	}
