@@ -22,8 +22,6 @@ public class PedestrianGenerator implements Generator<GameObject> {
 		final AudioManager audio = assets.getAudio();
 		this.entityGenerators.add(rnd -> new Pedestrian(audio, 5, 60, 0, rnd.nextBoolean(), assets.getAnimation("Images/walker_kid_animation.json")));
 		
-		wType = WeatherType.SNOW;
-		
 		if (wType == WeatherType.CLOUD || wType == WeatherType.SUN)
 			this.entityGenerators.add(rnd -> new Pedestrian(audio, 10, 100, 0, rnd.nextBoolean(), atlas.getRegion("skateboard")));
 		
