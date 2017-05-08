@@ -6,6 +6,7 @@ import java.util.Objects;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Vector2;
 import com.google.gson.Gson;
 import com.google.gson.annotations.SerializedName;
 
@@ -99,6 +100,17 @@ public class Animation {
 		return averageWidth;
 	}
 	
+	public Vector2 getUserPoint() {
+		if (atlas != null) {
+			return atlas.getUserPoint(atlasRegionFrames[getCurrentIndex()]);
+		}
+		return Vector2.Zero;
+	}
+	
+	public int getCurrentIndex() {
+		return (int) (time % atlasRegionFrames.length);
+	}
+	
 	/**
 	 * @return the texture atlas, or {@code null} if this
 	 * animation does not use one
@@ -108,9 +120,8 @@ public class Animation {
 	}
 	
 	public TextureRegion getTexture() {
-		final int currentIndex = (int) (time % atlasRegionFrames.length);
 		if (atlas != null) {
-			currentTexture = atlas.getRegion(atlasRegionFrames[currentIndex]);
+			currentTexture = atlas.getRegion(atlasRegionFrames[getCurrentIndex()]);
 		}
 		return currentTexture; 
 	}

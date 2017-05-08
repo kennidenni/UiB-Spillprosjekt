@@ -48,7 +48,7 @@ public class Player extends Actor implements ItemHolder, PhysicsSimulated {
 		this.feetStillAnimation = assets.getAnimation(team.getStillAnimation());
 		this.feetWalkingAnimation = assets.getAnimation(team.getWalkingAnimation());
 		this.feetFallingAnimation = assets.getAnimation(team.getFallingAnimation());
-		setScale(.4f);
+		setScale(.2f);
 		
 		this.bodyTexture = getBodyExpansionTexture();
 		currentFeetAnimation = feetStillAnimation;
@@ -94,7 +94,7 @@ public class Player extends Actor implements ItemHolder, PhysicsSimulated {
 	public Vector2 getPosition() {
 		if (body != null) {
 			super.getPosition().set(body.getPosition());
-			super.getPosition().sub(getWidth() / 2f, getHeight() / 2f);
+			super.getPosition().sub(getWidth() / 2f, 0);
 		}
 		return super.getPosition();
 	}
@@ -168,20 +168,17 @@ public class Player extends Actor implements ItemHolder, PhysicsSimulated {
 		
 		final float bodyWidth = bodyTexture.getRegionWidth() * getScale();
 		final float bodyHeight = bodyTexture.getRegionHeight() * getScale();
-		final float feetWidth = currentFeetAnimation.getTexture().getRegionWidth() * getScale();
-		final float feetHeight = currentFeetAnimation.getTexture().getRegionHeight() * getScale();
 		
-		float feetHorizontalOffset = 12;
-		if (getFlipHorizontally()) {
-//			feetHorizontalOffset += bodyWidth;
-		}
+		final TextureRegion feetTexture = currentFeetAnimation.getTexture();
+		final Vector2 feetOffset = currentFeetAnimation.getUserPoint();
+		final float feetWidth = feetTexture.getRegionWidth() * getScale();
+		final float feetHeight = feetTexture.getRegionHeight() * getScale();
 		
-//		renderTexture(batch, delta, currentFeetAnimation.getTexture(), feetWidth, feetHeight, 0, -bodyHeight / 2);
-		renderTexture(batch, delta, bodyTexture, bodyWidth, bodyHeight, 0, 0);
-		
+		renderTexture(batch, delta, feetTexture, feetWidth, feetHeight, feetWidth / 2 + -feetOffset.x * getScale(), 0);
+//		renderTexture(batch, delta, bodyTexture, bodyWidth, bodyHeight, 0, 0);
 		
 		if (Gdx.input.isKeyJustPressed(Keys.B) && getName().equals("Geir")) {
-			System.out.println(bodyWidth);
+			System.out.println(feetWidth / 2f);
 		}
 		
 	}
@@ -207,7 +204,7 @@ public class Player extends Actor implements ItemHolder, PhysicsSimulated {
 			setFlipHorizontally(false);
 		}
 		walking = false;
-		
+		currentFeetAnimation.update(delta);
 	}
 
 }

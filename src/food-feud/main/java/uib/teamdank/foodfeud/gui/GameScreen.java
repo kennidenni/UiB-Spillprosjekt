@@ -51,7 +51,7 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 		level.getWorld().setContactListener(new PhysicsContactListener(match));
 
 		camera.position.set(level.getWidth() / 2f, level.getHeight() / 2f, 0);
-		camera.zoom = .5f;
+		camera.zoom = .2f; // .5f
 
 		this.backgroundLayer = new BackgroundLayer(level);
 		addLayer(backgroundLayer);
