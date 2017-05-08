@@ -3,7 +3,14 @@ package uib.teamdank.cargame;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.math.Vector2;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import uib.teamdank.common.Actor;
 import uib.teamdank.common.Inventory;
@@ -11,6 +18,7 @@ import uib.teamdank.common.Score;
 import uib.teamdank.common.Upgrade;
 import uib.teamdank.common.Upgradeable;
 import uib.teamdank.common.util.AssetManager;
+import uib.teamdank.common.util.WeatherData;
 import uib.teamdank.common.util.WeatherData.WeatherType;
 
 /**
@@ -44,10 +52,9 @@ public class Player extends Actor implements Upgradeable {
 
 	private WeatherType wType;
 
-	public Player(WeatherType wType) {
+	private Player() {
 		super(100, "Per");
 		score = new Score(getName());
-		this.wType = wType;
 	}
 
 	public void accelerate() {
@@ -164,5 +171,25 @@ public class Player extends Actor implements Upgradeable {
 	
 	public void setWeatherType(WeatherType wType) {
 		this.wType = wType;
+	}
+	
+	public void saveAsJson() {
+		FileHandle handle = Gdx.files.external("TeamDank/Carl the Crasher/player.json");
+		Gson gson = new GsonBuilder().create();
+		handle.writeString(gson.toJson(this), false);
+	}
+	
+	public static Player create() {
+		try {
+			FileHandle handle = Gdx.files.external("TeamDank/Carl the Crasher/player.json");
+			if (handle.exists())
+				return new GsonBuilder().create().fromJson(handle.readString(), Player.class);
+			return new Player();
+		} catch(Exception e) {
+			Logger logger = LoggerFactory.getLogger(WeatherData.class);
+			logger.error(e.getMessage());
+			
+			return new Player();
+		}
 	}
 }
