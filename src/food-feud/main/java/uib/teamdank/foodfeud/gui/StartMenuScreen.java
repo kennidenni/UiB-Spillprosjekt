@@ -38,31 +38,18 @@ public class StartMenuScreen implements uib.teamdank.common.gui.StartMenuScreen 
     private CreditScreen creditScreen;
     private Game game;
 
-    
-    /**/
-    private static final String MENU = "Images/Buttons/ff_menu.png";
-    private Table weaponTable;
-	private ImageButton weaponMenuButton;
-	private WeaponMenu weaponMenu;
-    /**/
-    
-    
     public StartMenuScreen(FoodFeud game){
         this.game = game;
         stages = new Stage(new FitViewport(1920, 1080));
         creditScreen = new CreditScreen(game, "Images/Buttons/ff_back.png", "Data/credit_foodfeud.txt");
-        weaponMenu = new WeaponMenu();
         buttons = new Array<Button>();
         menu = new Table();
-        
-        
+
         logoButton = setupButton(LOGO);
         playButton = setupButton(PLAY);
         creditButton = setupButton(CREDIT);
         exitButton = setupButton(EXIT);
-        weaponMenuButton = setupButton(MENU);
 
-        setUpWeaponMenu();
         addButtonListener();
         addToTables();
 
@@ -86,7 +73,6 @@ public class StartMenuScreen implements uib.teamdank.common.gui.StartMenuScreen 
         buttons.add(playButton);
         buttons.add(creditButton);
         buttons.add(exitButton);
-        buttons.add(weaponMenuButton);
 
         menu.add(logoButton).height((float) (logoButton.getHeight() /1.3)).pad(10, 0, 0, 0);
         menu.row();
@@ -203,25 +189,5 @@ public class StartMenuScreen implements uib.teamdank.common.gui.StartMenuScreen 
             }
         });
     }
-    
-    private void setUpWeaponMenu() {
-		weaponMenuButton.addListener(new InputListener() {
-            @Override
-            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                System.out.println("hei");
-            	return true;
-            }
-
-            @Override
-            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-                Stage stage = event.getTarget().getStage();
-                Vector2 mouse = stage.screenToStageCoordinates(new Vector2(Gdx.input.getX(), Gdx.input.getY()));
-
-                if (stage.hit(mouse.x, mouse.y, true) == event.getTarget()) {
-                	game.setScreen(weaponMenu);
-                }
-            }
-        });
-	}
 
 }
