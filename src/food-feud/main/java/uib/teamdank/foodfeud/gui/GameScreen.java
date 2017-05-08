@@ -145,7 +145,9 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 		// Temporary
 		if (Gdx.input.isKeyJustPressed(Keys.SPACE)) {
 			time = FINAL_TIME;
-			match.nextTurn();
+			getGame().setScreen(new EndingScreen((FoodFeud) getGame()));
+			
+			//match.nextTurn();
 		}
 		if (Gdx.input.isKeyJustPressed(Keys.K)) {
 			activePlayer.decreaseHealth(20);

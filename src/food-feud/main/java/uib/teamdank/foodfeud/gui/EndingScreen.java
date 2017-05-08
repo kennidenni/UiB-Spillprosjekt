@@ -1,11 +1,8 @@
 package uib.teamdank.foodfeud.gui;
 
-import java.util.Arrays;
-import java.util.LinkedList;
 import java.util.List;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -26,8 +23,7 @@ import uib.teamdank.common.util.AssetManager;
 import uib.teamdank.foodfeud.FoodFeud;
 
 public class EndingScreen implements uib.teamdank.common.gui.HighscoreMenuScreen {
-	private static final String BACK = "Images/Buttons/bs_back.png";
-	private static final String GAMEOVER = "Images/gameOver.png";
+	private static final String BACK = "Images/Buttons/ff_back.png";
 
 	private final AssetManager assets;
 
@@ -35,7 +31,6 @@ public class EndingScreen implements uib.teamdank.common.gui.HighscoreMenuScreen
 	private ImageButton backButton;
 	private Table menu;
 	private FoodFeud game;
-	private ImageButton gameOverButton;
 	private TextButton highscore;
 	private BitmapFont font;
 	private TextButtonStyle textButtonStyle;
@@ -48,7 +43,6 @@ public class EndingScreen implements uib.teamdank.common.gui.HighscoreMenuScreen
 		stage = new Stage(new FitViewport(1920, 1080));
 
 		backButton = setupButton(BACK);
-		gameOverButton = setupButton(GAMEOVER);
 
 		font = new BitmapFont();
 		textButtonStyle = new TextButtonStyle();
@@ -57,8 +51,6 @@ public class EndingScreen implements uib.teamdank.common.gui.HighscoreMenuScreen
 		highscore.getLabel().setFontScale(10, 10);
 
 		menu = new Table();
-		menu.add(gameOverButton).width(gameOverButton.getWidth() / 2).height((float) (gameOverButton.getHeight() / 2))
-				.pad(0, 0, 100, 0);
 		menu.row();
 		menu.add(highscore);
 		menu.row();
