@@ -185,10 +185,6 @@ public class Player extends Actor implements ItemHolder, PhysicsSimulated {
 		
 	}
 	
-	public int getFeetEndPosition() {
-		return -1;
-	}
-	
 	@Override
 	public void update(float delta) {
 		updateMovement(delta);
