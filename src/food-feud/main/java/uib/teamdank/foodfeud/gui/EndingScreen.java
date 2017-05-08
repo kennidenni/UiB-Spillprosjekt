@@ -54,7 +54,7 @@ public class EndingScreen implements uib.teamdank.common.gui.HighscoreMenuScreen
 		
 		match = game.getGameScreen().getMatch();
 		
-		endingText = new TextButton("The winner is:\n" + match.getWinner(), textButtonStyle);
+		endingText = new TextButton("The winner is:\n" + match.getWinner().getName(), textButtonStyle);
 		endingText.getLabel().setFontScale(10, 10);
 
 		menu = new Table();

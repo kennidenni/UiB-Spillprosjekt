@@ -31,10 +31,10 @@ public class Match {
 		turnCount++;
 	}
 
-	public String getWinner() {
+	public Player getWinner() {
 		for (Player p : players){
 			if(!p.isDead()) 
-				return p.getName();
+				return p;
 		}
 		return null;
 	}
