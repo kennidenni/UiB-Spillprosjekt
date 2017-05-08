@@ -1,14 +1,13 @@
 package uib.teamdank.common;
 
-import org.junit.Before;
-import org.junit.Test;
-import uib.teamdank.common.Actor;
+import static org.hamcrest.core.Is.is;
+import static org.hamcrest.core.IsEqual.equalTo;
+import static org.junit.Assert.assertThat;
 
 import java.util.Random;
 
-import static org.hamcrest.core.Is.is;
-import static org.hamcrest.core.IsEqual.equalTo;
-import static org.junit.Assert.*;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * Test class for actor
@@ -25,7 +24,7 @@ public class ActorTest {
     @Before
     public void setUp() throws Exception {
         ran = new Random();
-        maxHealth = ran.nextInt(Integer.MAX_VALUE);
+        maxHealth = ran.nextInt(Integer.MAX_VALUE) / 2 - 1;
         currentHealth = ran.nextInt(maxHealth);
         name = "Per";
         actor = new Actor(maxHealth, currentHealth, name);
