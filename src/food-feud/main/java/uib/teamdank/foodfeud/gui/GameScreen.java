@@ -55,8 +55,11 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 
 		this.camera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		this.level = LevelLoader.createFromJson(Gdx.files.internal("Data/field_level.json"));
-		this.match = new MatchBuilder(assets).addPlayer("Geir", Team.ALPHA).addPlayer("Bodil", Team.BETA)
-				.addPlayer("Arne", Team.CHARLIE).addPlayer("Bertrude", Team.DELTA).build();
+		this.match = new MatchBuilder(assets).addPlayer("Geir", Team.ALPHA)
+											 .addPlayer("Bodil", Team.BETA)
+											 .addPlayer("Arne", Team.CHARLIE)
+											 .addPlayer("Bertrude", Team.DELTA)
+											 .build();
 		level.getWorld().setContactListener(new PhysicsContactListener(match));
 
 		camera.position.set(level.getWidth() / 2f, level.getHeight() / 2f, 0);
@@ -207,8 +210,8 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 		}
 	}
 
-	public List<Player> getPlayers() {
-		return match.getPlayers();
+	public Match getMatch() {
+		return match;
 	}
 
 	public void checkVictory() {
