@@ -171,8 +171,7 @@ public class FoodHud {
         Texture myTexture = new Texture(Gdx.files.internal(imageString));
         TextureRegion myTextureRegion = new TextureRegion(myTexture);
         TextureRegionDrawable myTexRegionDrawable = new TextureRegionDrawable(myTextureRegion);
-        ImageButton logo = new ImageButton(myTexRegionDrawable);
-        return logo;
+        return new ImageButton(myTexRegionDrawable);
     }
 
 }
