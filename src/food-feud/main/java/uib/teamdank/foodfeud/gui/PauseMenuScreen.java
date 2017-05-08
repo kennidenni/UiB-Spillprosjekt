@@ -29,8 +29,8 @@ public class PauseMenuScreen extends MenuScreen implements uib.teamdank.common.g
 		menu = new Table();
 		buttons = new Array<>();
 
-		buttons.add(createButton(BACK, () -> resume()));
-		buttons.add(createButton(EXIT, () -> exitToStartMenu()));
+		buttons.add(createButton(BACK, this::resume));
+		buttons.add(createButton(EXIT, this::exitToStartMenu));
 
 		menu.add(pauseButton).pad(0, 0, 20, 0);
 		menu.row();

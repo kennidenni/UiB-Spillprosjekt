@@ -31,9 +31,9 @@ public class StartMenuScreen extends MenuScreen implements uib.teamdank.common.g
         menu = new Table();
 
         logoButton = createButton(LOGO, null);
-        buttons.add(createButton(PLAY, () -> newGame()));
-        buttons.add(createButton(CREDIT, () -> viewCredit()));
-        buttons.add(createButton(EXIT, () -> exitGame()));
+        buttons.add(createButton(PLAY, this::newGame));
+        buttons.add(createButton(CREDIT, this::viewCredit));
+        buttons.add(createButton(EXIT, this::exitGame));
 
         addToTables();
 

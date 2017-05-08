@@ -62,7 +62,7 @@ public class HighscoreMenuScreen extends MenuScreen implements uib.teamdank.comm
         menu.add(hg).expand().align(Align.center);
         menu.row();
 
-        backButton = createButton(BACK, () -> goBack());
+        backButton = createButton(BACK, this::goBack);
         menu.add(backButton)
                 .width((backButton.getWidth() / 4))
                 .height((backButton.getHeight() / 4))
