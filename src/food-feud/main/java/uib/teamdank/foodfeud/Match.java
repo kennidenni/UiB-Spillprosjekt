@@ -32,10 +32,15 @@ public class Match {
 	}
 
 	public Player getWinner() {
-		for (Player p : players){
-			if(!p.isDead()) 
-				return p;
-		}
-		return null;
+	    Player winner = null;
+	    for (Player player : players) {
+	        if (!player.isDead()) {
+	            if (winner != null) {
+	                return null;
+	            }
+	            winner = player;
+	        }
+	    }
+	    return winner;
 	}
 }

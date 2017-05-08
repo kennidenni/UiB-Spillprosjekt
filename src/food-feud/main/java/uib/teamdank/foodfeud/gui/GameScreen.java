@@ -1,7 +1,5 @@
 package uib.teamdank.foodfeud.gui;
 
-import java.util.List;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -215,14 +213,8 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 	}
 
 	public void checkVictory() {
-		List<Player> players = match.getPlayers();
-		int deadPlayers = 0;
-		for (Player p : players) {
-			if (p.isDead()) {
-				deadPlayers++;
-			}
-		}
-		if (deadPlayers == players.size())
+		Player player = match.getWinner();
+		if (player != null)
 			getGame().setScreen(new EndingScreen((FoodFeud) getGame()));
 	}
 }
