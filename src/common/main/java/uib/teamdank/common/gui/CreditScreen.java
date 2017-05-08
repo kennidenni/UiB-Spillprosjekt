@@ -22,9 +22,8 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 
 import uib.teamdank.common.Game;
 
-public class CreditScreen implements Screen {
-		
-		private Stage stage;
+public class CreditScreen extends MenuScreen {
+
 		private ImageButton backButton;
 		private Game game;
 		private String creditFile;
@@ -32,52 +31,29 @@ public class CreditScreen implements Screen {
 		private VerticalGroup creditGroup;
 
 		public CreditScreen(Game game, String buttonFile, String fileWithCredit) {
+			super();
 			this.game = game;
-			stage = new Stage(new FitViewport(1920, 1080));
 			this.creditFile = fileWithCredit;
 						
-			backButton = setupButton(buttonFile);
+			backButton = createButton(buttonFile, () -> goBack());
+
 			buttonCont = new Container<>(backButton);
 			buttonCont.width(backButton.getWidth() / 4).height(backButton.getHeight() / 4)
 				.align(Align.bottomLeft)
 				.pad(0, Gdx.graphics.getWidth() / 16, Gdx.graphics.getHeight() / 16, 0);
 
-			stage.addActor(buttonCont);
+			getStage().addActor(buttonCont);
 					
 			creditGroup = new VerticalGroup();
 			creditGroup.setWidth(Gdx.graphics.getWidth() - buttonCont.getMaxWidth());
 			creditGroup.align(Align.center);
 
-			stage.addActor(creditGroup);
-			
-			Gdx.input.setInputProcessor(stage);
-			
-			backButton.addListener(new InputListener() {
-				@Override
-				public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-					return true;
-				}
-
-				@Override
-				public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-					Stage myStage = event.getTarget().getStage();
-					Vector2 mouse = myStage.screenToStageCoordinates(new Vector2(Gdx.input.getX(), Gdx.input.getY()));
-
-					if (myStage.hit(mouse.x, mouse.y, true) == event.getTarget()) {
-						game.setScreen(game.getStartMenuScreen());
-					}
-				}
-			});
-		}
-		
-		public ImageButton setupButton(String imgPath) {
-			return new ImageButton(
-					new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal(imgPath)))));
+			getStage().addActor(creditGroup);
 		}
 		
 		@Override
 		public void show() {
-			Gdx.input.setInputProcessor(stage);
+			super.show();
 			
 			String[] lines = Gdx.files.internal(creditFile).readString().split("\\r?\\n");
 			
@@ -98,37 +74,21 @@ public class CreditScreen implements Screen {
 
 		@Override
 		public void render(float delta) {
-			Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-			stage.act(delta);
-			stage.draw();
+			super.render(delta);
 			
 			creditGroup.moveBy(0, delta * 50);
 		}
 
 		@Override
-		public void resize(int width, int height) {
-			stage.getViewport().update(width, height, true);
-		}
-
-		@Override
-		public void pause() {
-			//TODO
-		}
-
-		@Override
-		public void resume() {
-			//TODO
-		}
-
-		@Override
 		public void hide() {
-			Gdx.input.setInputProcessor(null);
+			super.hide();
 			creditGroup.clear();
 		}
 
 		@Override
 		public void dispose() {
-			stage.dispose();			
+			getStage().dispose();
+			super.dispose();
 		}
 
 		public void goBack() {
