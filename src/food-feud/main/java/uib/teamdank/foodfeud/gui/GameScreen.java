@@ -129,6 +129,7 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 		super.update(delta);
 		level.updateWorld();
 		
+		checkForMute();
 		// User input
 		checkPauseRequest();
 		movement(activePlayer);
