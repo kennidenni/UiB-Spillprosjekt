@@ -90,8 +90,7 @@ public class ShopScreen extends MenuScreen implements Screen {
 	
 	private final List<CarButton> carButtons = new ArrayList<>();
 	private static final int CAR_COST = 10;
-	
-	private Stage stage;
+
 	private CarGame game;
 	
 	private Table menu;
@@ -114,7 +113,6 @@ public class ShopScreen extends MenuScreen implements Screen {
 
 	public ShopScreen(CarGame game) {
 		this.game = game;
-		stage = new Stage(new FitViewport(1920, 1080));
 
 		menu = new Table();
 		cars = new Table();
@@ -154,10 +152,9 @@ public class ShopScreen extends MenuScreen implements Screen {
 		menu.setFillParent(true);
 		coinsTable.setFillParent(true);
 		helpText.setFillParent(true);
-		stage.addActor(helpText);
-		stage.addActor(menu);
-		stage.addActor(coinsTable);
-		Gdx.input.setInputProcessor(stage);
+		getStage().addActor(helpText);
+		getStage().addActor(menu);
+		getStage().addActor(coinsTable);
 	}
 
 	private ImageButton setupImage(TextureRegion textureRegion) {
@@ -175,26 +172,14 @@ public class ShopScreen extends MenuScreen implements Screen {
 	}
 
 	@Override
-	public void hide() {
-		Gdx.input.setInputProcessor(null);
-	}
-
-	@Override
 	public void render(float delta) {
-		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		coinsCount.act(delta);
-		stage.act(delta);
-		stage.draw();
-	}
-
-	@Override
-	public void resize(int width, int height) {
-		stage.getViewport().update(width, height, true);
+		super.render(delta);
 	}
 
 	@Override
 	public void show() {
-		Gdx.input.setInputProcessor(stage);
+		super.show();
 
 		final Player player = game.getPlayer();
 		player.unlockSkin("car_forward");
@@ -229,20 +214,6 @@ public class ShopScreen extends MenuScreen implements Screen {
 	}
 
 	public void setNewCoinCount(int i) {
-
 		coinsCount.setText(String.valueOf(i));
 	}
-
-	@Override
-	public void pause() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void resume() {
-		// TODO Auto-generated method stub
-		
-	}
-
 }

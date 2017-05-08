@@ -22,17 +22,16 @@ public class PauseMenuScreen extends MenuScreen implements uib.teamdank.common.g
 	private static final String BACK = "Images/Buttons/bs_back.png";
 	private static final String EXIT = "Images/Buttons/bs_quit.png";
 
-	private Stage stage;
 	private Table menu;
 	private ImageButton pauseButton;
 	private Array<Button> buttons;
 	private Game game;
 
 	public PauseMenuScreen(CarGame game) {
+		super();
 		this.game = game;
-		stage = new Stage(new FitViewport(1920, 1080));
 
-		pauseButton = setupButton(PAUSE);
+		pauseButton = createButton(PAUSE, null);
 
 		menu = new Table();
 		buttons = new Array<Button>();
@@ -49,22 +48,7 @@ public class PauseMenuScreen extends MenuScreen implements uib.teamdank.common.g
 		}
 
 		menu.setFillParent(true);
-		stage.addActor(menu);
-		Gdx.input.setInputProcessor(stage);
-	}
-
-	// Setting the buttons up
-	public ImageButton setupButton(String imageString) {
-		Texture myTexture = new Texture(Gdx.files.internal(imageString));
-		TextureRegion myTextureRegion = new TextureRegion(myTexture);
-		TextureRegionDrawable myTexRegionDrawable = new TextureRegionDrawable(myTextureRegion);
-		ImageButton logo = new ImageButton(myTexRegionDrawable);
-		return logo;
-	}
-
-	@Override
-	public void dispose() {
-		// TODO Auto-generated method stub
+		getStage().addActor(menu);
 	}
 
 	@Override
@@ -73,30 +57,13 @@ public class PauseMenuScreen extends MenuScreen implements uib.teamdank.common.g
 	}
 
 	@Override
-	public void hide() {
-		// TODO Auto-generated method stub
-	}
-
-	@Override
-	public void pause() {
-		// TODO Auto-generated method stub
-	}
-
-	@Override
 	public void render(float delta) {
 		if (Gdx.input.isKeyJustPressed(Keys.ESCAPE)) {
 			resume();
 			return;
 		}
-		
-		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-		stage.act(delta);
-		stage.draw();
-	}
-	
-	@Override
-	public void resize(int width, int height) {
-		stage.getViewport().update(width, height, true);
+
+		super.render(delta);
 	}
 
 	@Override
@@ -107,11 +74,6 @@ public class PauseMenuScreen extends MenuScreen implements uib.teamdank.common.g
 	@Override
 	public void resumeGame() {
 		// TODO Auto-generated method stub
-	}
-
-	@Override
-	public void show() {
-		Gdx.input.setInputProcessor(stage);
 	}
 
 }
