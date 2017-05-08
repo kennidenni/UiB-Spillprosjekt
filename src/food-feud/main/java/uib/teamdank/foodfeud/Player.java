@@ -1,7 +1,5 @@
 package uib.teamdank.foodfeud;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
@@ -31,7 +29,7 @@ public class Player extends Actor implements ItemHolder, PhysicsSimulated {
 	
 	private TextureRegion bodyTexture;
 	private Animation currentFeetAnimation;
-
+	
 	private Body body;
 	private boolean onGround;
 	public boolean walking;
@@ -55,8 +53,11 @@ public class Player extends Actor implements ItemHolder, PhysicsSimulated {
 	}
 	
 	@Override
-	public void setAnimation(Animation animation) {
-		throw new UnsupportedOperationException("player uses custom animations");
+	public float getAngle() {
+		if (body != null) {
+			setAngle((float) Math.toDegrees(body.getAngle()));
+		}
+		return super.getAngle();
 	}
 	
 	@Override
@@ -64,14 +65,6 @@ public class Player extends Actor implements ItemHolder, PhysicsSimulated {
 		throw new UnsupportedOperationException("player uses custom animations");
 	}
 	
-	@Override
-	public float getAngle() {
-		if (body != null) {
-			setAngle((float) Math.toDegrees(body.getAngle()));
-		}
-		return super.getAngle();
-	}
-
 	public Body getBody() {
 		return body;
 	}
@@ -83,6 +76,13 @@ public class Player extends Actor implements ItemHolder, PhysicsSimulated {
 		float healthPerBody = getMaxHealth() / (float) team.getBodyExpansionCount();
 		int index = team.getBodyExpansionCount() - (int) (getHealth() / healthPerBody);
 		return playerAtlas.getRegion(team.getBodyExpansion(index));
+	}
+
+	@Override
+	public int getHeight() {
+		int height = bodyTexture.getRegionHeight();
+		height += currentFeetAnimation.getAverageHeight();
+		return (int) (height * getScale());
 	}
 
 	@Override
@@ -107,10 +107,19 @@ public class Player extends Actor implements ItemHolder, PhysicsSimulated {
 		return super.getVelocity();
 	}
 	
+	@Override
+	public int getWidth() {
+		return (int) (playerAtlas.getRegion(team.getBodyExpansion(0)).getRegionWidth() * getScale());
+	}
+
+	public boolean isDead() {
+		return getHealth() == 0;
+	}
+	
 	private boolean isMoving() {
 		return Math.abs(body.getLinearVelocity().x) > 0.001;
 	}
-
+	
 	public boolean isOnGround() {
 		return onGround;
 	}
@@ -128,7 +137,7 @@ public class Player extends Actor implements ItemHolder, PhysicsSimulated {
 	public void moveLeft(int times) {
 		moveRight(-1 * times);
 	}
-	
+
 	public void moveRight() {
 		moveRight(1);
 	}
@@ -137,12 +146,31 @@ public class Player extends Actor implements ItemHolder, PhysicsSimulated {
 		body.applyLinearImpulse(HORIZONTAL_MOVEMENT_IMPULSE * times, 0, getWidth() / 2, getHeight() / 2, true);
 	}
 
-	public void setBody(Body body) {
-		this.body = body;
+	@Override
+	public void render(SpriteBatch batch, float delta) {
+		
+		final float bodyWidth = bodyTexture.getRegionWidth() * getScale();
+		final float bodyHeight = bodyTexture.getRegionHeight() * getScale();
+		
+		final TextureRegion feetTexture = currentFeetAnimation.getTexture();
+		final Vector2 feetOffset = currentFeetAnimation.getUserPoint();
+		final float feetWidth = feetTexture.getRegionWidth() * getScale();
+		final float feetHeight = feetTexture.getRegionHeight() * getScale();
+		final float feetOffsetX = feetWidth / 2f + -feetOffset.x * getScale();
+		final float feetOffsetY = -feetOffset.y * getScale();
+
+		renderTexture(batch, delta, bodyTexture, bodyWidth, bodyHeight, 0, feetHeight + feetOffsetY);
+		renderTexture(batch, delta, feetTexture, feetWidth, feetHeight, feetOffsetX, 0);
+		
+	}
+
+	@Override
+	public void setAnimation(Animation animation) {
+		throw new UnsupportedOperationException("player uses custom animations");
 	}
 	
-	public boolean isDead() {
-		return getHealth() == 0;
+	public void setBody(Body body) {
+		this.body = body;
 	}
 
 	@Override
@@ -156,53 +184,18 @@ public class Player extends Actor implements ItemHolder, PhysicsSimulated {
 		if (isDead()) {
 			this.bodyTexture = playerAtlas.getRegion(team.getBodyDead());
 			body.setFixedRotation(false);
+			body.applyAngularImpulse(1f, true);
 		} else {
 			this.bodyTexture = getBodyExpansionTexture();
 		}
 	}
-
+	
 	public void setOnGround(boolean onGround) {
 		this.onGround = onGround;
 	}
 	
 	@Override
-	public int getHeight() {
-		int height = bodyTexture.getRegionHeight();
-		height += currentFeetAnimation.getAverageHeight();
-		return (int) (height * getScale());
-	}
-
-	@Override
-	public int getWidth() {
-		return (int) (playerAtlas.getRegion(team.getBodyExpansion(0)).getRegionWidth() * getScale());
-	}
-	
-	@Override
-	public void render(SpriteBatch batch, float delta) {
-		
-		final float bodyWidth = bodyTexture.getRegionWidth() * getScale();
-		final float bodyHeight = bodyTexture.getRegionHeight() * getScale();
-		
-		final TextureRegion feetTexture = currentFeetAnimation.getTexture();
-		final Vector2 feetOffset = currentFeetAnimation.getUserPoint();
-		final float feetWidth = feetTexture.getRegionWidth() * getScale();
-		final float feetHeight = feetTexture.getRegionHeight() * getScale();
-		final float feetOffsetX = feetWidth / 2f + -feetOffset.x * getScale();
-		final float feetOffsetY = -feetOffset.y * getScale();
-		
-		renderTexture(batch, delta, bodyTexture, bodyWidth, bodyHeight, 0, feetHeight + feetOffsetY);
-		renderTexture(batch, delta, feetTexture, feetWidth, feetHeight, feetOffsetX, 0);
-		
-		if (Gdx.input.isKeyJustPressed(Keys.B) && getName().equals("Geir")) {
-			System.out.println(feetWidth / 2f);
-		}
-		
-	}
-	
-	@Override
 	public void update(float delta) {
-		updateMovement(delta);
-
 		if (!isDead()) {
 			if (isOnGround() && isMoving() && walking) {
 				currentFeetAnimation = feetWalkingAnimation;

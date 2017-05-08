@@ -12,12 +12,10 @@ import com.badlogic.gdx.physics.box2d.Manifold;
 
 public class PhysicsContactListener implements ContactListener {
 
-	private final Match match;
-
 	private final Map<String, Integer> activePlayerGroundContactCounts = new HashMap<>();
 
 	public PhysicsContactListener(Match match) {
-		this.match = Objects.requireNonNull(match, "match canont be null");
+		Objects.requireNonNull(match, "match cannot be null");
 		match.getPlayers().forEach(player -> {
 			activePlayerGroundContactCounts.put(player.getName(), 0);
 		});
