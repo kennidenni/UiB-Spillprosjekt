@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -22,10 +23,11 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 
 import uib.teamdank.cargame.CarGame;
 import uib.teamdank.cargame.Player;
+import uib.teamdank.common.gui.MenuScreen;
 import uib.teamdank.common.util.AssetManager;
 import uib.teamdank.common.util.TextureAtlas;
 
-public class ShopScreen extends ScreenAdapter {
+public class ShopScreen extends MenuScreen implements Screen {
 
 	private static class CarButton extends ImageButton {
 		private boolean unlocked;
@@ -148,7 +150,7 @@ public class ShopScreen extends ScreenAdapter {
 		
 		setupCars();
 		setupScreen();
-		backListener();
+		addButtonListener(backButton, () -> game.setScreen(game.getStartMenuScreen()));
 
 		menu.setFillParent(true);
 		coinsTable.setFillParent(true);
@@ -157,25 +159,6 @@ public class ShopScreen extends ScreenAdapter {
 		stage.addActor(menu);
 		stage.addActor(coinsTable);
 		Gdx.input.setInputProcessor(stage);
-	}
-
-	private void backListener() {
-		backButton.addListener(new InputListener() {
-			@Override
-			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-				return true;
-			}
-
-			@Override
-			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-				Stage myStage = event.getTarget().getStage();
-				Vector2 mouse = myStage.screenToStageCoordinates(new Vector2(Gdx.input.getX(), Gdx.input.getY()));
-
-				if (myStage.hit(mouse.x, mouse.y, true) == event.getTarget()) {
-					game.setScreen(game.getStartMenuScreen());
-				}
-			}
-		});
 	}
 
 	private ImageButton setupImage(TextureRegion textureRegion) {
@@ -249,6 +232,18 @@ public class ShopScreen extends ScreenAdapter {
 	public void setNewCoinCount(int i) {
 
 		coinsCount.setText(String.valueOf(i));
+	}
+
+	@Override
+	public void pause() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void resume() {
+		// TODO Auto-generated method stub
+		
 	}
 
 }
