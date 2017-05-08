@@ -105,6 +105,7 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 		// Render HUD
 		hud.render(delta);
 		
+		
 		WORLD_DEBUG_RENDERER.render(level.getWorld(), camera.combined);
 	}
 
@@ -201,6 +202,7 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 	 * checks if time has run out, forces new round if true
 	 */
 	public void checkTime(){
+		hud.setTime(time);
 		if (time == 0){
 			time = FINAL_TIME;
 			match.nextTurn();
