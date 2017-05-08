@@ -109,6 +109,7 @@ public class ShopScreen extends MenuScreen implements Screen {
 	
 
 	public ShopScreen(CarGame game) {
+		super();
 		this.game = game;
 
 		menu = new Table();
