@@ -31,10 +31,10 @@ public abstract class MenuScreen implements Screen {
 
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-                Stage stage = event.getTarget().getStage();
-                Vector2 mouse = stage.screenToStageCoordinates(new Vector2(Gdx.input.getX(), Gdx.input.getY()));
+                Stage eventStage = event.getTarget().getStage();
+                Vector2 mouse = eventStage.screenToStageCoordinates(new Vector2(Gdx.input.getX(), Gdx.input.getY()));
 
-                if (stage.hit(mouse.x, mouse.y, true) == event.getTarget()) {
+                if (eventStage.hit(mouse.x, mouse.y, true) == event.getTarget()) {
                     lambda.run();
                 }
             }
