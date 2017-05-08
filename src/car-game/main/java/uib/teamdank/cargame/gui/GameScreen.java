@@ -74,7 +74,7 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 		this.assets = new AssetManager();
 		TextureAtlas carTextures = assets.getAtlas("Images/car_sheet.json");
 		TextureAtlas roadEntityTextures = assets.getAtlas("Images/road_entity_sheet.json");
-		TextureAtlas pedestrianTextures = assets.getAtlas("Images/walkers.json");
+		TextureAtlas pedestrianTextures = assets.getAtlas("Images/pedestrian_sheet.json");
 		
 		// Cameras
 		this.playerCamera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
