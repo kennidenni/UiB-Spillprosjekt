@@ -17,6 +17,8 @@ public class FoodFeud extends Game {
     private GameScreen gameScreen;
 	private PauseMenuScreen pauseMenuScreen;
 	private SpriteBatch batch;
+	private boolean isMuted;
+	
 
     public static void main(String[] args){
         LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
@@ -38,6 +40,7 @@ public class FoodFeud extends Game {
 	@Override
 	public GameScreen newGame() {
 		gameScreen = new GameScreen(this);
+		gameScreen.setStartAudio(isMuted);
 		return gameScreen;
 	}
 
@@ -71,5 +74,9 @@ public class FoodFeud extends Game {
 		super.dispose();
 		batch.dispose();
 		screen.dispose();
+	}
+
+	public void setAudio(boolean b) {
+		isMuted = b;
 	}
 }

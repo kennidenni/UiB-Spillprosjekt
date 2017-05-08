@@ -11,6 +11,8 @@ import uib.teamdank.common.Game;
 import uib.teamdank.common.GameObject;
 import uib.teamdank.common.gui.Layer;
 import uib.teamdank.common.util.AssetManager;
+import uib.teamdank.common.util.TimedEvent;
+import uib.teamdank.foodfeud.FoodFeud;
 import uib.teamdank.foodfeud.Level;
 import uib.teamdank.foodfeud.LevelLoader;
 import uib.teamdank.foodfeud.Match;
@@ -34,12 +36,23 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 	private final OrthographicCamera camera;
 	private final Level level;
 	private final Match match;
+	
+	private static final float TIME_BETWEEN_TIME = 1f;
+	private static final int AMOUNT_PER_TIME = 1;
+	
+	private static final int FINAL_TIME = 30;
+	private int time;
+
+	private final FoodHud hud;
+	private final AssetManager assets;
 
 	public GameScreen(Game game) {
 		super(game);
 		
-		AssetManager assets = new AssetManager();
-
+		assets = new AssetManager();
+		
+		time = FINAL_TIME;
+		
 		this.camera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		this.level = LevelLoader.createFromJson(Gdx.files.internal("Data/field_level.json"));
 		this.match = new MatchBuilder(assets)
@@ -59,7 +72,14 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 		addLayer(playerLayer);
 		this.foregroundLayer = new ForegroundLayer(level);
 		addLayer(foregroundLayer);
-
+		
+		//HUD
+		this.hud = new FoodHud();
+		hud.setGame((FoodFeud) game);
+		
+		addTimedEvent(new TimedEvent(TIME_BETWEEN_TIME, true, () -> {
+			time -= AMOUNT_PER_TIME;
+		}));
 		
 		PlayerBodyCreator playerBodyCreator = new PlayerBodyCreator(level.getWorld());
 		TextureRegion playerTexture = new TextureRegion(new Texture("Images/food_sheet.png"), 53, 48, 57, 57); // Temporary
@@ -81,6 +101,11 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 	public void render(float delta) {
 		getGame().getSpriteBatch().setProjectionMatrix(camera.combined);
 		super.render(delta);
+		
+		// Render HUD
+		hud.render(delta);
+		
+		
 		WORLD_DEBUG_RENDERER.render(level.getWorld(), camera.combined);
 	}
 
@@ -104,6 +129,7 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 		super.update(delta);
 		level.updateWorld();
 		
+		checkForMute();
 		// User input
 		checkPauseRequest();
 		movement(activePlayer);
@@ -116,8 +142,11 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 			}
 		}
 		
+		checkTime();
+		
 		// Temporary
 		if (Gdx.input.isKeyJustPressed(Keys.SPACE)) {
+			time = FINAL_TIME;
 			match.nextTurn();
 		}
 
@@ -152,5 +181,31 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 		}
 		
 	}
-
+	
+	public void setStartAudio(boolean isMuted) {
+		hud.setMute(isMuted);
+	}
+	
+	private void checkForMute() {
+		if(hud.isMuted()) {
+			assets.getAudio().mute();
+		} else {
+			assets.getAudio().unmute();
+		}
+	}
+	
+	public boolean isMuted() {
+		return hud.isMuted();
+	}
+	/**
+	 * checks if time has run out, forces new round if true
+	 */
+	public void checkTime(){
+		hud.setTime(time);
+		if (time == 0){
+			time = FINAL_TIME;
+			match.nextTurn();
+		}
+	}
+	
 }
