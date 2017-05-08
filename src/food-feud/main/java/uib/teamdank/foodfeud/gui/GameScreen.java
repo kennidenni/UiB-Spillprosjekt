@@ -34,10 +34,10 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 	private final OrthographicCamera camera;
 	private final Level level;
 	private final Match match;
-	
+
 	private static final float TIME_BETWEEN_TIME = 1f;
 	private static final int AMOUNT_PER_TIME = 1;
-	
+
 	private static final int FINAL_TIME = 30;
 	private int time;
 
@@ -46,19 +46,18 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 
 	public GameScreen(Game game) {
 		super(game);
-		
+
 		assets = new AssetManager();
-		
+
 		time = FINAL_TIME;
-		
+
 		this.camera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		this.level = LevelLoader.createFromJson(Gdx.files.internal("Data/field_level.json"));
-		this.match = new MatchBuilder(assets)
-							.addPlayer("Geir", Team.ALPHA)
-							.addPlayer("Bodil", Team.BETA)
-							.addPlayer("Arne", Team.CHARLIE)
-							.addPlayer("Bertrude", Team.DELTA)
-							.build();
+		this.match = new MatchBuilder(assets).addPlayer("Geir", Team.ALPHA)
+											 .addPlayer("Bodil", Team.BETA)
+											 .addPlayer("Arne", Team.CHARLIE)
+											 .addPlayer("Bertrude", Team.DELTA)
+											 .build();
 		level.getWorld().setContactListener(new PhysicsContactListener(match));
 
 		camera.position.set(level.getWidth() / 2f, level.getHeight() / 2f, 0);
@@ -70,15 +69,15 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 		addLayer(playerLayer);
 		this.foregroundLayer = new ForegroundLayer(level);
 		addLayer(foregroundLayer);
-		
-		//HUD
+
+		// HUD
 		this.hud = new FoodHud();
 		hud.setGame((FoodFeud) game);
-		
+
 		addTimedEvent(new TimedEvent(TIME_BETWEEN_TIME, true, () -> {
 			time -= AMOUNT_PER_TIME;
 		}));
-		
+
 		PlayerBodyCreator playerBodyCreator = new PlayerBodyCreator(level.getWorld());
 		for (Player player : match.getPlayers()) {
 			playerBodyCreator.initializeBody(player);
@@ -97,11 +96,10 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 	public void render(float delta) {
 		getGame().getSpriteBatch().setProjectionMatrix(camera.combined);
 		super.render(delta);
-		
+
 		// Render HUD
 		hud.render(delta);
-		
-		
+
 		WORLD_DEBUG_RENDERER.render(level.getWorld(), camera.combined);
 	}
 
@@ -120,11 +118,11 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 		camera.position.set(activePlayer.getX(), activePlayer.getY(), 0f);
 		camera.position.add(activePlayer.getWidth() / 2f, activePlayer.getHeight() / 2f, 0f);
 		camera.update();
-		
+
 		// Update game objects
 		super.update(delta);
 		level.updateWorld();
-		
+
 		checkForMute();
 		// User input
 		checkPauseRequest();
@@ -139,9 +137,11 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 				player.moveLeft(3);
 			}
 		}
-		
+
 		checkTime();
-		
+
+		checkVictory();
+
 		// Temporary
 		if (Gdx.input.isKeyJustPressed(Keys.SPACE)) {
 			time = FINAL_TIME;
@@ -152,61 +152,69 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 		}
 
 	}
-	
-	private void movement(Player active){
-		if (active.isOnGround() && 
-				(Gdx.input.isKeyJustPressed(Keys.W) ||
-				 Gdx.input.isKeyJustPressed(Keys.UP))) {
+
+	private void movement(Player active) {
+		if (active.isOnGround() && (Gdx.input.isKeyJustPressed(Keys.W) || Gdx.input.isKeyJustPressed(Keys.UP))) {
 			active.jump();
 		}
 		if ((Gdx.input.isKeyPressed(Keys.A) || Gdx.input.isKeyPressed(Keys.LEFT))) {
-			if ((active.getBody().getLinearVelocity().x) > (-Player.MAX_VEL_X)){
+			if ((active.getBody().getLinearVelocity().x) > (-Player.MAX_VEL_X)) {
 				active.moveLeft();
 			}
 			active.walking = true;
 		}
 		if ((Gdx.input.isKeyPressed(Keys.D) || Gdx.input.isKeyPressed(Keys.RIGHT))) {
-			if ((active.getBody().getLinearVelocity().x) < Player.MAX_VEL_X){
+			if ((active.getBody().getLinearVelocity().x) < Player.MAX_VEL_X) {
 				active.moveRight();
 			}
 			active.walking = true;
 		}
 	}
-	
+
 	@Override
 	protected void onUpdateGameObject(float delta, Layer layer, GameObject gameObject) {
-		
+
 		// Dispose of physics bodies on deleted objects
 		if (gameObject.isMarkedForRemoval() && gameObject instanceof PhysicsSimulated) {
 			level.getWorld().destroyBody(((PhysicsSimulated) gameObject).getBody());
 		}
-		
+
 	}
-	
+
 	public void setStartAudio(boolean isMuted) {
 		hud.setMute(isMuted);
 	}
-	
+
 	private void checkForMute() {
-		if(hud.isMuted()) {
+		if (hud.isMuted()) {
 			assets.getAudio().mute();
 		} else {
 			assets.getAudio().unmute();
 		}
 	}
-	
+
 	public boolean isMuted() {
 		return hud.isMuted();
 	}
+
 	/**
 	 * checks if time has run out, forces new round if true
 	 */
-	public void checkTime(){
+	public void checkTime() {
 		hud.setTime(time);
-		if (time == 0){
+		if (time == 0) {
 			time = FINAL_TIME;
 			match.nextTurn();
 		}
 	}
-	
+
+	public Match getMatch() {
+		return match;
+	}
+
+	public void checkVictory() {
+		Player player = match.getWinner();
+		if (player != null)
+			getGame().setScreen(new EndingScreen((FoodFeud) getGame()));
+	}
 }

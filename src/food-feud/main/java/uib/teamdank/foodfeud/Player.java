@@ -114,6 +114,7 @@ public class Player extends Actor implements ItemHolder, PhysicsSimulated {
 
 	public boolean isDead() {
 		return getHealth() == 0;
+			
 	}
 	
 	private boolean isMoving() {
@@ -213,5 +214,4 @@ public class Player extends Actor implements ItemHolder, PhysicsSimulated {
 			currentFeetAnimation.update(delta);
 		}
 	}
-
 }

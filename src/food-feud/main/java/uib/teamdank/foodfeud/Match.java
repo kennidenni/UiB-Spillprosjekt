@@ -30,4 +30,17 @@ public class Match {
 	public void nextTurn() {
 		turnCount++;
 	}
+
+	public Player getWinner() {
+	    Player winner = null;
+	    for (Player player : players) {
+	        if (!player.isDead()) {
+	            if (winner != null) {
+	                return null;
+	            }
+	            winner = player;
+	        }
+	    }
+	    return winner;
+	}
 }
