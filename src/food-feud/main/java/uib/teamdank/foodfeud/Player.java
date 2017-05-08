@@ -19,7 +19,7 @@ public class Player extends Actor implements ItemHolder, PhysicsSimulated {
 
 	private static final float FLIP_VELOCITY_TOLERANCE = 1f;
 	private static final float HORIZONTAL_MOVEMENT_IMPULSE = 1000f;
-	private static final float JUMP_FORCE = 10000f;
+	private static final float JUMP_FORCE = 25000f;
 	public static final float MAX_VEL_X = 12f;
 	
 	private final TextureAtlas playerAtlas;
