@@ -11,6 +11,7 @@ import uib.teamdank.common.Game;
 import uib.teamdank.common.GameObject;
 import uib.teamdank.common.gui.Layer;
 import uib.teamdank.common.util.AssetManager;
+import uib.teamdank.foodfeud.FoodFeud;
 import uib.teamdank.foodfeud.Level;
 import uib.teamdank.foodfeud.LevelLoader;
 import uib.teamdank.foodfeud.Match;
@@ -35,10 +36,13 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 	private final Level level;
 	private final Match match;
 
+	private final FoodHud hud;
+	private final AssetManager assets;
+
 	public GameScreen(Game game) {
 		super(game);
 		
-		AssetManager assets = new AssetManager();
+		assets = new AssetManager();
 
 		this.camera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		this.level = LevelLoader.createFromJson(Gdx.files.internal("Data/field_level.json"));
@@ -59,7 +63,10 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 		addLayer(playerLayer);
 		this.foregroundLayer = new ForegroundLayer(level);
 		addLayer(foregroundLayer);
-
+		
+		//HUD
+		this.hud = new FoodHud();
+		hud.setGame((FoodFeud) game);
 		
 		PlayerBodyCreator playerBodyCreator = new PlayerBodyCreator(level.getWorld());
 		TextureRegion playerTexture = new TextureRegion(new Texture("Images/food_sheet.png"), 53, 48, 57, 57); // Temporary
@@ -152,5 +159,23 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 		}
 		
 	}
-
+	
+	public void setStartAudio(boolean isMuted) {
+		hud.setMute(isMuted);
+	}
+	
+	private void checkForMute() {
+		if(hud.isMuted()) {
+			assets.getAudio().mute();
+		} else {
+			assets.getAudio().unmute();
+		}
+	}
+	
+	public boolean isMuted() {
+		if(hud.isMuted())
+			return true;
+		return false;
+	}
+	
 }
