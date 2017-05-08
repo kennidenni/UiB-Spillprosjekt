@@ -50,7 +50,6 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 		super(game);
 
 		assets = new AssetManager();
-
 		time = FINAL_TIME;
 
 		this.camera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
