@@ -119,7 +119,6 @@ public class FoodHud {
 	}
 
 	public void render(float delta) {
-		bar.act(delta);
 		time.act(delta);
 		stage.act(delta);
 		stage.draw();
