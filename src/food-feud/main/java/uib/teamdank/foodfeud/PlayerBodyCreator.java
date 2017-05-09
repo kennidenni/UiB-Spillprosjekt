@@ -28,6 +28,8 @@ import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.Shape;
 import com.badlogic.gdx.physics.box2d.World;
 
+import uib.teamdank.common.util.CType;
+
 public class PlayerBodyCreator {
 
 	private static final float GROUND_DETECTOR_HEIGHT = 4;
@@ -72,6 +74,8 @@ public class PlayerBodyCreator {
 		FixtureDef fixtureDef = new FixtureDef();
 		fixtureDef.shape = shape;
 		fixtureDef.isSensor = true;
+		fixtureDef.filter.categoryBits = CType.CATEGORY_PLAYER.getValue();
+		fixtureDef.filter.maskBits = (short) (CType.CATEGORY_PROJECTILE.getValue() | CType.CATEGORY_WORLD.getValue());
 		body.createFixture(fixtureDef).setUserData(player);
 		shape.dispose();
 	}
@@ -82,6 +86,8 @@ public class PlayerBodyCreator {
 		fixtureDef.friction = 0.75f;
 		fixtureDef.restitution = 0.1f;
 		fixtureDef.shape = shape;
+		fixtureDef.filter.categoryBits = CType.CATEGORY_PLAYER.getValue();
+		fixtureDef.filter.maskBits = (short) (CType.CATEGORY_PROJECTILE.getValue() | CType.CATEGORY_WORLD.getValue());
 		return fixtureDef;
 	}
 	
