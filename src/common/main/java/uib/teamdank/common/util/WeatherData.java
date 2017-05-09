@@ -16,11 +16,16 @@
  *******************************************************************************/
 package uib.teamdank.common.util;
 
+import java.io.InputStream;
 import java.net.URL;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+import java.util.concurrent.TimeUnit;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -123,14 +128,16 @@ public class WeatherData {
 	 * @return the current weather type in the specified location
 	 */
 	public WeatherType pullWeather(String country, String county, String municipality, String placeName) {
+		ExecutorService service = Executors.newSingleThreadExecutor();
+		
 		if (System.currentTimeMillis() - previousPullTime > WEATHER_FETCH_LIMIT_SECONDS * 1000) {
 			try {
+				Future<InputStream> f = service.submit(() -> new URL(String.format(XML_URL_FORMAT, country, county, municipality, placeName)).openStream()); 
 
-				URL url = new URL(String.format(XML_URL_FORMAT, country, county, municipality, placeName));
-
+				
 				DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 				DocumentBuilder builder = factory.newDocumentBuilder();
-				Document document = builder.parse(url.openStream());
+				Document document = builder.parse(f.get(7, TimeUnit.SECONDS));
 				previousWeatherType = parseWeatherDocument(document);
 
 			} catch (Exception e) {
@@ -144,6 +151,7 @@ public class WeatherData {
 			this.saveAsJson();
 		}
 
+		service.shutdown();
 		return previousWeatherType;
 	}
 
