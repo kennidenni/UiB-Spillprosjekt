@@ -123,7 +123,7 @@ public class SetupGame extends MenuScreen implements Screen {
 		textButtonStyle = new TextButtonStyle();
 		textButtonStyle.font = font;
 
-		helpText = new TextButton("Hvor mange players skal det være?", textButtonStyle);
+		helpText = new TextButton("How many players should there be?", textButtonStyle);
 		helpText.getLabel().setFontScale(3, 3);
 		menu.add(helpText);
 
