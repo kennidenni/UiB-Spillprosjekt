@@ -16,13 +16,12 @@
  *******************************************************************************/
 package uib.teamdank.cargame.gui;
 
-import java.util.Arrays;
-import java.util.List;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator.FreeTypeFontParameter;
 import com.badlogic.gdx.scenes.scene2d.ui.HorizontalGroup;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -32,6 +31,9 @@ import com.badlogic.gdx.utils.Align;
 import uib.teamdank.cargame.CarGame;
 import uib.teamdank.common.Score;
 import uib.teamdank.common.gui.MenuScreen;
+
+import java.util.Arrays;
+import java.util.List;
 
 public class HighscoreMenuScreen extends MenuScreen implements uib.teamdank.common.gui.HighscoreMenuScreen {
 	private static final String BACK = "Images/Buttons/bs_back.png";
@@ -45,6 +47,8 @@ public class HighscoreMenuScreen extends MenuScreen implements uib.teamdank.comm
 	private CarGame game;	
 	private Label nameLabel;
 	private Label scoreLabel;
+	private FreeTypeFontGenerator generator;
+	private FreeTypeFontParameter parameter;
 
 	public HighscoreMenuScreen(CarGame game) {
 		super();
@@ -61,8 +65,15 @@ public class HighscoreMenuScreen extends MenuScreen implements uib.teamdank.comm
 		
 		menu.row();
 
-		BitmapFont font = new BitmapFont();
-		font.getData().setScale(3);
+        generator = new FreeTypeFontGenerator(Gdx.files.internal("Fonts/roboto.ttf"));
+        parameter = new FreeTypeFontParameter();
+        parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
+        float dpi = 1 + Gdx.graphics.getDensity();
+        int size = (int) Math.ceil(30 * dpi);
+
+        parameter.size = size;
+        parameter.size = (int) Math.ceil(20 * dpi);
+		BitmapFont font = generator.generateFont(parameter);
 		
 		nameLabel = new Label("", new LabelStyle(font, Color.WHITE));
 		scoreLabel = new Label("", new LabelStyle(font, Color.WHITE));

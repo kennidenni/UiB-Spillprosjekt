@@ -23,6 +23,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator.FreeTypeFontParameter;
 import com.badlogic.gdx.scenes.scene2d.ui.HorizontalGroup;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -42,6 +44,9 @@ public class HighscoreMenuScreen extends MenuScreen implements uib.teamdank.comm
     private ImageButton highscoreButton;
     private Table menu;
     private FoodFeud game;
+    private FreeTypeFontGenerator generator;
+    private FreeTypeFontParameter parameter;
+    private BitmapFont font;
     private Label nameLabel;
     private Label scoreLabel;
 
@@ -59,8 +64,13 @@ public class HighscoreMenuScreen extends MenuScreen implements uib.teamdank.comm
                 .expand().align(Align.top).padTop(Gdx.graphics.getHeight() / 16);
 
         menu.row();
-        BitmapFont font = new BitmapFont();
-        font.getData().setScale(3);
+
+        generator = new FreeTypeFontGenerator(Gdx.files.internal("Fonts/roboto.ttf"));
+        parameter = new FreeTypeFontParameter();
+        float dpi = Gdx.graphics.getDensity() + 1;
+        parameter.size = (int) Math.ceil(50 * dpi);
+
+        font = generator.generateFont(parameter);
 
         nameLabel = new Label("", new LabelStyle(font, Color.WHITE));
         scoreLabel = new Label("", new LabelStyle(font, Color.WHITE));
