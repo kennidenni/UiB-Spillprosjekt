@@ -11,6 +11,8 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator.FreeTypeFontParameter;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
@@ -42,6 +44,8 @@ public class EndingScreen implements uib.teamdank.common.gui.HighscoreMenuScreen
 	private ImageButton gameOverButton;
 	private TextButton highscore;
 	private BitmapFont font;
+	private FreeTypeFontGenerator generator;
+	private FreeTypeFontParameter parameter;
 	private TextButtonStyle textButtonStyle;
 	private List<Score> score;
 
@@ -55,13 +59,18 @@ public class EndingScreen implements uib.teamdank.common.gui.HighscoreMenuScreen
 		
 		backButton = setupButton(BACK);
 		gameOverButton = setupButton(GAMEOVER);
-		
-		font = new BitmapFont();
+
+        generator = new FreeTypeFontGenerator(Gdx.files.internal("Fonts/ostrich.ttf"));
+        parameter = new FreeTypeFontParameter();
+        float dpi = 1 + Gdx.graphics.getDensity();
+        int size = (int) Math.ceil(50 * dpi);
+        parameter.size = size;
+
+		font = generator.generateFont(parameter);
 		textButtonStyle = new TextButtonStyle();
 		textButtonStyle.font = font;
 		highscore = new TextButton("Your score:\n" + String.valueOf(game.getPlayer().getScore().getScore()), textButtonStyle);
-		highscore.getLabel().setFontScale(10, 10);
-		
+
 		menu = new Table();
 		menu.add(gameOverButton).width(gameOverButton.getWidth() / 2).height((float) (gameOverButton.getHeight() / 2)).pad(0, 0, 100, 0);
 		menu.row();
