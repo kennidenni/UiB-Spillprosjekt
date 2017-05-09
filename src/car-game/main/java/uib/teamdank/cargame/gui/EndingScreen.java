@@ -62,9 +62,8 @@ public class EndingScreen implements uib.teamdank.common.gui.HighscoreMenuScreen
 
         generator = new FreeTypeFontGenerator(Gdx.files.internal("Fonts/ostrich.ttf"));
         parameter = new FreeTypeFontParameter();
-        float dpi = 1 + Gdx.graphics.getDensity();
-        int size = (int) Math.ceil(50 * dpi);
-        parameter.size = size;
+        float dpi = Gdx.graphics.getDensity() + 1;
+        parameter.size = (int) Math.ceil(50 * dpi);
 
 		font = generator.generateFont(parameter);
 		textButtonStyle = new TextButtonStyle();

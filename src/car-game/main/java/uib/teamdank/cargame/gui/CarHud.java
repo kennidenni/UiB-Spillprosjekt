@@ -68,8 +68,7 @@ public class CarHud {
 		generator = new FreeTypeFontGenerator(Gdx.files.internal("Fonts/ostrich.ttf"));
 		parameter = new FreeTypeFontParameter();
 		float dpi = Gdx.graphics.getDensity() + 1;
-		int size = (int) Math.ceil(50 * dpi);
-		parameter.size = size;
+		parameter.size = (int) Math.ceil(50 * dpi);
 		font = generator.generateFont(parameter);
 		textButtonStyle = new TextButtonStyle();
 		textButtonStyle.font = font;
