@@ -52,11 +52,10 @@ public class CreditScreen extends MenuScreen {
 			
 			String[] lines = Gdx.files.internal(creditFile).readString().split("\\r?\\n");
 
-			generator = new FreeTypeFontGenerator(Gdx.files.internal("Fonts/ostrich.ttf"));
+			generator = new FreeTypeFontGenerator(Gdx.files.internal("Fonts/roboto.ttf"));
 			parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
 			float dpi = Gdx.graphics.getDensity() + 1;
-			int size = (int) Math.ceil(40 * dpi);
-			parameter.size = size;
+			parameter.size = (int) Math.ceil(30 * dpi);
 			BitmapFont font = generator.generateFont(parameter);
 			
 			for (String line : lines) {
@@ -68,7 +67,7 @@ public class CreditScreen extends MenuScreen {
 				creditGroup.addActor(new Container<Label>(l).width(creditGroup.getWidth()));
 			}
 			
-			creditGroup.setPosition(2 * buttonCont.getMaxWidth(), -font.getCapHeight() * lines.length);
+			creditGroup.setPosition(2 * buttonCont.getMaxWidth(), (float) (-1.5*font.getCapHeight() * lines.length));
 		}	
 
 		@Override

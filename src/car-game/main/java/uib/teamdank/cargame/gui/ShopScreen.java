@@ -132,10 +132,10 @@ public class ShopScreen extends MenuScreen implements Screen {
 
 		coinImage = setupImage(roadEntityTextures.getRegion("coin"));
 		
-		generator = new FreeTypeFontGenerator(Gdx.files.internal("Fonts/ostrich.ttf"));
+		generator = new FreeTypeFontGenerator(Gdx.files.internal("Fonts/roboto.ttf"));
 		parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
 		float dpi = Gdx.graphics.getDensity() + 1;
-		parameter.size = (int) Math.ceil(32 * dpi);
+		parameter.size = (int) Math.ceil(20 * dpi);
 		font = generator.generateFont(parameter);
 
 		textButtonStyle = new TextButtonStyle();

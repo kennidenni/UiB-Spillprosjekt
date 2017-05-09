@@ -60,7 +60,7 @@ public class EndingScreen implements uib.teamdank.common.gui.HighscoreMenuScreen
 		backButton = setupButton(BACK);
 		gameOverButton = setupButton(GAMEOVER);
 
-        generator = new FreeTypeFontGenerator(Gdx.files.internal("Fonts/ostrich.ttf"));
+        generator = new FreeTypeFontGenerator(Gdx.files.internal("Fonts/roboto.ttf"));
         parameter = new FreeTypeFontParameter();
         float dpi = Gdx.graphics.getDensity() + 1;
         parameter.size = (int) Math.ceil(50 * dpi);

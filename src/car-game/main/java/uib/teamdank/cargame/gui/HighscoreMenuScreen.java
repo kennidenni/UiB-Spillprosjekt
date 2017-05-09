@@ -49,14 +49,14 @@ public class HighscoreMenuScreen extends MenuScreen implements uib.teamdank.comm
 		
 		menu.row();
 
-        generator = new FreeTypeFontGenerator(Gdx.files.internal("Fonts/ostrich.ttf"));
+        generator = new FreeTypeFontGenerator(Gdx.files.internal("Fonts/roboto.ttf"));
         parameter = new FreeTypeFontParameter();
         parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
         float dpi = 1 + Gdx.graphics.getDensity();
         int size = (int) Math.ceil(30 * dpi);
 
         parameter.size = size;
-        parameter.size = (int) Math.ceil(30 * dpi);
+        parameter.size = (int) Math.ceil(20 * dpi);
 		BitmapFont font = generator.generateFont(parameter);
 		
 		nameLabel = new Label("", new LabelStyle(font, Color.WHITE));
