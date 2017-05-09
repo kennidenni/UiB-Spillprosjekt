@@ -9,13 +9,8 @@ import uib.teamdank.common.Item;
  * weight and thrower) and inflicts damage on impact.
  */
 public class Weapon extends Item {
-
-	private final int dmg, weight;
-	private final WeaponProjectile proj;
-
-	private boolean damagedPlayer = false;
-
-	public enum WeaponProjectile {
+	
+	public enum Type {
 		// light bullets like guns
 		LIGHT_BALLISTIC,
 		// like uzi, HK416.. etc
@@ -24,8 +19,15 @@ public class Weapon extends Item {
 		HEAVY_BALLISTIC,
 		// shotgun etc
 		SPRAY_BALLISTIC;
-
 	}
+
+	private final int damage;
+	private final Type type;
+
+	private float mass;
+	private int amount;
+	private boolean damagedPlayer = false;
+
 
 	/**
 	 * Creates a weapon that does no damage and weighs nothing.
@@ -34,24 +36,35 @@ public class Weapon extends Item {
 	 * @param descr
 	 *            weapon description
 	 */
-	public Weapon(String name, String descr, int d, int w, TextureRegion texture, WeaponProjectile p) {
+	public Weapon(String name, String descr, TextureRegion texture, int damage, float mass, int amount, Type type) {
 		super(name, descr);
-		this.dmg = d;
-		this.weight = w;
 		setTexture(texture);
-		proj = p;
+		this.damage = damage;
+		this.mass = mass;
+		this.amount = amount;
+		this.type = type;
 	}
 
+	public void fire() {
+		if (amount > 0) {
+			amount--;
+		}
+	}
+	
+	public int getAmount() {
+		return amount;
+	}
+	
 	public int getDamage() {
-		return dmg;
+		return damage;
 	}
 
-	public double getWeight() {
-		return weight;
+	public float getMass() {
+		return mass;
 	}
-
-	public WeaponProjectile getProjectileType() {
-		return proj;
+	
+	public Type getType() {
+		return type;
 	}
 
 	public void hitPlayer(Player player) {
