@@ -16,11 +16,7 @@
  *******************************************************************************/
 package uib.teamdank.foodfeud.gui;
 
-import java.security.Timestamp;
-import java.sql.Time;
 import java.util.Date;
-
-import org.lwjgl.Sys;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
@@ -38,12 +34,10 @@ import uib.teamdank.foodfeud.FoodFeud;
 import uib.teamdank.foodfeud.Level;
 import uib.teamdank.foodfeud.LevelLoader;
 import uib.teamdank.foodfeud.Match;
-import uib.teamdank.foodfeud.MatchBuilder;
 import uib.teamdank.foodfeud.PhysicsContactListener;
 import uib.teamdank.foodfeud.PhysicsSimulated;
 import uib.teamdank.foodfeud.Player;
 import uib.teamdank.foodfeud.PlayerBodyCreator;
-import uib.teamdank.foodfeud.Team;
 
 /**
  * The main gameplay screen.
