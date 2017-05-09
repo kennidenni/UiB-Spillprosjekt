@@ -106,6 +106,7 @@ public class CarHud {
 		
 		newHighscoreInit();
 		
+		
 		stage.addActor(scoreTable);
 		stage.addActor(fuelTable);
 		stage.addActor(coinsTable);
