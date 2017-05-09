@@ -19,6 +19,8 @@ package uib.teamdank.common.gui;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator.FreeTypeFontParameter;
 import com.badlogic.gdx.scenes.scene2d.ui.Container;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -35,6 +37,9 @@ public class CreditScreen extends MenuScreen {
 		private String creditFile;
 		private Container<ImageButton> buttonCont;
 		private VerticalGroup creditGroup;
+		
+		private FreeTypeFontGenerator generator;
+		private FreeTypeFontParameter parameter;
 
 		public CreditScreen(Game game, String buttonFile, String fileWithCredit) {
 			super();
@@ -62,9 +67,12 @@ public class CreditScreen extends MenuScreen {
 			super.show();
 			
 			String[] lines = Gdx.files.internal(creditFile).readString().split("\\r?\\n");
-			
-			BitmapFont font = new BitmapFont();
-			font.getData().setScale(4);
+
+			generator = new FreeTypeFontGenerator(Gdx.files.internal("Fonts/roboto.ttf"));
+			parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
+			float dpi = Gdx.graphics.getDensity() + 1;
+			parameter.size = (int) Math.ceil(30 * dpi);
+			BitmapFont font = generator.generateFont(parameter);
 			
 			for (String line : lines) {
 				Label l = new Label(line, new LabelStyle(font, Color.WHITE));
@@ -75,7 +83,7 @@ public class CreditScreen extends MenuScreen {
 				creditGroup.addActor(new Container<Label>(l).width(creditGroup.getWidth()));
 			}
 			
-			creditGroup.setPosition(2 * buttonCont.getMaxWidth(), -font.getCapHeight() * lines.length);
+			creditGroup.setPosition(2 * buttonCont.getMaxWidth(), (float) (-1.25*font.getCapHeight() * lines.length));
 		}	
 
 		@Override
