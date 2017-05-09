@@ -22,6 +22,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import uib.teamdank.common.Game;
 import uib.teamdank.foodfeud.gui.GameScreen;
 import uib.teamdank.foodfeud.gui.PauseMenuScreen;
+import uib.teamdank.foodfeud.gui.SetupGame;
 import uib.teamdank.foodfeud.gui.StartMenuScreen;
 
 /**
@@ -31,6 +32,7 @@ public class FoodFeud extends Game {
 	private static final String TITLE = "Food Feud";
 	private StartMenuScreen startMenuScreen;
     private GameScreen gameScreen;
+    private SetupGame setupScreen;
 	private PauseMenuScreen pauseMenuScreen;
 	private SpriteBatch batch;
 	private boolean isMuted;
@@ -47,7 +49,6 @@ public class FoodFeud extends Game {
 	@Override
 	public void create() {
 		startMenuScreen = new StartMenuScreen(this);
-		gameScreen = new GameScreen(this);
 		pauseMenuScreen = new PauseMenuScreen(this);
 		batch = new SpriteBatch();
 		setScreen(startMenuScreen);
@@ -90,6 +91,15 @@ public class FoodFeud extends Game {
 		super.dispose();
 		batch.dispose();
 		screen.dispose();
+	}
+	
+	public SetupGame getSetupGame() {
+		return setupScreen;
+	}
+	
+	public SetupGame newSetupGame() {
+		setupScreen = new SetupGame(this);
+		return setupScreen;
 	}
 
 	public void setAudio(boolean b) {

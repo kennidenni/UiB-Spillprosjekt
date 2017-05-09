@@ -1,5 +1,5 @@
 {
-	"tileset": "Images/ff_buttons.png",
+	"tileset": "Images/Buttons/ff_buttons.png",
 	"regions": [
 		{
 			"name": "back",
