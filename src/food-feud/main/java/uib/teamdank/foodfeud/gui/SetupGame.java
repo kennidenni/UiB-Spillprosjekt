@@ -171,7 +171,7 @@ public class SetupGame extends MenuScreen implements Screen {
 	}
 
 	private void setupPlayers() {
-			PlayerButton playerHelper = new PlayerButton ("Geir Karltveit", Team.ALPHA, new TextureRegionDrawable(playerTextures.getRegion(Team.ALPHA.getBodyExpansion(0))));
+			PlayerButton playerHelper = new PlayerButton ("Gunnar \"Coach\" Schulze", Team.ALPHA, new TextureRegionDrawable(playerTextures.getRegion(Team.ALPHA.getBodyExpansion(0))));
 			playerHelper.addListener(new ButtonListener(playerHelper));
 			playerHelper.pad(60, 100, 60, 100);
 			playerButtons.add(playerHelper);
