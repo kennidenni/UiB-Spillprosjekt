@@ -195,12 +195,14 @@ public class Player extends Actor implements ItemHolder, PhysicsSimulated {
 		final float feetWidth = feetTexture.getRegionWidth() * getScale();
 		final float feetHeight = feetTexture.getRegionHeight() * getScale();
 		float feetOffsetX = feetWidth / 2f + -feetOffset.x * getScale();
-		if(this.getFlipHorizontally())
+		float bodyOffsetX = 0;
+		if(this.getFlipHorizontally()) {
 			feetOffsetX-=160*getScale()*0.1f;
-		
+			bodyOffsetX = -bodyWidth + 160*getScale();
+		}
 		final float feetOffsetY = -feetOffset.y * getScale();
 
-		renderTexture(batch, delta, bodyTexture, bodyWidth, bodyHeight, 0, feetHeight + feetOffsetY);
+		renderTexture(batch, delta, bodyTexture, bodyWidth, bodyHeight, bodyOffsetX, feetHeight + feetOffsetY);
 		renderTexture(batch, delta, feetTexture, feetWidth, feetHeight, feetOffsetX, 0);
 		
 	}
