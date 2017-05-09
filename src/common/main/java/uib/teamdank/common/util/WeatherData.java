@@ -1,10 +1,31 @@
+/*******************************************************************************
+ * Copyright (C) 2017  TeamDank
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *******************************************************************************/
 package uib.teamdank.common.util;
 
+import java.io.InputStream;
 import java.net.URL;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+import java.util.concurrent.TimeUnit;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -107,14 +128,16 @@ public class WeatherData {
 	 * @return the current weather type in the specified location
 	 */
 	public WeatherType pullWeather(String country, String county, String municipality, String placeName) {
+		ExecutorService service = Executors.newSingleThreadExecutor();
+		
 		if (System.currentTimeMillis() - previousPullTime > WEATHER_FETCH_LIMIT_SECONDS * 1000) {
 			try {
+				Future<InputStream> f = service.submit(() -> new URL(String.format(XML_URL_FORMAT, country, county, municipality, placeName)).openStream()); 
 
-				URL url = new URL(String.format(XML_URL_FORMAT, country, county, municipality, placeName));
-
+				
 				DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 				DocumentBuilder builder = factory.newDocumentBuilder();
-				Document document = builder.parse(url.openStream());
+				Document document = builder.parse(f.get(7, TimeUnit.SECONDS));
 				previousWeatherType = parseWeatherDocument(document);
 
 			} catch (Exception e) {
@@ -128,6 +151,7 @@ public class WeatherData {
 			this.saveAsJson();
 		}
 
+		service.shutdown();
 		return previousWeatherType;
 	}
 

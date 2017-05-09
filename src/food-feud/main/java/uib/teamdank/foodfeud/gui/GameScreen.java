@@ -1,3 +1,19 @@
+/*******************************************************************************
+ * Copyright (C) 2017  TeamDank
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *******************************************************************************/
 package uib.teamdank.foodfeud.gui;
 
 import com.badlogic.gdx.Gdx;
@@ -51,16 +67,14 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 	public GameScreen(Game game) {
 		super(game);
 
-		assets = new AssetManager();
+		this.assets = ((FoodFeud) game).getSetupGame().getAssets();
 		time = FINAL_TIME;
 
 		this.camera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		this.level = LevelLoader.createFromJson(Gdx.files.internal("Data/field_level.json"));
-		this.match = new MatchBuilder(assets).addPlayer("Geir", Team.ALPHA)
-											 .addPlayer("Bodil", Team.BETA)
-											 .addPlayer("Arne", Team.CHARLIE)
-											 .addPlayer("Bertrude", Team.DELTA)
-											 .build();
+		
+		this.match = ((FoodFeud) game).getSetupGame().getMatch();
+
 		level.getWorld().setContactListener(new PhysicsContactListener(match));
 
 		camera.position.set(level.getWidth() / 2f, level.getHeight() / 2f, 0);

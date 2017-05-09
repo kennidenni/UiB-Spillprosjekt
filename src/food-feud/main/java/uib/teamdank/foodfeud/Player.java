@@ -1,3 +1,19 @@
+/*******************************************************************************
+ * Copyright (C) 2017  TeamDank
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *******************************************************************************/
 package uib.teamdank.foodfeud;
 
 import com.badlogic.gdx.Gdx;
@@ -179,7 +195,10 @@ public class Player extends Actor implements ItemHolder, PhysicsSimulated {
 		final Vector2 feetOffset = currentFeetAnimation.getUserPoint();
 		final float feetWidth = feetTexture.getRegionWidth() * getScale();
 		final float feetHeight = feetTexture.getRegionHeight() * getScale();
-		final float feetOffsetX = feetWidth / 2f + -feetOffset.x * getScale();
+		float feetOffsetX = feetWidth / 2f + -feetOffset.x * getScale();
+		if(this.getFlipHorizontally())
+			feetOffsetX-=160*getScale()*0.1f;
+		
 		final float feetOffsetY = -feetOffset.y * getScale();
 
 		renderTexture(batch, delta, bodyTexture, bodyWidth, bodyHeight, 0, feetHeight + feetOffsetY);

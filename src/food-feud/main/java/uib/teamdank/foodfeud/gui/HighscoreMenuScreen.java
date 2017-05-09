@@ -1,3 +1,19 @@
+/*******************************************************************************
+ * Copyright (C) 2017  TeamDank
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *******************************************************************************/
 package uib.teamdank.foodfeud.gui;
 
 
@@ -7,6 +23,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator.FreeTypeFontParameter;
 import com.badlogic.gdx.scenes.scene2d.ui.HorizontalGroup;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -26,6 +44,9 @@ public class HighscoreMenuScreen extends MenuScreen implements uib.teamdank.comm
     private ImageButton highscoreButton;
     private Table menu;
     private FoodFeud game;
+    private FreeTypeFontGenerator generator;
+    private FreeTypeFontParameter parameter;
+    private BitmapFont font;
     private Label nameLabel;
     private Label scoreLabel;
 
@@ -43,8 +64,13 @@ public class HighscoreMenuScreen extends MenuScreen implements uib.teamdank.comm
                 .expand().align(Align.top).padTop(Gdx.graphics.getHeight() / 16);
 
         menu.row();
-        BitmapFont font = new BitmapFont();
-        font.getData().setScale(3);
+
+        generator = new FreeTypeFontGenerator(Gdx.files.internal("Fonts/roboto.ttf"));
+        parameter = new FreeTypeFontParameter();
+        float dpi = Gdx.graphics.getDensity() + 1;
+        parameter.size = (int) Math.ceil(50 * dpi);
+
+        font = generator.generateFont(parameter);
 
         nameLabel = new Label("", new LabelStyle(font, Color.WHITE));
         scoreLabel = new Label("", new LabelStyle(font, Color.WHITE));

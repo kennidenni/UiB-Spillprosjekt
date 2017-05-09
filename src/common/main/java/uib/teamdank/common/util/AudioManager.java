@@ -38,6 +38,12 @@ public class AudioManager implements Disposable {
 		}
 		return tracks.get(name);
 	}
+	
+	public void loopSound(String name) {
+		getSound(name).stop();
+		long id = getSound(name).play();
+		getSound(name).setLooping(id, true);
+	}
 
 	public void loopTrack(String name) {
 		getTrack(name).stop();
@@ -46,7 +52,7 @@ public class AudioManager implements Disposable {
 	}
 
 	public void mute() {
-		boolean muted = true;
+		muted = true;
 		tracks.forEach((name, track) -> track.setVolume(0));
 		sounds.forEach((name, sound) -> sound.stop());
 	}
@@ -89,7 +95,7 @@ public class AudioManager implements Disposable {
 	}
 
 	public void unmute() {
-		boolean muted = false;
+		muted = false;
 		tracks.forEach((name, track) -> track.setVolume(1));
 	}
 }

@@ -167,7 +167,7 @@ publiserfoodfeud:
   stage: deploy
   script:
     - ./gradlew build && ./gradlew teamdank-foodfeud:dist
-    - cd cd food-feud/build/libs/
+    - cd food-feud/build/libs/
     - ls -la
     - mv *.jar foodfeud.jar
     - cp foodfeud.jar /srv/nginx/pages/gitlabapi/public/apps/
