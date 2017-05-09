@@ -16,6 +16,7 @@
  *******************************************************************************/
 package uib.teamdank.foodfeud;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -26,6 +27,7 @@ public class Match {
 	public static final int MAX_PLAYER_COUNT = 4;
 
 	private final List<Player> players;
+	private final List<Player> alivePlayers;
 
 	private int turnCount;
 
@@ -33,10 +35,11 @@ public class Match {
 		Objects.requireNonNull(players, "player list cannot be null");
 		Arrays.asList(players).forEach(name -> Objects.requireNonNull(name, "a player cannot be null"));
 		this.players = Collections.unmodifiableList(players);
+		this.alivePlayers = new ArrayList<>(players);
 	}
 
 	public Player getActivePlayer() {
-		return players.get(turnCount % players.size());
+		return alivePlayers.get(turnCount % alivePlayers.size());
 	}
 
 	public List<Player> getPlayers() {
@@ -44,19 +47,15 @@ public class Match {
 	}
 
 	public void nextTurn() {
+		for (int i = alivePlayers.size() - 1; i >= 0; i--) {
+			if (alivePlayers.get(i).isDead()){
+				alivePlayers.remove(i);
+			}
+		}
 		turnCount++;
 	}
 
 	public Player getWinner() {
-	    Player winner = null;
-	    for (Player player : players) {
-	        if (!player.isDead()) {
-	            if (winner != null) {
-	                return null;
-	            }
-	            winner = player;
-	        }
-	    }
-	    return winner;
+	    return (alivePlayers.size() == 1 ? alivePlayers.get(0) : null);
 	}
 }

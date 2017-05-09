@@ -164,7 +164,7 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 			}
 		}
 
-		checkTime();
+		checkTimeorDead(activePlayer);
 
 		checkVictory();
 
@@ -225,9 +225,13 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 	/**
 	 * checks if time has run out, forces new round if true
 	 */
-	public void checkTime() {
+	public void checkTimeorDead(Player active) {
 		hud.setTime(time);
 		if (time == 0) {
+			time = FINAL_TIME;
+			match.nextTurn();
+		}
+		if (active.isDead()) {
 			time = FINAL_TIME;
 			match.nextTurn();
 		}
