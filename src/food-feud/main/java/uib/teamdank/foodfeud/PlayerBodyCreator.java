@@ -38,6 +38,9 @@ public class PlayerBodyCreator {
 	private static final float BODY_WIDTH = 96f; 
 	private static final float BODY_HEIGHT = 128f;
 	private static final float FEET_RADIUS = 48f;
+	final short CATEGORY_PLAYER = 1;  
+	final short CATEGORY_WORLD = 2; 
+	final short CATEGORY_PROJECTILE = 4; 
 	
 	private final World world;
 
@@ -72,6 +75,8 @@ public class PlayerBodyCreator {
 		FixtureDef fixtureDef = new FixtureDef();
 		fixtureDef.shape = shape;
 		fixtureDef.isSensor = true;
+		fixtureDef.filter.categoryBits = CATEGORY_PLAYER;
+		fixtureDef.filter.maskBits = CATEGORY_PROJECTILE | CATEGORY_WORLD;
 		body.createFixture(fixtureDef).setUserData(player);
 		shape.dispose();
 	}
@@ -82,6 +87,8 @@ public class PlayerBodyCreator {
 		fixtureDef.friction = 0.75f;
 		fixtureDef.restitution = 0.1f;
 		fixtureDef.shape = shape;
+		fixtureDef.filter.categoryBits = CATEGORY_PLAYER;
+		fixtureDef.filter.maskBits = CATEGORY_PROJECTILE | CATEGORY_WORLD;
 		return fixtureDef;
 	}
 	

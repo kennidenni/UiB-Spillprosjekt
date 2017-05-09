@@ -22,12 +22,17 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
+import com.badlogic.gdx.physics.box2d.Filter;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.google.gson.Gson;
 
 public class LevelLoader {
+	
+	final static short CATEGORY_PLAYER = 1;  
+	final static short CATEGORY_WORLD = 2; 
+	final static short CATEGORY_PROJECTILE = 4; 
 
 	private static class LevelModel {
 		String name;
@@ -78,6 +83,10 @@ public class LevelLoader {
 		}
 		
 		for (Fixture fix : ground.getFixtureList()){
+			Filter filter = fix.getFilterData();
+			filter.categoryBits = CATEGORY_WORLD;
+			filter.maskBits = CATEGORY_PROJECTILE | CATEGORY_PLAYER;
+			fix.setFilterData(filter);
 			fix.setFriction(0.75f);
 		}
 
