@@ -7,6 +7,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.scenes.scene2d.ui.HorizontalGroup;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -29,6 +30,7 @@ public class HighscoreMenuScreen extends MenuScreen implements uib.teamdank.comm
 	private CarGame game;	
 	private Label nameLabel;
 	private Label scoreLabel;
+	private FreeTypeFontGenerator generator;
 
 	public HighscoreMenuScreen(CarGame game) {
 		super();
@@ -45,6 +47,7 @@ public class HighscoreMenuScreen extends MenuScreen implements uib.teamdank.comm
 		
 		menu.row();
 
+		generator = new FreeTypeFontGenerator(Gdx.files.internal());
 		BitmapFont font = new BitmapFont();
 		font.getData().setScale(3);
 		
