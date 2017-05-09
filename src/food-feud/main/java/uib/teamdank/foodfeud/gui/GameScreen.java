@@ -16,6 +16,12 @@
  *******************************************************************************/
 package uib.teamdank.foodfeud.gui;
 
+import java.security.Timestamp;
+import java.sql.Time;
+import java.util.Date;
+
+import org.lwjgl.Sys;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -63,7 +69,10 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 	private final AssetManager assets;
 
 	private WeaponMenu weaponMenu;
-
+	private boolean touched = false;
+	private long startTime;
+	private long elapsedTime;
+	
 	public GameScreen(Game game) {
 		super(game);
 
@@ -175,8 +184,26 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 			Vector3 aim3D = camera.unproject(new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0));
 			Vector2 aim = new Vector2(aim3D.x, aim3D.y);
 			aim.sub(activePlayer.getPosition());
-			activePlayer.fireWeapon(playerLayer, level.getWorld(), aim.nor());
+			activePlayer.fireWeapon(playerLayer, level.getWorld(), aim.nor(), 10000);
 		}
+		if (Gdx.input.justTouched()) {
+			
+			startTime = System.currentTimeMillis();
+			elapsedTime = 0;
+			touched = true;
+		}
+			
+		if(!Gdx.input.isTouched() && touched){
+				elapsedTime = (new Date()).getTime() -startTime;
+				Vector3 aim3D = camera.unproject(new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0));
+				Vector2 aim = new Vector2(aim3D.x, aim3D.y);
+				aim.sub(activePlayer.getPosition());
+				System.out.println(elapsedTime * 100);
+				activePlayer.fireWeapon(playerLayer, level.getWorld(), aim.nor(), elapsedTime * 100);
+				touched = false;
+				
+			}
+		
 		if (Gdx.input.isKeyJustPressed(Keys.N)) {
 			time = FINAL_TIME;
 			match.nextTurn();
@@ -204,7 +231,7 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 			active.walking = true;
 		}
 	}
-
+	
 	@Override
 	protected void onUpdateGameObject(float delta, Layer layer, GameObject gameObject) {
 

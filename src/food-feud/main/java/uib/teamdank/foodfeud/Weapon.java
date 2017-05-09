@@ -64,11 +64,15 @@ public class Weapon extends Item {
 		this.type = type;
 	}
 
-	public void fire(Weapon weapon, Player player, Layer layer, World world, Vector2 dir) {
+	public void fire(Weapon weapon, Player player, Layer layer, World world, Vector2 dir, long elapsedTime) {
 		if (amount > 0) {
 			amount--;
 			ProjectileSpawner spawner = new ProjectileSpawner();
-			spawner.spawn(weapon, layer, world, dir, player.getX() + player.getWidth(), player.getY()+ player.getHeight() - player.getHeight() / 2f);
+			spawner.spawn(weapon, layer, world, dir, 
+					player.getX() + player.getWidth(), 
+					player.getY()+ player.getHeight() - player.getHeight() / 2f,
+					elapsedTime
+					);
 		}
 	}
 	

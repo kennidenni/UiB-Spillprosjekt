@@ -53,8 +53,8 @@ public class ProjectileSpawner {
 		return projectile;
 	}
 	
-	public void spawn(Weapon wep, Layer layer, World world, Vector2 dir, float originX, float originY) {
-		dir.scl(1000f);
+	public void spawn(Weapon wep, Layer layer, World world, Vector2 dir, float originX, float originY, long elapsedTime) {
+		dir.scl((float) elapsedTime);
 		if (wep.getType() == Type.LIGHT_BALLISTIC) {
 			layer.addGameObject(createProjectile(wep, world, dir, originX, originY));
 		}
