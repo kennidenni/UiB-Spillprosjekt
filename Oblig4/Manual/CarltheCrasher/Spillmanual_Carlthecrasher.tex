@@ -28,7 +28,7 @@ Informatikk}
 	\item Spillinstruksjoner og -regler .................................................................................... 5
 		\begin{itemize} 
 			\item Kontroller
-			\item Objekt interaksjon
+			\item Objekt-interaksjon
 			\item Poeng
 			\item Penger
 			\item Vær
@@ -39,6 +39,8 @@ Informatikk}
 \newpage
 
 \section{Introduksjon}
+Som Carl liker du å kjøre uforsvarlig, og målet ditt er å komme deg så lengst mulig uten gå tom for bensin og få mest mulig poeng. \\
+
 Dette er et spill tiltenkt datamaskiner der spilleren kjører en bil.
 Bilen kjører langs en vei med forskjellige ting i veibanen, som spilleren kan kjøre over eller unngå.
 Vanndammer vil gjøre at spilleren mister drivstoff, og mister litt kontrollen over bilen.
@@ -62,36 +64,34 @@ klokkefrekvens på 1.6 Ghz eller bedre.
 \end{itemize}
 \subsection{Installasjon}
 Du må først sørge for at du har installert den nyeste versjonen av Java og \\
-for å kunne spille Carl the Crasher må du laste ned carlthecrasher.jar filen. \\
+for å kunne spille Carl the Crasher må du laste ned carlthecrasher.jar-filen. \\
 Deretter åpner du filen som vanlig for å starte spillet.   
 \newpage
 
 \section{Spillinstruksjoner og -regler} 
-Som Carl liker du å kjøre uforsvarlig, og målet ditt er å komme deg så lengst mulig uten gå tom for bensin og få mest mulig poeng. \\
-
 \subsection{Kontroll} 
-Din primære spillinngangsenhet er tastaturen, og kan gjøre følgende: 
+Din primære spillinngangsenhet er tastaturet, og kan gjøre følgende: 
 \begin{itemize}
 	\item Du styrer Carl til høyre og venstre ved å bruke enten piltastene eller tastaturknappene \\ A og D. 
-	\item Carl kan ikke styre bilens hastighet direkte, men farten vil økes jo lenger du kjøre.
+	\item Carl kan ikke styre bilens hastighet direkte, men farten vil øke jo lenger du kjøre.
 	\item Du kan ikke kjøre ut av veien, men du kan kjøre på objekter som oppstår på veien.
 	\item Du kan pause spillet ved å gå til pausemenyen ved å trykke på tastaturknappen ESC. 
 	\begin{itemize}
-		\item Å trykke på ESC vil gi deg muligheten til å fortsette eller avsluttet spillet.
+		\item Å trykke på ESC vil gi deg muligheten til å fortsette eller avslutte spillet.
 	\end{itemize}
 \end{itemize}
 
-\subsection{Object interaksjon}
-På veien kan det oppstå forskjellige objekter, og avhengig av objektet kan det påføre bilen en positiv, eller negativ effekt. \\
+\subsection{Object-interaksjon}
+På veien kan det oppstå forskjellige objekter, og avhengig av objektet kan det påføre bilen en positiv eller negativ effekt. \\
 {\renewcommand\labelitemi{}
 \begin{itemize}
-	\item \includegraphics[scale=0.2]{images/gastank.png} \textbf{Bensintank}: Kan plukkes for å øke drivstoffen slik at du kan kjøre lengre 
-	\item \includegraphics[scale=0.5]{images/coin.png} \textbf{Mynt}: På veien kan du finne mynter som du kan plukke opp.5
+	\item \includegraphics[scale=0.2]{images/gastank.png} \textbf{Bensintank}: Kan plukkes opp for å øke drivstoffet slik at du kan kjøre lengre 
+	\item \includegraphics[scale=0.5]{images/coin.png} \textbf{Mynt}: På veien kan du finne mynter som du kan plukke opp.
 																Myntene kan brukes i butikken for å kjøpe nye biler.
-	\item \includegraphics[scale=0.2]{images/puddle.png} \textbf{Vanndam}: Kjører du på en vanndam vil det minske mengden drivstoff,
-																og samtidig gjøre at du vil miste litt kontrollen av bilen i en liten periode. 
-	\item \includegraphics[scale=0.2]{images/manhole.png} \textbf{Kumlokk}: Dersom du kjører på en kumlokk vil du kræsje og deretter tape umiddelbart
-	\item \includegraphics[scale=0.4]{images/walker.png} \textbf{Myke trafikanter}: Å kjøre på trafikanter vil gi deg ekstra poeng som vil øke sluttpoengsummen din 
+	\item \includegraphics[scale=0.2]{images/puddle.png} \textbf{Vanndam}: Kjører du på en vanndam vil det minske mengden drivstoff du har,
+																og samtidig gjøre at du vil miste litt kontrollen på bilen i en liten periode. 
+	\item \includegraphics[scale=0.2]{images/manhole.png} \textbf{Kumlokk}: Dersom du kjører på et kumlokk vil du kræsje og deretter tape umiddelbart.
+	\item \includegraphics[scale=0.4]{images/walker.png} \textbf{Myke trafikanter}: Å kjøre på trafikanter vil gi deg ekstra poeng som vil øke sluttpoengsummen din.
 \end{itemize}
 }
 
@@ -100,7 +100,7 @@ Målet ditt er å få den høyeste poengsummen, og det finnes ulike måter å tj
 \begin{itemize}
 	\item Du starter alltid med 0 poeng i starten av en runde, \\men du tjener opp poeng konstant når du kjører.
 	\item Poeng blir opptjent avhengig av hvor langt du kjører. 
-	\item Å kjøre på myke trafikanter vil gi deg penger, og ulike trafikanter vil gi ulik poeng.
+	\item Å kjøre på myke trafikanter vil gi deg poeng, og ulike trafikanter vil gi ulik poengsum.
 \end{itemize}
 
 \subsection{Penger} 
@@ -110,15 +110,15 @@ Målet ditt er å få den høyeste poengsummen, og det finnes ulike måter å tj
 \end{itemize}
 
 \subsection{Vær} 
-Spillet vil tilpasse seg etter det værforholdet som er lokalt hos deg. Om det er skyer vil det være skyer på banen,\\
+Spillet vil tilpasse seg etter det lokale værforholdet hos deg. Om det er skyer vil det være skyer på banen,
 om det regner vil det regne på banen, og om det snør vil det være snø på banen. \\
 Disse dataene om værforholdene blir hentet ut fra yr.no. 
 \begin{itemize} 
 	\item \textbf{Sol}: Normal framgang.
 	\item \textbf{Skyer}: Skyer i spillet, men værforholdet endrer ikke spillets framgang.
-	\item \textbf{Regn}: Det regner i spillet og det vil dukke opp flere dam, samt flere og nye trafikanter. 
-	\item \textbf{Snø}: Det er snø på bygningene og andre trafikanter vil dukker opp. Det vil også være vanskeligere å styre bilen,
- og du vil miste mye av kontrollen av bilen dersom du kjører i en vanndam.
+	\item \textbf{Regn}: Det regner i spillet og det vil dukke opp flere vanndammer	, samt flere og nye trafikanter. 
+	\item \textbf{Snø}: Det er snø på bygningene og andre trafikanter vil dukke opp. Det vil også være vanskeligere å styre bilen,
+ og du vil miste mye av kontrollen på bilen dersom du kjører i en vanndam.
 \end{itemize}
 
 
