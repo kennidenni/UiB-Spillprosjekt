@@ -7,6 +7,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator.FreeTypeFontParameter;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
@@ -107,6 +109,9 @@ public class ShopScreen extends MenuScreen implements Screen {
 	private TextButton coinsCount;
 	private TextButton helpText;
 	
+	private FreeTypeFontGenerator generator;
+	private FreeTypeFontParameter parameter;
+	
 
 	public ShopScreen(CarGame game) {
 		super();
@@ -126,13 +131,19 @@ public class ShopScreen extends MenuScreen implements Screen {
 		unlockedCarTextures = assets.getAtlas("Images/car_sheet.json");
 
 		coinImage = setupImage(roadEntityTextures.getRegion("coin"));
+		
+		generator = new FreeTypeFontGenerator(Gdx.files.internal("Fonts/ostrich.ttf"));
+		parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
+		float dpi = Gdx.graphics.getDensity() + 1;
+		int size = (int) Math.ceil(32 * dpi);
+		parameter.size = size;
+		font = generator.generateFont(parameter);;
 
-		font = new BitmapFont();
 		textButtonStyle = new TextButtonStyle();
 		textButtonStyle.font = font;
 
 		coinsCount = new TextButton("0", textButtonStyle);
-		coinsCount.getLabel().setFontScale(10, 10);
+		
 
 		coinsTable = new Table();
 		coinsTable.add(coinImage).pad(0, 1600, 900, 0);
@@ -140,7 +151,6 @@ public class ShopScreen extends MenuScreen implements Screen {
 
 		String help = "You need to click on the car \n to unlock it and select it.\n \n You need " + CAR_COST + " gold \n to unlock a new car";
 		helpText = new TextButton(help, textButtonStyle);
-		helpText.getLabel().setFontScale(3, 3);
 		helpText.pad(0, 1300, 0, 0);
 		
 		setupCars();
