@@ -6,6 +6,7 @@ import java.util.List;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.scenes.scene2d.ui.HorizontalGroup;
@@ -31,6 +32,7 @@ public class HighscoreMenuScreen extends MenuScreen implements uib.teamdank.comm
 	private Label nameLabel;
 	private Label scoreLabel;
 	private FreeTypeFontGenerator generator;
+	private FreeTypeFontGenerator.FreeTypeFontParameter parameter;
 
 	public HighscoreMenuScreen(CarGame game) {
 		super();
@@ -47,9 +49,14 @@ public class HighscoreMenuScreen extends MenuScreen implements uib.teamdank.comm
 		
 		menu.row();
 
-		generator = new FreeTypeFontGenerator(Gdx.files.internal());
-		BitmapFont font = new BitmapFont();
-		font.getData().setScale(3);
+		generator = new FreeTypeFontGenerator(Gdx.files.internal("Fonts/ostrich.ttf"));
+		parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
+		parameter.size = 20;
+		generator.scaleForPixelHeight(20);
+        this.parameter.minFilter = Texture.TextureFilter.Nearest;
+        this.parameter.magFilter = Texture.TextureFilter.MipMapLinearNearest;
+		BitmapFont font = generator.generateFont(parameter);
+		//font.getData().setScale(3);
 		
 		nameLabel = new Label("", new LabelStyle(font, Color.WHITE));
 		scoreLabel = new Label("", new LabelStyle(font, Color.WHITE));
