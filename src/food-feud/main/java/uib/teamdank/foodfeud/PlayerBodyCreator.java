@@ -38,6 +38,10 @@ public class PlayerBodyCreator {
 	private static final float BODY_WIDTH = 96f; 
 	private static final float BODY_HEIGHT = 128f;
 	private static final float FEET_RADIUS = 48f;
+	
+	// These constants are used to set category
+	// and mask for collision filters and
+	// are to the power of two, 2^x where x = 0 -> 16
 	final short CATEGORY_PLAYER = 1;  
 	final short CATEGORY_WORLD = 2; 
 	final short CATEGORY_PROJECTILE = 4; 
