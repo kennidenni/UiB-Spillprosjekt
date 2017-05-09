@@ -38,12 +38,10 @@ import uib.teamdank.foodfeud.FoodFeud;
 import uib.teamdank.foodfeud.Level;
 import uib.teamdank.foodfeud.LevelLoader;
 import uib.teamdank.foodfeud.Match;
-import uib.teamdank.foodfeud.MatchBuilder;
 import uib.teamdank.foodfeud.PhysicsContactListener;
 import uib.teamdank.foodfeud.PhysicsSimulated;
 import uib.teamdank.foodfeud.Player;
 import uib.teamdank.foodfeud.PlayerBodyCreator;
-import uib.teamdank.foodfeud.Team;
 
 /**
  * The main gameplay screen.
@@ -100,9 +98,6 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 		this.hud = new FoodHud();
 		hud.setGame((FoodFeud) game);
 		
-		this.weaponMenu = new WeaponMenu();
-		weaponMenu.setGame((FoodFeud) game);
-		
 		addTimedEvent(new TimedEvent(TIME_BETWEEN_TIME, true, () -> {
 			time -= AMOUNT_PER_TIME;
 		}));
@@ -127,9 +122,7 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 		super.render(delta);
 
 		// Render HUD
-		hud.render(delta);
-		weaponMenu.render(delta);
-		
+		hud.render(delta);	
 		
 		WORLD_DEBUG_RENDERER.render(level.getWorld(), camera.combined);
 	}
@@ -137,7 +130,6 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 	@Override
 	public void show() {
 		hud.setAsInputProcessor();
-		weaponMenu.setAsInputProcessor();
 	}
 
 	@Override
@@ -175,7 +167,7 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 			}
 		}
 
-		checkTime();
+		checkTimeorDead(activePlayer);
 
 		checkVictory();
 
@@ -260,9 +252,13 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 	/**
 	 * checks if time has run out, forces new round if true
 	 */
-	public void checkTime() {
+	public void checkTimeorDead(Player active) {
 		hud.setTime(time);
 		if (time == 0) {
+			time = FINAL_TIME;
+			match.nextTurn();
+		}
+		if (active.isDead()) {
 			time = FINAL_TIME;
 			match.nextTurn();
 		}

@@ -17,7 +17,7 @@
 package uib.teamdank.foodfeud.gui;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -38,8 +38,9 @@ import uib.teamdank.common.util.AssetManager;
 import uib.teamdank.common.util.TextureAtlas;
 import uib.teamdank.foodfeud.FoodFeud;
 
-public class FoodHud {
+public class FoodHud extends ScreenAdapter {
 
+	private FoodFeud game;
 	private Stage stage;
 	private AssetManager assets;
 	private ImageButton muteButton;
@@ -52,42 +53,61 @@ public class FoodHud {
 
 	private Table scoreTable;
 	private Table muteTable;
-
-	private FoodFeud game;
+	private Table weapons;
+	private Table menu;
 
 	private boolean muted = false;
-	
-    private static final String MENU = "Images/Buttons/ff_menu.png";
-    private Table weaponTable;
+
+	private static final String MENU_PATH = "Images/Buttons/ff_menu.png";
+	private static final String ANANAS_PATH = "Weapons/Ananas.png";
+	private static final String CARROT_PATH = "Weapons/Carrot.png";
+	private static final String CHEESE_PATH = "Weapons/Cheese.png";
+	private static final String DONUT_PATH = "Weapons/donut.png";
+
 	private ImageButton weaponMenuButton;
-	private WeaponMenu weaponMenu;
-	
+	private ImageButton ananas;
+	private ImageButton carrot;
+	private ImageButton cheese;
+	private ImageButton donut;
+
 	public FoodHud() {
 		stage = new Stage(new FitViewport(1920, 1080));
-		
+
 		this.assets = new AssetManager();
-		weaponMenu = new WeaponMenu();
-		setUpWeaponMenu();
-		setUpMute();
 
-        generator = new FreeTypeFontGenerator(Gdx.files.internal("Fonts/roboto.ttf"));
-        parameter = new FreeTypeFontParameter();
-        float dpi = Gdx.graphics.getDensity() + 1;
-        parameter.size = (int) Math.ceil(50 * dpi);
+		menu = new Table();
+		weapons = new Table();
+		scoreTable = new Table();
 
-        font = generator.generateFont(parameter);
+		generator = new FreeTypeFontGenerator(Gdx.files.internal("Fonts/roboto.ttf"));
+		parameter = new FreeTypeFontParameter();
+		float dpi = Gdx.graphics.getDensity() + 1;
+		parameter.size = (int) Math.ceil(50 * dpi);
+
+		font = generator.generateFont(parameter);
 		textButtonStyle = new TextButtonStyle();
 		textButtonStyle.font = font;
-		
+
 		time = new TextButton("0", textButtonStyle);
-		
-		scoreTable = new Table();
 		scoreTable.add(time).width(300).pad(900, 0, 0, 1600);
-	
+
+		weaponMenuButton = setupButton(MENU_PATH);
+		menu.add(weaponMenuButton).height((float) (weaponMenuButton.getHeight() / 4)).pad(980, 1670, 0, 0);
+
+		setUpMute();
+		addButtonListener();
+		addToWeapons();
+		setupStage();
+	}
+
+	private void setupStage() {
+		weapons.setFillParent(true);
+		weapons.setVisible(false);
 		scoreTable.setFillParent(true);
-		
-		stage.addActor(weaponTable);
-		
+		menu.setFillParent(true);
+
+		stage.addActor(weapons);
+		stage.addActor(menu);
 		stage.addActor(scoreTable);
 		stage.addActor(muteTable);
 	}
@@ -100,40 +120,48 @@ public class FoodHud {
 		Gdx.input.setInputProcessor(stage);
 	}
 
-	private void setUpWeaponMenu() {
-		weaponTable = new Table();      
-        weaponMenuButton = setupButton(MENU);
-		weaponTable.add(weaponMenuButton).height((float) (weaponMenuButton.getHeight() /4)).pad(200, 3600, 300, 0);
-		
-		weaponMenuButton.addListener(new InputListener() {
-            @Override
-            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-            	return true;
-            }
+	private void addToWeapons() {
+		ananas = setupButton(ANANAS_PATH);
+		carrot = setupButton(CARROT_PATH);
+		cheese = setupButton(CHEESE_PATH);
+		donut = setupButton(DONUT_PATH);
 
-            @Override
-            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-                Stage stage = event.getTarget().getStage();
-                Vector2 mouse = stage.screenToStageCoordinates(new Vector2(Gdx.input.getX(), Gdx.input.getY()));
-
-                if (stage.hit(mouse.x, mouse.y, true) == event.getTarget()) {
-                    viewWeaponMenu();
-                }
-            }
-        });
+		weapons.add(ananas).width((float) (ananas.getWidth() / 1.3)).height((float) (ananas.getHeight() / 1.3)).pad(5);
+		weapons.add(carrot).width((float) (carrot.getWidth() / 1.3)).height((float) (carrot.getHeight() / 1.3)).pad(5);
+		weapons.add(cheese).width((float) (cheese.getWidth() / 1.3)).height((float) (cheese.getHeight() / 1.3)).pad(5);
+		weapons.add(donut).width((float) (donut.getWidth() / 1.3)).height((float) (donut.getHeight() / 1.3)).pad(5);
+		weapons.debug();
+		weapons.pad(900, 0, 5, 0);
+		weapons.row();
 	}
-	
-	 public void viewWeaponMenu() {
-	        game.setScreen(weaponMenu);
-	    }
-	
+
+	private void addButtonListener() {
+		weaponMenuButton.addListener(new InputListener() {
+			@Override
+			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+				return true;
+			}
+
+			@Override
+			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+				Stage stage = event.getTarget().getStage();
+				Vector2 mouse = stage.screenToStageCoordinates(new Vector2(Gdx.input.getX(), Gdx.input.getY()));
+
+				if (stage.hit(mouse.x, mouse.y, true) == event.getTarget()) {
+					if (weapons.isVisible())
+						weapons.setVisible(false);
+					else
+						weapons.setVisible(true);
+				}
+			}
+		});
+	}
+
 	private void setUpMute() {
 		TextureAtlas muteTextures = assets.getAtlas("Images/mute.json");
-		muteButton = new ImageButton(
+		muteButton = new ImageButton(new TextureRegionDrawable(muteTextures.getRegion("unmuted")),
 				new TextureRegionDrawable(muteTextures.getRegion("unmuted")),
-				new TextureRegionDrawable(muteTextures.getRegion("unmuted")),
-				new TextureRegionDrawable(muteTextures.getRegion("muted"))
-		);
+				new TextureRegionDrawable(muteTextures.getRegion("muted")));
 		muteTable = new Table();
 		muteTable.add(muteButton).width((float) (muteButton.getWidth() / 2.5))
 				.height((float) (muteButton.getHeight() / 2.5)).pad(0, 200, 2000, 0);
@@ -183,6 +211,16 @@ public class FoodHud {
 		stage.draw();
 	}
 
+	@Override
+	public void show() {
+		Gdx.input.setInputProcessor(stage);
+	}
+
+	@Override
+	public void hide() {
+		Gdx.input.setInputProcessor(null);
+	}
+
 	public void setTime(long l) {
 		time.setText(String.valueOf(l));
 	}
@@ -190,12 +228,12 @@ public class FoodHud {
 	public void resize(int width, int height) {
 		stage.getViewport().update(width, height, true);
 	}
-	
+
 	public ImageButton setupButton(String imageString) {
-        Texture myTexture = new Texture(Gdx.files.internal(imageString));
-        TextureRegion myTextureRegion = new TextureRegion(myTexture);
-        TextureRegionDrawable myTexRegionDrawable = new TextureRegionDrawable(myTextureRegion);
-        return new ImageButton(myTexRegionDrawable);
-    }
+		Texture myTexture = new Texture(Gdx.files.internal(imageString));
+		TextureRegion myTextureRegion = new TextureRegion(myTexture);
+		TextureRegionDrawable myTexRegionDrawable = new TextureRegionDrawable(myTextureRegion);
+		return new ImageButton(myTexRegionDrawable);
+	}
 
 }
