@@ -21,6 +21,21 @@ Informatikk}
 \maketitle
 \newpage
 
+\section{Innholdsliste}
+\begin{itemize}
+	\item Introduksjon ........................................................................................................... 3
+	\item Systemkrav og installasjon ..................................................................................... 4
+	\item Spillinstruksjoner og -regler .................................................................................... 5
+		\begin{itemize} 
+			\item Kontroller
+			\item Objekt interaksjon
+			\item Poeng
+			\item Vær
+		\end{itemize}
+	\item Kreditt ................................................................... noe
+\end{itemize}
+\newpage
+
 \section{Introduksjon}
 Dette er et spill tiltenkt datamaskiner der spilleren kjører en bil.
 Bilen kjører langs en vei med forskjellige ting i veibanen, som spilleren kan kjøre over eller unngå.
@@ -51,6 +66,8 @@ Deretter åpner du filen som vanlig for å starte spillet.
 
 \section{Spillinstruksjoner og -regler} 
 Som Carl liker du å kjøre uforsvarlig, og målet ditt er å komme deg så lengst mulig uten gå tom for bensin og få mest mulig poeng. \\
+
+\subsection{Kontroll} 
 Din primære spillinngangsenhet er tastaturen, og kan gjøre følgende: 
 \begin{itemize}
 	\item Du styrer Carl til høyre og venstre ved å bruke enten piltastene eller tastaturknappene \\ A og D. \\ 
@@ -61,6 +78,8 @@ Din primære spillinngangsenhet er tastaturen, og kan gjøre følgende:
 		\item Å trykke på ESC vil gi deg muligheten til å fortsette eller avsluttet spillet.
 	\end{itemize}
 \end{itemize}
+
+\subsection{Object interaksjon}
 På veien kan det oppstå forskjellige objekter, og avhengig av objektet kan det påføre bilen en positiv, eller negativ effekt. \\
 \begin{itemize}
 	\item \includegraphics[scale=0.2]{images/gastank.png} Bensintank: Kan plukkes for å øke drivstoffen slik at du kan kjøre lengre 
@@ -70,6 +89,23 @@ På veien kan det oppstå forskjellige objekter, og avhengig av objektet kan det
 																og samtidig gjøre at du vil miste litt kontrollen av bilen i en liten periode. 
 	\item \includegraphics[scale=0.2]{images/manhole.png} Kumlokk: Dersom du kjører på en kumlokk vil du kræsje og deretter tape umiddelbart
 	\item \includegraphics[scale=0.4]{images/walker.png} Myke trafikanter: Å kjøre på trafikanter vil gi deg ekstra poeng som vil øke sluttpoengsummen din 
+\end{itemize}
+
+\subsection{Poeng}
+Målet ditt er å få den høyeste poengsummen, og det finnes ulike måter å tjene opp poeng på:
+\begin{itemize}
+	\item Du starter alltid med 0 poeng i starten av en runde, \\men du tjener opp poeng konstant når du kjører.
+	\item Poeng blir opptjent avhengig av hvor langt du kjører. 
+	\item Å kjøre på myke trafikanter vil gi deg penger, og ulike trafikanter vil gi ulik poeng.
+\end{itemize}
+
+\subsection{Vær} 
+Spillet vil tilpasse seg etter det værforholdet som er lokalt hos deg. Om det er skyer vil det være skyer på banen,\\&
+om det regner vil det regne på banen, og om det snør vil det være snø på banen. \\
+Disse dataene om værforholdene blir hentet ut fra yr.no. 
+\begin{itemize} 
+	\item Sol: Skyer i spillet, men værforholdet endrer ikke spillets framgang.
+	\item Regn: Det regner i spillet og det vil dukke 
 \end{itemize}
 \newpage
 
