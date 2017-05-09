@@ -28,11 +28,9 @@ import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.google.gson.Gson;
 
+import uib.teamdank.common.util.CType;
+
 public class LevelLoader {
-	
-	final static short CATEGORY_PLAYER = 1;  
-	final static short CATEGORY_WORLD = 2; 
-	final static short CATEGORY_PROJECTILE = 4; 
 
 	private static class LevelModel {
 		String name;
@@ -84,8 +82,8 @@ public class LevelLoader {
 		
 		for (Fixture fix : ground.getFixtureList()){
 			Filter filter = fix.getFilterData();
-			filter.categoryBits = CATEGORY_WORLD;
-			filter.maskBits = CATEGORY_PROJECTILE | CATEGORY_PLAYER;
+			filter.categoryBits = CType.CATEGORY_WORLD.getValue();
+			filter.maskBits = (short) (CType.CATEGORY_PROJECTILE.getValue() | CType.CATEGORY_PLAYER.getValue());
 			fix.setFilterData(filter);
 			fix.setFriction(0.75f);
 		}

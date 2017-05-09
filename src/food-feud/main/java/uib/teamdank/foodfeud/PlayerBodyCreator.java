@@ -28,6 +28,8 @@ import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.Shape;
 import com.badlogic.gdx.physics.box2d.World;
 
+import uib.teamdank.common.util.CType;
+
 public class PlayerBodyCreator {
 
 	private static final float GROUND_DETECTOR_HEIGHT = 4;
@@ -38,13 +40,6 @@ public class PlayerBodyCreator {
 	private static final float BODY_WIDTH = 96f; 
 	private static final float BODY_HEIGHT = 128f;
 	private static final float FEET_RADIUS = 48f;
-	
-	// These constants are used to set category
-	// and mask for collision filters and
-	// are to the power of two, 2^x where x = 0 -> 16
-	final short CATEGORY_PLAYER = 1;  
-	final short CATEGORY_WORLD = 2; 
-	final short CATEGORY_PROJECTILE = 4; 
 	
 	private final World world;
 
@@ -79,8 +74,8 @@ public class PlayerBodyCreator {
 		FixtureDef fixtureDef = new FixtureDef();
 		fixtureDef.shape = shape;
 		fixtureDef.isSensor = true;
-		fixtureDef.filter.categoryBits = CATEGORY_PLAYER;
-		fixtureDef.filter.maskBits = CATEGORY_PROJECTILE | CATEGORY_WORLD;
+		fixtureDef.filter.categoryBits = CType.CATEGORY_PLAYER.getValue();
+		fixtureDef.filter.maskBits = (short) (CType.CATEGORY_PROJECTILE.getValue() | CType.CATEGORY_WORLD.getValue());
 		body.createFixture(fixtureDef).setUserData(player);
 		shape.dispose();
 	}
@@ -91,8 +86,8 @@ public class PlayerBodyCreator {
 		fixtureDef.friction = 0.75f;
 		fixtureDef.restitution = 0.1f;
 		fixtureDef.shape = shape;
-		fixtureDef.filter.categoryBits = CATEGORY_PLAYER;
-		fixtureDef.filter.maskBits = CATEGORY_PROJECTILE | CATEGORY_WORLD;
+		fixtureDef.filter.categoryBits = CType.CATEGORY_PLAYER.getValue();
+		fixtureDef.filter.maskBits = (short) (CType.CATEGORY_PROJECTILE.getValue() | CType.CATEGORY_WORLD.getValue());
 		return fixtureDef;
 	}
 	
