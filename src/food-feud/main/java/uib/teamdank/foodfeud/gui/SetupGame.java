@@ -7,6 +7,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator.FreeTypeFontParameter;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
@@ -98,6 +100,10 @@ public class SetupGame extends MenuScreen implements Screen {
 
 	private MatchBuilder matchBuild;
 
+	private FreeTypeFontGenerator generator;
+
+	private FreeTypeFontParameter parameter;
+
 	public SetupGame(Game game) {
 		super();
 		this.game = game;
@@ -119,17 +125,21 @@ public class SetupGame extends MenuScreen implements Screen {
 		addButtonListener(backButton, () -> game.setScreen(game.getStartMenuScreen()));
 
 		playerTextures = assets.getAtlas("Images/player_sheet.json");
-		font = new BitmapFont();
+		
+		generator = new FreeTypeFontGenerator(Gdx.files.internal("Fonts/roboto.ttf"));
+		parameter = new FreeTypeFontParameter();
+		float dpi = Gdx.graphics.getDensity() + 1;
+		parameter.size = (int) Math.ceil(40 * dpi);
+		font = generator.generateFont(parameter);
+		
 		textButtonStyle = new TextButtonStyle();
 		textButtonStyle.font = font;
 
 		helpText = new TextButton("How many players should there be?", textButtonStyle);
-		helpText.getLabel().setFontScale(3, 3);
 		menu.add(helpText);
 
 		for (int i = 2; i < 5; i++) {
 			TextButton playerNumber = new TextButton(String.valueOf(i), textButtonStyle);
-			playerNumber.getLabel().setFontScale(5, 5);
 			playerNumber.pad(60);
 			playerNumber.setName(String.valueOf(i));
 			addButtonListener(playerNumber, () -> setPlayers(playerNumber.getName()));
@@ -141,7 +151,7 @@ public class SetupGame extends MenuScreen implements Screen {
 		backButtonTable.add(backButton).width((float) (backButton.getWidth() / 4)).height((float) (backButton.getHeight() / 4));
 
 		menu.pad(0, 0, 800, 0);
-		playerCountTable.pad(0, 0, 600, 0);
+		playerCountTable.pad(0, 0, 500, 0);
 		backButtonTable.pad(800, 0, 0, 0);
 		
 		menu.setFillParent(true);
