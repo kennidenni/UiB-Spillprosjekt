@@ -1,7 +1,9 @@
 package uib.teamdank.cargame.gui;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.Array;
@@ -14,6 +16,7 @@ import uib.teamdank.common.util.WeatherData.WeatherType;
 import uib.teamdank.common.gui.CreditScreen;
 
 public class StartMenuScreen extends MenuScreen implements uib.teamdank.common.gui.StartMenuScreen {
+	private static final String BACKGROUND = "Images/menu_screen.png";
 	private static final String LOGO = "Images/CarGameLogo.png";
 	private static final String PLAY = "Images/Buttons/start.png";
 	private static final String HIGHSCORE = "Images/Buttons/cg_highscore.png";
@@ -29,6 +32,7 @@ public class StartMenuScreen extends MenuScreen implements uib.teamdank.common.g
 	private ShopScreen shopScreen;
 	private Player player;
 	private WeatherData wData;
+	private Image backgroundImage;
 
 	public StartMenuScreen(CarGame game) {
 		super();
@@ -37,6 +41,9 @@ public class StartMenuScreen extends MenuScreen implements uib.teamdank.common.g
 		creditScreen = new CreditScreen(game, "Images/Buttons/bs_back.png", "Data/credit_crasher.txt");
 		shopScreen = new ShopScreen(game);
 		menu = new Table();
+		
+		// Background Image
+		setupBackground();
 		
 		// Weather Data
 		wData = game.getWeatherData();
@@ -54,7 +61,6 @@ public class StartMenuScreen extends MenuScreen implements uib.teamdank.common.g
 	}
 
 	private void createButtons() {
-		ImageButton logoButton = createButton(LOGO, null);
 		Array<Button> buttons = new Array<>();
 		
 		buttons.add(createButton(PLAY, this::newGame));
@@ -62,13 +68,19 @@ public class StartMenuScreen extends MenuScreen implements uib.teamdank.common.g
 		buttons.add(createButton(SHOP, this::viewShop));
 		buttons.add(createButton(CREDIT, this::viewCredit));
 		buttons.add(createButton(EXIT, this::exitGame));
-
-		menu.add(logoButton).height((float) (logoButton.getHeight() /1.3)).pad(10, 0, 0, 0);
+		
+		menu.pad(450, 1100, 0, 0);
 		menu.row();
 		for (Button but : buttons) {
 			menu.add(but).width((float) (but.getWidth() / 4)).height((float) (but.getHeight() / 4)).pad(5);
 			menu.row();
 		}
+	}
+	
+	private void setupBackground() {
+		Texture backgroundTexture = new Texture(BACKGROUND);
+		backgroundImage = new Image(backgroundTexture);
+		getStage().addActor(backgroundImage);
 	}
 
 	@Override
