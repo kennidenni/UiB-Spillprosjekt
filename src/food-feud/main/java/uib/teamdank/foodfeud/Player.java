@@ -198,6 +198,9 @@ public class Player extends Actor implements ItemHolder, PhysicsSimulated {
 		float bodyOffsetX = 0;
 		if(this.getFlipHorizontally()) {
 			feetOffsetX-=160*getScale()*0.1f;
+		}
+		
+		if(this.getFlipHorizontally() && bodyWidth > 160*getScale()) {
 			bodyOffsetX = -bodyWidth + 160*getScale();
 		}
 		final float feetOffsetY = -feetOffset.y * getScale();
