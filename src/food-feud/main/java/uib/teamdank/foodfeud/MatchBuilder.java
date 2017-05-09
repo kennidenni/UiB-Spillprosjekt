@@ -46,5 +46,14 @@ public class MatchBuilder {
 		}
 		return new Match(playerList);
 	}
+	
+	public void removePlayer(Team t) {
+		for (int i = 0; i < players.size(); i++) {
+			if (players.get(i).team == t) {
+				players.remove(i);
+				break;
+			}
+		}
+	}
 
 }

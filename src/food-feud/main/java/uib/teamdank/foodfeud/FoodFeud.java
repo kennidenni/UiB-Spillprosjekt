@@ -33,9 +33,7 @@ public class FoodFeud extends Game {
 	@Override
 	public void create() {
 		startMenuScreen = new StartMenuScreen(this);
-		gameScreen = new GameScreen(this);
 		pauseMenuScreen = new PauseMenuScreen(this);
-		setupScreen = new SetupGame(this);
 		batch = new SpriteBatch();
 		setScreen(startMenuScreen);
 	}
@@ -77,6 +75,10 @@ public class FoodFeud extends Game {
 		super.dispose();
 		batch.dispose();
 		screen.dispose();
+	}
+	
+	public SetupGame getSetupGame() {
+		return setupScreen;
 	}
 	
 	public SetupGame newSetupGame() {

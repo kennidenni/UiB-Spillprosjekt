@@ -23,37 +23,30 @@ import uib.teamdank.common.Game;
 import uib.teamdank.common.gui.MenuScreen;
 import uib.teamdank.common.util.AssetManager;
 import uib.teamdank.common.util.TextureAtlas;
-import uib.teamdank.foodfeud.FoodFeud;
+import uib.teamdank.foodfeud.Match;
+import uib.teamdank.foodfeud.MatchBuilder;
+import uib.teamdank.foodfeud.Team;
 
 public class SetupGame extends MenuScreen implements Screen {
 
-	private static class CarButton extends ImageButton {
-		private boolean unlocked;
+	private static class PlayerButton extends ImageButton {
+		private Team team;
 
-		public CarButton(String name, Drawable unlockedImage, Drawable lockedImage) {
-			super(lockedImage, lockedImage, unlockedImage);
-			setDisabled(true);
+		public PlayerButton(String name, Team t, Drawable unlockedImage) {
+			super(unlockedImage);
+			this.team = t;
 			setName(name);
-			setUnlocked(false);
 		}
-
-		public void setUnlocked(boolean unlocked) {
-			this.unlocked = unlocked;
-		}
-
-		public void updateTexture() {
-			if (unlocked && isChecked()) {
-				setDisabled(true);
-			} else if (unlocked) {
-				setDisabled(false);
-			}
+		
+		public Team getTeam() {
+			return team;
 		}
 	}
 
 	private class ButtonListener extends InputListener {
-		private final Button source;
+		private final PlayerButton source;
 
-		public ButtonListener(Button source) {
+		public ButtonListener(PlayerButton source) {
 			this.source = source;
 		}
 
@@ -68,8 +61,15 @@ public class SetupGame extends MenuScreen implements Screen {
 			Vector2 mouse = myStage.screenToStageCoordinates(new Vector2(Gdx.input.getX(), Gdx.input.getY()));
 
 			if (myStage.hit(mouse.x, mouse.y, true) == event.getTarget()) {
-				source.getName();
-				System.out.println("her");
+				if (source.isChecked()) {
+					selectedPlayers++;
+					matchBuild.addPlayer(source.getName(), source.getTeam());
+					source.setChecked(true);
+				} else {
+					selectedPlayers--;
+					matchBuild.removePlayer(source.getTeam());
+					source.setChecked(false);
+				}
 			}
 		}
 	}
@@ -77,24 +77,48 @@ public class SetupGame extends MenuScreen implements Screen {
 	private Game game;
 
 	private Table menu;
-
+	private Table playerTable;
+	private Table backButtonTable;
+	private Table playerCountTable;
 
 	private AssetManager assets;
 	private BitmapFont font;
 	private TextButtonStyle textButtonStyle;
 	private TextButton helpText;
 
-	private Table playerTable;
+	private int playerCount;
+	private TextureAtlas buttonTexture;
+	private TextureAtlas playerTextures;
+	
+	private Match match;
+	private ImageButton backButton;
+	private final List<PlayerButton> playerButtons = new ArrayList<>();
+
+	private int selectedPlayers = 0;
+
+	private MatchBuilder matchBuild;
 
 	public SetupGame(Game game) {
 		super();
 		this.game = game;
 
+		playerCount = 1;
+
 		menu = new Table();
 		playerTable = new Table();
+		playerCountTable = new Table();
+		backButtonTable = new Table();
 		new Table();
-		this.assets = new AssetManager();
 
+		this.assets = new AssetManager();
+		
+		matchBuild = new MatchBuilder(assets);
+
+		buttonTexture = assets.getAtlas("Images/Buttons/ff_button.json");
+		backButton = setupImage(buttonTexture.getRegion("back"));
+		addButtonListener(backButton, () -> game.setScreen(game.getStartMenuScreen()));
+
+		playerTextures = assets.getAtlas("Images/player_sheet.json");
 		font = new BitmapFont();
 		textButtonStyle = new TextButtonStyle();
 		textButtonStyle.font = font;
@@ -103,18 +127,59 @@ public class SetupGame extends MenuScreen implements Screen {
 		helpText.getLabel().setFontScale(3, 3);
 		menu.add(helpText);
 
-		for (int i = 1; i < 5; i++) {
+		for (int i = 2; i < 5; i++) {
 			TextButton playerNumber = new TextButton(String.valueOf(i), textButtonStyle);
 			playerNumber.getLabel().setFontScale(5, 5);
-			playerNumber.addListener(new ButtonListener(playerNumber));
-			playerNumber.pad(50);
-			playerTable.add(playerNumber);
+			playerNumber.pad(60);
+			playerNumber.setName(String.valueOf(i));
+			addButtonListener(playerNumber, () -> setPlayers(playerNumber.getName()));
+			playerCountTable.add(playerNumber);
 		}
-		playerTable.pad(200, 0, 0, 0);
+		
+		setupPlayers();
+
+		backButtonTable.add(backButton).width((float) (backButton.getWidth() / 4)).height((float) (backButton.getHeight() / 4));
+
+		menu.pad(0, 0, 800, 0);
+		playerCountTable.pad(0, 0, 600, 0);
+		backButtonTable.pad(800, 0, 0, 0);
+		
 		menu.setFillParent(true);
-		getStage().addActor(menu);
 		playerTable.setFillParent(true);
+		backButtonTable.setFillParent(true);
+		playerCountTable.setFillParent(true);
+		
+		getStage().addActor(menu);
 		getStage().addActor(playerTable);
+		getStage().addActor(playerCountTable);
+		getStage().addActor(backButtonTable);
+	}
+
+	private ImageButton setupImage(TextureRegion textureRegion) {
+		TextureRegionDrawable myTexRegionDrawable = new TextureRegionDrawable(textureRegion);
+		return new ImageButton(myTexRegionDrawable);
+	}
+
+	private void setupPlayers() {
+			PlayerButton playerHelper = new PlayerButton ("Geir Karltveit", Team.ALPHA, new TextureRegionDrawable(playerTextures.getRegion(Team.ALPHA.getBodyExpansion(0))));
+			playerHelper.addListener(new ButtonListener(playerHelper));
+			playerHelper.pad(60, 100, 60, 100);
+			playerButtons.add(playerHelper);
+			
+			playerHelper = new PlayerButton ("Gertrude Skogsheim", Team.BETA, new TextureRegionDrawable(playerTextures.getRegion(Team.BETA.getBodyExpansion(0))));
+			playerHelper.addListener(new ButtonListener(playerHelper));
+			playerHelper.pad(60, 100, 60, 100);
+			playerButtons.add(playerHelper);
+			
+			playerHelper = new PlayerButton ("Per-Ole Nordskog", Team.CHARLIE, new TextureRegionDrawable(playerTextures.getRegion(Team.CHARLIE.getBodyExpansion(0))));
+			playerHelper.addListener(new ButtonListener(playerHelper));
+			playerHelper.pad(60, 100, 60, 100);
+			playerButtons.add(playerHelper);
+			
+			playerHelper = new PlayerButton ("Knut-Roger Regeltun", Team.DELTA, new TextureRegionDrawable(playerTextures.getRegion(Team.DELTA.getBodyExpansion(0))));
+			playerHelper.addListener(new ButtonListener(playerHelper));
+			playerHelper.pad(60, 100, 60, 100);
+			playerButtons.add(playerHelper);
 	}
 
 	@Override
@@ -128,13 +193,40 @@ public class SetupGame extends MenuScreen implements Screen {
 
 	@Override
 	public void render(float delta) {
-		// coinsCount.act(delta);
 		super.render(delta);
+		if (playerCount > 1) 
+			addPlayersToScreen();
+		
+		checkPlayerAndMaybeStart();
+	}
+
+	private void checkPlayerAndMaybeStart() {
+		if (playerCount == selectedPlayers){
+			match = matchBuild.build();
+			game.setScreen(game.newGame());
+		}
+	}
+
+	private void addPlayersToScreen() {
+		for (int i = 0; i < playerButtons.size(); i++) {
+				playerTable.add(playerButtons.get(i)).pad(5);
+		}
+	}
+
+	private void setPlayers(String name) {
+		playerCount = Integer.parseInt(name);
+	}
+	
+	public Match getMatch() {
+		return match;
+	}
+	
+	public AssetManager getAssets() {
+		return assets;
 	}
 
 	@Override
 	public void show() {
 		super.show();
 	}
-
 }

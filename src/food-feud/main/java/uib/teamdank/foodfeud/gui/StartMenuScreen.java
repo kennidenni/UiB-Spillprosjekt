@@ -42,7 +42,7 @@ public class StartMenuScreen extends MenuScreen implements uib.teamdank.common.g
     }
 
     private void addToTables() {
-        menu.add(logoButton).height((float) (logoButton.getHeight() /1.3)).pad(10, 0, 0, 0);
+        menu.add(logoButton).height((float) (logoButton.getHeight() /1.3)).pad(10, 0, 20, 0);
         menu.row();
         for (Button but : buttons) {
             menu.add(but).width((float) (but.getWidth() / 4)).height((float) (but.getHeight() / 4)).pad(5);

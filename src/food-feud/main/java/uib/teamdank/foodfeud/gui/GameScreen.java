@@ -49,16 +49,14 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 	public GameScreen(Game game) {
 		super(game);
 
-		assets = new AssetManager();
+		this.assets = ((FoodFeud) game).getSetupGame().getAssets();
 		time = FINAL_TIME;
 
 		this.camera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		this.level = LevelLoader.createFromJson(Gdx.files.internal("Data/field_level.json"));
-		this.match = new MatchBuilder(assets).addPlayer("Geir", Team.ALPHA)
-											 .addPlayer("Bodil", Team.BETA)
-											 .addPlayer("Arne", Team.CHARLIE)
-											 .addPlayer("Bertrude", Team.DELTA)
-											 .build();
+		
+		this.match = ((FoodFeud) game).getSetupGame().getMatch();
+
 		level.getWorld().setContactListener(new PhysicsContactListener(match));
 
 		camera.position.set(level.getWidth() / 2f, level.getHeight() / 2f, 0);
