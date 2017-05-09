@@ -1,3 +1,19 @@
+/*******************************************************************************
+ * Copyright (C) 2017  TeamDank
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *******************************************************************************/
 package uib.teamdank.foodfeud;
 
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
@@ -6,6 +22,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import uib.teamdank.common.Game;
 import uib.teamdank.foodfeud.gui.GameScreen;
 import uib.teamdank.foodfeud.gui.PauseMenuScreen;
+import uib.teamdank.foodfeud.gui.SetupGame;
 import uib.teamdank.foodfeud.gui.StartMenuScreen;
 
 /**
@@ -15,6 +32,7 @@ public class FoodFeud extends Game {
 	private static final String TITLE = "Food Feud";
 	private StartMenuScreen startMenuScreen;
     private GameScreen gameScreen;
+    private SetupGame setupScreen;
 	private PauseMenuScreen pauseMenuScreen;
 	private SpriteBatch batch;
 	private boolean isMuted;
@@ -31,7 +49,6 @@ public class FoodFeud extends Game {
 	@Override
 	public void create() {
 		startMenuScreen = new StartMenuScreen(this);
-		gameScreen = new GameScreen(this);
 		pauseMenuScreen = new PauseMenuScreen(this);
 		batch = new SpriteBatch();
 		setScreen(startMenuScreen);
@@ -74,6 +91,15 @@ public class FoodFeud extends Game {
 		super.dispose();
 		batch.dispose();
 		screen.dispose();
+	}
+	
+	public SetupGame getSetupGame() {
+		return setupScreen;
+	}
+	
+	public SetupGame newSetupGame() {
+		setupScreen = new SetupGame(this);
+		return setupScreen;
 	}
 
 	public void setAudio(boolean b) {

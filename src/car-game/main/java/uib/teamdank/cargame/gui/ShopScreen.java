@@ -1,3 +1,19 @@
+/*******************************************************************************
+ * Copyright (C) 2017  TeamDank
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *******************************************************************************/
 package uib.teamdank.cargame.gui;
 
 import java.util.ArrayList;
@@ -7,6 +23,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator.FreeTypeFontParameter;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
@@ -107,6 +125,9 @@ public class ShopScreen extends MenuScreen implements Screen {
 	private TextButton coinsCount;
 	private TextButton helpText;
 	
+	private FreeTypeFontGenerator generator;
+	private FreeTypeFontParameter parameter;
+	
 
 	public ShopScreen(CarGame game) {
 		super();
@@ -126,13 +147,18 @@ public class ShopScreen extends MenuScreen implements Screen {
 		unlockedCarTextures = assets.getAtlas("Images/car_sheet.json");
 
 		coinImage = setupImage(roadEntityTextures.getRegion("coin"));
+		
+		generator = new FreeTypeFontGenerator(Gdx.files.internal("Fonts/roboto.ttf"));
+		parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
+		float dpi = Gdx.graphics.getDensity() + 1;
+		parameter.size = (int) Math.ceil(20 * dpi);
+		font = generator.generateFont(parameter);
 
-		font = new BitmapFont();
 		textButtonStyle = new TextButtonStyle();
 		textButtonStyle.font = font;
 
 		coinsCount = new TextButton("0", textButtonStyle);
-		coinsCount.getLabel().setFontScale(10, 10);
+		
 
 		coinsTable = new Table();
 		coinsTable.add(coinImage).pad(0, 1600, 900, 0);
@@ -140,7 +166,6 @@ public class ShopScreen extends MenuScreen implements Screen {
 
 		String help = "You need to click on the car \n to unlock it and select it.\n \n You need " + CAR_COST + " gold \n to unlock a new car";
 		helpText = new TextButton(help, textButtonStyle);
-		helpText.getLabel().setFontScale(3, 3);
 		helpText.pad(0, 1300, 0, 0);
 		
 		setupCars();
