@@ -67,7 +67,7 @@ public class CreditScreen extends MenuScreen {
 				creditGroup.addActor(new Container<Label>(l).width(creditGroup.getWidth()));
 			}
 			
-			creditGroup.setPosition(2 * buttonCont.getMaxWidth(), (float) (-1.5*font.getCapHeight() * lines.length));
+			creditGroup.setPosition(2 * buttonCont.getMaxWidth(), (float) (-1.25*font.getCapHeight() * lines.length));
 		}	
 
 		@Override
