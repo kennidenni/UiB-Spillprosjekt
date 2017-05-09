@@ -135,9 +135,8 @@ public class ShopScreen extends MenuScreen implements Screen {
 		generator = new FreeTypeFontGenerator(Gdx.files.internal("Fonts/ostrich.ttf"));
 		parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
 		float dpi = Gdx.graphics.getDensity() + 1;
-		int size = (int) Math.ceil(32 * dpi);
-		parameter.size = size;
-		font = generator.generateFont(parameter);;
+		parameter.size = (int) Math.ceil(32 * dpi);
+		font = generator.generateFont(parameter);
 
 		textButtonStyle = new TextButtonStyle();
 		textButtonStyle.font = font;
