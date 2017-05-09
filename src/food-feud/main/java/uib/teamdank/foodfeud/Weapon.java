@@ -17,8 +17,11 @@
 package uib.teamdank.foodfeud;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.World;
 
 import uib.teamdank.common.Item;
+import uib.teamdank.common.gui.Layer;
 
 /**
  * Represents a weapon item. A weapon can be thrown (distance depends of on
@@ -61,9 +64,11 @@ public class Weapon extends Item {
 		this.type = type;
 	}
 
-	public void fire() {
+	public void fire(Weapon weapon, Player player, Layer layer, World world, Vector2 dir) {
 		if (amount > 0) {
 			amount--;
+			ProjectileSpawner spawner = new ProjectileSpawner();
+			spawner.spawn(weapon, layer, world, dir, player.getX() + player.getWidth()/2f, player.getY()+ player.getHeight());
 		}
 	}
 	

@@ -16,24 +16,19 @@ import uib.teamdank.common.gui.Layer;
 import uib.teamdank.foodfeud.Weapon.Type;
 
 public class ProjectileSpawner {
+	
 
-	private final Weapon weapon;
-	
-	public ProjectileSpawner(Weapon weapon) {
-		this.weapon = Objects.requireNonNull(weapon, "weapon cannot be null");
-	}
-	
-	private Body createBody(World world, float scale, float originX, float originY) {
+	private Body createBody(Weapon weapon, World world, float scale) {
 		BodyDef bodyDef = new BodyDef();
 		bodyDef.type = BodyType.DynamicBody;
-		bodyDef.position.set(originX, originY);
+		//bodyDef.fixedRotation = true;
 		
 		final float width = weapon.getTexture().getRegionWidth() * scale;
 		final float height = weapon.getTexture().getRegionHeight() * scale;
 		
 		CircleShape shape = new CircleShape();
 		shape.setRadius(Math.max(width, height) / 2f);
-		shape.setPosition(new Vector2(width / 2f, height / 2f));
+		shape.setPosition(new Vector2(0, 0));
 		
 		Body body = world.createBody(bodyDef);
 		MassData massData = new MassData();
@@ -42,26 +37,27 @@ public class ProjectileSpawner {
 		FixtureDef fixtureDef = new FixtureDef();
 		fixtureDef.shape = shape;
 		fixtureDef.density = 1f;
-		fixtureDef.isSensor = true;
+		//fixtureDef.isSensor = true;
 		body.createFixture(fixtureDef);
 		
 		shape.dispose();
 		return body;
 	}
 	
-	private GameObject createProjectile(World world, Vector2 force, float originX, float originY) {
+	private GameObject createProjectile(Weapon weapon, World world, Vector2 force, float originX, float originY) {
 		final float scale = .25f;
-		Projectile projectile = new Projectile(createBody(world, scale, originX, originY), weapon.getDamage(), scale);
-		projectile.getBody().getTransform().setPosition(new Vector2(originX, originY));
+		Projectile projectile = new Projectile(createBody(weapon, world, scale), weapon.getDamage(), scale);
+		projectile.getBody().setTransform(projectile.getBody().getPosition().set(originX + projectile.getWidth() / 2f, originY + projectile.getHeight() / 2f), 0);
+		
 		projectile.getBody().applyLinearImpulse(force.x, force.y, 0, 0, true);
 		projectile.setTexture(weapon.getTexture());
 		return projectile;
 	}
 	
-	public void spawn(Layer layer, World world, Vector2 dir, float originX, float originY) {
-		dir.scl(10000000f);
-		if (weapon.getType() == Type.LIGHT_BALLISTIC) {
-			layer.addGameObject(createProjectile(world, dir, originX, originY));
+	public void spawn(Weapon wep, Layer layer, World world, Vector2 dir, float originX, float originY) {
+		dir.scl(10f);
+		if (wep.getType() == Type.LIGHT_BALLISTIC) {
+			layer.addGameObject(createProjectile(wep, world, dir, originX, originY));
 		}
 	}
 	

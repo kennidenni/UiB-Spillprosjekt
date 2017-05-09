@@ -18,7 +18,7 @@ public class Projectile extends GameObject {
 
 	@Override
 	public float getAngle() {
-		return body.getAngle();
+		return (float) Math.toDegrees(body.getAngle());
 	}
 	
 	public Body getBody() {
@@ -31,7 +31,9 @@ public class Projectile extends GameObject {
 	
 	@Override
 	public Vector2 getPosition() {
-		return body.getTransform().getPosition();
+		super.getPosition().set(body.getPosition());
+		super.getPosition().sub(getWidth() / 2f, getHeight() / 2f);
+		return super.getPosition();
 	}
 	
 	@Override

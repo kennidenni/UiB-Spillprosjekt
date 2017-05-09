@@ -80,9 +80,8 @@ public class Player extends Actor implements ItemHolder, PhysicsSimulated {
 		if (selectedWeapon == null || selectedWeapon.getAmount() == 0) {
 			return false;
 		}
-		selectedWeapon.fire();
-		ProjectileSpawner spawner = new ProjectileSpawner(selectedWeapon);
-		spawner.spawn(layer, world, dir, getX(), getY());
+		selectedWeapon.fire(selectedWeapon, this, layer, world, dir);
+		
 		return true;
 	}
 	
