@@ -1,3 +1,19 @@
+/*******************************************************************************
+ * Copyright (C) 2017  TeamDank
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *******************************************************************************/
 package uib.teamdank.foodfeud.gui;
 
 
@@ -6,31 +22,22 @@ import java.util.List;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.InputListener;
-import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.HorizontalGroup;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
-import com.badlogic.gdx.utils.viewport.FitViewport;
 import uib.teamdank.common.Score;
+import uib.teamdank.common.gui.MenuScreen;
 import uib.teamdank.foodfeud.FoodFeud;
 
-public class HighscoreMenuScreen implements uib.teamdank.common.gui.HighscoreMenuScreen {
+public class HighscoreMenuScreen extends MenuScreen implements uib.teamdank.common.gui.HighscoreMenuScreen {
     private static final String BACK = "Images/Buttons/ff_back.png";
     private static final String HIGHSCORE = "Images/Buttons/ff_highscore.png";
     private static final String SCORES = "Data/highscore.json";
 
-    private Stage stage;
     private ImageButton backButton;
     private ImageButton highscoreButton;
     private Table menu;
@@ -39,13 +46,13 @@ public class HighscoreMenuScreen implements uib.teamdank.common.gui.HighscoreMen
     private Label scoreLabel;
 
     public HighscoreMenuScreen(FoodFeud game) {
+    	super();
         this.game = game;
-        stage = new Stage(new FitViewport(1920, 1080));
 
         menu = new Table();
         menu.setFillParent(true);
 
-        highscoreButton = setupButton(HIGHSCORE);
+        highscoreButton = createButton(HIGHSCORE, null);
         menu.add(highscoreButton)
                 .width((highscoreButton.getWidth() / 4))
                 .height((highscoreButton.getHeight() / 4))
@@ -71,65 +78,27 @@ public class HighscoreMenuScreen implements uib.teamdank.common.gui.HighscoreMen
         menu.add(hg).expand().align(Align.center);
         menu.row();
 
-        backButton = setupButton(BACK);
+        backButton = createButton(BACK, this::goBack);
         menu.add(backButton)
                 .width((backButton.getWidth() / 4))
                 .height((backButton.getHeight() / 4))
                 .expand().align(Align.bottom).padBottom(Gdx.graphics.getHeight() / 16);
-        backButton.addListener(new InputListener() {
-            @Override
-            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                return true;
-            }
-            @Override
-            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-                Stage myStage = event.getTarget().getStage();
-                Vector2 mouse = myStage.screenToStageCoordinates(new Vector2(Gdx.input.getX(), Gdx.input.getY()));
-                if (myStage.hit(mouse.x, mouse.y, true) == event.getTarget()) {
-                    game.setScreen(game.getStartMenuScreen());
-                }
-            }
-        });
 
-        stage.addActor(menu);
-        Gdx.input.setInputProcessor(stage);
+        getStage().addActor(menu);
     }
-    private ImageButton setupButton(String imgPath) {
-        return new ImageButton(
-                new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal(imgPath)))));
-    }
-    @Override
-    public void dispose() {
-        // TODO
-    }
+    
     @Override
     public void goBack() {
         game.setScreen(game.getStartMenuScreen());
     }
-    @Override
-    public void hide() {
-        Gdx.input.setInputProcessor(null);
-    }
-    @Override
-    public void pause() {
-        //TODO
-    }
+    
     @Override
     public void render(float delta) {
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        stage.act(delta);
-        stage.draw();
-        nameLabel.act(delta); //TODO: Needed?
-        scoreLabel.act(delta); //TODO: Needed?
+        super.render(delta);
+        nameLabel.act(delta);
+        scoreLabel.act(delta);
     }
-    @Override
-    public void resize(int width, int height) {
-        stage.getViewport().update(width, height, true);
-    }
-    @Override
-    public void resume() {
-        // TODO
-    }
+    
     @Override
     public void setScores(List<Score> scores) {
         StringBuilder nameBuilder = new StringBuilder();
@@ -146,9 +115,5 @@ public class HighscoreMenuScreen implements uib.teamdank.common.gui.HighscoreMen
         }
         nameLabel.setText(nameBuilder.toString());
         scoreLabel.setText(scoreBuilder.toString());
-    }
-    @Override
-    public void show() {
-        Gdx.input.setInputProcessor(stage);
     }
 }

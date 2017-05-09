@@ -1,3 +1,19 @@
+/*******************************************************************************
+ * Copyright (C) 2017  TeamDank
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *******************************************************************************/
 package uib.teamdank.common.util;
 
 import java.util.HashMap;
@@ -9,6 +25,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Disposable;
 import com.google.gson.Gson;
 import com.google.gson.annotations.SerializedName;
@@ -28,7 +45,8 @@ public class TextureAtlas implements Disposable {
 		@SerializedName("y") int y;
 		@SerializedName("w") int w;
 		@SerializedName("h") int h;
-		
+		@SerializedName("userPointX") int userPointX = 0;
+		@SerializedName("userPointY") int userPointY = 0;
 	}
 	
 	/**
@@ -42,10 +60,11 @@ public class TextureAtlas implements Disposable {
 		return atlas;
 	}
 	
-	@SerializedName("tileset") private String tilesetFile;	
+	@SerializedName("tileset") private String tilesetFile;
 	@SerializedName("regions") private Region[] regions;
 	
 	private transient Map<String, TextureRegion> textureCache = new HashMap<>();
+	private transient Map<String, Vector2> userPointChache = new HashMap<>();
 	private transient Texture tileset;
 	
 	private TextureAtlas() {
@@ -69,17 +88,26 @@ public class TextureAtlas implements Disposable {
 		return textureCache.values().toArray(new TextureRegion[textureCache.size()]);
 	}
 	
+	public Vector2 getUserPoint(String name) {
+		validateRegion(name);
+		return userPointChache.get(name);
+	}
+	
 	/**
 	 * @return the texture region with the given name 
 	 */
 	public TextureRegion getRegion(String name) {
+		validateRegion(name);
+		return textureCache.get(name);
+	}
+	
+	private void validateRegion(String name) {
 		if (tileset == null) {
 			throw new IllegalStateException("texture atlas has not loaded the tileset yet, call #load()");
 		}
 		if (!textureCache.containsKey(name)) {
 			throw new IllegalArgumentException("no such region: " + name);
 		}
-		return textureCache.get(name);
 	}
 
 	private void load() {
@@ -90,6 +118,7 @@ public class TextureAtlas implements Disposable {
 		this.tileset = new Texture(sheetFile);
 		for (Region region : regions) {
 			textureCache.put(region.name, new TextureRegion(tileset, region.x, region.y, region.w, region.h));
+			userPointChache.put(region.name, new Vector2(region.userPointX, region.userPointY));
 		}
 	}
 	

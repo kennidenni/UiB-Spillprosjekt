@@ -1,11 +1,26 @@
+/*******************************************************************************
+ * Copyright (C) 2017  TeamDank
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *******************************************************************************/
 package uib.teamdank.cargame.gui;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.ScreenAdapter;
-import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
@@ -18,14 +33,13 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
-import com.badlogic.gdx.utils.viewport.FitViewport;
-
 import uib.teamdank.cargame.CarGame;
 import uib.teamdank.cargame.Player;
+import uib.teamdank.common.gui.MenuScreen;
 import uib.teamdank.common.util.AssetManager;
 import uib.teamdank.common.util.TextureAtlas;
 
-public class ShopScreen extends ScreenAdapter {
+public class ShopScreen extends MenuScreen implements Screen {
 
 	private static class CarButton extends ImageButton {
 		private boolean unlocked;
@@ -89,8 +103,7 @@ public class ShopScreen extends ScreenAdapter {
 	
 	private final List<CarButton> carButtons = new ArrayList<>();
 	private static final int CAR_COST = 10;
-	
-	private Stage stage;
+
 	private CarGame game;
 	
 	private Table menu;
@@ -112,8 +125,8 @@ public class ShopScreen extends ScreenAdapter {
 	
 
 	public ShopScreen(CarGame game) {
+		super();
 		this.game = game;
-		stage = new Stage(new FitViewport(1920, 1080));
 
 		menu = new Table();
 		cars = new Table();
@@ -148,34 +161,14 @@ public class ShopScreen extends ScreenAdapter {
 		
 		setupCars();
 		setupScreen();
-		backListener();
+		addButtonListener(backButton, () -> game.setScreen(game.getStartMenuScreen()));
 
 		menu.setFillParent(true);
 		coinsTable.setFillParent(true);
 		helpText.setFillParent(true);
-		stage.addActor(helpText);
-		stage.addActor(menu);
-		stage.addActor(coinsTable);
-		Gdx.input.setInputProcessor(stage);
-	}
-
-	private void backListener() {
-		backButton.addListener(new InputListener() {
-			@Override
-			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-				return true;
-			}
-
-			@Override
-			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-				Stage myStage = event.getTarget().getStage();
-				Vector2 mouse = myStage.screenToStageCoordinates(new Vector2(Gdx.input.getX(), Gdx.input.getY()));
-
-				if (myStage.hit(mouse.x, mouse.y, true) == event.getTarget()) {
-					game.setScreen(game.getStartMenuScreen());
-				}
-			}
-		});
+		getStage().addActor(helpText);
+		getStage().addActor(menu);
+		getStage().addActor(coinsTable);
 	}
 
 	private ImageButton setupImage(TextureRegion textureRegion) {
@@ -193,26 +186,14 @@ public class ShopScreen extends ScreenAdapter {
 	}
 
 	@Override
-	public void hide() {
-		Gdx.input.setInputProcessor(null);
-	}
-
-	@Override
 	public void render(float delta) {
-		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		coinsCount.act(delta);
-		stage.act(delta);
-		stage.draw();
-	}
-
-	@Override
-	public void resize(int width, int height) {
-		stage.getViewport().update(width, height, true);
+		super.render(delta);
 	}
 
 	@Override
 	public void show() {
-		Gdx.input.setInputProcessor(stage);
+		super.show();
 
 		final Player player = game.getPlayer();
 		player.unlockSkin("car_forward");
@@ -247,8 +228,6 @@ public class ShopScreen extends ScreenAdapter {
 	}
 
 	public void setNewCoinCount(int i) {
-
 		coinsCount.setText(String.valueOf(i));
 	}
-
 }

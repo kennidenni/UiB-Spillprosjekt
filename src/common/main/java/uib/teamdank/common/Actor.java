@@ -1,3 +1,19 @@
+/*******************************************************************************
+ * Copyright (C) 2017  TeamDank
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *******************************************************************************/
 package uib.teamdank.common;
 
 /**
@@ -19,7 +35,7 @@ public class Actor extends GameObject {
     public Actor (int mh, int ch, String n){
 	    super();
 	    this.maxHealth = mh;
-	    this.currentHealth = ch;
+	    setHealth(ch);
 	    this.name = n;
     }
 	/**
@@ -49,9 +65,7 @@ public class Actor extends GameObject {
 	 *            the amount of health to add
 	 */
 	public void increaseHealth(int amount) {
-		this.currentHealth = this.currentHealth + amount;
-		if (this.currentHealth > this.maxHealth)
-			this.currentHealth = this.maxHealth;
+		setHealth(Math.min(getMaxHealth(), getHealth() + amount));
 	}
 
 	/**
@@ -59,9 +73,7 @@ public class Actor extends GameObject {
 	 *            the amount of health to subtract
 	 */
 	public void decreaseHealth(int amount) {
-		this.currentHealth = this.currentHealth - amount;
-		if (this.currentHealth <= 0)
-		    this.currentHealth = 0;
+		setHealth(Math.max(0, getHealth() - amount));
 	}
 
 	/**
@@ -73,7 +85,7 @@ public class Actor extends GameObject {
 	 */
 	public void setHealth(int health) {
 		if (health < 0 || health > this.maxHealth)
-			throw new IllegalArgumentException();
+			throw new IllegalArgumentException("health is out of range: " + health);
 		this.currentHealth = health;
 	}
 }

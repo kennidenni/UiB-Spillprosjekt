@@ -1,3 +1,19 @@
+/*******************************************************************************
+ * Copyright (C) 2017  TeamDank
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *******************************************************************************/
 package uib.teamdank.cargame.gui;
 
 import java.util.Arrays;
@@ -74,7 +90,7 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 		this.assets = new AssetManager();
 		TextureAtlas carTextures = assets.getAtlas("Images/car_sheet.json");
 		TextureAtlas roadEntityTextures = assets.getAtlas("Images/road_entity_sheet.json");
-		TextureAtlas pedestrianTextures = assets.getAtlas("Images/walkers.json");
+		TextureAtlas pedestrianTextures = assets.getAtlas("Images/pedestrian_sheet.json");
 		
 		// Cameras
 		this.playerCamera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
