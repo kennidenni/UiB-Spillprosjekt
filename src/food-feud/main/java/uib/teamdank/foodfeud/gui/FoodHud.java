@@ -67,7 +67,6 @@ public class FoodHud {
 		
 		this.assets = new AssetManager();
 		weaponMenu = new WeaponMenu();
-		setUpWeaponMenu();
 		setUpMute();
 
         generator = new FreeTypeFontGenerator(Gdx.files.internal("Fonts/roboto.ttf"));
@@ -86,8 +85,6 @@ public class FoodHud {
 	
 		scoreTable.setFillParent(true);
 		
-		stage.addActor(weaponTable);
-		
 		stage.addActor(scoreTable);
 		stage.addActor(muteTable);
 	}
@@ -98,29 +95,6 @@ public class FoodHud {
 
 	public void setAsInputProcessor() {
 		Gdx.input.setInputProcessor(stage);
-	}
-
-	private void setUpWeaponMenu() {
-		weaponTable = new Table();      
-        weaponMenuButton = setupButton(MENU);
-		weaponTable.add(weaponMenuButton).height((float) (weaponMenuButton.getHeight() /4)).pad(200, 3600, 300, 0);
-		
-		weaponMenuButton.addListener(new InputListener() {
-            @Override
-            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-            	return true;
-            }
-
-            @Override
-            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-                Stage stage = event.getTarget().getStage();
-                Vector2 mouse = stage.screenToStageCoordinates(new Vector2(Gdx.input.getX(), Gdx.input.getY()));
-
-                if (stage.hit(mouse.x, mouse.y, true) == event.getTarget()) {
-                    viewWeaponMenu();
-                }
-            }
-        });
 	}
 	
 	 public void viewWeaponMenu() {
