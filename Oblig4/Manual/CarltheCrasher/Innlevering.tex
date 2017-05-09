@@ -30,9 +30,11 @@ Informatikk}
 			\item Kontroller
 			\item Objekt interaksjon
 			\item Poeng
+			\item Penger
 			\item Vær
 		\end{itemize}
-	\item Kreditt ................................................................... noe
+	\item Bilder ....................................................................................................................... noe
+	\item Kredit ...................................................................................................................... noe
 \end{itemize}
 \newpage
 
@@ -70,7 +72,7 @@ Som Carl liker du å kjøre uforsvarlig, og målet ditt er å komme deg så leng
 \subsection{Kontroll} 
 Din primære spillinngangsenhet er tastaturen, og kan gjøre følgende: 
 \begin{itemize}
-	\item Du styrer Carl til høyre og venstre ved å bruke enten piltastene eller tastaturknappene \\ A og D. \\ 
+	\item Du styrer Carl til høyre og venstre ved å bruke enten piltastene eller tastaturknappene \\ A og D. 
 	\item Carl kan ikke styre bilens hastighet direkte, men farten vil økes jo lenger du kjøre.
 	\item Du kan ikke kjøre ut av veien, men du kan kjøre på objekter som oppstår på veien.
 	\item Du kan pause spillet ved å gå til pausemenyen ved å trykke på tastaturknappen ESC. 
@@ -81,15 +83,17 @@ Din primære spillinngangsenhet er tastaturen, og kan gjøre følgende:
 
 \subsection{Object interaksjon}
 På veien kan det oppstå forskjellige objekter, og avhengig av objektet kan det påføre bilen en positiv, eller negativ effekt. \\
+{\renewcommand\labelitemi{}
 \begin{itemize}
-	\item \includegraphics[scale=0.2]{images/gastank.png} Bensintank: Kan plukkes for å øke drivstoffen slik at du kan kjøre lengre 
-	\item \includegraphics[scale=0.5]{images/coin.png} Mynt: På veien kan du finne mynter som du kan plukke opp.5
+	\item \includegraphics[scale=0.2]{images/gastank.png} \textbf{Bensintank}: Kan plukkes for å øke drivstoffen slik at du kan kjøre lengre 
+	\item \includegraphics[scale=0.5]{images/coin.png} \textbf{Mynt}: På veien kan du finne mynter som du kan plukke opp.5
 																Myntene kan brukes i butikken for å kjøpe nye biler.
-	\item \includegraphics[scale=0.2]{images/puddle.png} Vanndam: Kjører du på en vanndam vil det minske mengden drivstoff,
+	\item \includegraphics[scale=0.2]{images/puddle.png} \textbf{Vanndam}: Kjører du på en vanndam vil det minske mengden drivstoff,
 																og samtidig gjøre at du vil miste litt kontrollen av bilen i en liten periode. 
-	\item \includegraphics[scale=0.2]{images/manhole.png} Kumlokk: Dersom du kjører på en kumlokk vil du kræsje og deretter tape umiddelbart
-	\item \includegraphics[scale=0.4]{images/walker.png} Myke trafikanter: Å kjøre på trafikanter vil gi deg ekstra poeng som vil øke sluttpoengsummen din 
+	\item \includegraphics[scale=0.2]{images/manhole.png} \textbf{Kumlokk}: Dersom du kjører på en kumlokk vil du kræsje og deretter tape umiddelbart
+	\item \includegraphics[scale=0.4]{images/walker.png} \textbf{Myke trafikanter}: Å kjøre på trafikanter vil gi deg ekstra poeng som vil øke sluttpoengsummen din 
 \end{itemize}
+}
 
 \subsection{Poeng}
 Målet ditt er å få den høyeste poengsummen, og det finnes ulike måter å tjene opp poeng på:
@@ -99,76 +103,124 @@ Målet ditt er å få den høyeste poengsummen, og det finnes ulike måter å tj
 	\item Å kjøre på myke trafikanter vil gi deg penger, og ulike trafikanter vil gi ulik poeng.
 \end{itemize}
 
+\subsection{Penger} 
+\begin{itemize}
+	\item{I løpet av spillet får spilleren penger i form av spillets egen valuta.}
+	\item{Pengene kan brukes i spillets butikk fra hovedmenyen for å kjøpe nye biler.}
+\end{itemize}
+
 \subsection{Vær} 
-Spillet vil tilpasse seg etter det værforholdet som er lokalt hos deg. Om det er skyer vil det være skyer på banen,\\&
+Spillet vil tilpasse seg etter det værforholdet som er lokalt hos deg. Om det er skyer vil det være skyer på banen,\\
 om det regner vil det regne på banen, og om det snør vil det være snø på banen. \\
 Disse dataene om værforholdene blir hentet ut fra yr.no. 
 \begin{itemize} 
-	\item Sol: Skyer i spillet, men værforholdet endrer ikke spillets framgang.
-	\item Regn: Det regner i spillet og det vil dukke 
+	\item \textbf{Sol}: Normal framgang.
+	\item \textbf{Skyer}: Skyer i spillet, men værforholdet endrer ikke spillets framgang.
+	\item \textbf{Regn}: Det regner i spillet og det vil dukke opp flere dam, samt flere og nye trafikanter. 
+	\item \textbf{Snø}: Det er snø på bygningene og andre trafikanter vil dukker opp. Det vil også være vanskeligere å styre bilen,
+ og du vil miste mye av kontrollen av bilen dersom du kjører i en vanndam.
 \end{itemize}
+
+
+INSERT PICTURES OF DIFFERENT WEATHERS
 \newpage
+\section{Bilder}
+	\begin{center}
+	{\renewcommand\labelitemi{}
+		\begin{itemize}
+			\item{\makebox[13.5cm]{\includegraphics[width=1.00\textwidth]{images/main_menu.PNG}}}
+			\item {\hfil Figure 1. Hovedmeny} 
+			\bigskip
+			\bigskip
+			\bigskip
+			\item{\makebox[13.5cm]{\includegraphics[width=1.00\textwidth]{images/hs_menu.PNG}}}
+			\item {\hfil Figure 2. Highscoremeny}
+			\bigskip
+			\bigskip
+			\bigskip
+			\item{\makebox[13.5cm]{ \includegraphics[width=1.00\textwidth]{images/shop_menu.PNG}}}
+			\item {\hfil Figure 3. Butikkmeny}
+			\bigskip
+			\bigskip
+			\bigskip
+			\item{\makebox[13.5cm]{ \includegraphics[width=1.00\textwidth]{images/credits.PNG}}}
+			\item {\hfil Figure 4. Kreditering}
+			\bigskip
+			\bigskip
+			\bigskip
+			\item{\makebox[13.5cm]{ \includegraphics[width=1.00\textwidth]{images/game.PNG}}}
+			\item {\hfil Figure 5. Gameplay}
+			\bigskip
+			\bigskip
+			\bigskip
+			\item{\makebox[13.5cm]{ \includegraphics[width=1.00\textwidth]{images/pause.PNG}}}
+			\item {\hfil Figure 6. Pausemeny}
+			\bigskip
+			\bigskip
+			\bigskip
+			\item{\makebox[13.5cm]{ \includegraphics[width=1.00\textwidth]{images/gameover.PNG}}}
+			\item {\hfil Figure 7. Game-over}
+		\end{itemize}
+	}
+	\end{center} 
 
-\begin{center}
-\begin{tabular}{ | m{5cm} | m{8cm} | }
-\hline
-Målgruppe. & Ungdom 15-25 år. \\ \hline
+\newpage
+\section{Credits}
+\begin{center} 
+\textbf{TeamDank}\\ \
+
+\textbf{Utvikler team:}\\
+TeamDank Programming Team\\ \
+
+\textbf{Grafikk:} \\
+TeamDank Art Department \\ \
 
 
+\textbf{Værdata:} \\ 
+Weather forecast from Yr, delivered by the Norwegian Meteorological Institute and NRK. \\ 
+http://om.yr.no/verdata/xml/  \\
+(Data from http://www.yr.no/sted/Hordaland/Bergen/Bergen/) \\ \
 
-Åpne data. & Bruke åpne data fra yr.no om været. Om det er skyer vil det være skyer på banen,\\&
-om det regner vil det regne på banen, og om det snør vil det være snø på banen.\\ \hline
-\end{tabular}
+\textbf{Lyder:} \\ 
+Lyder brukt fra freesound: \\
+car\textunderscore drive.wav (In Car Driving.aif) by (http://freesound.org/people/RutgerMuller/) \\
+happy\textunderscore bgmusic.wav (Happy 8bit Loop 01) by (http://freesound.org/people/Tristan\textunderscore Lohengr) \\
+car\textunderscore crash.mp3 (Car Crash) by (http://freesound.org/people/squareal) \\
+coin\textunderscore sound.wav (Coins 1) by (http://freesound.org/people/ProjectsU012) \\
+dead\textunderscore pedestrian (me\textunderscore ouch.wav) by (http://freesound.org/people/SpazTastic) \\
+fuel.wav (Drip2.wav) by (http://freesound.org/people/Neotone) \\
+splash.mp3 (Splash 1.wav) by (http://freesound.org/people/FreqMan) \\ \
+
+\textbf{Utviklere}: \\
+Peter Andre Johansen \\
+Håvar Eggereide \\
+Kenneth Apeland \\
+Philip Thao Hoang \\
+Markus Johan Ragnhildstveit \\
+Torbjørn Ola Sunnarvik Moen \\
+Elias Refvem Siljan \\
+Sturle Fraga Elvestad \\
+Eirik Strøm \\
+Amund Lindberg \\
+Ole Magnus Lie \\
+Bjørnar Herland \\ \
+
+\textbf{Grafikk:} \\
+Malin Øien \\
+Emilia Botnen Van den Bergh \\ \
+
+\textbf{Coach:} \\
+Gunnar Schulze \\ \ 
+
+\textbf{Juridisk Team:} \\ 
+Anna Fossen-Helle \\ \
+
+\textbf{Spillidé:} \\
+Team 1\textunderscore9 \\
+Kenneth Apeland \\
+Natalie Priyaphon Wannaphong \\
+Joakim Moss Grutle \\
+Peder Ben \\ \
 \end{center}
-
-		\subsection{Poeng}
-		\begin{itemize}
-			\item{Spilleren tjener poeng konstant når han kjører.}
-			\item{Poeng blir opptjent avhengig av hvor langt spilleren kjører og hvilke myke trafikanter spilleren kjører over.}
-			\item{Spilleren starter alltid med 0 poeng i starten av en runde.}
-		\end{itemize}
-
-		\subsection{Penger}
-		\begin{itemize}
-			\item{I løpet av spillet får spilleren penger i form av spillets egen valuta.}
-			\item{Pengene kan brukes i spillets butikk fra hovedmenyen for å kjøpe nye biler.}
-		\end{itemize}
-
-	\newpage
-	\begin{figure}\begin{center}
-		\includegraphics[width=1.00\textwidth]{images/main_menu.PNG}
-		\caption{Hovedmeny.}
-	\end{center}\end{figure}
-
-	\begin{figure}\begin{center}
-		\includegraphics[width=1.00\textwidth]{images/hs_menu.PNG}
-		\caption{Highscoremeny.}
-	\end{center}\end{figure}
-
-	\begin{figure}\begin{center}
-		\includegraphics[width=1.00\textwidth]{images/shop_menu.PNG}
-		\caption{Butikkmeny.}
-	\end{center}\end{figure}
-
-	\begin{figure}\begin{center}
-		\includegraphics[width=1.00\textwidth]{images/credits.PNG}
-		\caption{Kreditering.}
-	\end{center}\end{figure}
-
-	\begin{figure}\begin{center}
-		\includegraphics[width=1.00\textwidth]{images/game.PNG}
-		\caption{Gameplay.}
-	\end{center}\end{figure}
-
-	\begin{figure}\begin{center}
-		\includegraphics[width=1.00\textwidth]{images/pause.PNG}
-		\caption{Pausemeny.}
-	\end{center}\end{figure}
-
-	\begin{figure}\begin{center}
-		\includegraphics[width=1.00\textwidth]{images/gameover.PNG}
-		\caption{Game over-meny.}
-	\end{center}\end{figure}
-
 
 \end{document}
