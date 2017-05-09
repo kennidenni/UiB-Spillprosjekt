@@ -21,6 +21,8 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator.FreeTypeFontParameter;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
@@ -42,6 +44,8 @@ public class FoodHud {
 	private AssetManager assets;
 	private ImageButton muteButton;
 
+	private FreeTypeFontGenerator generator;
+	private FreeTypeFontParameter parameter;
 	private BitmapFont font;
 	private TextButtonStyle textButtonStyle;
 	private TextButton time;
@@ -66,12 +70,16 @@ public class FoodHud {
 		setUpWeaponMenu();
 		setUpMute();
 
-		font = new BitmapFont();
+        generator = new FreeTypeFontGenerator(Gdx.files.internal("Fonts/roboto.ttf"));
+        parameter = new FreeTypeFontParameter();
+        float dpi = Gdx.graphics.getDensity() + 1;
+        parameter.size = (int) Math.ceil(50 * dpi);
+
+        font = generator.generateFont(parameter);
 		textButtonStyle = new TextButtonStyle();
 		textButtonStyle.font = font;
 		
 		time = new TextButton("0", textButtonStyle);
-		time.getLabel().setFontScale(10, 10);
 		
 		scoreTable = new Table();
 		scoreTable.add(time).width(300).pad(900, 0, 0, 1600);
