@@ -21,7 +21,6 @@ public class ProjectileSpawner {
 	private Body createBody(Weapon weapon, World world, float scale) {
 		BodyDef bodyDef = new BodyDef();
 		bodyDef.type = BodyType.DynamicBody;
-		//bodyDef.fixedRotation = true;
 		
 		final float width = weapon.getTexture().getRegionWidth() * scale;
 		final float height = weapon.getTexture().getRegionHeight() * scale;
@@ -37,7 +36,6 @@ public class ProjectileSpawner {
 		FixtureDef fixtureDef = new FixtureDef();
 		fixtureDef.shape = shape;
 		fixtureDef.density = 1f;
-		//fixtureDef.isSensor = true;
 		body.createFixture(fixtureDef);
 		
 		shape.dispose();
@@ -49,13 +47,14 @@ public class ProjectileSpawner {
 		Projectile projectile = new Projectile(createBody(weapon, world, scale), weapon.getDamage(), scale);
 		projectile.getBody().setTransform(projectile.getBody().getPosition().set(originX + projectile.getWidth() / 2f, originY + projectile.getHeight() / 2f), 0);
 		
-		projectile.getBody().applyLinearImpulse(force.x, force.y, 0, 0, true);
+		projectile.getBody().applyLinearImpulse(force.x, force.y, originX + projectile.getWidth() / 2f, originY + projectile.getHeight() / 2f, true);
+		projectile.getBody().applyAngularImpulse(10000f, true);
 		projectile.setTexture(weapon.getTexture());
 		return projectile;
 	}
 	
 	public void spawn(Weapon wep, Layer layer, World world, Vector2 dir, float originX, float originY) {
-		dir.scl(10f);
+		dir.scl(1000f);
 		if (wep.getType() == Type.LIGHT_BALLISTIC) {
 			layer.addGameObject(createProjectile(wep, world, dir, originX, originY));
 		}
