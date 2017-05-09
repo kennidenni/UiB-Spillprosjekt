@@ -1,5 +1,5 @@
 Credits: 
-Creators 
+Created by:  
 TeamDank
 
 Developer:
@@ -9,7 +9,9 @@ Art:
 TeamDank Art Department 
 
 WeatherData:
-http://om.yr.no/verdata/xml/ (Data from http://www.yr.no)
+Weather forecast from Yr, delivered by the Norwegian Meteorological Institute and NRK.
+http://om.yr.no/verdata/xml/ 
+(Data from http://www.yr.no/sted/Hordaland/Bergen/Bergen/)
 
 Soundtracks: 
 This game uses theses sounds from freesound: 
@@ -26,3 +28,29 @@ dead_pedestrian (me_ouch.wav) by (http://freesound.org/people/SpazTastic)
 fuel.wav (Drip2.wav) by (http://freesound.org/people/Neotone)
 
 splash.mp3 (Splash 1.wav) by (http://freesound.org/people/FreqMan)
+
+Game idea:
+Team 1_9, by Kenneth Apeland, Natalie Priyaphon Wannaphong, Joakim Moss Grutle and Peder Bøen
+
+
+Members of TeamDank: 
+
+Developers: 
+Philip Thao Hoang
+Torbjørn Ola Sunnarvik Moen
+Kenneth Apeland
+Peter Andre Johansen
+Elias Refvem Siljan
+Håvar Eggereide
+Markus Johan Ragnhildstveit
+Sturle Fraga Elvestad
+Eirik Strøm
+Amund Lindberg
+Ole Magnus Lie
+Bjørnar Herland
+
+Art Department: 
+Malin Øien and Emilia Botnen Van den Bergh
+
+Legal Team: 
+Anna Fossen-Helle
