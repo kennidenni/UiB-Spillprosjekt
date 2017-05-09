@@ -34,7 +34,15 @@ public class BackgroundLayer extends Layer {
 		this.playerCamera = playerCamera;
 		this.screenCamera = screenCamera;
 		this.player = player;
-		this.backgroundTexture = new Texture(Gdx.files.internal("Images/background.png"));
+		
+		// fordi backgroundTexture er final så kan ikke denne if setningen flyttes ut i egen metode.
+		if (wType.equals(WeatherType.SNOW)){
+			this.backgroundTexture = new Texture(Gdx.files.internal("Images/background_snow.png"));
+		}
+		else {
+			this.backgroundTexture = new Texture(Gdx.files.internal("Images/background.png"));
+		}
+		
 		this.scrollingRoad = new LoopingBackground(playerCamera, new Texture(Gdx.files.internal("Images/road.png")), .5f);
 		
 		TextureAtlas structuresAtlas = assets.getAtlas("Images/structure_sheet.json"); 
@@ -42,11 +50,13 @@ public class BackgroundLayer extends Layer {
 		
 		// Set weather texture
 		if(wType != WeatherType.SNOW){
+			
 			structureTextures[0] = structuresAtlas.getRegion("building_left_1");
 			structureTextures[1] = structuresAtlas.getRegion("building_left_2");
 			structureTextures[2] = structuresAtlas.getRegion("pond_left_1");
 			structureTextures[3] = structuresAtlas.getRegion("trees_1");
 		} else {
+			
 			structureTextures[0] = structuresAtlas.getRegion("building_left_1_snow");
 			structureTextures[1] = structuresAtlas.getRegion("building_left_2_snow");
 			structureTextures[2] = structuresAtlas.getRegion("pond_left_1");
@@ -60,11 +70,11 @@ public class BackgroundLayer extends Layer {
 	}
 	
 	public int getRoadLeftX() {
-		return (int) (-(scrollingRoad.getWidth() - player.getWidth()) / 2);
+		return -(scrollingRoad.getWidth() - player.getWidth()) / 2;
 	}
 	
 	public int getRoadRightX() {
-		return (int) ((scrollingRoad.getWidth() + player.getWidth()) / 2);
+		return (scrollingRoad.getWidth() + player.getWidth()) / 2;
 	}
 	
 	@Override
