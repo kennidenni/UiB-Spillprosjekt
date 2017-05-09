@@ -51,7 +51,7 @@ public class ScrollingSpawner implements Generator<GameObject> {
 	}
 
 
-	private void deleteOldStructures() {
+	protected void deleteOldStructures() {
 		GameObject firstSpawn = spawns.get(0);
 		if (firstSpawn.isMarkedForRemoval()) {
 			// Object has already been removed elsewhere
@@ -69,6 +69,26 @@ public class ScrollingSpawner implements Generator<GameObject> {
 	@Override
 	public GameObject generate(Random random) {
 		return generator.generate(random);
+	}
+
+	protected OrthographicCamera getCamera() {
+		return camera;
+	}
+
+	protected Generator<GameObject> getGenerator() {
+		return generator;
+	}
+
+	protected Layer getLayer() {
+		return layer;
+	}
+
+	protected Random getRandom() {
+		return random;
+	}
+
+	protected Array<GameObject> getSpawns() {
+		return spawns;
 	}
 
 	private int getNewHorizontalPosition(int width) {
