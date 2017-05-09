@@ -62,7 +62,6 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 	private final FoodHud hud;
 	private final AssetManager assets;
 
-	private WeaponMenu weaponMenu;
 	private boolean touched = false;
 	private long startTime;
 	private long elapsedTime;
