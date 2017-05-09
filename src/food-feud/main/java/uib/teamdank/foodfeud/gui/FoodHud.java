@@ -57,9 +57,6 @@ public class FoodHud {
 
 	private boolean muted = false;
 	
-    private static final String MENU = "Images/Buttons/ff_menu.png";
-    private Table weaponTable;
-	private ImageButton weaponMenuButton;
 	private WeaponMenu weaponMenu;
 	
 	public FoodHud() {
