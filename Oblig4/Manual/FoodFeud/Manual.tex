@@ -7,20 +7,22 @@
 \usepackage{array}
 \usepackage[hmargin=3.5cm,vmargin=2.7cm]{geometry} 
 \usepackage{graphicx}
+\usepackage{mathtools}
 
 
 \title{Spillmanual}
 \author{Team Dank}
 \begin{document}
 \author{Team Dank \\
-Universitetet i Bergern \\
+Universitetet i Bergen \\
 Informatikk}
 \maketitle
 
 \newpage
 
 \section{Introduksjon}
-Dette er et spill tiltenkt datamaskiner der spillere kjemper om å overleve lengst.
+Dette er et spill tiltenkt datamaskiner der spillere kjemper om å overleve lengre enn sine motstandere. Det kan være opp til 4 spillere, men minimum 2. Spillet er et rundebasert 2D-platform strategi artilleri spill. Spillerne kan bevege seg i 30 sekunder for å posisjonere seg. Deretter vil de ha muligheten til å sikte seg inn på fiender med våpen som skyter matvarer. Disse matvarene er melk, osv i skrivende stund, flere kan bli implementert i senere versjoner. % TODO
+Når man har truffet en fiende, vil denne fienden legge på seg det antall kalorier matvaren inneholder. Dersom spilleren kommer over en grense kalorier vil spilleren tape, og er ute av spillet. Den som overlever til slutt vil vinne spillet.
 
 
 \section{Systemkrav og installasjon}
@@ -32,12 +34,12 @@ Dette er et spill tiltenkt datamaskiner der spillere kjemper om å overleve leng
 	\item{50 MB ledig plass for installasjon}
 	\item{Java 8}
 	\item{Tastatur og mus}
-	\item{TeamDank anbefaler deg å ha en prosessor (2005+) med klokkefrekvens på 1.6 Ghz eller bedre}
+	\item{TeamDank anbefaler deg å ha en prosessor (2005+) med klokkefrekvens på 1.6 GHz eller bedre}
 \end{itemize}
 
 \subsection{Installasjon}
 Du må først sørge for at du har installert den nyeste versjonen av Java og \\
-for å kunne spille Carl the Crasher må du laste ned carlthecrasher.jar filen. \\
+for å kunne spille FoodFeud må du laste ned $foodfeud.jar$ filen. \\
 Deretter åpner du filen som vanlig for å starte spillet.  
 \newpage
 
