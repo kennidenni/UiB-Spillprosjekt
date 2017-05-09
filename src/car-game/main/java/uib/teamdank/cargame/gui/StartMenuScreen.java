@@ -4,7 +4,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.Array;
 import uib.teamdank.cargame.CarGame;
@@ -17,7 +16,6 @@ import uib.teamdank.common.gui.CreditScreen;
 
 public class StartMenuScreen extends MenuScreen implements uib.teamdank.common.gui.StartMenuScreen {
 	private static final String BACKGROUND = "Images/menu_screen.png";
-	private static final String LOGO = "Images/CarGameLogo.png";
 	private static final String PLAY = "Images/Buttons/start.png";
 	private static final String HIGHSCORE = "Images/Buttons/cg_highscore.png";
 	private static final String SHOP = "Images/Buttons/bs_shop.png";
@@ -32,7 +30,6 @@ public class StartMenuScreen extends MenuScreen implements uib.teamdank.common.g
 	private ShopScreen shopScreen;
 	private Player player;
 	private WeatherData wData;
-	private Image backgroundImage;
 
 	public StartMenuScreen(CarGame game) {
 		super();
@@ -79,7 +76,7 @@ public class StartMenuScreen extends MenuScreen implements uib.teamdank.common.g
 	
 	private void setupBackground() {
 		Texture backgroundTexture = new Texture(BACKGROUND);
-		backgroundImage = new Image(backgroundTexture);
+		Image backgroundImage = new Image(backgroundTexture);
 		getStage().addActor(backgroundImage);
 	}
 
