@@ -1,19 +1,3 @@
-/*******************************************************************************
- * Copyright (C) 2017  TeamDank
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- *******************************************************************************/
 package uib.teamdank.common.util;
 
 import java.util.Arrays;
@@ -54,6 +38,12 @@ public class AudioManager implements Disposable {
 		}
 		return tracks.get(name);
 	}
+	
+	public void loopSound(String name) {
+		getSound(name).stop();
+		long id = getSound(name).play();
+		getSound(name).setLooping(id, true);
+	}
 
 	public void loopTrack(String name) {
 		getTrack(name).stop();
@@ -62,7 +52,7 @@ public class AudioManager implements Disposable {
 	}
 
 	public void mute() {
-		boolean muted = true;
+		muted = true;
 		tracks.forEach((name, track) -> track.setVolume(0));
 		sounds.forEach((name, sound) -> sound.stop());
 	}
@@ -105,7 +95,7 @@ public class AudioManager implements Disposable {
 	}
 
 	public void unmute() {
-		boolean muted = false;
+		muted = false;
 		tracks.forEach((name, track) -> track.setVolume(1));
 	}
 }
