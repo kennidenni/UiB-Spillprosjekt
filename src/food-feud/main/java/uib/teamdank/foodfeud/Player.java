@@ -16,14 +16,17 @@
  *******************************************************************************/
 package uib.teamdank.foodfeud;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.World;
 
 import uib.teamdank.common.Actor;
 import uib.teamdank.common.Inventory;
 import uib.teamdank.common.ItemHolder;
+import uib.teamdank.common.gui.Layer;
 import uib.teamdank.common.util.Animation;
 import uib.teamdank.common.util.AssetManager;
 import uib.teamdank.common.util.TextureAtlas;
@@ -52,11 +55,16 @@ public class Player extends Actor implements ItemHolder, PhysicsSimulated {
 
 	private final Team team;
 	private final Inventory weapons;
+	private Weapon selectedWeapon;
 	
 	public Player(AssetManager assets, Team team, String name) {
 		super(100, name);
 		this.team = team;
 		this.weapons = new Inventory();
+		for (Weapon weapon : WeaponLoader.fromJson(assets, Gdx.files.internal("Data/weapons.json"))) {
+			this.weapons.addItem(weapon);
+		}
+		selectedWeapon = (Weapon) weapons.getItem(0);
 
 		this.playerAtlas = assets.getAtlas("Images/player_sheet.json");
 		this.feetStillAnimation = assets.getAnimation(team.getStillAnimation());
@@ -66,6 +74,15 @@ public class Player extends Actor implements ItemHolder, PhysicsSimulated {
 		
 		this.bodyTexture = getBodyExpansionTexture();
 		currentFeetAnimation = feetStillAnimation;
+	}
+	
+	public boolean fireWeapon(Layer layer, World world, Vector2 dir, long elapsedTime) {
+		if (selectedWeapon == null || selectedWeapon.getAmount() == 0) {
+			return false;
+		}
+		selectedWeapon.fire(selectedWeapon, this, layer, world, dir, elapsedTime);
+		
+		return true;
 	}
 	
 	@Override
@@ -115,6 +132,10 @@ public class Player extends Actor implements ItemHolder, PhysicsSimulated {
 		return super.getPosition();
 	}
 
+	public Weapon getSelectedWeapon() {
+		return selectedWeapon;
+	}
+	
 	@Override
 	public Vector2 getVelocity() {
 		if (body != null) {

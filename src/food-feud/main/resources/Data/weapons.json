@@ -1,0 +1,20 @@
+[
+	{
+		"name": "Melk",
+		"description": "A cold box of milk.",
+		"texture": "milk",
+		"calories": "41",
+		"mass": "0.33",
+		"amount": "5",
+		"type": "LIGHT_BALLISTIC"
+	},
+	{
+		"name": "Coca Cola",
+		"description": "The most popular fizzy drink.",
+		"texture": "soda",
+		"calories": "42",
+		"mass": "1	",
+		"amount": "3",
+		"type": "LIGHT_BALLISTIC"
+	}
+]
