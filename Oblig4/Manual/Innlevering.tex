@@ -11,7 +11,7 @@
 
 
 \begin{document}
-\title{ \normalsize \includegraphics[scale=0.5]{images/CarGameLogo.png}
+\title{ \normalsize \includegraphics[scale=0.43]{images/CarGameLogo.png}
 	\\
 	\includegraphics[scale=0.5]{images/menu_car.png}
 }
@@ -34,14 +34,15 @@ Spilleren får en score for hver spillrunde, i tillegg til at spilleren samler o
 
 \section{Systemkrav og installasjon}
 \subsection{Systemkrav}
-Ikke mindre enn 1 GB RAM minne\\
-Windows Vista/Linux 2005/Mac OS X eller senere \\
-50 MB ledig plass for installasjon \\
-Java 8 \\
-Tastatur, mus \\
-TeamDank anbefaler deg å ha en prosessor (2005+) med \\ 
+\begin{itemize}
+	\item Ikke mindre enn 1 GB RAM minne\\
+	\item Windows Vista/Linux 2005/Mac OS X eller senere \\
+	\item 50 MB ledig plass for installasjon \\
+	\item Java 8 \\
+	\item Tastatur, mus \\
+ 	\item TeamDank anbefaler deg å ha en prosessor (2005+) med \\ 
 klokkefrekvens på 1.6 Ghz eller bedre.
-
+\end{itemize}
 \subsection{Installasjon}
 Du må først sørge for at du har installert den nyeste versjonen av Java og \\
 for å kunne spille Carl the Crasher må du laste ned carlthecrasher.jar filen. \\
@@ -49,15 +50,27 @@ Deretter åpner du filen som vanlig for å starte spillet.
 \newpage
 
 \section{Spillinstruksjoner og -regler} 
-Din pirmære spillinngangsenhet er tastaturen. Du styrer Carl ved å bruke 
-Spillere. & En-spiller spill. \\ \hline
-Spillvarighet. & Spillet varer helt til bilen går tom for bensin eller til spilleren kjører på at kumlokk.\\&
-Dette kan ta alt fra få sekunder til mange minutter, da spiller kan plukke opp mer bensin på veien, eller kræsje med en gang.\\ \hline
-
-
-
-
-	
+Som Carl liker du å kjøre uforsvarlig, og målet ditt er å komme deg så lengst mulig uten gå tom for bensin og få mest mulig poeng. \\
+Din primære spillinngangsenhet er tastaturen, og kan gjøre følgende: 
+\begin{itemize}
+	\item Du styrer Carl til høyre og venstre ved å bruke enten piltastene eller tastaturknappene \\ A og D. \\ 
+	\item Carl kan ikke styre bilens hastighet direkte, men farten vil økes jo lenger du kjøre.
+	\item Du kan ikke kjøre ut av veien, men du kan kjøre på objekter som oppstår på veien.
+	\item Du kan pause spillet ved å gå til pausemenyen ved å trykke på tastaturknappen ESC. 
+	\begin{itemize}
+		\item Å trykke på ESC vil gi deg muligheten til å fortsette eller avsluttet spillet.
+	\end{itemize}
+\end{itemize}
+På veien kan det oppstå forskjellige objekter, og avhengig av objektet kan det påføre bilen en positiv, eller negativ effekt. \\
+\begin{itemize}
+	\item \includegraphics[scale=0.2]{images/gastank.png} Bensintank: Kan plukkes for å øke drivstoffen slik at du kan kjøre lengre 
+	\item \includegraphics[scale=0.5]{images/coin.png} Mynt: På veien kan du finne mynter som du kan plukke opp.5
+																Myntene kan brukes i butikken for å kjøpe nye biler.
+	\item \includegraphics[scale=0.2]{images/puddle.png} Vanndam: Kjører du på en vanndam vil det minske mengden drivstoff,
+																og samtidig gjøre at du vil miste litt kontrollen av bilen i en liten periode. 
+	\item \includegraphics[scale=0.2]{images/manhole.png} Kumlokk: Dersom du kjører på en kumlokk vil du kræsje og deretter tape umiddelbart
+	\item \includegraphics[scale=0.4]{images/walker.png} Myke trafikanter: Å kjøre på trafikanter vil gi deg ekstra poeng som vil øke sluttpoengsummen din 
+\end{itemize}
 \newpage
 
 \begin{center}
@@ -72,76 +85,6 @@ om det regner vil det regne på banen, og om det snør vil det være snø på ba
 \end{tabular}
 \end{center}
 
-\begin{center}
-\begin{tabular}{ | m{4cm} | m{10cm}|} 
-\hline
-Pre-condition & 
-Spillet er startet \\&
-\\ \hline
-
-Standard path & 
-S01 Bruker står i starmenyen \\&
-S02 Trykker `play` \\&
-S03 Spillet starter \\&
-S04 Bruker holder inne til høyre eller venstre for å styre \\&
-S05 Bruker unngår hindringene \\&
-S06 Bruker plukker opp myntene\\&
-S07 Bruker plukker opp bensintankene dersom det kommer\\&
-S08 Bruker spiller til tom for bensin \\&
-S09 Spillet stopper \\&
-S10 Spillet viser high-score og ekstra penger \\&
-S11 Spillet lagrer \\&
-S12 Spillet går tilbake til startskjermen \\&
-\\ \hline
-
-Post-condition & 
-Spillet er klar til å avsluttes eller starte på nytt \\&
-\\ \hline
-
-Alternative Path & 
-A01: @S01, Bruker kan trykke på oppgrader knappen\\& 
-		A01.01 Bruker kjøper oppgraderinger dersom han vil\\&
-		A01.02 Bilen i spillet blir bedre \\&
-		A01.03 Bruker trykker på tilbake-knappen \\&
-		A01.04 RESUME @S01 \\&
-		\\&
-A02: @S01, Bruker kan trykke på tannhjul knappen\\& 
-		A02.01 Bruker endrer på instillingene han vil\\&
-		A02.02 Spillet godtar instillingene \\&
-		A01.03 Bruker trykker på tilbake-knappen \\&
-		A02.04 RESUME @S01 \\&
-		\\&
-A03: @S04-07, Bruker kan når som helst trykke på pause mens han spiller spillet\\&
-		A03.01 Spillet settes på pause \\& 
-		A03.02 Bruker kan trykke `Avslutt` eller `Fortsett`\\& 
-		A03.03 Dersom bruker trykker på `Avslutt`\\& 
-		A03.04 RESUME @S09 \\&
-		
-\\ \hline
-\end{tabular}
-Use-case: Spille spillet
-\end{center}
-
-	\section{Spillregler}
-		\subsection{Kontroll}
-		\begin{itemize}
-			\item{Spilleren kan styre bilen til høyre og venstre ved hjelp av piltastene eller A og D.}
-			\item{Spilleren kan ikke styre bilens hastighet direkte.}
-			\item{Bilen kan ikke styres av veien.}
-			\item{Man går til pausemenyen ved å trykke på ESC.}
-		\end{itemize}
-
-		\subsection{Objektinteraksjon}
-		\begin{itemize}
-			\item{Bilen kan treffe objekter i veien.}
-			\item{Objekter kan påføre bilen en positiv, eller negativ effekt.}
-			\item{Mynter vil gi spilleren mulighet til å kjøpe nye biler.}
-			\item{Bensintanker vil gi spilleren mer drivstoff, slik at spillet varer lengre.}
-			\item{Myke trafikanter vil gi spilleren mer poeng dersom de blir påkjørt.}
-			\item{Vanndammer vil minske mengden drivstoff, og samtidig gjøre at spilleren mister litt kontrollen av bilen.}
-			\item{Kumlokk vil avslutte spillet.}
-		\end{itemize}
-
 		\subsection{Poeng}
 		\begin{itemize}
 			\item{Spilleren tjener poeng konstant når han kjører.}
@@ -153,16 +96,6 @@ Use-case: Spille spillet
 		\begin{itemize}
 			\item{I løpet av spillet får spilleren penger i form av spillets egen valuta.}
 			\item{Pengene kan brukes i spillets butikk fra hovedmenyen for å kjøpe nye biler.}
-		\end{itemize}
-
-	\section{Brukerhistorier}
-		\begin{itemize}
-			\item{Som spiller vil jeg ha mulighet til å styre bilen for å kunne velge hva jeg vil kjøre over.}
-			\item{Som spiller vil jeg ha mulighet til å sette spillet på pause når jeg vil for å kunne gjøre andre ting.}
-			\item{Som spiller vil jeg ha mulighet til å avslutte spiller når jeg vil i tilfelle jeg ikke har tid til å spille mer.}
-			\item{Som spiller vil jeg ha mulighet til å oppgradere bilen min for å få en følelse av progressjon.}
-			\item{Som spiller vil jeg ha mulighet til å se mine høyeste poengscore for å kunne måle min egen progressjon i spillet.}
-			\item{Som spiller vil jeg ha mulighet til å justere lydvolumet på spillet for å ikke vere forstyrrende på bussen.}
 		\end{itemize}
 
 	\newpage
