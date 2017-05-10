@@ -51,16 +51,17 @@ public class LevelLoader {
 		Texture foreground = new Texture(model.foreground);
 
 		World world = new World(new Vector2(0, model.gravity), true);
-		createGroundFixtures(world, model, background.getHeight());
+		Level level = new Level(model.name, world, background, foreground);
+		createGroundFixtures(world, model, level, background.getHeight());
 
 		return new Level(model.name, world, background, foreground);
 	}
 
-	private static void createGroundFixtures(World world, LevelModel level, int height) {
+	private static void createGroundFixtures(World world, LevelModel level, Level levelObj, int height) {
 		BodyDef groundDef = new BodyDef();
 		groundDef.type = BodyType.StaticBody;
 		Body ground = world.createBody(groundDef);
-		ground.setUserData(level);
+		ground.setUserData(levelObj);
 
 		for (int i = 0; i < level.ground.length; i++) {
 

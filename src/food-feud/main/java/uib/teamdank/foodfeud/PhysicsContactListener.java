@@ -42,21 +42,29 @@ public class PhysicsContactListener implements ContactListener {
 		Object userDataA = contact.getFixtureA().getBody().getUserData();
 		Object userDataB = contact.getFixtureB().getBody().getUserData();
 
-		System.out.println(userDataA.getClass().toString() + " " + userDataB.getClass().toString());
-
 		if (userDataA instanceof Projectile && userDataB instanceof Player) {
-			projectileHit((Player) userDataB, (Projectile) userDataA);
+			projectileHit((Projectile) userDataA, (Player) userDataB);
 		}
 		else if(userDataA instanceof Player && userDataB instanceof Projectile) {
-			projectileHit((Player) userDataA, (Projectile) userDataB);
+			projectileHit((Projectile) userDataB, (Player) userDataA);
+		}
+		else if(userDataA instanceof Projectile && userDataB instanceof Level) {
+			projectileHitGround((Projectile) userDataA);
+		}
+		else if(userDataA instanceof Level && userDataB instanceof Projectile) {
+			projectileHitGround((Projectile) userDataB);
 		}
 		else {
 			updatePlayerGroundStatus(contact.getFixtureA(), contact.getFixtureB(), false);
 		}
 	}
 
-	private void projectileHit(Player player, Projectile projectile) {
-		System.out.println("hit");
+	private void projectileHitGround(Projectile userDataA) {
+		// TODO
+	}
+
+	private void projectileHit(Projectile projectile, Player player) {
+		player.setHealth(player.getHealth() - projectile.getDamage());
 	}
 
 	@Override
