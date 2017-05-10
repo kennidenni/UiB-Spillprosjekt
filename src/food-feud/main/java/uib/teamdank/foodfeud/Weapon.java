@@ -45,7 +45,6 @@ public class Weapon extends Item {
 	private final Type type;
 
 	private float mass;
-	private int amount;
 	private boolean damagedPlayer = false;
 
 	/**
@@ -55,28 +54,20 @@ public class Weapon extends Item {
 	 * @param descr
 	 *            weapon description
 	 */
-	public Weapon(String name, String descr, TextureRegion texture, int damage, float mass, int amount, Type type) {
+	public Weapon(String name, String descr, TextureRegion texture, int damage, float mass, Type type) {
 		super(name, descr);
 		setTexture(texture);
 		this.damage = damage;
 		this.mass = mass;
-		this.amount = amount;
 		this.type = type;
 	}
 
-	public void fire(GameScreen game, Weapon weapon, Player player, Layer layer, World world, Vector2 dir, long elapsedTime) {
-		if (amount > 0) {
-			amount--;
+	public void fire(Weapon weapon, Player player, Layer layer, World world, Vector2 dir, long elapsedTime) {
 			ProjectileSpawner spawner = new ProjectileSpawner();
 			spawner.spawn(game, weapon, layer, world, player, dir, player.getX() + player.getWidth(),
 					player.getY() + player.getHeight() - player.getHeight() / 2f, elapsedTime);
 		}
-	}
-
-	public int getAmount() {
-		return amount;
-	}
-
+	
 	public int getDamage() {
 		return damage;
 	}
@@ -97,4 +88,4 @@ public class Weapon extends Item {
 		}
 	}
 
-}
+}
