@@ -30,10 +30,7 @@ import uib.teamdank.cargame.CarGame;
 import uib.teamdank.cargame.Pedestrian;
 import uib.teamdank.cargame.Player;
 import uib.teamdank.cargame.RoadEntity;
-import uib.teamdank.cargame.util.PedestrianGenerator;
-import uib.teamdank.cargame.util.RoadEntityGenerator;
-import uib.teamdank.cargame.util.ScrollingSpawner;
-import uib.teamdank.cargame.util.WeatherGenerator;
+import uib.teamdank.cargame.util.*;
 import uib.teamdank.common.Game;
 import uib.teamdank.common.GameObject;
 import uib.teamdank.common.Score;
@@ -147,11 +144,13 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 		pedestrianSpawner.setExtraVerticalSpaceBetweenSpawns(50);
 		
 		// Weather spawner initialization
-		this.weatherSpawner = new ScrollingSpawner(weatherLayer, playerCamera, new WeatherGenerator(wType));
-		if(wType == WeatherType.SNOW || wType == WeatherType.RAIN)
-			weatherSpawner.setHorizontalPositionRange(-Gdx.graphics.getWidth()+300, Gdx.graphics.getWidth());
-		else
+		if(wType == WeatherType.SNOW || wType == WeatherType.RAIN) {
+			weatherSpawner = new DownpourSpawner(weatherLayer, playerCamera, new WeatherGenerator(wType));
+		}
+		else {
+			weatherSpawner = new ScrollingSpawner(weatherLayer, playerCamera, new WeatherGenerator(wType));
 			weatherSpawner.setHorizontalPositionRange(-Gdx.graphics.getWidth(), Gdx.graphics.getWidth());
+		}
 		weatherSpawner.setChanceOfSpawn(2f);
 
 		// HUD
@@ -299,14 +298,17 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 		if (player.isOutOfFuel() && player.getVelocity().y == 0) {
 			getGame().setScreen(new EndingScreen((CarGame) getGame()));
 		}
-
-
+		
 	}
-	
+
 	private void updateHUD() {
 		hud.setCurrentFuel(player.getHealth(), player.getMaxHealth());
 		hud.setScore(player.getScore().getScore());
 		hud.setCoins(player.getInventory().getGold());
+	}
+	
+	public void setWeather (WeatherType w) {
+		wType = w;
 	}
 	
 }

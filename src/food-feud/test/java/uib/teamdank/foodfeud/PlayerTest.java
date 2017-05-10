@@ -34,11 +34,6 @@ public class PlayerTest extends LibGdxDependentTest {
 	public void setUp() {
 		player = new Player(new AssetManager(), Team.ALPHA, "sturle");
 	}
-
-	@Test
-	public void noWeapons() {
-		assertThat(player.getInventory().getItemCount(), is(equalTo(0)));
-	}
 	
 //	@Test
 //	public void addWeapon() {

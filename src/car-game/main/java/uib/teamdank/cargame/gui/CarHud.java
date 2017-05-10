@@ -106,6 +106,7 @@ public class CarHud {
 		
 		newHighscoreInit();
 		
+		
 		stage.addActor(scoreTable);
 		stage.addActor(fuelTable);
 		stage.addActor(coinsTable);
@@ -226,7 +227,6 @@ public class CarHud {
 	
 	public void newHighscoreInit() {
 		newHighscoreMessage = new TextButton("NEW HIGHSCORE!", textButtonStyle);
-		newHighscoreMessage.getLabel().setFontScale(5, 5);
 		
 		newHighscoreTable = new Table();
 		newHighscoreTable.add(newHighscoreMessage).width(300).pad(0, 0, 800, 0);
