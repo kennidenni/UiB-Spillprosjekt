@@ -44,7 +44,6 @@ import uib.teamdank.foodfeud.PlayerBodyCreator;
  * The main gameplay screen.
  */
 public class GameScreen extends uib.teamdank.common.gui.GameScreen {
-	private static final Box2DDebugRenderer WORLD_DEBUG_RENDERER = new Box2DDebugRenderer();
 	
 	private static final String MUSIC_TRACK = "Music/happy_bgmusic.wav";
 	private static final String WALKING_SOUND = "Sounds/running.wav";
@@ -132,7 +131,6 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 		// Render HUD
 		hud.render(delta);	
 		
-		WORLD_DEBUG_RENDERER.render(level.getWorld(), camera.combined);
 	}
 	
 	@Override

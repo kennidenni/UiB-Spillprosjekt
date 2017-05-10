@@ -130,7 +130,6 @@ public class FoodHud extends ScreenAdapter {
 		weapons.add(carrot).width((float) (carrot.getWidth() / 1.3)).height((float) (carrot.getHeight() / 1.3)).pad(5);
 		weapons.add(cheese).width((float) (cheese.getWidth() / 1.3)).height((float) (cheese.getHeight() / 1.3)).pad(5);
 		weapons.add(donut).width((float) (donut.getWidth() / 1.3)).height((float) (donut.getHeight() / 1.3)).pad(5);
-		weapons.debug();
 		weapons.pad(900, 0, 5, 0);
 		weapons.row();
 	}
