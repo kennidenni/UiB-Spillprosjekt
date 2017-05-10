@@ -171,10 +171,9 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 			Vector3 aim3D = camera.unproject(new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0));
 			Vector2 aim = new Vector2(aim3D.x, aim3D.y);
 			aim.sub(activePlayer.getPosition());
-			activePlayer.fireWeapon(playerLayer, level.getWorld(), aim.nor(), 10000);
-			match.CURRENT_AMMO_COUNT--;
+			activePlayer.fireWeapon(this, playerLayer, level.getWorld(), aim.nor(), 10000);
 		}
-		if (Gdx.input.justTouched()) {
+		if (Gdx.input.justTouched() && !hud.weaponsAreVisible()) {
 			
 			startTime = System.currentTimeMillis();
 			elapsedTime = 0;
@@ -186,10 +185,9 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 				Vector3 aim3D = camera.unproject(new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0));
 				Vector2 aim = new Vector2(aim3D.x, aim3D.y);
 				aim.sub(activePlayer.getPosition());
-				activePlayer.fireWeapon(playerLayer, level.getWorld(), aim.nor(), elapsedTime * 100);
-				match.CURRENT_AMMO_COUNT--;
+				System.out.println(elapsedTime * 100);
+				activePlayer.fireWeapon(this, playerLayer, level.getWorld(), aim.nor(), elapsedTime * 100);
 				touched = false;
-				
 			}
 		
 		if (Gdx.input.isKeyJustPressed(Keys.N)) {

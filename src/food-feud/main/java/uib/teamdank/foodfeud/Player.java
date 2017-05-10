@@ -32,6 +32,7 @@ import uib.teamdank.common.gui.Layer;
 import uib.teamdank.common.util.Animation;
 import uib.teamdank.common.util.AssetManager;
 import uib.teamdank.common.util.TextureAtlas;
+import uib.teamdank.foodfeud.gui.GameScreen;
 
 /**
  * Represents a player in the game.
@@ -76,11 +77,11 @@ public class Player extends Actor implements ItemHolder, PhysicsSimulated {
 		currentFeetAnimation = feetStillAnimation;
 	}
 	
-	public boolean fireWeapon(Layer layer, World world, Vector2 dir, long elapsedTime) {
+	public boolean fireWeapon(GameScreen game, Layer layer, World world, Vector2 dir, long elapsedTime) {
 		if (selectedWeapon == null) {
 			return false;
 		}
-		selectedWeapon.fire(selectedWeapon, this, layer, world, dir, elapsedTime);
+		selectedWeapon.fire(game, selectedWeapon, this, layer, world, dir, elapsedTime);
 		
 		return true;
 	}
@@ -221,8 +222,6 @@ public class Player extends Actor implements ItemHolder, PhysicsSimulated {
 		else if (this.getFlipHorizontally() && bodyWidth < 160*getScale())
 			bodyOffsetX = 160*getScale()-bodyWidth;
 		
-		System.out.println(bodyOffsetX);
-		
 		final float feetOffsetY = -feetOffset.y * getScale();
 
 		renderTexture(batch, delta, bodyTexture, bodyWidth, bodyHeight, bodyOffsetX, feetHeight + feetOffsetY);
@@ -279,4 +278,4 @@ public class Player extends Actor implements ItemHolder, PhysicsSimulated {
 			currentFeetAnimation.update(delta);
 		}
 	}
-}
+}
