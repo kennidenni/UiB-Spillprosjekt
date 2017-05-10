@@ -17,7 +17,7 @@ import uib.teamdank.foodfeud.Weapon.Type;
 import uib.teamdank.foodfeud.gui.GameScreen;
 
 public class ProjectileSpawner {
-
+	
 	static Weapon wep;
 
 	private Body createBody(Weapon weapon, World world, float scale) {
