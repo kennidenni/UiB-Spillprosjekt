@@ -173,7 +173,7 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 			aim.sub(activePlayer.getPosition());
 			activePlayer.fireWeapon(this, playerLayer, level.getWorld(), aim.nor(), 10000);
 		}
-		if (Gdx.input.justTouched()) {
+		if (Gdx.input.justTouched() && !hud.weaponsAreVisible()) {
 			
 			startTime = System.currentTimeMillis();
 			elapsedTime = 0;
@@ -188,7 +188,6 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 				System.out.println(elapsedTime * 100);
 				activePlayer.fireWeapon(this, playerLayer, level.getWorld(), aim.nor(), elapsedTime * 100);
 				touched = false;
-				
 			}
 		
 		if (Gdx.input.isKeyJustPressed(Keys.N)) {

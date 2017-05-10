@@ -17,7 +17,6 @@
 package uib.teamdank.foodfeud.gui;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -38,7 +37,6 @@ import uib.teamdank.common.gui.MenuScreen;
 import uib.teamdank.common.util.AssetManager;
 import uib.teamdank.common.util.TextureAtlas;
 import uib.teamdank.foodfeud.FoodFeud;
-import uib.teamdank.foodfeud.Player;
 import uib.teamdank.foodfeud.Weapon;
 import uib.teamdank.foodfeud.WeaponLoader;
 
@@ -61,6 +59,7 @@ public class FoodHud extends MenuScreen {
 	private Table menu;
 
 	private boolean muted = false;
+	private boolean weaponDelay = false;
 
 	private static final String MENU_PATH = "Images/Buttons/ff_menu.png";
 	private ImageButton weaponMenuButton;
@@ -148,10 +147,13 @@ public class FoodHud extends MenuScreen {
 				Vector2 mouse = stage.screenToStageCoordinates(new Vector2(Gdx.input.getX(), Gdx.input.getY()));
 
 				if (stage.hit(mouse.x, mouse.y, true) == event.getTarget()) {
-					if (weapons.isVisible())
+					if (weapons.isVisible()) {
 						weapons.setVisible(false);
-					else
+						weaponDelay = true;
+					}
+					else {
 						weapons.setVisible(true);
+					}
 				}
 			}
 		});
@@ -234,6 +236,17 @@ public class FoodHud extends MenuScreen {
 		TextureRegion myTextureRegion = new TextureRegion(myTexture);
 		TextureRegionDrawable myTexRegionDrawable = new TextureRegionDrawable(myTextureRegion);
 		return new ImageButton(myTexRegionDrawable);
+	}
+
+	public boolean weaponsAreVisible() {
+		if(weapons.isVisible()) {
+			return true;
+		}
+		if(weaponDelay) {
+			weaponDelay = false;
+			return true;
+		}
+		return false;
 	}
 
 }
