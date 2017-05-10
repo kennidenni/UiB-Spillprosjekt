@@ -269,4 +269,8 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 		if (player != null)
 			getGame().setScreen(new EndingScreen((FoodFeud) getGame()));
 	}
+	
+	public Player getCurrentPlayer() {
+		return match.getActivePlayer();
+	}
 }

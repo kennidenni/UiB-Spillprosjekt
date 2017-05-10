@@ -66,7 +66,6 @@ public class Player extends Actor implements ItemHolder, PhysicsSimulated {
 		for (Weapon weapon : WeaponLoader.fromJson(assets, Gdx.files.internal("Data/weapons.json"))) {
 			this.weapons.addItem(weapon);
 		}
-		selectedWeapon = (Weapon) weapons.getItem(0);
 
 		this.playerAtlas = assets.getAtlas("Images/player_sheet.json");
 		this.feetStillAnimation = assets.getAnimation(team.getStillAnimation());
@@ -78,7 +77,7 @@ public class Player extends Actor implements ItemHolder, PhysicsSimulated {
 	}
 	
 	public boolean fireWeapon(Layer layer, World world, Vector2 dir, long elapsedTime) {
-		if (selectedWeapon == null || selectedWeapon.getAmount() == 0) {
+		if (selectedWeapon == null) {
 			return false;
 		}
 		selectedWeapon.fire(selectedWeapon, this, layer, world, dir, elapsedTime);
@@ -139,6 +138,10 @@ public class Player extends Actor implements ItemHolder, PhysicsSimulated {
 
 	public Weapon getSelectedWeapon() {
 		return selectedWeapon;
+	}
+	
+	public void setWeapon(Weapon w) {
+		selectedWeapon = w;
 	}
 	
 	@Override
