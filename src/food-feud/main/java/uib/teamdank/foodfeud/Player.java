@@ -77,7 +77,7 @@ public class Player extends Actor implements ItemHolder, PhysicsSimulated {
 		currentFeetAnimation = feetStillAnimation;
 	}
 	
-	public boolean fireWeapon(Layer layer, World world, Vector2 dir, long elapsedTime) {
+	public boolean fireWeapon(GameScreen game, Layer layer, World world, Vector2 dir, long elapsedTime) {
 		if (selectedWeapon == null) {
 			return false;
 		}
