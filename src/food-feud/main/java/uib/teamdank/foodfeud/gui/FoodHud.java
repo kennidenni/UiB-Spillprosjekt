@@ -34,11 +34,15 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 
+import uib.teamdank.common.gui.MenuScreen;
 import uib.teamdank.common.util.AssetManager;
 import uib.teamdank.common.util.TextureAtlas;
 import uib.teamdank.foodfeud.FoodFeud;
+import uib.teamdank.foodfeud.Player;
+import uib.teamdank.foodfeud.Weapon;
+import uib.teamdank.foodfeud.WeaponLoader;
 
-public class FoodHud extends ScreenAdapter {
+public class FoodHud extends MenuScreen {
 
 	private FoodFeud game;
 	private Stage stage;
@@ -59,16 +63,7 @@ public class FoodHud extends ScreenAdapter {
 	private boolean muted = false;
 
 	private static final String MENU_PATH = "Images/Buttons/ff_menu.png";
-	private static final String ANANAS_PATH = "Weapons/Ananas.png";
-	private static final String CARROT_PATH = "Weapons/Carrot.png";
-	private static final String CHEESE_PATH = "Weapons/Cheese.png";
-	private static final String DONUT_PATH = "Weapons/donut.png";
-
 	private ImageButton weaponMenuButton;
-	private ImageButton ananas;
-	private ImageButton carrot;
-	private ImageButton cheese;
-	private ImageButton donut;
 
 	public FoodHud() {
 		stage = new Stage(new FitViewport(1920, 1080));
@@ -121,15 +116,20 @@ public class FoodHud extends ScreenAdapter {
 	}
 
 	private void addToWeapons() {
-		ananas = setupButton(ANANAS_PATH);
-		carrot = setupButton(CARROT_PATH);
-		cheese = setupButton(CHEESE_PATH);
-		donut = setupButton(DONUT_PATH);
-
-		weapons.add(ananas).width((float) (ananas.getWidth() / 1.3)).height((float) (ananas.getHeight() / 1.3)).pad(5);
-		weapons.add(carrot).width((float) (carrot.getWidth() / 1.3)).height((float) (carrot.getHeight() / 1.3)).pad(5);
-		weapons.add(cheese).width((float) (cheese.getWidth() / 1.3)).height((float) (cheese.getHeight() / 1.3)).pad(5);
-		weapons.add(donut).width((float) (donut.getWidth() / 1.3)).height((float) (donut.getHeight() / 1.3)).pad(5);
+		Weapon[] weaponsList = WeaponLoader.fromJson(assets, Gdx.files.internal("Data/weapons.json"));
+		
+		int i = 0;
+		for (Weapon w : weaponsList) {
+			i++;
+			TextureRegion myTextureRegion = new TextureRegion(w.getTexture());
+			TextureRegionDrawable myTexRegionDrawable = new TextureRegionDrawable(myTextureRegion);
+			ImageButton weaponButton = new ImageButton(myTexRegionDrawable);
+			addButtonListener(weaponButton, () -> game.getGameScreen().getCurrentPlayer().setWeapon(w));
+			weapons.add(weaponButton).width((float) (weaponButton.getWidth() / 1.3)).height((float) (weaponButton.getHeight() / 1.3)).pad(10);
+			if (i % 10 == 0)
+				weapons.row();
+		}
+		
 		weapons.debug();
 		weapons.pad(900, 0, 5, 0);
 		weapons.row();
