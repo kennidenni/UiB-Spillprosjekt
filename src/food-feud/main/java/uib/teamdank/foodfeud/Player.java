@@ -78,7 +78,7 @@ public class Player extends Actor implements ItemHolder, PhysicsSimulated {
 	}
 	
 	public boolean fireWeapon(Layer layer, World world, Vector2 dir, long elapsedTime) {
-		if (selectedWeapon == null || selectedWeapon.getAmount() == 0) {
+		if (selectedWeapon == null) {
 			return false;
 		}
 		selectedWeapon.fire(selectedWeapon, this, layer, world, dir, elapsedTime);
