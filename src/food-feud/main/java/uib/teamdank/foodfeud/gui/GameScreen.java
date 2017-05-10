@@ -70,7 +70,6 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 	private long startTime;
 	private long elapsedTime;
 
-	private AudioManager audioManager;
 	
 	public GameScreen(Game game) {
 		super(game);
@@ -110,9 +109,7 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 		}
 		level.distributePlayers(match.getPlayers());
 		
-		audioManager = assets.getAudio();
-		
-		audioManager.preloadSounds(WALKING_SOUND);
+
 	}
 
 	private void checkPauseRequest() {
@@ -142,7 +139,7 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 	public void show() {
 		hud.setAsInputProcessor();
 		
-		//assets.getAudio().loopSound(MUSIC_TRACK);
+		assets.getAudio().loopSound(MUSIC_TRACK);
 	}
 
 	@Override
