@@ -6,7 +6,7 @@
 \usepackage{xspace}
 \usepackage{array}
 \usepackage[hmargin=3.5cm,vmargin=2.7cm]{geometry} 
-\usepackage{graphicx}
+\usepackage{graphicx,wrapfig}
 
 
 
@@ -15,7 +15,8 @@
 	\\
 	\includegraphics[scale=0.5]{images/menu_car.png}
 }
-\author{Team Dank \\
+\author{\textbf{Spillmanual} \\
+Team Dank \\
 Universitetet i Bergern \\
 Informatikk}
 \maketitle
@@ -30,25 +31,30 @@ Informatikk}
 			\item Kontroller
 			\item Objekt-interaksjon
 			\item Poeng
-			\item Penger
 			\item Vær
 		\end{itemize}
-	\item Bilder ....................................................................................................................... noe
-	\item Kredit ...................................................................................................................... noe
+	\item Bilder ...................................................................................................................... 7
+	\item Kredit ..................................................................................................................... noe
 \end{itemize}
 \newpage
 
 \section{Introduksjon}
-Som Carl liker du å kjøre uforsvarlig, og målet ditt er å komme deg så lengst mulig uten gå tom for bensin og få mest mulig poeng. \\
+Dette er et spill tiltenkt datamaskiner der du som spiller er Carl og kjører en bil. 
+Som Carl liker du å kjøre uforsvarlig, og målet ditt er å komme deg så lengst mulig uten gå tom for bensin. 
+Bilen kjører langs en vei med forskjellige ting i veibanen, og som Carl ønsker du å kjøre på alt som gir deg lykke. 
+På veien er det også trafikanter som er i veien for Carl og den eneste måten å få de fjernet på fra veien til Carl er å kjøre på dem.
+I motsetning til ting som gir Carl lykke, befinner det seg en haug med vanndammer og kumlokker som vil forhindre Carl i å kjøre langt. 
+\begin{wrapfigure}{l}{2cm}
+\includegraphics[width=2cm]{images/car.png}
+\end{wrapfigure} 
+Vanndammer vil gjøre at Carli mister drivstoff, \\ og mister litt kontrollen over bilen. \\
+Kumlokk i veien gjør at Carl mister kontroll på bilen og kræsjer. \\
+Bensintanker gir Carl ekstra drivstoff, slik at runden varer lenger. \\
+Myke trafikanter vil gi poeng til Carl dersom de blir påkjørt. \\
+Mynter kan plukkes opp slik at Carl kan kjøpe nye biler. \\
+Spilleren får en score for hver spillrunde, i tillegg til at spilleren samler opp virtuelle penger som kan brukes til å bytte bil. \\
+Men du må også være obs på det lokale værforholdet hos deg, fordi det påvirke veien til Carl! 
 
-Dette er et spill tiltenkt datamaskiner der spilleren kjører en bil.
-Bilen kjører langs en vei med forskjellige ting i veibanen, som spilleren kan kjøre over eller unngå.
-Vanndammer vil gjøre at spilleren mister drivstoff, og mister litt kontrollen over bilen.
-Kumlokk i veien gjør at spilleren taper.
-Bensintanker gir spilleren ekstra drivstoff, slik at runden varer lenger.
-Myke trafikanter vil gi poeng til spilleren dersom de blir påkjørt.
-Mynter kan plukkes opp slik at spilleren kan kjøpe nye biler.
-Spilleren får en score for hver spillrunde, i tillegg til at spilleren samler opp virtuelle penger som kan brukes til å bytte bil.
 \newpage
 
 \section{Systemkrav og installasjon}
@@ -101,12 +107,6 @@ Målet ditt er å få den høyeste poengsummen, og det finnes ulike måter å tj
 	\item Du starter alltid med 0 poeng i starten av en runde, \\men du tjener opp poeng konstant når du kjører.
 	\item Poeng blir opptjent avhengig av hvor langt du kjører. 
 	\item Å kjøre på myke trafikanter vil gi deg poeng, og ulike trafikanter vil gi ulik poengsum.
-\end{itemize}
-
-\subsection{Penger} 
-\begin{itemize}
-	\item{I løpet av spillet får spilleren penger i form av spillets egen valuta.}
-	\item{Pengene kan brukes i spillets butikk fra hovedmenyen for å kjøpe nye biler.}
 \end{itemize}
 
 \subsection{Vær} 
