@@ -98,6 +98,8 @@ public class PlayerBodyCreator {
 		bodyDef.linearDamping = .01f;
 		Body body = world.createBody(bodyDef);
 
+		body.setUserData(player);
+
 		addGroundDetector(player, body);
 		addFeetCollider(player, body);
 		addBodyCollider(player, body);

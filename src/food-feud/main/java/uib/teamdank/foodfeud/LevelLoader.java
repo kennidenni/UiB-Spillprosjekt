@@ -60,6 +60,7 @@ public class LevelLoader {
 		BodyDef groundDef = new BodyDef();
 		groundDef.type = BodyType.StaticBody;
 		Body ground = world.createBody(groundDef);
+		ground.setUserData(level);
 
 		for (int i = 0; i < level.ground.length; i++) {
 

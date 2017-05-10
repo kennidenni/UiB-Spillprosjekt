@@ -47,6 +47,7 @@ public class ProjectileSpawner {
 		
 		projectile.getBody().applyLinearImpulse(force.x, force.y, originX + projectile.getWidth() / 2f, originY + projectile.getHeight() / 2f, true);
 		projectile.getBody().applyAngularImpulse(10000f, true);
+		projectile.getBody().setUserData(projectile);
 		projectile.setTexture(weapon.getTexture());
 		return projectile;
 	}
