@@ -32,7 +32,7 @@ public class ForegroundLayer extends Layer {
 
     @Override
     public void preRender(SpriteBatch batch, float delta) {
-        batch.draw(level.getForeground(), 0, 0);
+        batch.draw(level.getForeground(), 0, 0, level.getWidth(), level.getHeight());
     }
 
 }
