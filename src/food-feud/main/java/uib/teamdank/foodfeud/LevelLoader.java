@@ -37,6 +37,7 @@ public class LevelLoader {
 		String background;
 		String foreground;
 		float gravity;
+		float sizeRatio;
 		float[][] ground;
 	}
 
@@ -50,24 +51,33 @@ public class LevelLoader {
 		Texture background = new Texture(model.background);
 		Texture foreground = new Texture(model.foreground);
 
+		
 		World world = new World(new Vector2(0, model.gravity), true);
-		createGroundFixtures(world, model, background.getHeight());
-
-		return new Level(model.name, world, background, foreground);
+		Level level = new Level(model.name, world, model.sizeRatio, background, foreground);
+		createGroundFixtures(world, model, level, background.getHeight());
+		
+		// Maybe this will work
+		return level;
 	}
 
-	private static void createGroundFixtures(World world, LevelModel level, int height) {
+	private static void createGroundFixtures(World world, LevelModel level, Level levelObj, int height) {
 		BodyDef groundDef = new BodyDef();
 		groundDef.type = BodyType.StaticBody;
 		Body ground = world.createBody(groundDef);
+		ground.setUserData(levelObj);
 
 		for (int i = 0; i < level.ground.length; i++) {
 
-			// Invert Y-axis
 			for (int j = 0; j < level.ground[i].length; j++) {
+				
+				// Invert Y-axis
 				if (j % 2 == 1) {
 					level.ground[i][j] = height - level.ground[i][j];
 				}
+				
+				// Scale coordinates
+				level.ground[i][j] *= level.sizeRatio;
+				
 			}
 			
 			if (level.ground[i].length / 2 > 8) {

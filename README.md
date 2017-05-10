@@ -8,6 +8,7 @@
 ## [Hvordan sette opp Java-prosjektene](https://gitlab.uib.no/inf112-v2017/inf112-v2017-pr2_team_d/wikis/java-prosjekt)
 ## [API (fra origin/master)](http://158.39.74.42/javadoc/index.html)
 ## [SonarQube server](http://158.39.74.42:9000/dashboard?id=teamdank)
+## [Script for bygging av prosjektene](SCRIPT.md)
 
 # Members
 ## Coach:

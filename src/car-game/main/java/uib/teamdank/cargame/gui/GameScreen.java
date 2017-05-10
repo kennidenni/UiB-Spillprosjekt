@@ -226,14 +226,7 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 	@Override
 	public void render(float delta) {
 
-		// Update player camera
-		Vector2 playerPos = player.getPosition();
-		float cameraX = playerPos.x + player.getWidth() / 2;
-		float cameraY = playerPos.y + Gdx.graphics.getHeight() / 2 - CAR_VERTICAL_POSITION;
-		playerCamera.position.set(cameraX, cameraY, 0);
-		playerCamera.update();
-		getGame().getSpriteBatch().setProjectionMatrix(playerCamera.combined);
-
+		
 		// Render layers
 		super.render(delta);
 
@@ -280,6 +273,15 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 			player.turnRight();
 		}
 
+		// Update player camera
+		Vector2 playerPos = player.getPosition();
+		float cameraX = playerPos.x + player.getWidth() / 2;
+		float cameraY = playerPos.y + Gdx.graphics.getHeight() / 2 - CAR_VERTICAL_POSITION;
+		playerCamera.position.set(cameraX, cameraY, 0);
+		playerCamera.update();
+		getGame().getSpriteBatch().setProjectionMatrix(playerCamera.combined);
+
+				
 		// Spawn new road entities
 		roadEntitySpawner.update(delta);
 		roadEntitySpawner.setHorizontalPositionRange(backgroundLayer.getRoadLeftX(), backgroundLayer.getRoadRightX());

@@ -39,7 +39,35 @@ public class PhysicsContactListener implements ContactListener {
 
 	@Override
 	public void beginContact(Contact contact) {
-		updatePlayerGroundStatus(contact.getFixtureA(), contact.getFixtureB(), false);
+		Object userDataA = contact.getFixtureA().getBody().getUserData();
+		Object userDataB = contact.getFixtureB().getBody().getUserData();
+
+		if (userDataA instanceof Projectile && userDataB instanceof Player) {
+			projectileHit((Projectile) userDataA, (Player) userDataB);
+		}
+		else if(userDataA instanceof Player && userDataB instanceof Projectile) {
+			projectileHit((Projectile) userDataB, (Player) userDataA);
+		}
+		else if(userDataA instanceof Projectile && userDataB instanceof Level) {
+			projectileHitGround((Projectile) userDataA);
+		}
+		else if(userDataA instanceof Level && userDataB instanceof Projectile) {
+			projectileHitGround((Projectile) userDataB);
+		}
+		else {
+			updatePlayerGroundStatus(contact.getFixtureA(), contact.getFixtureB(), false);
+		}
+	}
+
+	private void projectileHitGround(Projectile projectile) {
+		projectile.startRemoveTimer();
+	}
+
+	private void projectileHit(Projectile projectile, Player player) {
+		if(projectile.playerFired() != player) {
+			projectile.markForRemoval();
+			player.decreaseHealth(projectile.getDamage());
+		}
 	}
 
 	@Override
@@ -59,7 +87,7 @@ public class PhysicsContactListener implements ContactListener {
 
 	/**
 	 * Updates the every player's "touching the ground" status by examining the
-	 * potential contact between the player and the given fixtures. Nothing will
+	 * potential contact between the player and the giwven fixtures. Nothing will
 	 * happen if none of the fixtures belong to the player.
 	 * <p>
 	 * Since the player's ground sensor can collide with more than fixture at
