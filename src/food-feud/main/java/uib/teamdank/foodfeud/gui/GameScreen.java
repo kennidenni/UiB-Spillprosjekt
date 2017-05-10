@@ -80,7 +80,7 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 		level.getWorld().setContactListener(new PhysicsContactListener(match));
 
 		camera.position.set(level.getWidth() / 2f, level.getHeight() / 2f, 0);
-		camera.zoom = .5f; // .5f
+		camera.zoom = .5f * level.getSizeRatio();
 
 		this.backgroundLayer = new BackgroundLayer(level);
 		addLayer(backgroundLayer);
@@ -97,7 +97,7 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 			time -= AMOUNT_PER_TIME;
 		}));
 
-		PlayerBodyCreator playerBodyCreator = new PlayerBodyCreator(level.getWorld());
+		PlayerBodyCreator playerBodyCreator = new PlayerBodyCreator(level);
 		for (Player player : match.getPlayers()) {
 			playerBodyCreator.initializeBody(player);
 			playerLayer.addGameObject(player);
@@ -185,7 +185,6 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 				Vector3 aim3D = camera.unproject(new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0));
 				Vector2 aim = new Vector2(aim3D.x, aim3D.y);
 				aim.sub(activePlayer.getPosition());
-				System.out.println(elapsedTime * 100);
 				activePlayer.fireWeapon(playerLayer, level.getWorld(), aim.nor(), elapsedTime * 100);
 				touched = false;
 				
@@ -202,7 +201,7 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 	}
 
 	private void movement(Player active) {
-		if (active.isOnGround() && (Gdx.input.isKeyJustPressed(Keys.W) || Gdx.input.isKeyJustPressed(Keys.UP))) {
+		if ((Gdx.input.isKeyJustPressed(Keys.W) || Gdx.input.isKeyJustPressed(Keys.UP))) {
 			active.jump();
 		}
 		if ((Gdx.input.isKeyPressed(Keys.A) || Gdx.input.isKeyPressed(Keys.LEFT))) {

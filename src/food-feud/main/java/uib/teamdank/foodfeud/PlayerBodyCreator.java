@@ -41,10 +41,12 @@ public class PlayerBodyCreator {
 	private static final float BODY_HEIGHT = 128f;
 	private static final float FEET_RADIUS = 48f;
 	
+	private final Level level;
 	private final World world;
 
-	public PlayerBodyCreator(World world) {
-		this.world = Objects.requireNonNull(world, "world cannot be null");
+	public PlayerBodyCreator(Level level) {
+		this.level = Objects.requireNonNull(level, "level cannot be null");
+		this.world = level.getWorld();
 	}
 	
 	private void addBodyCollider(Player player, Body body) {
@@ -97,6 +99,8 @@ public class PlayerBodyCreator {
 		bodyDef.fixedRotation = true;
 		bodyDef.linearDamping = .01f;
 		Body body = world.createBody(bodyDef);
+		
+		player.setScale(.2f * level.getSizeRatio());
 
 		body.setUserData(player);
 
