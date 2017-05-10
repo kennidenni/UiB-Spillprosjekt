@@ -29,6 +29,7 @@ import uib.teamdank.common.Game;
 import uib.teamdank.common.GameObject;
 import uib.teamdank.common.gui.Layer;
 import uib.teamdank.common.util.AssetManager;
+import uib.teamdank.common.util.AudioManager;
 import uib.teamdank.common.util.TimedEvent;
 import uib.teamdank.foodfeud.FoodFeud;
 import uib.teamdank.foodfeud.Level;
@@ -44,6 +45,9 @@ import uib.teamdank.foodfeud.PlayerBodyCreator;
  */
 public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 	private static final Box2DDebugRenderer WORLD_DEBUG_RENDERER = new Box2DDebugRenderer();
+	
+	private static final String MUSIC_TRACK = "Music/happy_bgmusic.wav";
+	private static final String WALKING_SOUND = "Sounds/running.wav";
 
 	private final BackgroundLayer backgroundLayer;
 	private final Layer playerLayer;
@@ -65,6 +69,8 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 	private boolean touched = false;
 	private long startTime;
 	private long elapsedTime;
+
+	private AudioManager audioManager;
 	
 	public GameScreen(Game game) {
 		super(game);
@@ -103,12 +109,22 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 			playerLayer.addGameObject(player);
 		}
 		level.distributePlayers(match.getPlayers());
+		
+		audioManager = assets.getAudio();
+		
+		audioManager.preloadSounds(WALKING_SOUND);
 	}
 
 	private void checkPauseRequest() {
 		if (Gdx.input.isKeyJustPressed(Keys.ESCAPE)) {
 			getGame().setScreen(getGame().getPauseMenuScreen());
 		}
+	}
+	
+	@Override
+	public void dispose() {
+		super.dispose();
+		assets.dispose();
 	}
 
 	@Override
@@ -125,6 +141,8 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 	@Override
 	public void show() {
 		hud.setAsInputProcessor();
+		
+		//assets.getAudio().loopSound(MUSIC_TRACK);
 	}
 
 	@Override
@@ -133,6 +151,12 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 		camera.viewportHeight = height;
 		camera.update();
 	}
+	
+	@Override
+	public void hide() {
+		assets.getAudio().pauseAll();
+	}
+
 
 	@Override
 	public void update(float delta) {
@@ -210,6 +234,7 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 				active.moveLeft();
 			}
 			active.walking = true;
+			
 		}
 		if ((Gdx.input.isKeyPressed(Keys.D) || Gdx.input.isKeyPressed(Keys.RIGHT))) {
 			if ((active.getBody().getLinearVelocity().x) < Player.MAX_VEL_X) {
