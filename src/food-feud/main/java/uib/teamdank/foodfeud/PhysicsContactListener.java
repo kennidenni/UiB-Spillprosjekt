@@ -64,7 +64,10 @@ public class PhysicsContactListener implements ContactListener {
 	}
 
 	private void projectileHit(Projectile projectile, Player player) {
-		player.setHealth(player.getHealth() - projectile.getDamage());
+		if(projectile.playerFired() != player) {
+			projectile.markForRemoval();
+			player.decreaseHealth(projectile.getDamage());
+		}
 	}
 
 	@Override

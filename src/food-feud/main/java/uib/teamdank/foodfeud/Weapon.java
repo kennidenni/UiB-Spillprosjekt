@@ -68,7 +68,7 @@ public class Weapon extends Item {
 		if (amount > 0) {
 			amount--;
 			ProjectileSpawner spawner = new ProjectileSpawner();
-			spawner.spawn(weapon, layer, world, dir, 
+			spawner.spawn(weapon, layer, world, player, dir,
 					player.getX() + player.getWidth(), 
 					player.getY()+ player.getHeight() - player.getHeight() / 2f,
 					elapsedTime

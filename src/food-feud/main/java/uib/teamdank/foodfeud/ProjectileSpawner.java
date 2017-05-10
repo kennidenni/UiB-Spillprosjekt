@@ -43,9 +43,9 @@ public class ProjectileSpawner {
 		return body;
 	}
 	
-	private GameObject createProjectile(Weapon weapon, World world, Vector2 force, float originX, float originY) {
+	private GameObject createProjectile(Weapon weapon, World world, Player player, Vector2 force, float originX, float originY) {
 		final float scale = .25f;
-		Projectile projectile = new Projectile(createBody(weapon, world, scale), weapon.getDamage(), scale);
+		Projectile projectile = new Projectile(createBody(weapon, world, scale), player, weapon.getDamage(), scale);
 		projectile.getBody().setTransform(projectile.getBody().getPosition().set(originX + projectile.getWidth() / 2f, originY + projectile.getHeight() / 2f), 0);
 		
 		projectile.getBody().applyLinearImpulse(force.x, force.y, originX + projectile.getWidth() / 2f, originY + projectile.getHeight() / 2f, true);
@@ -55,10 +55,10 @@ public class ProjectileSpawner {
 		return projectile;
 	}
 	
-	public void spawn(Weapon wep, Layer layer, World world, Vector2 dir, float originX, float originY, long elapsedTime) {
+	public void spawn(Weapon wep, Layer layer, World world, Player player, Vector2 dir, float originX, float originY, long elapsedTime) {
 		dir.scl((float) elapsedTime);
 		if (wep.getType() == Type.LIGHT_BALLISTIC) {
-			layer.addGameObject(createProjectile(wep, world, dir, originX, originY));
+			layer.addGameObject(createProjectile(wep, world, player, dir, originX, originY));
 		}
 	}
 	
