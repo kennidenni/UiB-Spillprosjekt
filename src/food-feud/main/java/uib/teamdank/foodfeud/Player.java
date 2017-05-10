@@ -200,10 +200,18 @@ public class Player extends Actor implements ItemHolder, PhysicsSimulated {
 			feetOffsetX-=160*getScale()*0.1f;
 		}
 		
-		if(this.getFlipHorizontally() && bodyWidth > 160*getScale()) {
-			bodyOffsetX = -bodyWidth + 160*getScale();
-		}
+		if(this.getFlipHorizontally() && bodyWidth > 160*getScale() && team == Team.ALPHA) {
+			bodyOffsetX = -(bodyWidth - 160*getScale()) - 6.4f;
+		} else if (this.getFlipHorizontally() && bodyWidth < 160*getScale() && team == Team.ALPHA)
+			bodyOffsetX = (160*getScale()-bodyWidth) - 6.4f;
+		else if(this.getFlipHorizontally() && bodyWidth > 160*getScale()) {
+			bodyOffsetX = -(bodyWidth - 160*getScale());
+		} else if (this.getFlipHorizontally() && bodyWidth < 160*getScale())
+			bodyOffsetX = (160*getScale()-bodyWidth);
 		final float feetOffsetY = -feetOffset.y * getScale();
+		
+//		System.out.println(bodyWidth);
+		System.out.println(bodyOffsetX);
 
 		renderTexture(batch, delta, bodyTexture, bodyWidth, bodyHeight, bodyOffsetX, feetHeight + feetOffsetY);
 		renderTexture(batch, delta, feetTexture, feetWidth, feetHeight, feetOffsetX, 0);
