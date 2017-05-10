@@ -90,6 +90,7 @@ public class ProjectileSpawner {
 	public void spawn(GameScreen game, Weapon wep, Layer layer, World world, Player player, Vector2 dir, float originX, float originY,
 			long elapsedTime) {
 		dir.scl((float) elapsedTime);
+		System.out.println(wep.getType());
 		if (wep.getType() == Type.LIGHT_BALLISTIC) {
 			layer.addGameObject(createProjectile(wep, world, player, dir, originX, originY));
 		}
