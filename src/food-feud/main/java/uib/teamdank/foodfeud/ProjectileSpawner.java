@@ -12,7 +12,9 @@ import com.badlogic.gdx.physics.box2d.World;
 import uib.teamdank.common.GameObject;
 import uib.teamdank.common.gui.Layer;
 import uib.teamdank.common.util.CType;
+import uib.teamdank.common.util.TimedEvent;
 import uib.teamdank.foodfeud.Weapon.Type;
+import uib.teamdank.foodfeud.gui.GameScreen;
 
 public class ProjectileSpawner {
 
@@ -57,18 +59,21 @@ public class ProjectileSpawner {
 		return projectile;
 	}
 
-	public void spawn(Weapon wep, Layer layer, World world, Player player, Vector2 dir, float originX, float originY,
+	public void spawn(GameScreen game, Weapon wep, Layer layer, World world, Player player, Vector2 dir, float originX, float originY,
 			long elapsedTime) {
 		dir.scl((float) elapsedTime);
 		if (wep.getType() == Type.LIGHT_BALLISTIC) {
 			layer.addGameObject(createProjectile(wep, world, player, dir, originX, originY));
 		}
 		if (wep.getType() == Type.HEAVY_BALLISTIC) {
-			layer.addGameObject(createProjectile(wep, world, player, dir, originX, originY));
+			layer.addGameObject(createProjectile(wep, world, player, dir.add(dir), originX, originY));
 		}
 		if (wep.getType() == Type.BURST_BALLISTIC) {
 			for(int i = 0; i<3; i++){
-				layer.addGameObject(createProjectile(wep, world, player, dir.add(i, i), originX, originY));
+				layer.addGameObject(createProjectile(wep, world, player, dir, originX, originY));
+				game.addTimedEvent(new TimedEvent(0.5f, true, () -> {
+				}));
+		
 			}
 		}
 		if (wep.getType() == Type.SPRAY_BALLISTIC) {
@@ -76,6 +81,7 @@ public class ProjectileSpawner {
 				layer.addGameObject(createProjectile(wep, world, player, dir.add(0, +i), originX, originY));
 				layer.addGameObject(createProjectile(wep, world, player, dir.add(0, -i), originX, originY));
 			}
+			layer.addGameObject(createProjectile(wep, world, player, dir, originX, originY));
 		}
 	}
 
