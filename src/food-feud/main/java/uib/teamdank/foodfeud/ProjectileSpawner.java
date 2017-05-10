@@ -11,6 +11,7 @@ import com.badlogic.gdx.physics.box2d.World;
 
 import uib.teamdank.common.GameObject;
 import uib.teamdank.common.gui.Layer;
+import uib.teamdank.common.util.CType;
 import uib.teamdank.foodfeud.Weapon.Type;
 
 public class ProjectileSpawner {
@@ -34,6 +35,8 @@ public class ProjectileSpawner {
 		FixtureDef fixtureDef = new FixtureDef();
 		fixtureDef.shape = shape;
 		fixtureDef.density = 1f;
+		fixtureDef.filter.categoryBits = CType.CATEGORY_PROJECTILE.getValue();
+		fixtureDef.filter.maskBits = (short) (CType.CATEGORY_PLAYER.getValue() | CType.CATEGORY_WORLD.getValue());
 		body.createFixture(fixtureDef);
 		
 		shape.dispose();
