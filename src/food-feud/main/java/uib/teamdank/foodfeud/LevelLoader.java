@@ -51,11 +51,13 @@ public class LevelLoader {
 		Texture background = new Texture(model.background);
 		Texture foreground = new Texture(model.foreground);
 
+		
 		World world = new World(new Vector2(0, model.gravity), true);
-		createGroundFixtures(world, model, background.getHeight());
+		Level level = new Level(model.name, world, model.sizeRatio, background, foreground);
+		createGroundFixtures(world, model, level, background.getHeight());
 		
 		// Maybe this will work
-		return new Level(model.name, world, model.sizeRatio, background, foreground);
+		return level;
 	}
 
 	private static void createGroundFixtures(World world, LevelModel level, Level levelObj, int height) {
