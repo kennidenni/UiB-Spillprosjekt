@@ -51,7 +51,7 @@ public class ScrollingSpawner implements Generator<GameObject> {
 	}
 
 
-	protected void deleteOldStructures() {
+	private void deleteOldStructures() {
 		GameObject firstSpawn = spawns.get(0);
 		if (firstSpawn.isMarkedForRemoval()) {
 			// Object has already been removed elsewhere
