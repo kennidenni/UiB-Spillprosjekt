@@ -41,7 +41,7 @@ desktop.ini
 *.log
 *.aux
 *.synctex.gz
-.Manual.lb
+*.lb
 
 # Kom en .out og .toc fil når jeg opprettet .pdf fra .tex:
 *.out 
