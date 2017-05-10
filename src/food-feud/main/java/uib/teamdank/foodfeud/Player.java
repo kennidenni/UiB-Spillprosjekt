@@ -224,7 +224,7 @@ public class Player extends Actor implements ItemHolder, PhysicsSimulated {
 		super.setHealth(health);
 		if (isDead() && !wasAlive) {
 			return;
-		}System.out.println(getHealth());
+		}
 		
 		if (isDead()) {
 			this.bodyTexture = playerAtlas.getRegion(team.getBodyDead());
