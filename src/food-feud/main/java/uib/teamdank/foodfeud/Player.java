@@ -29,6 +29,7 @@ import uib.teamdank.common.ItemHolder;
 import uib.teamdank.common.gui.Layer;
 import uib.teamdank.common.util.Animation;
 import uib.teamdank.common.util.AssetManager;
+import uib.teamdank.common.util.AudioManager;
 import uib.teamdank.common.util.TextureAtlas;
 
 /**
@@ -40,6 +41,8 @@ public class Player extends Actor implements ItemHolder, PhysicsSimulated {
 	private static final float HORIZONTAL_MOVEMENT_IMPULSE = 1000f;
 	private static final float JUMP_FORCE = 25000f;
 	public static final float MAX_VEL_X = 12f;
+	
+	private static final String DEAD_SOUND = "Sounds/dead.wav";
 	
 	private final TextureAtlas playerAtlas;
 	private final Animation feetStillAnimation;
@@ -56,6 +59,8 @@ public class Player extends Actor implements ItemHolder, PhysicsSimulated {
 	private final Team team;
 	private final Inventory weapons;
 	private Weapon selectedWeapon;
+	private AssetManager assets;
+	private AudioManager audioManager;
 	
 	public Player(AssetManager assets, Team team, String name) {
 		super(100, name);
@@ -74,6 +79,8 @@ public class Player extends Actor implements ItemHolder, PhysicsSimulated {
 		
 		this.bodyTexture = getBodyExpansionTexture();
 		currentFeetAnimation = feetStillAnimation;
+		audioManager = assets.getAudio();
+		audioManager.preloadSounds(DEAD_SOUND);
 	}
 	
 	public boolean fireWeapon(Layer layer, World world, Vector2 dir, long elapsedTime) {
@@ -241,6 +248,7 @@ public class Player extends Actor implements ItemHolder, PhysicsSimulated {
 		
 		if (isDead()) {
 			this.bodyTexture = playerAtlas.getRegion(team.getBodyDead());
+			audioManager.playSound(DEAD_SOUND);
 			body.setFixedRotation(false);
 			body.applyAngularImpulse(1f, true);
 		} else {
