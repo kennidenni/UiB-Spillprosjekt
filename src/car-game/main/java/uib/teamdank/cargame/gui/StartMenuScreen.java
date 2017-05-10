@@ -228,7 +228,7 @@ public class StartMenuScreen extends MenuScreen implements uib.teamdank.common.g
 			cheatActivated = false;
 			return wType;
 		}
-		System.out.println( wData.pullWeather("Norway", "Hordaland", "Bergen", "Bergen"));
+		System.out.println("using standard weather from yr.no");
 		return wData.pullWeather("Norway", "Hordaland", "Bergen", "Bergen");
 	}
 }
