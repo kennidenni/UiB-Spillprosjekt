@@ -33,17 +33,13 @@ import uib.teamdank.foodfeud.Weapon.Type;
 import uib.teamdank.foodfeud.gui.GameScreen;
 
 public class ProjectileSpawner {
-	
-	Weapon wep;
 
 	private Body createBody(Weapon weapon, World world, float scale) {
 		BodyDef bodyDef = new BodyDef();
 		bodyDef.type = BodyType.DynamicBody;
 		
-		wep = weapon;
-		
-		final float width = wep.getTexture().getRegionWidth() * scale;
-		final float height = wep.getTexture().getRegionHeight() * scale;
+		final float width = weapon.getTexture().getRegionWidth() * scale;
+		final float height = weapon.getTexture().getRegionHeight() * scale;
 		
 		CircleShape shape = new CircleShape();
 		shape.setRadius(Math.max(width, height) / 2f);
@@ -51,7 +47,7 @@ public class ProjectileSpawner {
 
 		Body body = world.createBody(bodyDef);
 		MassData massData = new MassData();
-		massData.mass = wep.getMass();
+		massData.mass = weapon.getMass();
 		body.setMassData(massData);
 		FixtureDef fixtureDef = new FixtureDef();
 		fixtureDef.shape = shape;
@@ -66,14 +62,14 @@ public class ProjectileSpawner {
 
 	private GameObject createProjectile(Weapon weapon, World world, Player player, Vector2 force, float originX, float originY) {
 		float scale;
-		if(wep.getType() == Type.BURST_BALLISTIC)
+		if(weapon.getType() == Type.BURST_BALLISTIC)
+			scale = .01f;
+		else if(weapon.getType() == Type.HEAVY_BALLISTIC)
+			scale = .06f;
+		else if(weapon.getType() == Type.LIGHT_BALLISTIC)
 			scale = .03f;
-		else if(wep.getType() == Type.HEAVY_BALLISTIC)
-			scale = .125f;
-		else if(wep.getType() == Type.LIGHT_BALLISTIC)
-			scale = 0.6f;
 		else
-			scale = 0.4f;
+			scale = .02f;
 		
 		Projectile projectile = new Projectile(createBody(weapon, world, scale), player, weapon.getDamage(), scale);
 		projectile.getBody().setTransform(projectile.getBody().getPosition().set(originX + projectile.getWidth() / 2f,
