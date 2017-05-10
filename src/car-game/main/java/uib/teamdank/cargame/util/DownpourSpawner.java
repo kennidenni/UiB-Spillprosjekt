@@ -58,17 +58,20 @@ public class DownpourSpawner extends ScrollingSpawner {
             Array<GameObject> row = rows.first();
 
             if(row.get(0).getPosition().y + lastHeight < getCamera().position.y - getCamera().viewportHeight / 2) {
-                for(int i = 0; i < row.size; i++) {
-                    Vector2 pos = row.get(i).getPosition();
-                    if(rows.size > 1)
-                        pos.y = rows.last().get(0).getPosition().y + lastHeight;
-                    else
-                        pos.y += lastHeight;
-                    pos.x = row.get(i).getWidth()*i - getCamera().position.x - getCamera().viewportWidth / 2;
-                }
-
+                moveRowUp(row);
                 rows.addLast(rows.removeFirst());
             }
+        }
+    }
+
+    private void moveRowUp(Array<GameObject> row) {
+        for(int i = 0; i < row.size; i++) {
+            Vector2 pos = row.get(i).getPosition();
+            if(rows.size > 1)
+                pos.y = rows.last().get(0).getPosition().y + lastHeight;
+            else
+                pos.y += lastHeight;
+            pos.x = row.get(i).getWidth()*i - getCamera().position.x - getCamera().viewportWidth / 2;
         }
     }
 }
