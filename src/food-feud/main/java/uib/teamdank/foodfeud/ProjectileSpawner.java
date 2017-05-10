@@ -18,7 +18,7 @@ import uib.teamdank.foodfeud.gui.GameScreen;
 
 public class ProjectileSpawner {
 	
-	static Weapon wep;
+	Weapon wep;
 
 	private Body createBody(Weapon weapon, World world, float scale) {
 		BodyDef bodyDef = new BodyDef();
