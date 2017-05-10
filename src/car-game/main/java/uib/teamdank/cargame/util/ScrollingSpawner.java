@@ -87,6 +87,26 @@ public class ScrollingSpawner implements Generator<GameObject> {
 		return generator.generate(random);
 	}
 
+	protected OrthographicCamera getCamera() {
+		return camera;
+	}
+
+	protected Generator<GameObject> getGenerator() {
+		return generator;
+	}
+
+	protected Layer getLayer() {
+		return layer;
+	}
+
+	protected Random getRandom() {
+		return random;
+	}
+
+	protected Array<GameObject> getSpawns() {
+		return spawns;
+	}
+
 	private int getNewHorizontalPosition(int width) {
 		final int min = minHorizontalPosition;
 		final int max = maxHorizontalPosition;
