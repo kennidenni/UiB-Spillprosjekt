@@ -17,11 +17,15 @@
 package uib.teamdank.cargame.gui;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.viewport.FitViewport;
+
 import uib.teamdank.cargame.CarGame;
 import uib.teamdank.cargame.Player;
 import uib.teamdank.common.Game;
@@ -39,25 +43,32 @@ public class StartMenuScreen extends MenuScreen implements uib.teamdank.common.g
 	private static final String EXIT = "Images/Buttons/bs_quit.png";
 
 	private Table menu;
-	
+
 	private HighscoreMenuScreen highscoreMenuScreen;
 	private CreditScreen creditScreen;
-	private Game game;
+	private CarGame game;
 	private ShopScreen shopScreen;
 	private Player player;
 	private WeatherData wData;
+	private boolean cheatActivated;
+	private WeatherType wType;
+	private Stage stage;
+	private String c1;
+	private String c2;
+	private String c3;
 
 	public StartMenuScreen(CarGame game) {
 		super();
+		stage = new Stage(new FitViewport(1920, 1080));
 		this.game = game;
 		highscoreMenuScreen = new HighscoreMenuScreen(game);
 		creditScreen = new CreditScreen(game, "Images/Buttons/bs_back.png", "Data/credit_crasher.txt");
 		shopScreen = new ShopScreen(game);
 		menu = new Table();
-		
+
 		// Background Image
 		setupBackground();
-		
+
 		// Weather Data
 		wData = game.getWeatherData();
 
@@ -75,13 +86,13 @@ public class StartMenuScreen extends MenuScreen implements uib.teamdank.common.g
 
 	private void createButtons() {
 		Array<Button> buttons = new Array<>();
-		
+
 		buttons.add(createButton(PLAY, this::newGame));
 		buttons.add(createButton(HIGHSCORE, this::viewHighscores));
 		buttons.add(createButton(SHOP, this::viewShop));
 		buttons.add(createButton(CREDIT, this::viewCredit));
 		buttons.add(createButton(EXIT, this::exitGame));
-		
+
 		menu.pad(450, 1100, 0, 0);
 		menu.row();
 		for (Button but : buttons) {
@@ -89,7 +100,7 @@ public class StartMenuScreen extends MenuScreen implements uib.teamdank.common.g
 			menu.row();
 		}
 	}
-	
+
 	private void setupBackground() {
 		Texture backgroundTexture = new Texture(BACKGROUND);
 		Image backgroundImage = new Image(backgroundTexture);
@@ -109,21 +120,100 @@ public class StartMenuScreen extends MenuScreen implements uib.teamdank.common.g
 	public void viewCredit() {
 		game.setScreen(creditScreen);
 	}
-	
+
 	public void viewShop() {
 		game.setScreen(shopScreen);
 	}
-	
+
 	@Override
 	public void newGame() {
 		game.setScreen(game.newGame());
 	}
-	
-	public Player getPlayer(){
+
+	public Player getPlayer() {
 		return player;
 	}
-	
+
+	@Override
+	public void render(float delta) {
+		super.render(delta);
+		cheatForWeather();
+	}
+
+	private void cheatForWeather() {
+		if (Gdx.input.isKeyJustPressed(Keys.R))
+			c1 = "R";
+		if (Gdx.input.isKeyJustPressed(Keys.A) && c1 == "R")
+			c2 = "A";
+		if (Gdx.input.isKeyJustPressed(Keys.I) && c1 == "R" && c2 == "A") 
+			c3 = "I";
+		if (Gdx.input.isKeyJustPressed(Keys.N) && c1 == "R" && c2 == "A" && c3 == "I"){
+			System.out.println("rain");
+			wType = WeatherType.RAIN;
+			resetKeys();
+		}
+		
+		if (Gdx.input.isKeyJustPressed(Keys.S))
+			c1 = "S";
+		if (Gdx.input.isKeyJustPressed(Keys.U) && c1 == "S")
+			c2 = "U";
+		if (Gdx.input.isKeyJustPressed(Keys.N) && c1 == "S" && c2 == "U") {
+			System.out.println("sun");
+			wType = WeatherType.SUN;
+			resetKeys();
+		}
+		
+		if (Gdx.input.isKeyJustPressed(Keys.S))
+			c1 = "S";
+		if (Gdx.input.isKeyJustPressed(Keys.N) && c1 == "S")
+			c2 = "N";
+		if (Gdx.input.isKeyJustPressed(Keys.O) && c1 == "S" && c2 == "N")
+			c3 = "O";
+		if (Gdx.input.isKeyJustPressed(Keys.W) && c1 == "S" && c2 == "N" && c3 == "O") {
+			System.out.println("snow");
+			wType = WeatherType.SNOW;
+			resetKeys();
+		}
+		
+		
+		if (Gdx.input.isKeyJustPressed(Keys.C))
+			c1 = "C";
+		if (Gdx.input.isKeyJustPressed(Keys.O) && c1 == "C")
+			c2 = "O";
+		if (Gdx.input.isKeyJustPressed(Keys.I) && c1 == "C" && c2 == "O")
+			c3 = "I";
+		if (Gdx.input.isKeyJustPressed(Keys.N) && c1 == "C" && c2 == "O" && c3 == "I") {
+			System.out.println("Give coin");
+			player.getInventory().addGold(10);
+			c1 = "";
+			c2 = "";
+			c3 = "";
+		}
+		
+		if (Gdx.input.isKeyJustPressed(Keys.S))
+			c1 = "S";
+		if (Gdx.input.isKeyJustPressed(Keys.K) && c1 == "S")
+			c2 = "K";
+		if (Gdx.input.isKeyJustPressed(Keys.Y) && c1 == "S" && c2 == "K") {
+			System.out.println("sky");
+			wType = WeatherType.CLOUD;
+			resetKeys();
+		}
+	}
+
+	private void resetKeys() {
+		c1 = "";
+		c2 = "";
+		c3 = "";
+		cheatActivated = true;
+	}
+
 	public WeatherType getWeather() {
+		if (cheatActivated) {
+			cheatActivated = false;
+			return wType;
+		}
+		System.out.println( wData.pullWeather("Norway", "Hordaland", "Bergen", "Bergen"));
 		return wData.pullWeather("Norway", "Hordaland", "Bergen", "Bergen");
 	}
 }

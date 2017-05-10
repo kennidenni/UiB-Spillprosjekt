@@ -299,14 +299,17 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 		if (player.isOutOfFuel() && player.getVelocity().y == 0) {
 			getGame().setScreen(new EndingScreen((CarGame) getGame()));
 		}
-
-
+		
 	}
-	
+
 	private void updateHUD() {
 		hud.setCurrentFuel(player.getHealth(), player.getMaxHealth());
 		hud.setScore(player.getScore().getScore());
 		hud.setCoins(player.getInventory().getGold());
+	}
+	
+	public void setWeather (WeatherType w) {
+		wType = w;
 	}
 	
 }
