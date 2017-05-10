@@ -141,6 +141,14 @@ public class StartMenuScreen extends MenuScreen implements uib.teamdank.common.g
 	}
 
 	private void cheatForWeather() {
+		tryRain();
+		trySun();
+		trySnow();
+		tryCoin();
+		trySky();
+	}
+
+	private void tryRain() {
 		if (Gdx.input.isKeyJustPressed(Keys.R))
 			c1 = "R";
 		if (Gdx.input.isKeyJustPressed(Keys.A) && c1 == "R")
@@ -152,7 +160,9 @@ public class StartMenuScreen extends MenuScreen implements uib.teamdank.common.g
 			wType = WeatherType.RAIN;
 			resetKeys();
 		}
-		
+	}
+
+	private void trySun() {
 		if (Gdx.input.isKeyJustPressed(Keys.S))
 			c1 = "S";
 		if (Gdx.input.isKeyJustPressed(Keys.U) && c1 == "S")
@@ -162,7 +172,9 @@ public class StartMenuScreen extends MenuScreen implements uib.teamdank.common.g
 			wType = WeatherType.SUN;
 			resetKeys();
 		}
-		
+	}
+
+	private void trySnow() {
 		if (Gdx.input.isKeyJustPressed(Keys.S))
 			c1 = "S";
 		if (Gdx.input.isKeyJustPressed(Keys.N) && c1 == "S")
@@ -174,8 +186,9 @@ public class StartMenuScreen extends MenuScreen implements uib.teamdank.common.g
 			wType = WeatherType.SNOW;
 			resetKeys();
 		}
-		
-		
+	}
+
+	private void tryCoin() {
 		if (Gdx.input.isKeyJustPressed(Keys.C))
 			c1 = "C";
 		if (Gdx.input.isKeyJustPressed(Keys.O) && c1 == "C")
@@ -189,7 +202,9 @@ public class StartMenuScreen extends MenuScreen implements uib.teamdank.common.g
 			c2 = "";
 			c3 = "";
 		}
-		
+	}
+
+	private void trySky() {
 		if (Gdx.input.isKeyJustPressed(Keys.S))
 			c1 = "S";
 		if (Gdx.input.isKeyJustPressed(Keys.K) && c1 == "S")
