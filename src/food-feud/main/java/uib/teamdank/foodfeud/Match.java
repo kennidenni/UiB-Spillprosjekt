@@ -27,7 +27,7 @@ public class Match {
 	public static final int MAX_PLAYER_COUNT = 4;
 	
 	public static final int MAX_AMMO_COUNT = 10;
-	public static int CURRENT_AMMO_COUNT = 10;
+	public int CURRENT_AMMO_COUNT = 10;
 
 	private final List<Player> players;
 	private final List<Player> alivePlayers;
