@@ -25,6 +25,9 @@ import java.util.Objects;
 public class Match {
 
 	public static final int MAX_PLAYER_COUNT = 4;
+	
+	public static final int MAX_AMMO_COUNT = 10;
+	public int CURRENT_AMMO_COUNT = 10;
 
 	private final List<Player> players;
 	private final List<Player> alivePlayers;
@@ -52,6 +55,7 @@ public class Match {
 				alivePlayers.remove(i);
 			}
 		}
+		CURRENT_AMMO_COUNT=MAX_AMMO_COUNT;
 		turnCount++;
 	}
 

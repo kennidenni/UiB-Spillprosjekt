@@ -3,6 +3,7 @@
 	"background": "Images/background.png",
 	"foreground": "Images/foreground.png",
 	"gravity": "-9.81",
+	"sizeRatio": "0.104166667",
 	"ground": [
 		[814,609,668,772,668,1080,1264,1080,1264,772,1123,609,814,609],
 		[1296,792,1264,772,1264,1080,1299,1080],

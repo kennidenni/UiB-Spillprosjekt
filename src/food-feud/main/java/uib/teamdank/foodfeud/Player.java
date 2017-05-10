@@ -16,6 +16,8 @@
  *******************************************************************************/
 package uib.teamdank.foodfeud;
 
+import java.util.Objects;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -37,10 +39,10 @@ import uib.teamdank.foodfeud.gui.GameScreen;
  */
 public class Player extends Actor implements ItemHolder, PhysicsSimulated {
 
-	private static final float FLIP_VELOCITY_TOLERANCE = 1f;
-	private static final float HORIZONTAL_MOVEMENT_IMPULSE = 1000f;
-	private static final float JUMP_FORCE = 25000f;
-	public static final float MAX_VEL_X = 12f;
+	private static final float FLIP_VELOCITY_TOLERANCE = 0.104166667f;
+	private static final float HORIZONTAL_MOVEMENT_IMPULSE = 10.4166667f;
+	private static final float JUMP_FORCE = 75f;
+	public static final float MAX_VEL_X = 2f;
 	
 	private final TextureAtlas playerAtlas;
 	private final Animation feetStillAnimation;
@@ -71,7 +73,6 @@ public class Player extends Actor implements ItemHolder, PhysicsSimulated {
 		this.feetStillAnimation = assets.getAnimation(team.getStillAnimation());
 		this.feetWalkingAnimation = assets.getAnimation(team.getWalkingAnimation());
 		this.feetFallingAnimation = assets.getAnimation(team.getFallingAnimation());
-		setScale(.2f);
 		
 		this.bodyTexture = getBodyExpansionTexture();
 		currentFeetAnimation = feetStillAnimation;
@@ -204,17 +205,21 @@ public class Player extends Actor implements ItemHolder, PhysicsSimulated {
 		if(this.getFlipHorizontally()) 
 			feetOffsetX-=160*getScale()*0.1f;
 		
-		if(this.getFlipHorizontally() && bodyWidth > 160*getScale() && team == Team.ALPHA)
-			bodyOffsetX = -(bodyWidth - 160*getScale()) - 6.4f;
+		if(this.getFlipHorizontally() && bodyWidth > 160*getScale() && team == Team.ALPHA){
+			bodyOffsetX = -(bodyWidth - 160*getScale() + 0.60f);
+		}
 		
-		else if (this.getFlipHorizontally() && bodyWidth < 160*getScale() && team == Team.ALPHA)
-			bodyOffsetX = (160*getScale()-bodyWidth) - 6.4f;
+		else if (this.getFlipHorizontally() && bodyWidth < 160*getScale() && team == Team.ALPHA) {
+			bodyOffsetX = (160*getScale()-bodyWidth) - 0.60f;
+		}
 		
 		else if(this.getFlipHorizontally() && bodyWidth > 160*getScale())
 			bodyOffsetX = -(bodyWidth - 160*getScale());
 		
 		else if (this.getFlipHorizontally() && bodyWidth < 160*getScale())
 			bodyOffsetX = 160*getScale()-bodyWidth;
+		
+		System.out.println(bodyOffsetX);
 		
 		final float feetOffsetY = -feetOffset.y * getScale();
 
