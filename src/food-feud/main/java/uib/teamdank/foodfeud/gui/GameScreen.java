@@ -59,7 +59,7 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 	private static final float TIME_BETWEEN_TIME = 1f;
 	private static final int AMOUNT_PER_TIME = 1;
 
-	private static final int FINAL_TIME = 30;
+	private static final int FINAL_TIME = 10;
 	private int time;
 
 	private final FoodHud hud;
