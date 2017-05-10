@@ -70,7 +70,7 @@ public class Weapon extends Item {
 			ProjectileSpawner spawner = new ProjectileSpawner();
 			spawner.spawn(weapon, layer, world, dir, 
 					player.getX() + player.getWidth(), 
-					player.getY()+ player.getHeight() - player.getHeight() / 2f,
+					player.getY()+ player.getHeight(),
 					elapsedTime
 					);
 		}
