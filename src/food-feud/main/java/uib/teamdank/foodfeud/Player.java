@@ -16,6 +16,8 @@
  *******************************************************************************/
 package uib.teamdank.foodfeud;
 
+import java.util.Objects;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -31,16 +33,17 @@ import uib.teamdank.common.util.Animation;
 import uib.teamdank.common.util.AssetManager;
 import uib.teamdank.common.util.AudioManager;
 import uib.teamdank.common.util.TextureAtlas;
+import uib.teamdank.foodfeud.gui.GameScreen;
 
 /**
  * Represents a player in the game.
  */
 public class Player extends Actor implements ItemHolder, PhysicsSimulated {
 
-	private static final float FLIP_VELOCITY_TOLERANCE = 1f;
-	private static final float HORIZONTAL_MOVEMENT_IMPULSE = 1000f;
-	private static final float JUMP_FORCE = 25000f;
-	public static final float MAX_VEL_X = 12f;
+	private static final float FLIP_VELOCITY_TOLERANCE = 0.104166667f;
+	private static final float HORIZONTAL_MOVEMENT_IMPULSE = 10.4166667f;
+	private static final float JUMP_FORCE = 75f;
+	public static final float MAX_VEL_X = 2f;
 	
 	private static final String DEAD_SOUND = "Sounds/dead.wav";
 	
@@ -69,13 +72,11 @@ public class Player extends Actor implements ItemHolder, PhysicsSimulated {
 		for (Weapon weapon : WeaponLoader.fromJson(assets, Gdx.files.internal("Data/weapons.json"))) {
 			this.weapons.addItem(weapon);
 		}
-		selectedWeapon = (Weapon) weapons.getItem(0);
 
 		this.playerAtlas = assets.getAtlas("Images/player_sheet.json");
 		this.feetStillAnimation = assets.getAnimation(team.getStillAnimation());
 		this.feetWalkingAnimation = assets.getAnimation(team.getWalkingAnimation());
 		this.feetFallingAnimation = assets.getAnimation(team.getFallingAnimation());
-		setScale(.2f);
 		
 		this.bodyTexture = getBodyExpansionTexture();
 		currentFeetAnimation = feetStillAnimation;
@@ -83,11 +84,11 @@ public class Player extends Actor implements ItemHolder, PhysicsSimulated {
 		audioManager.preloadSounds(DEAD_SOUND);
 	}
 	
-	public boolean fireWeapon(Layer layer, World world, Vector2 dir, long elapsedTime) {
-		if (selectedWeapon == null || selectedWeapon.getAmount() == 0) {
+	public boolean fireWeapon(GameScreen game, Layer layer, World world, Vector2 dir, long elapsedTime) {
+		if (selectedWeapon == null) {
 			return false;
 		}
-		selectedWeapon.fire(selectedWeapon, this, layer, world, dir, elapsedTime);
+		selectedWeapon.fire(game, selectedWeapon, this, layer, world, dir, elapsedTime);
 		
 		return true;
 	}
@@ -145,6 +146,10 @@ public class Player extends Actor implements ItemHolder, PhysicsSimulated {
 
 	public Weapon getSelectedWeapon() {
 		return selectedWeapon;
+	}
+	
+	public void setWeapon(Weapon w) {
+		selectedWeapon = w;
 	}
 	
 	@Override
@@ -210,11 +215,13 @@ public class Player extends Actor implements ItemHolder, PhysicsSimulated {
 		if(this.getFlipHorizontally()) 
 			feetOffsetX-=160*getScale()*0.1f;
 		
-		if(this.getFlipHorizontally() && bodyWidth > 160*getScale() && team == Team.ALPHA)
-			bodyOffsetX = -(bodyWidth - 160*getScale()) - 6.4f;
+		if(this.getFlipHorizontally() && bodyWidth > 160*getScale() && team == Team.ALPHA){
+			bodyOffsetX = -(bodyWidth - 160*getScale() + 0.60f);
+		}
 		
-		else if (this.getFlipHorizontally() && bodyWidth < 160*getScale() && team == Team.ALPHA)
-			bodyOffsetX = (160*getScale()-bodyWidth) - 6.4f;
+		else if (this.getFlipHorizontally() && bodyWidth < 160*getScale() && team == Team.ALPHA) {
+			bodyOffsetX = (160*getScale()-bodyWidth) - 0.60f;
+		}
 		
 		else if(this.getFlipHorizontally() && bodyWidth > 160*getScale())
 			bodyOffsetX = -(bodyWidth - 160*getScale());
@@ -279,4 +286,4 @@ public class Player extends Actor implements ItemHolder, PhysicsSimulated {
 			currentFeetAnimation.update(delta);
 		}
 	}
-}
+}

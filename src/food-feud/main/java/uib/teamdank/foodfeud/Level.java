@@ -31,10 +31,11 @@ public class Level implements Disposable {
 	
 	private final String name;
 	private final World world;
+	private final float sizeRatio;
 	private final Texture background;
 	private final Texture foreground;
 	
-	public Level(String name, World world, Texture background, Texture foreground) {
+	public Level(String name, World world, float sizeRatio, Texture background, Texture foreground) {
 		if (background.getWidth() != foreground.getWidth()) {
 			throw new IllegalArgumentException("foreground must be as wide as background");
 		}
@@ -44,8 +45,13 @@ public class Level implements Disposable {
 		
 		this.name = Objects.requireNonNull(name, "name cannot be null");
 		this.world = Objects.requireNonNull(world, "world cannot be null");
+		this.sizeRatio = sizeRatio;
 		this.background = Objects.requireNonNull(background, "background cannot be null");
 		this.foreground = Objects.requireNonNull(foreground, "foreground cannot be null");
+	}
+	
+	public float getSizeRatio() {
+		return sizeRatio;
 	}
 	
 	@Override
@@ -80,7 +86,7 @@ public class Level implements Disposable {
 	}
 	
 	public int getHeight() {
-		return getBackground().getHeight();
+		return (int) (getBackground().getHeight() * sizeRatio);
 	}
 	
 	public String getName() {
@@ -92,7 +98,7 @@ public class Level implements Disposable {
 	}
 	
 	public int getWidth() {
-		return getBackground().getWidth();
+		return (int) (getBackground().getWidth() * sizeRatio);
 	}
 	
 	public World getWorld() {

@@ -28,7 +28,7 @@ public class WeaponLoader {
 		for (int i = 0; i < cachedModels.length; i++) {
 			final WeaponModel w = cachedModels[i];
 			final TextureRegion tex = assets.getAtlas("Images/food_sheet.json").getRegion(w.texture);
-			weapons[i] = new Weapon(w.name, w.description, tex, (int) (w.calories * w.mass), w.mass, w.amount, w.type);
+			weapons[i] = new Weapon(w.name, w.description, tex, (int) (w.calories * w.mass), w.mass,w.type);
 		}
 		return weapons;
 	}

@@ -59,8 +59,8 @@ public class PhysicsContactListener implements ContactListener {
 		}
 	}
 
-	private void projectileHitGround(Projectile userDataA) {
-		// TODO
+	private void projectileHitGround(Projectile projectile) {
+		projectile.startRemoveTimer();
 	}
 
 	private void projectileHit(Projectile projectile, Player player) {
