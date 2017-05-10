@@ -63,5 +63,6 @@ public class Projectile extends GameObject implements PhysicsSimulated {
 		if(removeTimer > 0 && System.currentTimeMillis() - removeTimer > COUNTDOWN) {
 			markForRemoval();
 		}
+		super.update(delta);
 	}
 }
