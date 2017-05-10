@@ -35,7 +35,7 @@ public class Level implements Disposable {
 	private final Texture background;
 	private final Texture foreground;
 	
-	public Level(String name, World world, Texture background, Texture foreground) {
+	public Level(String name, World world, float sizeRatio, Texture background, Texture foreground) {
 		if (background.getWidth() != foreground.getWidth()) {
 			throw new IllegalArgumentException("foreground must be as wide as background");
 		}
