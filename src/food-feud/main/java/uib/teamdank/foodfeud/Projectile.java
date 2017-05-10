@@ -7,11 +7,13 @@ import uib.teamdank.common.GameObject;
 
 public class Projectile extends GameObject {
 
+	private final Player playerFired;
 	private final Body body;
 	private final int damage;
 	
-	public Projectile(Body body, int damage, float scale) {
+	public Projectile(Body body, Player playerFired, int damage, float scale) {
 		this.body = body;
+		this.playerFired = playerFired;
 		this.damage = damage;
 		setScale(scale);
 	}
@@ -40,6 +42,9 @@ public class Projectile extends GameObject {
 	public Vector2 getVelocity() {
 		return body.getLinearVelocity();
 	}
-	
-	
+
+
+	public Player playerFired() {
+		return playerFired;
+	}
 }

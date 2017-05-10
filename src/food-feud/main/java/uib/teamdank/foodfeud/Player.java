@@ -106,8 +106,12 @@ public class Player extends Actor implements ItemHolder, PhysicsSimulated {
 		if (team == null) {
 			return null;
 		}
+		if(isDead()) {
+			throw new IllegalArgumentException("player is dead");
+		}
 		float healthPerBody = getMaxHealth() / (float) team.getBodyExpansionCount();
 		int index = team.getBodyExpansionCount() - (int) (getHealth() / healthPerBody);
+		index = Math.min(index, team.getBodyExpansionCount()-1);
 		return playerAtlas.getRegion(team.getBodyExpansion(index));
 	}
 
