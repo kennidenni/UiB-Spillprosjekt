@@ -284,8 +284,6 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 		if (time == 0 && !isWaiting) {
 			hud.setTime(TIME_TO_CHANGE);
 			isWaiting = true;
-			System.out.println(time);
-
 		} 
 		if (waitingTime < 0 && isWaiting) {
 			time = FINAL_TIME;
