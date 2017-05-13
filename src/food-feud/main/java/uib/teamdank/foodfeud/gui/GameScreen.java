@@ -53,7 +53,11 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 
 	private static final float TIME_BETWEEN_TIME = 1f;
 	private static final int AMOUNT_PER_TIME = 1;
-
+	
+	private static final int TIME_TO_CHANGE = 5;
+	private boolean isWaiting;
+	private float waitingTime;
+	
 	private static final int FINAL_TIME = 10;
 	private int time;
 
@@ -70,6 +74,8 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 
 		this.assets = ((FoodFeud) game).getSetupGame().getAssets();
 		time = FINAL_TIME;
+		isWaiting = false;
+		waitingTime = 5;
 
 		this.camera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		this.level = LevelLoader.createFromJson(Gdx.files.internal("Data/field_level.json"));
@@ -162,56 +168,64 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 		level.updateWorld();
 
 		checkForMute();
-		// User input
-		checkPauseRequest();
-		if (!activePlayer.isDead()) {
-			movement(activePlayer);
-		}
-		// Prevent players exiting world
-		for (Player player : match.getPlayers()) {
-			if (player.getX() < 0) {
-				player.moveRight(3);
-			} else if (player.getX() > level.getWidth() - player.getWidth()) {
-				player.moveLeft(3);
+		if (!isWaiting) {
+			// User input
+			checkPauseRequest();
+			if (!activePlayer.isDead()) {
+				movement(activePlayer);
 			}
-		}
+			// Prevent players exiting world
+			for (Player player : match.getPlayers()) {
+				if (player.getX() < 0) {
+					player.moveRight(3);
+				} else if (player.getX() > level.getWidth() - player.getWidth()) {
+					player.moveLeft(3);
+				}
+			}
 
-		checkTimeorDead(activePlayer);
+			checkVictory();
 
-		checkVictory();
-
-		// Temporary
-		if (Gdx.input.isKeyJustPressed(Keys.SPACE) && match.CURRENT_AMMO_COUNT>0) {
-			Vector3 aim3D = camera.unproject(new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0));
-			Vector2 aim = new Vector2(aim3D.x, aim3D.y);
-			aim.sub(activePlayer.getPosition());
-			activePlayer.fireWeapon(this, playerLayer, level.getWorld(), aim.nor(), 10000);
-		}
-		if (Gdx.input.justTouched() && !hud.weaponsAreVisible()) {
-			
-			startTime = System.currentTimeMillis();
-			elapsedTime = 0;
-			touched = true;
-		}
-			
-		if(!Gdx.input.isTouched() && touched && match.CURRENT_AMMO_COUNT>0){
-				elapsedTime = (new Date()).getTime() -startTime;
+			// Temporary
+			if (Gdx.input.isKeyJustPressed(Keys.SPACE) && match.CURRENT_AMMO_COUNT>0) {
 				Vector3 aim3D = camera.unproject(new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0));
 				Vector2 aim = new Vector2(aim3D.x, aim3D.y);
 				aim.sub(activePlayer.getPosition());
-				System.out.println(elapsedTime * 100);
-				activePlayer.fireWeapon(this, playerLayer, level.getWorld(), aim.nor(), elapsedTime * 100);
-				touched = false;
+				activePlayer.fireWeapon(this, playerLayer, level.getWorld(), aim.nor(), 10000);
 			}
-		
-		if (Gdx.input.isKeyJustPressed(Keys.N)) {
-			time = FINAL_TIME;
-			match.nextTurn();
-		}
-		if (Gdx.input.isKeyJustPressed(Keys.M)) {
-			activePlayer.decreaseHealth(20);
-		}
+			if (Gdx.input.justTouched() && !hud.weaponsAreVisible()) {
+				
+				startTime = System.currentTimeMillis();
+				elapsedTime = 0;
+				touched = true;
+			}
+				
+			if(!Gdx.input.isTouched() && touched && match.CURRENT_AMMO_COUNT>0){
+					elapsedTime = (new Date()).getTime() -startTime;
+					Vector3 aim3D = camera.unproject(new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0));
+					Vector2 aim = new Vector2(aim3D.x, aim3D.y);
+					aim.sub(activePlayer.getPosition());
+					System.out.println(elapsedTime * 100);
+					activePlayer.fireWeapon(this, playerLayer, level.getWorld(), aim.nor(), elapsedTime * 100);
+					touched = false;
+				}
+			
+			if (Gdx.input.isKeyJustPressed(Keys.N)) {
+				time = FINAL_TIME;
+				match.nextTurn();
+			}
+			if (Gdx.input.isKeyJustPressed(Keys.M)) {
+				activePlayer.decreaseHealth(20);
+			}
 
+		}
+		
+		checkTimeorDead(activePlayer);
+		
+		if(isWaiting) {
+			hud.setInvisibleText(true);
+			waitingTime = waitingTime - delta;
+			hud.setTime((int) waitingTime);
+		}
 	}
 
 	private void movement(Player active) {
@@ -263,12 +277,22 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 	 */
 	public void checkTimeorDead(Player active) {
 		hud.setTime(time);
-		if (time == 0) {
+		if (time == 0 && !isWaiting) {
+			hud.setTime(TIME_TO_CHANGE);
+			isWaiting = true;
+			System.out.println(time);
+
+		} 
+		if (waitingTime < 0 && isWaiting) {
 			time = FINAL_TIME;
+			isWaiting = false;
+			hud.setInvisibleText(false);
+			waitingTime = 5;
 			match.nextTurn();
 		}
 		if (active.isDead()) {
 			time = FINAL_TIME;
+			hud.setInvisibleText(false);
 			match.nextTurn();
 		}
 	}

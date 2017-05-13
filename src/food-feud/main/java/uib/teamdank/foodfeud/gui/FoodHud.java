@@ -60,9 +60,12 @@ public class FoodHud extends MenuScreen {
 
 	private boolean muted = false;
 	private boolean weaponDelay = false;
+	private boolean isWaiting = false;
 
 	private static final String MENU_PATH = "Images/Buttons/ff_menu.png";
 	private ImageButton weaponMenuButton;
+	private TextButton nextPlayerWait;
+	private Table hiddenTable;
 
 	public FoodHud() {
 		stage = new Stage(new FitViewport(1920, 1080));
@@ -72,6 +75,7 @@ public class FoodHud extends MenuScreen {
 		menu = new Table();
 		weapons = new Table();
 		scoreTable = new Table();
+		hiddenTable = new Table();
 
 		generator = new FreeTypeFontGenerator(Gdx.files.internal("Fonts/roboto.ttf"));
 		parameter = new FreeTypeFontParameter();
@@ -81,13 +85,18 @@ public class FoodHud extends MenuScreen {
 		font = generator.generateFont(parameter);
 		textButtonStyle = new TextButtonStyle();
 		textButtonStyle.font = font;
+		
+		nextPlayerWait = new TextButton("TIME TO NEXT PLAYER", textButtonStyle);
+		hiddenTable.add(nextPlayerWait).pad(700, 0, 0, 1050);
+		
 
 		time = new TextButton("0", textButtonStyle);
 		scoreTable.add(time).width(300).pad(900, 0, 0, 1600);
 
 		weaponMenuButton = setupButton(MENU_PATH);
 		menu.add(weaponMenuButton).height((float) (weaponMenuButton.getHeight() / 4)).pad(980, 1670, 0, 0);
-
+		
+		
 		setUpMute();
 		addButtonListener();
 		addToWeapons();
@@ -95,11 +104,14 @@ public class FoodHud extends MenuScreen {
 	}
 
 	private void setupStage() {
+		hiddenTable.setFillParent(true);
+		hiddenTable.setVisible(false);
 		weapons.setFillParent(true);
 		weapons.setVisible(false);
 		scoreTable.setFillParent(true);
 		menu.setFillParent(true);
 
+		stage.addActor(hiddenTable);
 		stage.addActor(weapons);
 		stage.addActor(menu);
 		stage.addActor(scoreTable);
@@ -204,6 +216,11 @@ public class FoodHud extends MenuScreen {
 	public void setMute(boolean isMuted) {
 		muted = isMuted;
 		muteButton.setChecked(isMuted);
+	}
+	
+	public void setInvisibleText(boolean b) {
+		isWaiting = b;
+		hiddenTable.setVisible(b);
 	}
 
 	public void render(float delta) {
