@@ -23,13 +23,10 @@ import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
-import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
-
 import uib.teamdank.common.Game;
 import uib.teamdank.common.GameObject;
 import uib.teamdank.common.gui.Layer;
 import uib.teamdank.common.util.AssetManager;
-import uib.teamdank.common.util.AudioManager;
 import uib.teamdank.common.util.TimedEvent;
 import uib.teamdank.foodfeud.FoodFeud;
 import uib.teamdank.foodfeud.Level;
@@ -46,8 +43,6 @@ import uib.teamdank.foodfeud.PlayerBodyCreator;
 public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 	
 	private static final String MUSIC_TRACK = "Music/happy_bgmusic.wav";
-	private static final String WALKING_SOUND = "Sounds/running.wav";
-
 	private final BackgroundLayer backgroundLayer;
 	private final Layer playerLayer;
 	private final ForegroundLayer foregroundLayer;
