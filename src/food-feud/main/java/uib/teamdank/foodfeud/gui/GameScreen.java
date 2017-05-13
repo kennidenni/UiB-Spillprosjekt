@@ -186,28 +186,7 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 			checkVictory();
 
 			// Temporary
-			if (Gdx.input.isKeyJustPressed(Keys.SPACE) && match.CURRENT_AMMO_COUNT>0) {
-				Vector3 aim3D = camera.unproject(new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0));
-				Vector2 aim = new Vector2(aim3D.x, aim3D.y);
-				aim.sub(activePlayer.getPosition());
-				activePlayer.fireWeapon(this, playerLayer, level.getWorld(), aim.nor(), 10000);
-			}
-			if (Gdx.input.justTouched() && !hud.weaponsAreVisible()) {
-				
-				startTime = System.currentTimeMillis();
-				elapsedTime = 0;
-				touched = true;
-			}
-				
-			if(!Gdx.input.isTouched() && touched && match.CURRENT_AMMO_COUNT>0){
-					elapsedTime = (new Date()).getTime() -startTime;
-					Vector3 aim3D = camera.unproject(new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0));
-					Vector2 aim = new Vector2(aim3D.x, aim3D.y);
-					aim.sub(activePlayer.getPosition());
-					System.out.println(elapsedTime * 100);
-					activePlayer.fireWeapon(this, playerLayer, level.getWorld(), aim.nor(), elapsedTime * 100);
-					touched = false;
-				}
+			tryToShoot(activePlayer);
 			
 			if (Gdx.input.isKeyJustPressed(Keys.N)) {
 				time = FINAL_TIME;
@@ -226,6 +205,31 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 			waitingTime = waitingTime - delta;
 			hud.setTime((int) waitingTime);
 		}
+	}
+
+	private void tryToShoot(Player activePlayer) {
+		if (Gdx.input.isKeyJustPressed(Keys.SPACE) && match.CURRENT_AMMO_COUNT>0) {
+			Vector3 aim3D = camera.unproject(new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0));
+			Vector2 aim = new Vector2(aim3D.x, aim3D.y);
+			aim.sub(activePlayer.getPosition());
+			activePlayer.fireWeapon(this, playerLayer, level.getWorld(), aim.nor(), 10000);
+		}
+		if (Gdx.input.justTouched() && !hud.weaponsAreVisible()) {
+			
+			startTime = System.currentTimeMillis();
+			elapsedTime = 0;
+			touched = true;
+		}
+			
+		if(!Gdx.input.isTouched() && touched && match.CURRENT_AMMO_COUNT>0){
+				elapsedTime = (new Date()).getTime() -startTime;
+				Vector3 aim3D = camera.unproject(new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0));
+				Vector2 aim = new Vector2(aim3D.x, aim3D.y);
+				aim.sub(activePlayer.getPosition());
+				System.out.println(elapsedTime * 100);
+				activePlayer.fireWeapon(this, playerLayer, level.getWorld(), aim.nor(), elapsedTime * 100);
+				touched = false;
+			}
 	}
 
 	private void movement(Player active) {
