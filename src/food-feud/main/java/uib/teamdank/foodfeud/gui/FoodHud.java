@@ -129,8 +129,7 @@ public class FoodHud extends MenuScreen {
 				weapons.row();
 		}
 		
-		weapons.debug();
-		weapons.pad(900, 0, 5, 0);
+		weapons.pad(850, 0, 5, 0);
 		weapons.row();
 	}
 
