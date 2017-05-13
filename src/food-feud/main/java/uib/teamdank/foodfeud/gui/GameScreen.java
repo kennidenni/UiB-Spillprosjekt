@@ -58,7 +58,7 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 	private boolean isWaiting;
 	private float waitingTime;
 	
-	private static final int FINAL_TIME = 10;
+	private static final int FINAL_TIME = 15;
 	private int time;
 
 	private final FoodHud hud;

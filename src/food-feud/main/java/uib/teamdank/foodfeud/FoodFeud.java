@@ -35,7 +35,7 @@ public class FoodFeud extends Game {
     private SetupGame setupScreen;
 	private PauseMenuScreen pauseMenuScreen;
 	private SpriteBatch batch;
-	private boolean isMuted = true;
+	private boolean isMuted;
 	
 
     public static void main(String[] args){

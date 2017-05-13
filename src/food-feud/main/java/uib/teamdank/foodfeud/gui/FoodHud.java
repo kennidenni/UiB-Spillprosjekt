@@ -60,7 +60,6 @@ public class FoodHud extends MenuScreen {
 
 	private boolean muted = false;
 	private boolean weaponDelay = false;
-	private boolean isWaiting = false;
 
 	private static final String MENU_PATH = "Images/Buttons/ff_menu.png";
 	private ImageButton weaponMenuButton;
@@ -219,7 +218,6 @@ public class FoodHud extends MenuScreen {
 	}
 	
 	public void setInvisibleText(boolean b) {
-		isWaiting = b;
 		hiddenTable.setVisible(b);
 	}
 
