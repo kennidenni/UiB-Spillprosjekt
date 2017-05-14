@@ -179,9 +179,9 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 			// Prevent players exiting world
 			for (Player player : match.getPlayers()) {
 				if (player.getX() < 0) {
-					player.moveRight(3);
+					player.moveRight(10);
 				} else if (player.getX() > level.getWidth() - player.getWidth()) {
-					player.moveLeft(3);
+					player.moveLeft(10);
 				}
 			}
 
@@ -194,10 +194,6 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 				time = FINAL_TIME;
 				match.nextTurn();
 			}
-			if (Gdx.input.isKeyJustPressed(Keys.M)) {
-				activePlayer.decreaseHealth(20);
-			}
-
 		}
 		
 		checkTimeorDead(activePlayer);
@@ -228,12 +224,30 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 				Vector3 aim3D = camera.unproject(new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0));
 				Vector2 aim = new Vector2(aim3D.x, aim3D.y);
 				aim.sub(activePlayer.getPosition());
-				System.out.println(elapsedTime * 100);
 				activePlayer.fireWeapon(this, playerLayer, level.getWorld(), aim.nor(), elapsedTime * 100);
 				hasShot = true;
 				time = 5;
 				touched = false;
+				
+				//added recoil
+				shootingRecoil(activePlayer);
 			}
+	}
+
+	private void shootingRecoil(Player activePlayer) {
+		activePlayer.jump();
+		activePlayer.jump();
+		activePlayer.jump();
+		activePlayer.jump();
+		System.out.println(Gdx.input.getX() + ", " + camera.viewportWidth / 2);
+		if(Gdx.input.getX() > camera.viewportWidth / 2) 
+			activePlayer.moveLeft(5);
+
+
+		if (Gdx.input.getX() < camera.viewportWidth / 2)
+			activePlayer.moveRight(5);
+		
+		activePlayer.walking = true;
 	}
 
 	private void movement(Player active) {
