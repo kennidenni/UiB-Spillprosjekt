@@ -26,8 +26,8 @@ public class Match {
 
 	public static final int MAX_PLAYER_COUNT = 4;
 	
-	public static final int MAX_AMMO_COUNT = 10;
-	public int CURRENT_AMMO_COUNT = 10;
+	public static final int MAX_AMMO_COUNT = 2;
+	public int CURRENT_AMMO_COUNT = 2;
 
 	private final List<Player> players;
 	private final List<Player> alivePlayers;
@@ -57,6 +57,10 @@ public class Match {
 		}
 		CURRENT_AMMO_COUNT=MAX_AMMO_COUNT;
 		turnCount++;
+	}
+	
+	public void decreaseCurrentAmmo(int i) {
+		CURRENT_AMMO_COUNT -= i;
 	}
 
 	public Player getWinner() {
