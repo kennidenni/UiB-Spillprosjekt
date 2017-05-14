@@ -233,10 +233,10 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 	}
 
 	private void movement(Player active) {
-		if ((Gdx.input.isKeyJustPressed(Keys.W) || Gdx.input.isKeyJustPressed(Keys.UP))) {
+		if (Gdx.input.isKeyJustPressed(Keys.W) || Gdx.input.isKeyJustPressed(Keys.UP)) {
 			active.jump();
 		}
-		if ((Gdx.input.isKeyPressed(Keys.A) || Gdx.input.isKeyPressed(Keys.LEFT))) {
+		if (Gdx.input.isKeyPressed(Keys.A) || Gdx.input.isKeyPressed(Keys.LEFT)) {
 			if ((active.getBody().getLinearVelocity().x) > (-Player.MAX_VEL_X)) {
 				active.moveLeft();
 			}

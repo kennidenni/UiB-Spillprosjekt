@@ -84,7 +84,7 @@ public class PlayerBodyCreator {
 	
 	private FixtureDef createPlayerFixtureDef(Shape shape) {
 		FixtureDef fixtureDef = new FixtureDef();
-		fixtureDef.density = 1f;
+		fixtureDef.density = 0.0065f;
 		fixtureDef.friction = 0.75f;
 		fixtureDef.restitution = 0.1f;
 		fixtureDef.shape = shape;
