@@ -16,8 +16,6 @@
  *******************************************************************************/
 package uib.teamdank.foodfeud;
 
-import java.util.Objects;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -41,9 +39,9 @@ import uib.teamdank.foodfeud.gui.GameScreen;
 public class Player extends Actor implements ItemHolder, PhysicsSimulated {
 
 	private static final float FLIP_VELOCITY_TOLERANCE = 0.104166667f;
-	private static final float HORIZONTAL_MOVEMENT_IMPULSE = 10.4166667f;
-	private static final float JUMP_FORCE = 75f;
-	public static final float MAX_VEL_X = 2f;
+	private static final float HORIZONTAL_MOVEMENT_IMPULSE = 0.05f;
+	private static final float JUMP_FORCE = 0.8f;
+	public static final float MAX_VEL_X = 4f;
 	
 	private static final String DEAD_SOUND = "Sounds/dead.wav";
 	
@@ -62,7 +60,6 @@ public class Player extends Actor implements ItemHolder, PhysicsSimulated {
 	private final Team team;
 	private final Inventory weapons;
 	private Weapon selectedWeapon;
-	private AssetManager assets;
 	private AudioManager audioManager;
 	
 	public Player(AssetManager assets, Team team, String name) {
@@ -106,6 +103,7 @@ public class Player extends Actor implements ItemHolder, PhysicsSimulated {
 		throw new UnsupportedOperationException("player uses custom animations");
 	}
 	
+	@Override
 	public Body getBody() {
 		return body;
 	}
@@ -180,7 +178,7 @@ public class Player extends Actor implements ItemHolder, PhysicsSimulated {
 	
 	public void jump() {
 		if (isOnGround()) {
-			body.applyLinearImpulse(body.getLinearVelocity().x, JUMP_FORCE, getWidth() / 2f, getHeight() / 2f, true);
+			body.applyLinearImpulse(0, JUMP_FORCE, getWidth() / 2f, getHeight() / 2f, true);
 		}
 	}
 	
@@ -197,7 +195,7 @@ public class Player extends Actor implements ItemHolder, PhysicsSimulated {
 	}
 	
 	public void moveRight(int times) {
-		body.applyLinearImpulse(HORIZONTAL_MOVEMENT_IMPULSE * times, 0, getWidth() / 2, getHeight() / 2, true);
+		body.applyLinearImpulse(HORIZONTAL_MOVEMENT_IMPULSE * times, 0, getWidth() / 2f, getHeight() / 2f, true);
 	}
 
 	@Override
