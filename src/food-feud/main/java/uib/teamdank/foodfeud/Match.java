@@ -26,8 +26,8 @@ public class Match {
 
 	public static final int MAX_PLAYER_COUNT = 4;
 	
-	public static final int MAX_AMMO_COUNT = 2;
-	public int CURRENT_AMMO_COUNT = 2;
+	public static final int MAX_AMMO_COUNT = 1;
+	public int CURRENT_AMMO_COUNT = 1;
 
 	private final List<Player> players;
 	private final List<Player> alivePlayers;
@@ -54,7 +54,9 @@ public class Match {
 			if (alivePlayers.get(i).isDead()){
 				alivePlayers.remove(i);
 			}
+			alivePlayers.get(i).setWeapon(null);
 		}
+		
 		CURRENT_AMMO_COUNT=MAX_AMMO_COUNT;
 		turnCount++;
 	}
