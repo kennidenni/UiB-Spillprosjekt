@@ -57,6 +57,7 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 	private static final int TIME_TO_CHANGE = 5;
 	private boolean isWaiting;
 	private float waitingTime;
+	private boolean hasShot;
 	
 	private static final int FINAL_TIME = 15;
 	private int time;
@@ -75,6 +76,7 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 		this.assets = ((FoodFeud) game).getSetupGame().getAssets();
 		time = FINAL_TIME;
 		isWaiting = false;
+		hasShot = false;
 		waitingTime = 5;
 
 		this.camera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
@@ -208,13 +210,13 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 	}
 
 	private void tryToShoot(Player activePlayer) {
-		if (Gdx.input.isKeyJustPressed(Keys.SPACE) && match.CURRENT_AMMO_COUNT>0) {
+		if (Gdx.input.isKeyJustPressed(Keys.SPACE) && match.CURRENT_AMMO_COUNT>0 && !hasShot) {
 			Vector3 aim3D = camera.unproject(new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0));
 			Vector2 aim = new Vector2(aim3D.x, aim3D.y);
 			aim.sub(activePlayer.getPosition());
 			activePlayer.fireWeapon(this, playerLayer, level.getWorld(), aim.nor(), 10000);
 		}
-		if (Gdx.input.justTouched() && !hud.weaponsAreVisible()) {
+		if (Gdx.input.justTouched() && !hud.weaponsAreVisible() && !hasShot) {
 			
 			startTime = System.currentTimeMillis();
 			elapsedTime = 0;
@@ -228,6 +230,8 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 				aim.sub(activePlayer.getPosition());
 				System.out.println(elapsedTime * 100);
 				activePlayer.fireWeapon(this, playerLayer, level.getWorld(), aim.nor(), elapsedTime * 100);
+				hasShot = true;
+				time = 5;
 				touched = false;
 			}
 	}
@@ -290,11 +294,13 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 			isWaiting = false;
 			hud.setInvisibleText(false);
 			waitingTime = 5;
+			hasShot = false;
 			match.nextTurn();
 		}
 		if (active.isDead()) {
 			time = FINAL_TIME;
 			hud.setInvisibleText(false);
+			hasShot = false;
 			match.nextTurn();
 		}
 	}
