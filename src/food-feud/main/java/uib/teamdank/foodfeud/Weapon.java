@@ -65,7 +65,7 @@ public class Weapon extends Item {
 	public void fire(GameScreen game, Weapon weapon, Player player, Layer layer, World world, Vector2 dir, long elapsedTime) {
 			ProjectileSpawner spawner = new ProjectileSpawner();
 			spawner.spawn(game, weapon, layer, world, player, dir, player.getX() + player.getWidth(),
-					player.getY() + player.getHeight() - player.getHeight() / 2f, elapsedTime);
+					player.getY() + player.getHeight(), elapsedTime);
 		}
 	
 	public int getDamage() {
