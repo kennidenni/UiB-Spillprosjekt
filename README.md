@@ -16,8 +16,6 @@
 ## Students:
 Malin Øien (but005)
 
-Bjørnar Herland (kiy005)
-
 Anna Fossen-Helle (afo035)
 
 Philip Thao Hoang (tum005)
@@ -41,7 +39,5 @@ Sturle Fraga Elvestad (sel023)
 Eirik Strøm (qaj004)
 
 Amund Lindberg (dag004)
-
-~~Ola Næss Kaldestad (oka010)~~
 
 Ole Magnus Lie (oli007)
