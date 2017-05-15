@@ -17,6 +17,7 @@
 package uib.teamdank.foodfeud.gui;
 
 import java.util.Date;
+import java.util.List;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
@@ -41,7 +42,7 @@ import uib.teamdank.foodfeud.PlayerBodyCreator;
  * The main gameplay screen.
  */
 public class GameScreen extends uib.teamdank.common.gui.GameScreen {
-	
+
 	private static final String MUSIC_TRACK = "Music/happy_bgmusic.wav";
 	private final BackgroundLayer backgroundLayer;
 	private final Layer playerLayer;
@@ -53,12 +54,12 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 
 	private static final float TIME_BETWEEN_TIME = 1f;
 	private static final int AMOUNT_PER_TIME = 1;
-	
+
 	private static final int TIME_TO_CHANGE = 5;
 	private boolean isWaiting;
 	private float waitingTime;
 	private boolean hasShot;
-	
+
 	private static final int FINAL_TIME = 15;
 	private int time;
 
@@ -69,7 +70,6 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 	private long startTime;
 	private long elapsedTime;
 
-	
 	public GameScreen(Game game) {
 		super(game);
 
@@ -81,7 +81,7 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 
 		this.camera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		this.level = LevelLoader.createFromJson(Gdx.files.internal("Data/field_level.json"));
-		
+
 		this.match = ((FoodFeud) game).getSetupGame().getMatch();
 
 		level.getWorld().setContactListener(new PhysicsContactListener(match));
@@ -99,7 +99,7 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 		// HUD
 		this.hud = new FoodHud();
 		hud.setGame((FoodFeud) game);
-		
+
 		addTimedEvent(new TimedEvent(TIME_BETWEEN_TIME, true, () -> {
 			time -= AMOUNT_PER_TIME;
 		}));
@@ -110,7 +110,6 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 			playerLayer.addGameObject(player);
 		}
 		level.distributePlayers(match.getPlayers());
-		
 
 	}
 
@@ -119,7 +118,7 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 			getGame().setScreen(getGame().getPauseMenuScreen());
 		}
 	}
-	
+
 	@Override
 	public void dispose() {
 		super.dispose();
@@ -132,14 +131,14 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 		super.render(delta);
 
 		// Render HUD
-		hud.render(delta);	
-		
+		hud.render(delta);
+
 	}
-	
+
 	@Override
 	public void show() {
 		hud.setAsInputProcessor();
-		
+
 		assets.getAudio().loopSound(MUSIC_TRACK);
 	}
 
@@ -149,12 +148,11 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 		camera.viewportHeight = height;
 		camera.update();
 	}
-	
+
 	@Override
 	public void hide() {
 		assets.getAudio().pauseAll();
 	}
-
 
 	@Override
 	public void update(float delta) {
@@ -185,20 +183,21 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 				}
 			}
 
+			match.checkForDead();
 			checkVictory();
 
 			// Temporary
 			tryToShoot(activePlayer);
-			
+
 			if (Gdx.input.isKeyJustPressed(Keys.N)) {
 				time = FINAL_TIME;
 				match.nextTurn();
 			}
 		}
-		
+
 		checkTimeorDead(activePlayer);
-		
-		if(isWaiting) {
+
+		if (isWaiting) {
 			hud.setInvisibleText(true);
 			waitingTime = waitingTime - delta;
 			hud.setTime((int) waitingTime);
@@ -206,27 +205,27 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 	}
 
 	private void tryToShoot(Player activePlayer) {
-		if (Gdx.input.isKeyJustPressed(Keys.SPACE) && match.CURRENT_AMMO_COUNT>0 && !hasShot) {
+		if (Gdx.input.isKeyJustPressed(Keys.SPACE) && match.CURRENT_AMMO_COUNT > 0 && !hasShot) {
 			Vector3 aim3D = camera.unproject(new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0));
 			Vector2 aim = new Vector2(aim3D.x, aim3D.y);
 			aim.sub(activePlayer.getPosition());
 			fireMyWeapon(activePlayer, aim);
 		}
 		if (Gdx.input.justTouched() && !hud.weaponsAreVisible() && !hasShot) {
-			
+
 			startTime = System.currentTimeMillis();
 			elapsedTime = 0;
 			touched = true;
 		}
-			
-		if(!Gdx.input.isTouched() && touched && match.CURRENT_AMMO_COUNT>0){
-				elapsedTime = (new Date()).getTime() -startTime;
-				Vector3 aim3D = camera.unproject(new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0));
-				Vector2 aim = new Vector2(aim3D.x, aim3D.y);
-				aim.sub(activePlayer.getPosition());
-				fireMyWeapon(activePlayer, aim);
-				touched = false;
-			}
+
+		if (!Gdx.input.isTouched() && touched && match.CURRENT_AMMO_COUNT > 0) {
+			elapsedTime = (new Date()).getTime() - startTime;
+			Vector3 aim3D = camera.unproject(new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0));
+			Vector2 aim = new Vector2(aim3D.x, aim3D.y);
+			aim.sub(activePlayer.getPosition());
+			fireMyWeapon(activePlayer, aim);
+			touched = false;
+		}
 	}
 
 	private void fireMyWeapon(Player activePlayer, Vector2 aim) {
@@ -247,13 +246,12 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 		activePlayer.jump();
 		activePlayer.jump();
 		System.out.println(Gdx.input.getX() + ", " + camera.viewportWidth / 2);
-		if(Gdx.input.getX() > camera.viewportWidth / 2) 
+		if (Gdx.input.getX() > camera.viewportWidth / 2)
 			activePlayer.moveLeft(5);
-
 
 		if (Gdx.input.getX() < camera.viewportWidth / 2)
 			activePlayer.moveRight(5);
-		
+
 		activePlayer.walking = true;
 	}
 
@@ -266,7 +264,7 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 				active.moveLeft();
 			}
 			active.walking = true;
-			
+
 		}
 		if ((Gdx.input.isKeyPressed(Keys.D) || Gdx.input.isKeyPressed(Keys.RIGHT))) {
 			if ((active.getBody().getLinearVelocity().x) < Player.MAX_VEL_X) {
@@ -275,7 +273,7 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 			active.walking = true;
 		}
 	}
-	
+
 	@Override
 	protected void onUpdateGameObject(float delta, Layer layer, GameObject gameObject) {
 
@@ -309,7 +307,7 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 		if (time == 0 && !isWaiting) {
 			hud.setTime(TIME_TO_CHANGE);
 			isWaiting = true;
-		} 
+		}
 		if (waitingTime < 0 && isWaiting) {
 			time = FINAL_TIME;
 			isWaiting = false;
@@ -335,7 +333,7 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 		if (player != null)
 			getGame().setScreen(new EndingScreen((FoodFeud) getGame()));
 	}
-	
+
 	public Player getCurrentPlayer() {
 		return match.getActivePlayer();
 	}

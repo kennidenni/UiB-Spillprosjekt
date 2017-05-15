@@ -84,18 +84,16 @@ public class FoodHud extends MenuScreen {
 		font = generator.generateFont(parameter);
 		textButtonStyle = new TextButtonStyle();
 		textButtonStyle.font = font;
-		
+
 		nextPlayerWait = new TextButton("TIME TO NEXT PLAYER", textButtonStyle);
-		hiddenTable.add(nextPlayerWait).pad(700, 0, 0, 1050);
-		
+		hiddenTable.add(nextPlayerWait).pad(700, 0, 0, 900);
 
 		time = new TextButton("0", textButtonStyle);
 		scoreTable.add(time).width(300).pad(900, 0, 0, 1600);
 
 		weaponMenuButton = setupButton(MENU_PATH);
 		menu.add(weaponMenuButton).height((float) (weaponMenuButton.getHeight() / 4)).pad(980, 1670, 0, 0);
-		
-		
+
 		setUpMute();
 		addButtonListener();
 		addToWeapons();
@@ -127,7 +125,7 @@ public class FoodHud extends MenuScreen {
 
 	private void addToWeapons() {
 		Weapon[] weaponsList = WeaponLoader.fromJson(assets, Gdx.files.internal("Data/weapons.json"));
-		
+
 		int i = 0;
 		for (Weapon w : weaponsList) {
 			i++;
@@ -135,11 +133,12 @@ public class FoodHud extends MenuScreen {
 			TextureRegionDrawable myTexRegionDrawable = new TextureRegionDrawable(myTextureRegion);
 			ImageButton weaponButton = new ImageButton(myTexRegionDrawable);
 			addButtonListener(weaponButton, () -> game.getGameScreen().getCurrentPlayer().setWeapon(w));
-			weapons.add(weaponButton).width((float) (weaponButton.getWidth() / 1.3)).height((float) (weaponButton.getHeight() / 1.3)).pad(10);
+			weapons.add(weaponButton).width((float) (weaponButton.getWidth() / 1.3))
+					.height((float) (weaponButton.getHeight() / 1.3)).pad(10);
 			if (i % 10 == 0)
 				weapons.row();
 		}
-		
+
 		weapons.pad(850, 0, 5, 0);
 		weapons.row();
 	}
@@ -160,8 +159,7 @@ public class FoodHud extends MenuScreen {
 					if (weapons.isVisible()) {
 						weapons.setVisible(false);
 						weaponDelay = true;
-					}
-					else {
+					} else {
 						weapons.setVisible(true);
 					}
 				}
@@ -216,7 +214,7 @@ public class FoodHud extends MenuScreen {
 		muted = isMuted;
 		muteButton.setChecked(isMuted);
 	}
-	
+
 	public void setInvisibleText(boolean b) {
 		hiddenTable.setVisible(b);
 	}
@@ -253,10 +251,10 @@ public class FoodHud extends MenuScreen {
 	}
 
 	public boolean weaponsAreVisible() {
-		if(weapons.isVisible()) {
+		if (weapons.isVisible()) {
 			return true;
 		}
-		if(weaponDelay) {
+		if (weaponDelay) {
 			weaponDelay = false;
 			return true;
 		}
