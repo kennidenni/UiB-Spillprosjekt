@@ -25,9 +25,9 @@ import java.util.Objects;
 public class Match {
 
 	public static final int MAX_PLAYER_COUNT = 4;
-	
-	public static final int MAX_AMMO_COUNT = 1;
-	public int CURRENT_AMMO_COUNT = 1;
+
+	public static final int MAX_AMMO_COUNT = 5;
+	public int CURRENT_AMMO_COUNT = 5;
 
 	private final List<Player> players;
 	private final List<Player> alivePlayers;
@@ -51,23 +51,30 @@ public class Match {
 
 	public void nextTurn() {
 		for (int i = alivePlayers.size() - 1; i >= 0; i--) {
-			if (alivePlayers.get(i).isDead()){
-				alivePlayers.remove(i);
-			} else {
+			if (!alivePlayers.get(i).isDead()) {
 				alivePlayers.get(i).setWeapon(null);
 			}
-			
 		}
-		
-		CURRENT_AMMO_COUNT=MAX_AMMO_COUNT;
+
+		CURRENT_AMMO_COUNT = MAX_AMMO_COUNT;
 		turnCount++;
 	}
-	
+
+	public void checkForDead() {
+		for (int i = alivePlayers.size() - 1; i >= 0; i--) {
+			if (alivePlayers.get(i).isDead())
+				alivePlayers.remove(i);
+			}
+	}
+
 	public void decreaseCurrentAmmo(int i) {
 		CURRENT_AMMO_COUNT -= i;
 	}
 
 	public Player getWinner() {
-	    return (alivePlayers.size() == 1 ? alivePlayers.get(0) : null);
+		if (alivePlayers.size() == 1)
+			return alivePlayers.get(0);
+
+		return null;
 	}
 }

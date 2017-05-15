@@ -17,6 +17,7 @@
 package uib.teamdank.foodfeud.gui;
 
 import java.util.Date;
+import java.util.List;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
@@ -68,6 +69,7 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 	private boolean touched = false;
 	private long startTime;
 	private long elapsedTime;
+	private List<Player> playerList;
 
 	
 	public GameScreen(Game game) {
@@ -111,6 +113,7 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 		}
 		level.distributePlayers(match.getPlayers());
 		
+		playerList = match.getPlayers();
 
 	}
 
@@ -184,7 +187,8 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 					player.moveLeft(10);
 				}
 			}
-
+			
+			match.checkForDead();
 			checkVictory();
 
 			// Temporary

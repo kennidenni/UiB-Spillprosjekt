@@ -86,7 +86,7 @@ public class FoodHud extends MenuScreen {
 		textButtonStyle.font = font;
 		
 		nextPlayerWait = new TextButton("TIME TO NEXT PLAYER", textButtonStyle);
-		hiddenTable.add(nextPlayerWait).pad(700, 0, 0, 1050);
+		hiddenTable.add(nextPlayerWait).pad(700, 0, 0, 900);
 		
 
 		time = new TextButton("0", textButtonStyle);
