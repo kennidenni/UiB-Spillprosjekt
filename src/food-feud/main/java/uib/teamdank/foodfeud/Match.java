@@ -53,8 +53,10 @@ public class Match {
 		for (int i = alivePlayers.size() - 1; i >= 0; i--) {
 			if (alivePlayers.get(i).isDead()){
 				alivePlayers.remove(i);
+			} else {
+				alivePlayers.get(i).setWeapon(null);
 			}
-			alivePlayers.get(i).setWeapon(null);
+			
 		}
 		
 		CURRENT_AMMO_COUNT=MAX_AMMO_COUNT;
