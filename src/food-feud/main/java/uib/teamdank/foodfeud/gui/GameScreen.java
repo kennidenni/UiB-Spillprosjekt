@@ -210,7 +210,7 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 			Vector3 aim3D = camera.unproject(new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0));
 			Vector2 aim = new Vector2(aim3D.x, aim3D.y);
 			aim.sub(activePlayer.getPosition());
-			activePlayer.fireWeapon(this, playerLayer, level.getWorld(), aim.nor(), 10000);
+			fireMyWeapon(activePlayer, aim);
 		}
 		if (Gdx.input.justTouched() && !hud.weaponsAreVisible() && !hasShot) {
 			
@@ -224,14 +224,21 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 				Vector3 aim3D = camera.unproject(new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0));
 				Vector2 aim = new Vector2(aim3D.x, aim3D.y);
 				aim.sub(activePlayer.getPosition());
-				activePlayer.fireWeapon(this, playerLayer, level.getWorld(), aim.nor(), elapsedTime * 100);
+				fireMyWeapon(activePlayer, aim);
+				touched = false;
+			}
+	}
+
+	private void fireMyWeapon(Player activePlayer, Vector2 aim) {
+		boolean shot = activePlayer.fireWeapon(this, playerLayer, level.getWorld(), aim.nor(), elapsedTime * 100);
+		if (shot) {
+			shootingRecoil(activePlayer);
+			match.decreaseCurrentAmmo(1);
+			if (match.CURRENT_AMMO_COUNT == 0) {
 				hasShot = true;
 				time = 5;
-				touched = false;
-				
-				//added recoil
-				shootingRecoil(activePlayer);
 			}
+		}
 	}
 
 	private void shootingRecoil(Player activePlayer) {
