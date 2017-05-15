@@ -46,13 +46,13 @@ public class Player extends Actor implements Upgradeable {
 
 	private static final float INITIAL_HORIZONTAL_ACCELERATION = 40f;
 	private static final float HORIZONTAL_FRICTION = .9f;
-	private static final float ADD_TO_HORIZONTAL_SPEED = .002f;
+	private static final float ADD_TO_HORIZONTAL_SPEED = .0018f;
 
 	private static final float VERTICAL_ACCELERATION = 10f;
 	private static final float VERTICAL_FRICTION = .98f;
 	
 	private static final float INITIAL_TOP_SPEED = 512f;
-	private static final float MAX_TOP_SPEED = 1024f;
+	private static final float MAX_TOP_SPEED = 2048;
 	private static final float ADD_TO_TOP_SPEED = 0.1f;
 	
 	private float topSpeed = INITIAL_TOP_SPEED;
