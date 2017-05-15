@@ -64,7 +64,7 @@ public class Match {
 		for (int i = alivePlayers.size() - 1; i >= 0; i--) {
 			if (alivePlayers.get(i).isDead())
 				alivePlayers.remove(i);
-			}
+		}
 	}
 
 	public void decreaseCurrentAmmo(int i) {
