@@ -17,6 +17,7 @@
 package uib.teamdank.foodfeud.gui;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -104,9 +105,10 @@ public class FoodHud extends MenuScreen {
 		hiddenTable.setFillParent(true);
 		hiddenTable.setVisible(false);
 		weapons.setFillParent(true);
-		weapons.setVisible(false);
+		weapons.setVisible(true);
+		weaponDelay = false;
 		scoreTable.setFillParent(true);
-		menu.setFillParent(true);
+		menu.setFillParent(false);
 
 		stage.addActor(hiddenTable);
 		stage.addActor(weapons);
@@ -132,6 +134,7 @@ public class FoodHud extends MenuScreen {
 			TextureRegion myTextureRegion = new TextureRegion(w.getTexture());
 			TextureRegionDrawable myTexRegionDrawable = new TextureRegionDrawable(myTextureRegion);
 			ImageButton weaponButton = new ImageButton(myTexRegionDrawable);
+			weaponButton.getStyle().imageDown = myTexRegionDrawable.tint(Color.CHARTREUSE);
 			addButtonListener(weaponButton, () -> game.getGameScreen().getCurrentPlayer().setWeapon(w));
 			weapons.add(weaponButton).width((float) (weaponButton.getWidth() / 1.3))
 					.height((float) (weaponButton.getHeight() / 1.3)).pad(10);
@@ -152,15 +155,16 @@ public class FoodHud extends MenuScreen {
 
 			@Override
 			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-				Stage stage = event.getTarget().getStage();
-				Vector2 mouse = stage.screenToStageCoordinates(new Vector2(Gdx.input.getX(), Gdx.input.getY()));
+				Stage tempStage = event.getTarget().getStage();
+				Vector2 mouse = tempStage.screenToStageCoordinates(new Vector2(Gdx.input.getX(), Gdx.input.getY()));
 
-				if (stage.hit(mouse.x, mouse.y, true) == event.getTarget()) {
+				if (tempStage.hit(mouse.x, mouse.y, true) == event.getTarget()) {
 					if (weapons.isVisible()) {
 						weapons.setVisible(false);
 						weaponDelay = true;
 					} else {
 						weapons.setVisible(true);
+						weaponDelay = false;
 					}
 				}
 			}
@@ -239,6 +243,7 @@ public class FoodHud extends MenuScreen {
 		time.setText(String.valueOf(l));
 	}
 
+	@Override
 	public void resize(int width, int height) {
 		stage.getViewport().update(width, height, true);
 	}
@@ -251,13 +256,16 @@ public class FoodHud extends MenuScreen {
 	}
 
 	public boolean weaponsAreVisible() {
+
 		if (weapons.isVisible()) {
 			return true;
 		}
+		/*
 		if (weaponDelay) {
 			weaponDelay = false;
 			return true;
 		}
+		*/
 		return false;
 	}
 
