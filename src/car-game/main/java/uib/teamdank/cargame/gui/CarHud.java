@@ -183,14 +183,11 @@ public class CarHud {
 
 	private void toggleMute() {
 		if(muted) {
-			muted = false;
-			game.setAudio(muted);
-			muteButton.setChecked(false);
+			setMute(false);
+			
 		}
 		else {
-			muted = true;
-			game.setAudio(muted);
-			muteButton.setChecked(true);
+			setMute(true);
 		}
 	}
 	
@@ -201,6 +198,8 @@ public class CarHud {
 	public void setMute(boolean isMuted) {
 		muted = isMuted;
 		muteButton.setChecked(isMuted);
+		game.getGameScreen().setMuted(isMuted);
+		game.setAudio(isMuted);
 	}
 
 	public void render(float delta) {
