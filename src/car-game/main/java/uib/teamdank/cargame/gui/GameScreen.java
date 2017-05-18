@@ -183,6 +183,7 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 		return pause;
 	}
 
+	/*
 	private void checkForMute() {
 		if(hud.isMuted()) {
 			assets.getAudio().mute();
@@ -190,11 +191,23 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 			assets.getAudio().unmute();
 		}
 	}
+	*/
 	
 	public boolean isMuted() {
 		if(hud.isMuted())
 			return true;
 		return false;
+	}
+	
+	public void setMuted(boolean bool){
+		if(bool == true){
+			assets.getAudio().mute();
+		}
+		else if (bool == false){
+			assets.getAudio().unmute();
+		    assets.getAudio().loopSound(MUSIC_TRACK);
+		    assets.getAudio().loopSound(ENGINE_TRACK);
+		}
 	}
 	
 	public void setStartAudio(boolean isMuted) {
@@ -263,7 +276,7 @@ public class GameScreen extends uib.teamdank.common.gui.GameScreen {
 		
 		// Player input
 		checkForPauseRequest();
-		checkForMute();
+		//checkForMute();
 		boolean inputTurnLeft = Gdx.input.isKeyPressed(Keys.A) || Gdx.input.isKeyPressed(Keys.LEFT);
 		boolean inputTurnRight = Gdx.input.isKeyPressed(Keys.D) || Gdx.input.isKeyPressed(Keys.RIGHT);
 		if (inputTurnLeft) {
